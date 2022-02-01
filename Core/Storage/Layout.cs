@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -73,8 +74,12 @@ namespace Core.Storage {
       bool didExportedSuccessfuly;
 
       try {
+        if (!Directory.Exists(Preferences.LayoutsPath)) {
+          Directory.CreateDirectory(Preferences.LayoutsPath);
+        }
+
         XDocument document = this.ToXDocument();
-        document.Save(this.GetPath()); // Where goes the saved file?
+        document.Save(this.GetPath());
 
         didExportedSuccessfuly = true;
       } catch {

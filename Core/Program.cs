@@ -17,7 +17,7 @@ namespace Core {
       ExampleLayoutUsage();
     }
 
-    static private Layout CreateExampleLayout() {
+    static private Layout? CreateExampleLayout() {
       static string[] CarBrands(params string[] carBrands) {
         return carBrands;
       }
@@ -43,19 +43,26 @@ namespace Core {
       example.Zones.Add(office);
       example.Zones.Add(export);
 
-      example.Export();
+      bool didExport = example.Export();
 
-      Console.WriteLine($"Návrh rozložení uložen do \"{ example.GetPath() }\".");
-
-      return example;
+      if (didExport) {
+        Console.WriteLine($"Návrh rozložení uložen do \"{ example.GetPath() }\".");
+        return example;
+      } else {
+        Console.WriteLine($"Návrh rozložení nebyl uložen.");
+        return null;
+      }
     }
 
     static private void ExampleLayoutUsage() {
-      Layout exampleLayout = CreateExampleLayout();
-      const string carBrand = "hyu";
-      IEnumerable<string> suitableZonesNames = exampleLayout.GetCarBrandSuitableZonesNames(carBrand);
+      Layout? exampleLayout = CreateExampleLayout();
 
-      Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { string.Join(", ", suitableZonesNames) }");
+      if (exampleLayout != null) {
+        const string carBrand = "hyu";
+        IEnumerable<string> suitableZonesNames = exampleLayout.GetCarBrandSuitableZonesNames(carBrand);
+
+        Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { string.Join(", ", suitableZonesNames) }");
+      }
 
       Console.WriteLine("Press any key for exit...");
       Console.ReadKey();
