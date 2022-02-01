@@ -44,29 +44,13 @@ namespace Core.Storage {
 
 
 
-    public void Rename(string newName) {
-      this.Name = newName;
-    }
-
-    public void Resize(Size newSize) {
-      this.Size = newSize;
-    }
-
-    public void AddZone(Zone zone) {
-      this.Zones.Add(zone);
-    }
-
-    public void RemoveZone(Zone zone) {
-      this.Zones.Remove(zone);
-    }
-
     public void RemoveZone(string name) {
       Zone zone = this.Zones.Find(zone => zone.Name == name);
 
       if (zone == null) {
         throw new ArgumentException($"Layout.Zones doesn't contain a Zone with name \"{ name }\"");
       } else {
-        this.RemoveZone(zone);
+        this.Zones.Remove(zone);
       }
     }
 
@@ -99,14 +83,14 @@ namespace Core.Storage {
     // XDocumentCompatible
     override public XDocument ToXDocument() {
       XElement[] elements = new XElement[3] {
-        new XElement("Name", this.Name),
-        new XElement("Size", this.Size.ToCustomString()),
-        new XElement("Zones", this.Zones.Select(zone => zone.ToXElement()))
+        new("Name", this.Name),
+        new("Size", this.Size.ToCustomString()),
+        new("Zones", this.Zones.Select(zone => zone.ToXElement()))
       };
 
-      XElement rootElement = new XElement("Layout", elements);
+      XElement rootElement = new("Layout", elements);
 
-      XDocument document = new XDocument(rootElement);
+      XDocument document = new(rootElement);
 
       return document;
     }
