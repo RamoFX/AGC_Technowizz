@@ -7,6 +7,5 @@ namespace Core.Storage {
     static public readonly string LayoutBasePath = Paths.GetDocumentsPath();
     static public readonly string LayoutBaseName = "AGC_Technowizz_Configs";
     static public readonly string LayoutsPath = Paths.JoinPaths(LayoutBasePath, LayoutBaseName);
-    static public readonly char LayoutCsvSeparator = ';';
   }
 }
