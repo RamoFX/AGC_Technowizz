@@ -1,4 +1,4 @@
-﻿namespace Core.Storage.Utilities {
+﻿namespace Core.Storage {
   enum ZoneType {
     Storage,
     Other

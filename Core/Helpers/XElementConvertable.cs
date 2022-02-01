@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 
 
-namespace Core.Storage.Utilities {
+namespace Core.Helpers {
   abstract class XElementConvertable<T> {
     abstract public XElement ToXElement();
 

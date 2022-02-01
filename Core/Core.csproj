@@ -53,9 +53,9 @@
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="Storage\Layout.cs" />
     <Compile Include="Storage\Preferences.cs" />
-    <Compile Include="Storage\Utilities\XDocumentConvertable.cs" />
-    <Compile Include="Storage\Utilities\XElementConvertable.cs" />
-    <Compile Include="Storage\Utilities\ZoneType.cs" />
+    <Compile Include="Helpers\XDocumentConvertable.cs" />
+    <Compile Include="Helpers\XElementConvertable.cs" />
+    <Compile Include="Storage\ZoneType.cs" />
     <Compile Include="Storage\Zone.cs" />
     <Compile Include="Helpers\Paths.cs" />
     <Compile Include="Program.cs" />

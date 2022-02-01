@@ -15,6 +15,8 @@ namespace Core {
     // Use for development testing or debugging, won't be used as entrypoint
     static void Main() {
       //CreateExampleXml();
+
+
     }
 
     static void CreateExampleXml() {
