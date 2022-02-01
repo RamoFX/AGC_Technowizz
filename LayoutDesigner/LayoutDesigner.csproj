@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3D4F29CE-C410-498C-9D80-DBD427BABCD9}</ProjectGuid>
+    <ProjectGuid>{8B379F13-EB65-4B30-9C7E-E6B714CF5330}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ConfigDesigner</RootNamespace>
-    <AssemblyName>ConfigDesigner</AssemblyName>
+    <RootNamespace>LayoutDesigner</RootNamespace>
+    <AssemblyName>LayoutDesigner</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <LangVersion>9.0</LangVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,9 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>ConfigDesigner.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
