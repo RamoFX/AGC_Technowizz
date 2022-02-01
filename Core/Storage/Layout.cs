@@ -28,6 +28,8 @@ namespace Core.Storage {
       this.Zones = zones.ToList();
     }
 
+    public Layout(string name, Size size) : this(name, size, new List<Zone>()) { }
+
 
 
     static public string GetPath(string name) {
