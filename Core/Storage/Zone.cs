@@ -37,6 +37,12 @@ namespace Core.Storage {
 
 
 
+    public bool IsCarBrandSuitable(string carBrand) {
+      return this.CarBrands.Contains(carBrand);
+    }
+
+
+
     // XElementConvertable
     override public XElement ToXElement() {
       XAttribute[] attributes = {

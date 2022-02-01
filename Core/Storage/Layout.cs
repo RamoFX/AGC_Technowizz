@@ -55,6 +55,18 @@ namespace Core.Storage {
       }
     }
 
+    public IEnumerable<string> GetCarBrandSuitableZonesNames(string carBrand) {
+      List<string> suitableZonesNames = new();
+
+      foreach(Zone zone in this.Zones) {
+        if (zone.IsCarBrandSuitable(carBrand)) {
+          suitableZonesNames.Add(zone.Name);
+        }
+      }
+
+      return suitableZonesNames;
+    }
+
 
 
     public bool Export() {
@@ -113,4 +125,3 @@ namespace Core.Storage {
     }
   }
 }
- 
