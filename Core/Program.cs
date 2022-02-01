@@ -11,57 +11,54 @@ using Core.Storage;
 
 
 namespace Core {
+  // Use for development testing or debugging, won't be used as entrypoint
   class Program {
-    // Use for development testing or debugging, won't be used as entrypoint
     static void Main() {
-      //CreateExampleXml();
-
-
+      ExampleLayoutUsage();
     }
 
-    static void CreateExampleXml() {
-      XDocument document = new();
+    static private Layout CreateExampleLayout() {
+      static string[] CarBrands(params string[] carBrands) {
+        return carBrands;
+      }
 
-      // Brands
-      XElement brand1 = new("Brand");
-      brand1.SetAttributeValue("name", "toy");
+      Layout example = new("Example", new(15, 8));
 
-      XElement brand2 = new("Brand");
-      brand2.SetAttributeValue("name", "ms");
+      Zone a1 = new("A1", new(0, 0), new(5, 3), 4, ZoneType.Storage, CarBrands("bmw", "toy"));
+      Zone b1 = new("B1", new(5, 0), new(5, 4), 4, ZoneType.Storage, CarBrands("rr"));
+      Zone b2 = new("B2", new(4, 5), new(4, 2), 4, ZoneType.Storage, CarBrands("hyu"));
+      Zone c1 = new("C1", new(11, 0), new(4, 2), 4, ZoneType.Storage, CarBrands("hon"));
+      Zone c2 = new("C2", new(12, 3), new(1, 3), 4, ZoneType.Storage, CarBrands("hyu", "toy"));
+      Zone c3 = new("C3", new(9, 6), new(1, 1), 4, ZoneType.Storage, CarBrands("kia"));
 
-      XElement brand3 = new("Brand");
-      brand3.SetAttributeValue("name", "bmw");
+      Zone export = new("Export", new(11, 5), new(4, 3), 0, ZoneType.Other);
+      Zone office = new("Office", new(0, 5), new(4, 3), 0, ZoneType.Other);
 
-      // Layout
-      XElement layout = new("Layout");
-      layout.SetAttributeValue("name", "example");
-      layout.SetAttributeValue("size", "16,9");
+      example.Zones.Add(a1);
+      example.Zones.Add(b1);
+      example.Zones.Add(b2);
+      example.Zones.Add(c1);
+      example.Zones.Add(c2);
+      example.Zones.Add(c3);
+      example.Zones.Add(office);
+      example.Zones.Add(export);
 
-      // Zones
-      XElement zones = new("Zones");
+      example.Export();
 
-      // Zone1
-      XElement zone1 = new("Zone");
-      zone1.SetAttributeValue("name", "A1");
-      zone1.SetAttributeValue("size", "4,3");
+      Console.WriteLine($"Návrh rozložení uložen do \"{ example.GetPath() }\".");
 
-      // Zone2
-      XElement zone2 = new("Zone");
-      zone2.SetAttributeValue("name", "B1");
-      zone2.SetAttributeValue("size", "3,4");
+      return example;
+    }
 
-      // Zone1, Zone2
-      XElement[] zone1_zone2 = new XElement[2] { zone1, zone2 };
+    static private void ExampleLayoutUsage() {
+      Layout exampleLayout = CreateExampleLayout();
+      const string carBrand = "hyu";
+      IEnumerable<string> suitableZonesNames = exampleLayout.GetCarBrandSuitableZonesNames(carBrand);
 
-      // Add to the XML DOM
-      document.Add(layout);
-      layout.Add(zones);
-      zones.Add(zone1_zone2);
-      zone1.Add(brand1, brand3);
-      zone2.Add(brand2);
+      Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { string.Join(", ", suitableZonesNames) }");
 
-      // Save
-      document.Save("./example.xml");
+      Console.WriteLine("Press any key for exit...");
+      Console.ReadKey();
     }
   }
 }
