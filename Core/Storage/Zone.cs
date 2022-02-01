@@ -36,7 +36,7 @@ namespace Core.Storage {
 
 
 
-    // XElementCompatible
+    // XElementConvertable
     override public XElement ToXElement() {
       XAttribute[] attributes = {
         new("name", this.Name),

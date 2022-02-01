@@ -80,7 +80,7 @@ namespace Core.Storage {
 
 
 
-    // XDocumentCompatible
+    // XDocumentConvertable
     override public XDocument ToXDocument() {
       // Zones
       IEnumerable<XElement> zonesChildrenElements = this.Zones.Select(zone => zone.ToXElement());
