@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
-using Core;
 using Core.Storage.Utilities;
 using Core.Helpers;
 
@@ -17,8 +14,8 @@ namespace Core.Storage {
     public Point Location;
     public Size Size;
     public int VerticalCapacity;
-    public List<string> CarBrands;
     public ZoneType Type;
+    public List<string> CarBrands;
 
 
 
@@ -28,13 +25,13 @@ namespace Core.Storage {
 
 
 
-    public Zone(string name, Point location, Size size, int verticalCapacity, IEnumerable<string> carBrands, ZoneType type) {
+    public Zone(string name, Point location, Size size, int verticalCapacity, ZoneType type, IEnumerable<string> carBrands) {
       this.Name = name;
       this.Location = location;
       this.Size = size;
       this.VerticalCapacity = verticalCapacity;
-      this.CarBrands = carBrands.ToList();
       this.Type = type;
+      this.CarBrands = carBrands.ToList();
     }
 
 
@@ -49,25 +46,29 @@ namespace Core.Storage {
         new("type", this.Type.ToString())
       };
 
-      XElement[] childrenElements = {
-        new("name", this.Name),
-        new("location", this.Location.ToCustomString()),
-        new("size", this.Size.ToCustomString()),
-        new("verticalCapacity", this.VerticalCapacity.ToString()),
-        new("type", this.Type.ToString())
-      };
+      List<XElement> childrenElements = new();
+
+      foreach (string carBrand in this.CarBrands) {
+        var childrenElement = XmlLinqUtilities.CreateElement(
+          "CarBrand",
+          new XAttribute[] { new XAttribute("name", carBrand) }
+        );
+
+        childrenElements.Add(childrenElement);
+      }
 
       return XmlLinqUtilities.CreateElement("Zone", attributes, childrenElements);
     }
 
     static public new Zone FromXElement(XElement element) {
-      string name = element.Element("Name").Value;
-      Point location = element.Element("Location").Value.ToPoint();
-      Size size = element.Element("Size").Value.ToSize();
-      int verticalCapacity = element.Element("VerticalCapacity").Value.ToInt();
-      ZoneType type = element.Element("Type").Value.ToZoneType(true);
+      string name = element.Attribute("Name").Value;
+      Point location = element.Attribute("Location").Value.ToPoint();
+      Size size = element.Attribute("Size").Value.ToSize();
+      int verticalCapacity = element.Attribute("VerticalCapacity").Value.ToInt();
+      ZoneType type = element.Attribute("Type").Value.ToZoneType(true);
+      IEnumerable<string> carBrads = element.Elements().Select( carBrandElement => carBrandElement.Attribute("name").Value );
 
-      return new Zone(name, location, size, verticalCapacity, type);
+      return new Zone(name, location, size, verticalCapacity, type, carBrads);
     }
   }
 }
