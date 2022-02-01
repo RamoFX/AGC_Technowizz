@@ -9,7 +9,7 @@ using Core.Helpers;
 
 
 namespace Core.Storage {
-  class Layout : XDocumentConvertable<Layout> {
+  public class Layout : XDocumentConvertable<Layout> {
     public string Name;
     public Size Size;
     public List<Zone> Zones;

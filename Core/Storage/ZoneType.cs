@@ -1,5 +1,5 @@
 ﻿namespace Core.Storage {
-  enum ZoneType {
+  public enum ZoneType {
     Storage,
     Other
   }

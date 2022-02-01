@@ -8,7 +8,7 @@ using Core.Helpers;
 
 
 namespace Core.Storage {
-  class Zone : XElementConvertable<Zone> {
+  public class Zone : XElementConvertable<Zone> {
     public string Name;
     public Point Location;
     public Size Size;

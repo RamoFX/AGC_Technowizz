@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 
 namespace Core.Helpers {
-  abstract class XElementConvertable<T> {
+  abstract public class XElementConvertable<T> {
     abstract public XElement ToXElement();
 
     static public T FromXElement(XElement element) {
