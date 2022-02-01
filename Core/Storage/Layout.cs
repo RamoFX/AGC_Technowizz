@@ -105,8 +105,8 @@ namespace Core.Storage {
     static public new Layout FromXDocument(XDocument document) {
       XElement root = document.Root;
 
-      string name = root.Attribute("Name").Value;
-      Size size = root.Attribute("Size").Value.ToSize();
+      string name = root.Attribute("name").Value;
+      Size size = root.Attribute("size").Value.ToSize();
       IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
 
       return new Layout(name, size, zones);
