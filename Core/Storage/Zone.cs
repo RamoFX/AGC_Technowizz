@@ -68,11 +68,11 @@ namespace Core.Storage {
     }
 
     static public new Zone FromXElement(XElement element) {
-      string name = element.Attribute("Name").Value;
-      Point location = element.Attribute("Location").Value.ToPoint();
-      Size size = element.Attribute("Size").Value.ToSize();
-      int verticalCapacity = element.Attribute("VerticalCapacity").Value.ToInt();
-      ZoneType type = element.Attribute("Type").Value.ToZoneType(true);
+      string name = element.Attribute("name").Value;
+      Point location = element.Attribute("location").Value.ToPoint();
+      Size size = element.Attribute("size").Value.ToSize();
+      int verticalCapacity = element.Attribute("verticalCapacity").Value.ToInt();
+      ZoneType type = element.Attribute("type").Value.ToZoneType(true);
       IEnumerable<string> carBrads = element.Elements().Select( carBrandElement => carBrandElement.Attribute("name").Value );
 
       return new Zone(name, location, size, verticalCapacity, type, carBrads);
