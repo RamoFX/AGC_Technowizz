@@ -82,15 +82,21 @@ namespace Core.Storage {
 
     // XDocumentCompatible
     override public XDocument ToXDocument() {
-      XElement[] elements = new XElement[3] {
-        new("Name", this.Name),
-        new("Size", this.Size.ToCustomString()),
-        new("Zones", this.Zones.Select(zone => zone.ToXElement()))
+      // Zones
+      IEnumerable<XElement> zonesChildrenElements = this.Zones.Select(zone => zone.ToXElement());
+
+      XElement zones = XmlLinqUtilities.CreateElement("Zones", zonesChildrenElements);
+
+      // Root
+      XAttribute[] rootAttributes = {
+        new("name", this.Name),
+        new("size", this.Size.ToCustomString())
       };
 
-      XElement rootElement = new("Layout", elements);
+      XElement root = XmlLinqUtilities.CreateElement("Layout", rootAttributes, new XElement[] { zones });
 
-      XDocument document = new(rootElement);
+      // Document
+      XDocument document = new(root);
 
       return document;
     }
@@ -98,9 +104,9 @@ namespace Core.Storage {
     static public new Layout FromXDocument(XDocument document) {
       XElement root = document.Root;
 
-      string name = root.Element("Name").Value;
-      Size size = root.Element("Size").Value.ToSize();
-      IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(xElementZone => Zone.FromXElement(xElementZone));
+      string name = root.Attribute("Name").Value;
+      Size size = root.Attribute("Size").Value.ToSize();
+      IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
 
       return new Layout(name, size, zones);
     }
