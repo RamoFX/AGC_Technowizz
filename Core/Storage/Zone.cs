@@ -33,6 +33,8 @@ namespace Core.Storage {
       this.CarBrands = carBrands.ToList();
     }
 
+    public Zone(string name, Point location, Size size, int verticalCapacity, ZoneType type) : this(name, location, size, verticalCapacity, type, new string[0] { }) { }
+
 
 
     // XElementConvertable
