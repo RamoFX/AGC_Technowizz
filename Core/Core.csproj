@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communicator\DatabaseAccess.cs" />
+    <Compile Include="Communicator\DataProcessing.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="Storage\Layout.cs" />
@@ -64,12 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Communicator\Communicator.csproj">
-      <Project>{988e136e-f5b1-4b00-b86d-2709aedaa3a0}</Project>
-      <Name>Communicator</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

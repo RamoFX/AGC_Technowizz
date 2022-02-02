@@ -48,30 +48,8 @@ namespace Core.Storage {
 
 
     // Zone interactions
-    public void RemoveZone(string name) {
-      Zone zone = this.Zones.Find(zone => zone.Name == name);
-
-      if (zone == null) {
-        throw new ArgumentException($"Layout.Zones doesn't contain a Zone with name \"{ name }\"");
-      } else {
-        this.Zones.Remove(zone);
-      }
-    }
-
     public IEnumerable<Zone> GetSuitableZones(string carBrand) {
-      List<Zone> suitableZones = new();
-
-      foreach (Zone zone in this.Zones) {
-        if (zone.IsCarBrandSuitable(carBrand)) {
-          suitableZones.Add(zone);
-        }
-      }
-
-      return suitableZones;
-    }
-
-    public IEnumerable<(string, int)> GetSuitableZoneNamePalletsCanBeStoredPairs(string carBrand) {
-      return this.GetSuitableZones(carBrand).Select(zone => (zone.Name, zone.PalletsCanBeStored));
+      return this.Zones.FindAll(zone => zone.IsSuitable(carBrand));
     }
 
 

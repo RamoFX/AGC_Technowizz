@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 
-using Communicator;
+using Core.Communicator;
 using Core.Helpers;
 
 
@@ -19,19 +19,31 @@ namespace Core.Storage {
 
 
 
-    public int MaxCapacity { get => this.Size.Width * this.Size.Height * this.VerticalCapacity; }
-    public int PalletsCurrentlyStored { get => Communicator.DatabaseAccess.GetZonePalletsCount(this.Name); }
-    public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsCurrentlyStored; }
+    public int MaxCapacity {
+      get => this.Type == ZoneType.Storage
+        ? this.Size.Width * this.Size.Height * this.VerticalCapacity
+        : 0;
+    }
+
+    public int PalletsCurrentlyStored {
+      get => this.Type == ZoneType.Storage
+        ? DatabaseAccess.GetZonePalletsCount(this.Name)
+        : 0;
+    }
+
+    public int PalletsCanBeStored {
+      get => this.MaxCapacity - this.PalletsCurrentlyStored;
+    }
 
 
 
     public Zone(string name, Point location, Size size, int verticalCapacity, ZoneType type, IEnumerable<string> carBrands) {
-      this.Name = name.ToLower();
+      this.Name = name;
       this.Location = location;
       this.Size = size;
       this.VerticalCapacity = verticalCapacity;
       this.Type = type;
-      this.CarBrands = carBrands.Select(carBrand => carBrand.ToLower()).ToList();
+      this.CarBrands = carBrands.ToList();
     }
 
     public Zone(string name, Point location, Size size, int verticalCapacity, ZoneType type) : this(name, location, size, verticalCapacity, type, new string[0] { }) { }
@@ -39,20 +51,16 @@ namespace Core.Storage {
 
 
     // Self interaction
-    public bool IsCarBrandSuitable(string carBrand) {
+    private bool CanStore(string carBrand) {
       return this.CarBrands.Contains(carBrand);
     }
 
-    public bool CanStorePallets() {
+    private bool HasAvailableSpace() {
       return this.PalletsCanBeStored > 0;
     }
 
-    public int CountOfStorablePallets(string carBrand) {
-      if (this.IsCarBrandSuitable(carBrand) && CanStorePallets()) {
-        return this.PalletsCanBeStored;
-      } else {
-        return 0;
-      }
+    public bool IsSuitable(string carBrand) {
+      return this.CanStore(carBrand) && this.HasAvailableSpace();
     }
 
 
