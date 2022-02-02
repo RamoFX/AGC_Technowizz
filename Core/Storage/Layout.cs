@@ -18,8 +18,8 @@ namespace Core.Storage {
 
 
     public int MaxCapacity { get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity); }
-    public int PalletsLoaded { get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsLoaded); }
-    public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsLoaded; }
+    public int PalletsCurrentlyStored { get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored); }
+    public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsCurrentlyStored; }
 
 
 
