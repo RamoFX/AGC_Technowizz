@@ -37,8 +37,21 @@ namespace Core.Storage {
 
 
 
+    // Self interaction
     public bool IsCarBrandSuitable(string carBrand) {
       return this.CarBrands.Contains(carBrand);
+    }
+
+    public bool CanStorePallets() {
+      return this.PalletsCanBeStored > 0;
+    }
+
+    public int CountOfStorablePallets(string carBrand) {
+      if (this.IsCarBrandSuitable(carBrand) && CanStorePallets()) {
+        return this.PalletsCanBeStored;
+      } else {
+        return 0;
+      }
     }
 
 
