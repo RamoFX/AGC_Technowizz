@@ -33,6 +33,7 @@ namespace Core.Storage {
 
 
 
+    // Self interactions
     static public string GetPath(string name) {
       return Paths.JoinPaths(
         Preferences.LayoutsPath,
@@ -46,6 +47,7 @@ namespace Core.Storage {
 
 
 
+    // Zone interactions
     public void RemoveZone(string name) {
       Zone zone = this.Zones.Find(zone => zone.Name == name);
 
@@ -70,6 +72,7 @@ namespace Core.Storage {
 
 
 
+    // IO interactions
     public bool Export() {
       bool didExportedSuccessfuly;
 
