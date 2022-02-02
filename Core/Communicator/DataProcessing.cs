@@ -16,18 +16,21 @@ namespace Core.Communicator
     const string layoutName = "Example";
     const string FullErrorMessage = "Plno";
 
-    public static Dictionary<string, string> containerCode_name = new();
+    public static Dictionary<string, string> containerCode_name = new Dictionary<string, string>();
 
-    public static void Setup()
-    {
+    static bool IsZoneFull(Zone zone) {
+      if (zone.PalletsCurrentlyStored == zone.PalletsCanBeStored) return true;
+      return false;
+    }
+
+    public static void Setup() {
       layout = Layout.Import(layoutName);
+      //DatabaseAccess.LoadDataFromDatabase();
 
       // Load test data
-      using (StreamReader sr = new("../test_data.csv"))
-      {
+      using (StreamReader sr = new StreamReader("../test_data.csv")) {
         sr.ReadLine();
-        while (!sr.EndOfStream)
-        {
+        while (!sr.EndOfStream) {
           string[] items_in_line = sr.ReadLine().Split(';');
           string number = Convert.ToInt32(items_in_line[7]).ToString();
           string name = items_in_line[5].Trim();
@@ -36,23 +39,20 @@ namespace Core.Communicator
       }
     }
 
-    public static string GetZoneFromCarBrand(string carBrand)
-    {
-      IEnumerable<Zone> suitableZones = layout.GetSuitableZones(carBrand);
-
-      if (suitableZones.Count() > 0) {
-        return suitableZones.First().Name;
-      } else {
-        return "X";
+    public static string GetZoneFromCarBrand(string carBrand) {
+      foreach (Zone zone in layout.Zones) {
+        if (zone.CarBrands.Contains(carBrand.ToLower()) && !IsZoneFull(zone))
+          return zone.Name;
       }
+      return "X";
     }
 
-    public static string[] ShowEmptyZones()
-    {
-      return layout.Zones
-        .FindAll(zone => zone.PalletsCanBeStored == 0)
-        .Select(zone => zone.Name)
-        .ToArray();
+    public static string[] ShowEmptyZones() {
+      List<string> returnArray = new List<string>();
+      foreach (Zone zone in layout.Zones)
+        if (zone.PalletsCurrentlyStored == 0 && zone.Type == ZoneType.Storage) returnArray.Add(zone.Name);
+
+      return returnArray.ToArray();
     }
   }
 }
