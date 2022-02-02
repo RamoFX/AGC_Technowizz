@@ -12,7 +12,7 @@ namespace ZoneAssigner {
   public partial class Form1 : Form {
     public Form1() {
       InitializeComponent();
-      Comm.Setup();
+      DataProcessing.Setup();
     }
 
     private Random random = new Random();
@@ -48,32 +48,36 @@ namespace ZoneAssigner {
 
     Rectangle GetRectangleFromZone(string zone)
     {
-      Rectangle rect = new();
-      switch (zone[0].ToString().ToUpper())
+      if (zone != "X")
       {
-        case "A":
-          rect.X = Astart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-          rect.Y = 0;
-          rect.Height = upperSize;
-          break;
-        case "B":
-          rect.X = Bstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-          rect.Y = 0;
-          rect.Height = upperSize;
-          break;
-        case "C":
-          rect.X = Cstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-          rect.Y = upperSize + 4 * boxSize;
-          rect.Height = bottomSize;
-          break;
-        case "D":
-          rect.X = Dstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-          rect.Y = upperSize + 4 * boxSize;
-          rect.Height = bottomSize;
-          break;
+        Rectangle rect = new();
+        switch (zone[0].ToString().ToUpper())
+        {
+          case "A":
+            rect.X = Astart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
+            rect.Y = 0;
+            rect.Height = upperSize;
+            break;
+          case "B":
+            rect.X = Bstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
+            rect.Y = 0;
+            rect.Height = upperSize;
+            break;
+          case "C":
+            rect.X = Cstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
+            rect.Y = upperSize + 4 * boxSize;
+            rect.Height = bottomSize;
+            break;
+          case "D":
+            rect.X = Dstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
+            rect.Y = upperSize + 4 * boxSize;
+            rect.Height = bottomSize;
+            break;
+        }
+        rect.Width = boxSize;
+        return rect;
       }
-      rect.Width = boxSize;
-      return rect;
+      else return new();
     }
 
     void HighlightZone(string zone, Graphics g)
@@ -163,8 +167,8 @@ namespace ZoneAssigner {
       else
       {
         // containerCode ---> zone
-        string carBrand = Comm.GetCarBrandFromContainerCode($"{ containerCode }");
-        zone = Comm.GetZoneFromCarBrand(carBrand);
+        string carBrand = DatabaseAccess.GetCarBrandFromContainerCode($"{ containerCode }");
+        zone = DataProcessing.GetZoneFromCarBrand(carBrand);
 
         ContainerCodeTextField.Clear();
         HideError();
