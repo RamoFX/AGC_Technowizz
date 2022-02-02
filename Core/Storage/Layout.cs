@@ -58,16 +58,20 @@ namespace Core.Storage {
       }
     }
 
-    public IEnumerable<string> GetCarBrandSuitableZonesNames(string carBrand) {
-      List<string> suitableZonesNames = new();
+    public IEnumerable<Zone> GetSuitableZones(string carBrand) {
+      List<Zone> suitableZones = new();
 
-      foreach(Zone zone in this.Zones) {
+      foreach (Zone zone in this.Zones) {
         if (zone.IsCarBrandSuitable(carBrand)) {
-          suitableZonesNames.Add(zone.Name);
+          suitableZones.Add(zone);
         }
       }
 
-      return suitableZonesNames;
+      return suitableZones;
+    }
+
+    public IEnumerable<(string, int)> GetSuitableZoneNamePalletsCanBeStoredPairs(string carBrand) {
+      return this.GetSuitableZones(carBrand).Select(zone => (zone.Name, zone.PalletsCanBeStored));
     }
 
 
