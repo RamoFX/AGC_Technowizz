@@ -39,13 +39,13 @@ namespace Communicator
         }
       }
     }
-    
+
     public static string GetZoneFromCarBrand(string carBrand)
     {
       foreach (Zone zone in layout.Zones)
       {
-        if (zone.CarBrands.Contains(carBrand) && !IsZoneFull(zone))
-            return zone.Name;
+        if (zone.CarBrands.Contains(carBrand.ToLower()) && !IsZoneFull(zone))
+          return zone.Name;
       }
       return "X";
     }

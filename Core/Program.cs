@@ -24,12 +24,12 @@ namespace Core {
 
       Layout example = new("Example", new(15, 8));
 
-      Zone a1 = new("A1", new(0, 0), new(5, 3), 4, ZoneType.Storage, CarBrands("bmw", "toy"));
-      Zone b1 = new("B1", new(5, 0), new(5, 4), 4, ZoneType.Storage, CarBrands("rr"));
-      Zone b2 = new("B2", new(4, 5), new(4, 2), 4, ZoneType.Storage, CarBrands("hyu"));
-      Zone c1 = new("C1", new(11, 0), new(4, 2), 4, ZoneType.Storage, CarBrands("hon"));
-      Zone c2 = new("C2", new(12, 3), new(1, 3), 4, ZoneType.Storage, CarBrands("hyu", "toy"));
-      Zone c3 = new("C3", new(9, 6), new(1, 1), 4, ZoneType.Storage, CarBrands("kia"));
+      Zone a1 = new("a1", new(0, 0), new(5, 3), 4, ZoneType.Storage, CarBrands("bm", "to"));
+      Zone b1 = new("b1", new(5, 0), new(5, 4), 4, ZoneType.Storage, CarBrands("al"));
+      Zone b2 = new("b2", new(4, 5), new(4, 2), 4, ZoneType.Storage, CarBrands("po"));
+      Zone c1 = new("c1", new(11, 0), new(4, 2), 4, ZoneType.Storage, CarBrands("sk"));
+      Zone c2 = new("c2", new(12, 3), new(1, 3), 4, ZoneType.Storage, CarBrands("al", "to"));
+      Zone c3 = new("c3", new(9, 6), new(1, 1), 4, ZoneType.Storage, CarBrands("my"));
 
       Zone export = new("Export", new(11, 5), new(4, 3), 0, ZoneType.Other);
       Zone office = new("Office", new(0, 5), new(4, 3), 0, ZoneType.Other);
@@ -58,7 +58,7 @@ namespace Core {
       Layout? exampleLayout = CreateExampleLayout();
 
       if (exampleLayout != null) {
-        const string carBrand = "hyu";
+        const string carBrand = "bm";
         IEnumerable<string> suitableZonesNames = exampleLayout.GetCarBrandSuitableZonesNames(carBrand);
 
         Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { string.Join(", ", suitableZonesNames) }");

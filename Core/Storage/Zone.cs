@@ -26,12 +26,12 @@ namespace Core.Storage {
 
 
     public Zone(string name, Point location, Size size, int verticalCapacity, ZoneType type, IEnumerable<string> carBrands) {
-      this.Name = name;
+      this.Name = name.ToLower();
       this.Location = location;
       this.Size = size;
       this.VerticalCapacity = verticalCapacity;
       this.Type = type;
-      this.CarBrands = carBrands.ToList();
+      this.CarBrands = carBrands.Select(carBrand => carBrand.ToLower()).ToList();
     }
 
     public Zone(string name, Point location, Size size, int verticalCapacity, ZoneType type) : this(name, location, size, verticalCapacity, type, new string[0] { }) { }
