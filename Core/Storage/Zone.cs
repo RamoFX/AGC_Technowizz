@@ -18,9 +18,9 @@ namespace Core.Storage {
 
 
 
-    public int MaxCapacity { get => this.Size.Width * this.Size.Height; }
-    public int PalletsLoaded = 0;
-    public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsLoaded; }
+    public int MaxCapacity { get => this.Size.Width * this.Size.Height * this.VerticalCapacity; }
+    public int PalletsCurrentlyStored = 0;
+    public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsCurrentlyStored; }
 
 
 
