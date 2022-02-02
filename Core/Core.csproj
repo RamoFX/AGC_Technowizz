@@ -52,6 +52,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="Storage\Layout.cs" />
+    <Compile Include="Storage\LayoutManager.cs" />
     <Compile Include="Storage\Preferences.cs" />
     <Compile Include="Helpers\XDocumentConvertable.cs" />
     <Compile Include="Helpers\XElementConvertable.cs" />
