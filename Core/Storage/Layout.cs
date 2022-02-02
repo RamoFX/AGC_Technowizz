@@ -51,21 +51,7 @@ namespace Core.Storage {
 
     // Zone interactions
     public IEnumerable<Zone> GetSuitableZones(string carBrand) {
-      return this.Zones.FindAll(zone => {
-        bool isSuitable = zone.IsSuitable(carBrand);
-
-        string message = "";
-        message += "\n";
-        message += $"{ zone.Name } is suitable? { isSuitable }\n";
-        message += "Reason:\n";
-        message += $"\t1) CanStore(\"{carBrand}\"): { zone.CanStore(carBrand) }\n";
-        message += $"\t2) HasAvailableSpace(): { zone.HasAvailableSpace() }\n";
-        message += "\n";
-
-        Console.WriteLine(message);
-
-        return isSuitable;
-      });
+      return this.Zones.FindAll(zone => zone.IsSuitable(carBrand));
     }
 
 
