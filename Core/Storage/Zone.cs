@@ -51,11 +51,11 @@ namespace Core.Storage {
 
 
     // Self interaction
-    private bool CanStore(string carBrand) {
+    public bool CanStore(string carBrand) {
       return this.CarBrands.Contains(carBrand);
     }
 
-    private bool HasAvailableSpace() {
+    public bool HasAvailableSpace() {
       return this.PalletsCanBeStored > 0;
     }
 

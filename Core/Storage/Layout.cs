@@ -31,6 +31,8 @@ namespace Core.Storage {
 
     public Layout(string name, Size size) : this(name, size, new Zone[0] {}) { }
 
+    public Layout(Layout from) : this(from.Name, from.Size, from.Zones) { }
+
 
 
     // Self interactions
@@ -49,7 +51,21 @@ namespace Core.Storage {
 
     // Zone interactions
     public IEnumerable<Zone> GetSuitableZones(string carBrand) {
-      return this.Zones.FindAll(zone => zone.IsSuitable(carBrand));
+      return this.Zones.FindAll(zone => {
+        bool isSuitable = zone.IsSuitable(carBrand);
+
+        string message = "";
+        message += "\n";
+        message += $"{ zone.Name } is suitable? { isSuitable }\n";
+        message += "Reason:\n";
+        message += $"\t1) CanStore(\"{carBrand}\"): { zone.CanStore(carBrand) }\n";
+        message += $"\t2) HasAvailableSpace(): { zone.HasAvailableSpace() }\n";
+        message += "\n";
+
+        Console.WriteLine(message);
+
+        return isSuitable;
+      });
     }
 
 
