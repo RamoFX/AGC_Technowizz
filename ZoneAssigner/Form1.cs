@@ -1,4 +1,4 @@
-﻿using Communicator;
+﻿using Core.Communicator;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
