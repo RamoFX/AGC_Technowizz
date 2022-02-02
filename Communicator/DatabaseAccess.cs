@@ -40,39 +40,5 @@ namespace Communicator
 
       return new Random().Next(10);
     }
-
-    public static void LoadDataFromDatabase(string Cesta_k_souboru = @"./data.csv")
-    {
-      using (StreamReader sr = new StreamReader(Cesta_k_souboru))
-      {
-        /*
-         * 
-         * Zde je zapotřebí výstup z databáze
-         * soubor data.csv ve formátu [název zóny];[aktuální stav zóny];[maximalní počet palet v zóně]
-         * 
-         */
-
-        while (!sr.EndOfStream)
-        {
-          string[] items = sr.ReadLine().Split(';');
-          string name = items[0].Trim().ToLower();
-          int nowSize = Convert.ToInt32(items[1]);
-          int maxSize = Convert.ToInt32(items[2]);
-
-          if (Storage.ContainsKey(items[0]))
-            Storage[name] = new int[] { nowSize, maxSize };
-          else
-            Storage.Add(name, new int[] { nowSize, maxSize });
-        }
-        foreach (var a in DataProcessing.layout.Zones)
-        {
-          if (a.Type == Core.Storage.ZoneType.Storage)
-          {
-            int palletsNow = Storage[a.Name.ToLower()][0];
-            a.PalletsCurrentlyStored = palletsNow;
-          } 
-        }
-      }
-    }
   }
 }
