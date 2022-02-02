@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Communicator;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Communicator;
 
-namespace ZoneAssigner {
+namespace ZoneAssigner
+{
   public partial class Form1 : Form {
     public Form1() {
       InitializeComponent();
@@ -51,24 +47,24 @@ namespace ZoneAssigner {
       if (zone != "X")
       {
         Rectangle rect = new();
-        switch (zone[0].ToString().ToUpper())
+        switch (zone[0].ToString().ToLower())
         {
-          case "A":
+          case "a":
             rect.X = Astart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
             rect.Y = 0;
             rect.Height = upperSize;
             break;
-          case "B":
+          case "b":
             rect.X = Bstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
             rect.Y = 0;
             rect.Height = upperSize;
             break;
-          case "C":
+          case "c":
             rect.X = Cstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
             rect.Y = upperSize + 4 * boxSize;
             rect.Height = bottomSize;
             break;
-          case "D":
+          case "d":
             rect.X = Dstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
             rect.Y = upperSize + 4 * boxSize;
             rect.Height = bottomSize;
@@ -172,7 +168,7 @@ namespace ZoneAssigner {
 
         ContainerCodeTextField.Clear();
         HideError();
-        ShowZone(zone);
+        ShowZone(zone.ToUpper());
         VisualizerPictureBox.Refresh();
       }
     }

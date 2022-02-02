@@ -27,7 +27,7 @@ namespace Communicator
         return DataProcessing.containerCode_name[containerCode];
       }
       System.Windows.Forms.MessageBox.Show($"Kód neexistuje\nPoužití náhodné zóny");
-      return new string[] { "PO", "MS", "SK", "BM" }.ElementAt(new Random().Next(4));
+      return new string[] { "po", "ms", "sk", "bm" }.ElementAt(new Random().Next(4));
     }
 
     public static void LoadDataFromDatabase(string Cesta_k_souboru = @"./data.csv")
@@ -44,7 +44,7 @@ namespace Communicator
         while (!sr.EndOfStream)
         {
           string[] items = sr.ReadLine().Split(';');
-          string name = items[0].Trim().ToUpper();
+          string name = items[0].Trim().ToLower();
           int nowSize = Convert.ToInt32(items[1]);
           int maxSize = Convert.ToInt32(items[2]);
 
@@ -57,7 +57,7 @@ namespace Communicator
         {
           if (a.Type == Core.Storage.ZoneType.Storage)
           {
-            int palletsNow = Storage[a.Name][0];
+            int palletsNow = Storage[a.Name.ToLower()][0];
             a.PalletsCurrentlyStored = palletsNow;
           } 
         }
