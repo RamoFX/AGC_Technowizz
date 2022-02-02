@@ -17,8 +17,7 @@ namespace Communicator
        * 
        * Zde by se měl uskutečnit požadavek na databázi SAP
        * Aplikace posílá: řetězec - číslo čárkového kódu palety
-       * Aplikace přijímá: řetězec - krátké označení auta (např. toy, ms, ...)
-       * Poznámka: krátké označení auta my mělo být v malých písmenech
+       * Aplikace přijímá: řetězec - krátké označení auta (např. TOY, MS, ...)
        * 
        */
 
@@ -28,6 +27,18 @@ namespace Communicator
       }
       System.Windows.Forms.MessageBox.Show($"Kód neexistuje\nPoužití náhodné zóny");
       return new string[] { "PO", "MS", "SK", "BM" }.ElementAt(new Random().Next(4));
+    }
+
+    public static int GetZonePalletsCount(string zoneName) {
+      /*
+       * 
+       * Zde by se měl uskutečnit požadavek na databázi SAP
+       * Aplikace posílá: řetězec - název zóny (např. A1, AB98, ..)
+       * Aplikace přijímá: číslo - počet palet v dané zóně
+       * 
+       */
+
+      return new Random().Next(10);
     }
 
     public static void LoadDataFromDatabase(string Cesta_k_souboru = @"./data.csv")
