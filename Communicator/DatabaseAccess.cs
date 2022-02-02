@@ -15,10 +15,10 @@ namespace Communicator
     {
       /*
        * 
-       *  Zde se uskutečňuje požadavek na SAP.
-       *  Aplikace potřebuje z kódu palety získat značku auta, konkrétně řetězec o délce dvou nebo tří písmen (např. "TO" nebo "MS").
-       *  Podle značky auta se zjistí zóna, kde by se měla paleta nacházet (soubor Config.conf).
-       *  K těmto datům my nemáme přístup, proto pro správnou funkčnost aplikace je potřeba toto implementovat.
+       * Zde by se měl uskutečnit požadavek na databázi SAP
+       * Aplikace posílá: řetězec - číslo čárkového kódu palety
+       * Aplikace přijímá: řetězec - krátké označení auta (např. toy, ms, ...)
+       * Poznámka: krátké označení auta my mělo být v malých písmenech
        * 
        */
 
