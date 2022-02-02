@@ -21,7 +21,6 @@ namespace Core.Communicator
     public static void Setup()
     {
       layout = Layout.Import(layoutName);
-      //DatabaseAccess.LoadDataFromDatabase(); // Error - doesn't exist. Does it need to be repaired?
 
       // Load test data
       using (StreamReader sr = new("../test_data.csv"))
