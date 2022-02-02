@@ -58,7 +58,7 @@ namespace Communicator
           if (a.Type == Core.Storage.ZoneType.Storage)
           {
             int palletsNow = Storage[a.Name][0];
-            a.PalletsLoaded = palletsNow;
+            a.PalletsCurrentlyStored = palletsNow;
           } 
         }
       }

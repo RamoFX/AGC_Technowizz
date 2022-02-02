@@ -17,7 +17,7 @@ namespace Communicator
 
     static bool IsZoneFull(Zone zone)
     {
-      if (zone.PalletsLoaded == zone.PalletsCanBeStored) return true;
+      if (zone.PalletsCurrentlyStored == zone.PalletsCanBeStored) return true;
       return false;
     }
 
@@ -54,7 +54,7 @@ namespace Communicator
     {
       List<string> returnArray = new List<string>();
       foreach (Zone zone in layout.Zones)
-        if (zone.PalletsLoaded == 0 && zone.Type == ZoneType.Storage) returnArray.Add(zone.Name);
+        if (zone.PalletsCurrentlyStored == 0 && zone.Type == ZoneType.Storage) returnArray.Add(zone.Name);
 
       return returnArray.ToArray();
     }
