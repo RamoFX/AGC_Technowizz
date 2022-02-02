@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 
+using Communicator;
 using Core.Helpers;
 
 
@@ -19,7 +20,7 @@ namespace Core.Storage {
 
 
     public int MaxCapacity { get => this.Size.Width * this.Size.Height * this.VerticalCapacity; }
-    public int PalletsCurrentlyStored = 0;
+    public int PalletsCurrentlyStored { get => Communicator.DatabaseAccess.GetZonePalletsCount(this.Name); }
     public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsCurrentlyStored; }
 
 

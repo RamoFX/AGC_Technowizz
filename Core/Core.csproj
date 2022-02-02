@@ -65,5 +65,11 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communicator\Communicator.csproj">
+      <Project>{988e136e-f5b1-4b00-b86d-2709aedaa3a0}</Project>
+      <Name>Communicator</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
