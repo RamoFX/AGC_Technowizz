@@ -1,4 +1,9 @@
-﻿namespace Core.Communicator {
+﻿using System;
+using System.Linq;
+
+
+
+namespace Core.Communicator {
   public class DatabaseAccess {
     public static string GetCarBrandFromContainerCode(string containerCode) {
       /*
@@ -10,12 +15,20 @@
        */
 
       // Pseudo database
-      return containerCode switch {
-        "1" => "MS",
-        "2" => "SK",
-        "3" => "BM",
-        _ => "PO",
-      };
+      //return containerCode switch {
+      //  "1" => "MS",
+      //  "2" => "SK",
+      //  "3" => "BM",
+      //  _ => "PO",
+      //};
+
+      if (DataProcessing.containerCode_name.ContainsKey(containerCode)) {
+        return DataProcessing.containerCode_name[containerCode];
+      }
+
+      System.Windows.Forms.MessageBox.Show($"Kód neexistuje\nPoužití náhodné zóny");
+
+      return new string[] { "PO", "MS", "SK", "BM" }.ElementAt(new Random().Next(4));
     }
 
     public static int GetZonePalletsCount(string zoneName) {
