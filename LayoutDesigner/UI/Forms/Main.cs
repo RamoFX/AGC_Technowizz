@@ -49,7 +49,7 @@ namespace LayoutDesigner.UI.Forms {
       this.ToolStripComboBox_ExistingLayouts.ComboBox.DataSource = ExistingLayoutsNames;
       this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ExistingLayouts_ComboBox_SelectionChangeCommitted;
 
-      this.Update_ToolStrip_Items_Enabled();
+      this.UpdateControls_Enabled();
       this.UpdateTitle();
     }
 
@@ -73,7 +73,7 @@ namespace LayoutDesigner.UI.Forms {
 
         // Post-hooks
         this.ToolStripComboBox_ExistingLayouts.SelectedIndex = 0;
-        this.Update_ToolStrip_Items_Enabled();
+        this.UpdateControls_Enabled();
         this.UpdateTitle();
       }
     }
@@ -90,7 +90,7 @@ namespace LayoutDesigner.UI.Forms {
       this.CurrentLayout = new(LayoutManager.GenerateNewLayoutUniqueName(NewLayoutNameBase), new(10, 10));
 
       // Post-hooks
-      this.Update_ToolStrip_Items_Enabled();
+      this.UpdateControls_Enabled();
       this.UpdateTitle();
     }
 
@@ -100,7 +100,7 @@ namespace LayoutDesigner.UI.Forms {
         this.CurrentLayout = Core.Storage.Layout.Import(name);
 
         // Post-hooks
-        this.Update_ToolStrip_Items_Enabled();
+        this.UpdateControls_Enabled();
         this.UpdateTitle();
       } catch (System.Xml.XmlException) {
         MessageBox.Show($"Při načítání rozvržení \"{ name }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
@@ -110,9 +110,9 @@ namespace LayoutDesigner.UI.Forms {
     private void SaveBase() {
       this.CurrentLayout.Export();
 
-      this.Update_ToolStrip_Items_Enabled();
+      this.UpdateControls_Enabled();
       this.UpdateTitle();
-      this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
+      this.UpdateExistingLayouts_DataSource();
     }
 
     private void Save() {
@@ -172,7 +172,7 @@ namespace LayoutDesigner.UI.Forms {
           File.Delete(this.CurrentLayout.GetPath());
 
           this.Unload(true);
-          this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
+          this.UpdateExistingLayouts_DataSource();
         }
       }
     }
@@ -188,11 +188,11 @@ namespace LayoutDesigner.UI.Forms {
       }
     }
 
-    private void Update_ToolStripMenuItem_Open_Enabled() {
+    private void UpdateOpenControl_Enabled() {
       ToolStripMenuItem_Open.Enabled = this.ExistingLayoutsNames.Count() > 0;
     }
 
-    private void Update_ToolStripMenuItem_Save_Enabled() {
+    private void UpdateSaveControl_Enabled() {
       bool isEnabled;
 
       if (!this.IsLayoutPresent) {
@@ -204,22 +204,22 @@ namespace LayoutDesigner.UI.Forms {
       this.ToolStripMenuItem_Save.Enabled = isEnabled;
     }
 
-    private void Update_ToolStripMenuItem_SaveAs_Enabled() {
+    private void UpdateSaveAsControl_Enabled() {
       this.ToolStripMenuItem_SaveAs.Enabled = this.IsLayoutPresent;
     }
 
-    private void Update_ToolStripMenuItem_Delete_Enabled() {
+    private void UpdateDeleteControl_Enabled() {
       this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent;
     }
 
-    private void Update_ToolStrip_Items_Enabled() {
-      this.Update_ToolStripMenuItem_Open_Enabled();
-      this.Update_ToolStripMenuItem_Save_Enabled();
-      this.Update_ToolStripMenuItem_SaveAs_Enabled();
-      this.Update_ToolStripMenuItem_Delete_Enabled();
+    private void UpdateControls_Enabled() {
+      this.UpdateOpenControl_Enabled();
+      this.UpdateSaveControl_Enabled();
+      this.UpdateSaveAsControl_Enabled();
+      this.UpdateDeleteControl_Enabled();
     }
 
-    private void Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource() {
+    private void UpdateExistingLayouts_DataSource() {
       string selectedValue = (string) this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectedValue;
       this.ToolStripComboBox_ExistingLayouts.ComboBox.DataSource = ExistingLayoutsNames;
       int foundIndex = ExistingLayoutsNames.FindIndex(value => value == selectedValue);
