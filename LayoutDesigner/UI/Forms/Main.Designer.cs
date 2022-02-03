@@ -30,12 +30,12 @@ namespace LayoutDesigner.UI.Forms {
       this.ToolStripMenuItem_New = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripComboBox_ExistingLayouts = new System.Windows.Forms.ToolStripComboBox();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_Delete = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_OpenInFileExplorer = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.MenuStrip.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -80,8 +80,15 @@ namespace LayoutDesigner.UI.Forms {
       // 
       // ToolStripComboBox_ExistingLayouts
       // 
+      this.ToolStripComboBox_ExistingLayouts.DropDownWidth = 200;
+      this.ToolStripComboBox_ExistingLayouts.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.ToolStripComboBox_ExistingLayouts.Name = "ToolStripComboBox_ExistingLayouts";
-      this.ToolStripComboBox_ExistingLayouts.Size = new System.Drawing.Size(121, 23);
+      this.ToolStripComboBox_ExistingLayouts.Size = new System.Drawing.Size(200, 23);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(294, 6);
       // 
       // ToolStripMenuItem_Save
       // 
@@ -115,11 +122,6 @@ namespace LayoutDesigner.UI.Forms {
       this.ToolStripMenuItem_OpenInFileExplorer.Size = new System.Drawing.Size(297, 22);
       this.ToolStripMenuItem_OpenInFileExplorer.Text = "Všechna rozvržení v průzkumníku souborů";
       this.ToolStripMenuItem_OpenInFileExplorer.Click += new System.EventHandler(this.ToolStripMenuItem_OpenInFileExplorer_Click);
-      // 
-      // toolStripSeparator2
-      // 
-      this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(294, 6);
       // 
       // Main
       // 

@@ -49,6 +49,36 @@ namespace Core.Storage {
       return GetPath(this.Name);
     }
 
+    public string LatestSaveHash() {
+      try {
+        return Layout.Import(this.Name).ComputeHash();
+      } catch (FileNotFoundException) {
+        return "";
+      }
+    }
+    
+    public bool IsSaved() {
+      return LayoutManager.GetExistingLayoutsNames().Contains(this.Name);
+    }
+
+    public bool IsSaveUpToDate() {
+      string hashSavedLayout = this.LatestSaveHash();
+      string hashCurrentLayout = this.ComputeHash();
+
+      bool areUpToDate = hashSavedLayout == hashCurrentLayout;
+
+      return areUpToDate && this.IsSaved();
+    }
+
+    public string ComputeHash() {
+      string documentString = this.ToXDocument().ToString(SaveOptions.DisableFormatting);
+      byte[] documentBytes = Encoding.UTF8.GetBytes(documentString);
+      using MD5 md5 = MD5.Create();
+      byte[] hashRaw = md5.ComputeHash(documentBytes);
+
+      return BitConverter.ToString(hashRaw).Replace("-", String.Empty);
+    }
+
 
 
     // Zone interactions
