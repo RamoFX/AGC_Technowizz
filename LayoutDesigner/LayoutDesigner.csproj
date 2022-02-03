@@ -66,11 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Dialogs\NewName.cs">
+    <Compile Include="UI\Dialogs\UserTextInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\NewName.Designer.cs">
-      <DependentUpon>NewName.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\UserTextInput.Designer.cs">
+      <DependentUpon>UserTextInput.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Main.cs">
       <SubType>Form</SubType>
@@ -90,8 +90,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\Dialogs\NewName.resx">
-      <DependentUpon>NewName.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\UserTextInput.resx">
+      <DependentUpon>UserTextInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
