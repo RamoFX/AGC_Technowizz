@@ -23,7 +23,7 @@ namespace Core.Storage {
       return GetExistingLayoutsNames().Contains(name);
     }
 
-    public static object GenerateNewLayoutUniqueName(string nameBase) {
+    public static string GenerateNewLayoutUniqueName(string nameBase) {
       int nameCollisionPreventiveSuffix = 1;
       var existingLayoutsNames = GetExistingLayoutsNames();
 
