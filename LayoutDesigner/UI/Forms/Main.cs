@@ -22,26 +22,13 @@ namespace LayoutDesigner.UI.Forms {
   public partial class Main : Form {
     // Constants
     private const string TitleBase = "Návrhář rozvržení";
-    private const string NewLayoutNameBase = "Nové rozvržení";
+    private const string NewLayoutNameBase = "Novy";
     private const string ExistingLayoutSelectBelow = "Vyberte níže...";
 
 
 
-    // Title
-    private void UpdateTitle(bool isSaved) {
-      string layoutName = this.CurrentLayout?.Name ?? "";
-
-      if (layoutName.Length > 0) {
-        this.Text = $"{ TitleBase } - { layoutName } ({( isSaved ? "uloženo" : "neuloženo" )})";
-      } else {
-        this.Text = $"{ TitleBase }";
-      }
-    }
-
-
-
     // Layout data
-    private Layout CurrentLayout = null;
+    private Layout CurrentLayout;
 
     private bool IsLayoutPresent {
       get => this.CurrentLayout != null;
@@ -53,7 +40,154 @@ namespace LayoutDesigner.UI.Forms {
 
 
 
+    // Constructor
+    public Main() {
+      InitializeComponent();
+      this.CurrentLayout = null;
+
+      this.ToolStripComboBox_ExistingLayouts.ComboBox.BindingContext = this.BindingContext;
+      this.ToolStripComboBox_ExistingLayouts.ComboBox.DataSource = ExistingLayoutsNames;
+      this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ExistingLayouts_ComboBox_SelectionChangeCommitted;
+
+      this.Update_ToolStrip_Items_Enabled();
+      this.UpdateTitle();
+    }
+
+
+
+    // Layout IO features
+    private void Unload(bool force) {
+      if (this.IsLayoutPresent) {
+        // If not saved ask user if he wants to save
+        // If forced then do not ask
+        if (!force && !this.CurrentLayout.IsSaveUpToDate()) {
+          var dialogResult = MessageBox.Show("Rozvržení není uloženo. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
+
+          if (dialogResult == DialogResult.Yes) {
+            this.Save();
+          }
+        }
+
+        // Unload
+        this.CurrentLayout = null;
+
+        // Post-hooks
+        this.ToolStripComboBox_ExistingLayouts.SelectedIndex = 0;
+        this.Update_ToolStrip_Items_Enabled();
+        this.UpdateTitle();
+      }
+    }
+
+    private void Unload() {
+      this.Unload(false);
+    }
+
+    private void New() {
+      // Pre-hooks
+      this.Unload();
+
+      // Create new layout
+      this.CurrentLayout = new(LayoutManager.GenerateNewLayoutUniqueName(NewLayoutNameBase), new(10, 10));
+
+      // Post-hooks
+      this.Update_ToolStrip_Items_Enabled();
+      this.UpdateTitle();
+    }
+
+    private void Open(string name) {
+      // May be invalid file
+      try {
+        this.CurrentLayout = Core.Storage.Layout.Import(name);
+
+        // Post-hooks
+        this.Update_ToolStrip_Items_Enabled();
+        this.UpdateTitle();
+      } catch (System.Xml.XmlException) {
+        MessageBox.Show($"Při načítání rozvržení \"{ name }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
+      }
+    }
+
+    private void SaveBase() {
+      this.CurrentLayout.Export();
+
+      this.Update_ToolStrip_Items_Enabled();
+      this.UpdateTitle();
+      this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
+    }
+
+    private void Save() {
+      if (this.IsLayoutPresent) {
+        // Save if not saved
+        if (!this.CurrentLayout.IsSaveUpToDate()) {
+          if (this.CurrentLayout.IsSaved()) {
+            // New file
+            this.SaveAs();
+          } else {
+            this.SaveBase();
+          }
+        }
+      }
+    }
+
+    private void SaveAs() {
+      // Save if layout opened
+      if (this.IsLayoutPresent) {
+        Func<string, bool> valueValidator = newName => {
+          newName = newName.Trim();
+          Regex regex = new(@"^[a-zA-Z][a-zA-Z0-9 ]*[a-zA-Z0-9]$");
+
+          if (newName.Length == 0) {
+            MessageBox.Show("Textové pole nesmí být prázdné.");
+            return false;
+          } else if (!regex.IsMatch(newName)) {
+            MessageBox.Show("Textové pole smí obsahovat pouze malá nebo velká písmena A-Z, čísla a mezery. První musí být písmeno. Nesmí začínat nebo končit mezerou.");
+            return false;
+          } else if (LayoutManager.IsNameAlreadyTaken(newName)) {
+            MessageBox.Show("Tento název se již používá. Zadejte prosím jiný.");
+            return false;
+          } else {
+            return true;
+          }
+        };
+
+        UserTextInput userTextInput = new(valueValidator, "Nový název rozvržení");
+
+        userTextInput.ShowDialog(this);
+
+        if (userTextInput.DialogResult == DialogResult.OK) {
+          this.CurrentLayout.Name = userTextInput.FinalValue;
+
+          SaveBase();
+        }
+      }
+    }
+
+    private void Delete() {
+      // Delete if layout opened
+      if (this.IsLayoutPresent) {
+        // Ask if user is sure
+        var dialogResult = MessageBox.Show($"Rozvržení \"{ this.CurrentLayout.Name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo);
+
+        if (dialogResult == DialogResult.Yes) {
+          File.Delete(this.CurrentLayout.GetPath());
+
+          this.Unload(true);
+          this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
+        }
+      }
+    }
+
+
+
     // State
+    private void UpdateTitle() {
+      if (this.IsLayoutPresent) {
+        this.Text = $"{ TitleBase } - { this.CurrentLayout.Name } ({( this.CurrentLayout.IsSaveUpToDate() ? "uloženo" : "neuloženo" )})";
+      } else {
+        this.Text = $"{ TitleBase }";
+      }
+    }
+
     private void Update_ToolStripMenuItem_Open_Enabled() {
       ToolStripMenuItem_Open.Enabled = this.ExistingLayoutsNames.Count() > 0;
     }
@@ -94,141 +228,6 @@ namespace LayoutDesigner.UI.Forms {
 
 
 
-    // Layout IO features
-    private void Unload() {
-      if (this.IsLayoutPresent) {
-        // If not saved ask user if he wants to save
-        if (!this.CurrentLayout.IsSaveUpToDate()) {
-          var dialogResult = MessageBox.Show("Rozvržení není uloženo. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
-
-          if (dialogResult == DialogResult.Yes) {
-            this.Save();
-          }
-        }
-
-        // Unload
-        this.ToolStripComboBox_ExistingLayouts.SelectedIndex = 0;
-        this.CurrentLayout = null;
-
-        // Post-hooks
-        this.Update_ToolStrip_Items_Enabled();
-        this.UpdateTitle(false);
-      }
-    }
-
-    private void New() {
-      // Pre-hooks
-      this.Unload();
-
-      // Create new layout
-      this.CurrentLayout = new(LayoutManager.GenerateNewLayoutUniqueName(NewLayoutNameBase), new(10, 10));
-
-      // Post-hooks
-      this.Update_ToolStrip_Items_Enabled();
-      this.UpdateTitle(false);
-    }
-
-    private void TryOpen(string existingLayoutName) {
-      try {
-        // Try load existing layout
-        this.CurrentLayout = Core.Storage.Layout.Import(existingLayoutName);
-
-        // Post-hooks
-        this.Update_ToolStrip_Items_Enabled();
-        this.UpdateTitle(true);
-      } catch (System.Xml.XmlException) {
-        MessageBox.Show($"Při načítání rozvržení \"{ existingLayoutName }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
-        this.Unload();
-      }
-    }
-
-    private void SaveBase() {
-      this.CurrentLayout.Export();
-
-      this.Update_ToolStrip_Items_Enabled();
-      this.UpdateTitle(true);
-      this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
-    }
-
-    private void Save() {
-      if (this.IsLayoutPresent) {
-        // Save if not saved
-        if (!this.CurrentLayout.IsSaveUpToDate()) {
-          if (this.CurrentLayout.IsSaved()) {
-            // New file
-            this.SaveAs();
-          } else {
-            this.SaveBase();
-          }
-        }
-      }
-    }
-
-    private void SaveAs() {
-      // Save if layout opened
-      if (this.CurrentLayout != null) {
-        Func<string, bool> valueValidator = newName => {
-          Regex regex = new("^[a-zA-Z]+$");
-
-          if (newName.Trim().Length == 0) {
-            MessageBox.Show("Textové pole nesmí být prázdné.");
-            return false;
-          } else if (!regex.IsMatch(newName)) {
-            MessageBox.Show("Textové pole smí obsahovat pouze malá nebo velká písmena A-Z.");
-            return false;
-          } else if (LayoutManager.IsNameAlreadyTaken(newName)) {
-            MessageBox.Show("Tento název se již používá. Zadejte prosím jiný.");
-            return false;
-          } else {
-            return true;
-          }
-        };
-
-        UserTextInput userTextInput = new(valueValidator, "Nový název rozvržení");
-
-        userTextInput.ShowDialog(this);
-
-        if (userTextInput.DialogResult == DialogResult.OK) {
-          this.CurrentLayout.Name = userTextInput.FinalValue;
-
-          SaveBase();
-        }
-      }
-    }
-
-    private void Delete() {
-      // Delete if layout opened
-      if (this.CurrentLayout != null) {
-        string layoutName = this.CurrentLayout.Name;
-        string layoutPath = Core.Storage.Layout.GetPath(layoutName);
-
-        // Ask if user is sure
-        var dialogResult = MessageBox.Show($"Rozvržení \"{ layoutName }\" bude odstraněno. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo);
-
-        if (dialogResult == DialogResult.Yes) {
-          File.Delete(layoutPath);
-
-          this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
-          this.Unload();
-        }
-      }
-    }
-
-
-
-    // Main UI window
-    public Main() {
-      InitializeComponent();
-      this.Update_ToolStrip_Items_Enabled();
-
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.BindingContext = this.BindingContext;
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.DataSource = ExistingLayoutsNames;
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ExistingLayouts_ComboBox_SelectionChangeCommitted;
-      this.UpdateTitle(false);
-    }
-
-
-
     // Events
     private void ToolStripMenuItem_New_Click(object sender, EventArgs e) {
       this.New();
@@ -240,7 +239,7 @@ namespace LayoutDesigner.UI.Forms {
       if (existingLayoutName == ExistingLayoutSelectBelow) {
         this.Unload();
       } else {
-        this.TryOpen(existingLayoutName);
+        this.Open(existingLayoutName);
       }
     }
 
@@ -260,7 +259,7 @@ namespace LayoutDesigner.UI.Forms {
       if (Directory.Exists(Preferences.LayoutsPath)) {
         Process.Start("explorer.exe", Preferences.LayoutsPath);
       } else {
-        MessageBox.Show("Nelze otevřít - rozložení neexistují. Zkuste nejprve vytvořit nové rozložení.", "Chyba!");
+        MessageBox.Show("Nelze otevřít, rozvržení neexistují. Zkuste nejprve vytvořit nové rozvržení.", "Chyba!");
       }
     }
 
