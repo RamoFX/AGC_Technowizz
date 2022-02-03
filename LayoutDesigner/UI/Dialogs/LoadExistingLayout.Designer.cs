@@ -1,6 +1,6 @@
 ﻿
-namespace LayoutDesigner {
-  partial class Form1 {
+namespace LayoutDesigner.UI.Dialogs {
+  partial class LoadExistingLayout {
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -27,10 +27,9 @@ namespace LayoutDesigner {
       this.components = new System.ComponentModel.Container();
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(800, 450);
-      this.Text = "Form1";
+      this.Text = "LoadExistingLayout";
     }
 
     #endregion
   }
 }
-
