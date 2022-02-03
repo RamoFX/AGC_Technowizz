@@ -65,9 +65,7 @@ namespace Core.Storage {
       string hashSavedLayout = this.LatestSaveHash();
       string hashCurrentLayout = this.ComputeHash();
 
-      bool areUpToDate = hashSavedLayout == hashCurrentLayout;
-
-      return areUpToDate && this.IsSaved();
+      return hashSavedLayout == hashCurrentLayout;
     }
 
     public string ComputeHash() {
