@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -18,7 +19,7 @@ namespace Core.Storage {
       return GetExistingLayoutsPaths().Select(path => Path.GetFileNameWithoutExtension(Path.GetFileName(path)));
     }
 
-    static bool IsNameAlreadyTaken(string name) {
+    static public bool IsNameAlreadyTaken(string name) {
       return GetExistingLayoutsNames().Contains(name);
     }
   }
