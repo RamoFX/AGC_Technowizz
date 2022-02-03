@@ -153,7 +153,7 @@ namespace LayoutDesigner.UI.Forms {
       // Save if layout opened
       if (this.CurrentLayout != null) {
         Func<string, bool> valueValidator = newName => {
-          Regex regex = new("^[a-zA-Z]$");
+          Regex regex = new("^[a-zA-Z]+$");
           bool alreadyExists = this.ExistingLayoutsNames.Contains(newName);
 
           if (newName.Trim().Length == 0) {
