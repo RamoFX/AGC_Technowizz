@@ -1,6 +1,6 @@
 ﻿
 namespace LayoutDesigner.UI.Dialogs {
-  partial class NewName {
+  partial class UserTextInput {
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -24,18 +24,18 @@ namespace LayoutDesigner.UI.Dialogs {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-      this.TextBox_NewName = new System.Windows.Forms.TextBox();
+      this.TextBox = new System.Windows.Forms.TextBox();
       this.Button_Cancel = new System.Windows.Forms.Button();
-      this.Label_NewName = new System.Windows.Forms.Label();
+      this.Label = new System.Windows.Forms.Label();
       this.Button_Apply = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
-      // TextBox_NewName
+      // TextBox
       // 
-      this.TextBox_NewName.Location = new System.Drawing.Point(62, 60);
-      this.TextBox_NewName.Name = "TextBox_NewName";
-      this.TextBox_NewName.Size = new System.Drawing.Size(254, 20);
-      this.TextBox_NewName.TabIndex = 0;
+      this.TextBox.Location = new System.Drawing.Point(62, 60);
+      this.TextBox.Name = "TextBox";
+      this.TextBox.Size = new System.Drawing.Size(254, 20);
+      this.TextBox.TabIndex = 0;
       // 
       // Button_Cancel
       // 
@@ -47,15 +47,15 @@ namespace LayoutDesigner.UI.Dialogs {
       this.Button_Cancel.UseVisualStyleBackColor = true;
       this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
       // 
-      // Label_NewName
+      // Label
       // 
-      this.Label_NewName.AutoSize = true;
-      this.Label_NewName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.Label_NewName.Location = new System.Drawing.Point(59, 31);
-      this.Label_NewName.Name = "Label_NewName";
-      this.Label_NewName.Size = new System.Drawing.Size(158, 16);
-      this.Label_NewName.TabIndex = 2;
-      this.Label_NewName.Text = "Nový název pro rozložení";
+      this.Label.AutoSize = true;
+      this.Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.Label.Location = new System.Drawing.Point(59, 31);
+      this.Label.Name = "Label";
+      this.Label.Size = new System.Drawing.Size(48, 16);
+      this.Label.TabIndex = 2;
+      this.Label.Text = "(unset)";
       // 
       // Button_Apply
       // 
@@ -67,20 +67,20 @@ namespace LayoutDesigner.UI.Dialogs {
       this.Button_Apply.UseVisualStyleBackColor = true;
       this.Button_Apply.Click += new System.EventHandler(this.Button_Apply_Click);
       // 
-      // NewName
+      // UserTextInput
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(378, 159);
       this.Controls.Add(this.Button_Apply);
-      this.Controls.Add(this.Label_NewName);
+      this.Controls.Add(this.Label);
       this.Controls.Add(this.Button_Cancel);
-      this.Controls.Add(this.TextBox_NewName);
+      this.Controls.Add(this.TextBox);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MinimizeBox = false;
-      this.Name = "NewName";
+      this.Name = "UserTextInput";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "Nový název";
+      this.Text = "Zadejte hodnotu";
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -88,9 +88,9 @@ namespace LayoutDesigner.UI.Dialogs {
 
     #endregion
 
-    private System.Windows.Forms.TextBox TextBox_NewName;
+    private System.Windows.Forms.TextBox TextBox;
     private System.Windows.Forms.Button Button_Cancel;
-    private System.Windows.Forms.Label Label_NewName;
+    private System.Windows.Forms.Label Label;
     private System.Windows.Forms.Button Button_Apply;
   }
 }
