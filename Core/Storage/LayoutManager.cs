@@ -16,7 +16,7 @@ namespace Core.Storage {
     }
 
     static public IEnumerable<string> GetExistingLayoutsNames() {
-      return GetExistingLayoutsPaths().Select(path => Path.GetFileNameWithoutExtension(Path.GetFileName(path)));
+      return GetExistingLayoutsPaths().Where(name => !name.EndsWith(".last")).Select(path => Path.GetFileNameWithoutExtension(Path.GetFileName(path)));
     }
 
     static public bool IsNameAlreadyTaken(string name) {

@@ -32,7 +32,12 @@ namespace ZoneAssigner {
       this.ContainerCodeLabel = new System.Windows.Forms.Label();
       this.ZoneLabel = new System.Windows.Forms.Label();
       this.VisualizerPictureBox = new System.Windows.Forms.PictureBox();
+      this.MenuStrip = new System.Windows.Forms.MenuStrip();
+      this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).BeginInit();
+      this.MenuStrip.SuspendLayout();
       this.SuspendLayout();
       // 
       // TestDataComboBox
@@ -89,7 +94,7 @@ namespace ZoneAssigner {
             "0805350386",
             "0806421183",
             "0806862018"});
-      this.TestDataComboBox.Location = new System.Drawing.Point(840, 12);
+      this.TestDataComboBox.Location = new System.Drawing.Point(840, 27);
       this.TestDataComboBox.Name = "TestDataComboBox";
       this.TestDataComboBox.Size = new System.Drawing.Size(170, 21);
       this.TestDataComboBox.TabIndex = 1;
@@ -100,7 +105,7 @@ namespace ZoneAssigner {
       this.ErrorLabel.AutoSize = true;
       this.ErrorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.ErrorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-      this.ErrorLabel.Location = new System.Drawing.Point(9, 62);
+      this.ErrorLabel.Location = new System.Drawing.Point(9, 77);
       this.ErrorLabel.Name = "ErrorLabel";
       this.ErrorLabel.Size = new System.Drawing.Size(232, 16);
       this.ErrorLabel.TabIndex = 5;
@@ -110,7 +115,7 @@ namespace ZoneAssigner {
       // ContainerCodeTextField
       // 
       this.ContainerCodeTextField.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.ContainerCodeTextField.Location = new System.Drawing.Point(12, 28);
+      this.ContainerCodeTextField.Location = new System.Drawing.Point(12, 43);
       this.ContainerCodeTextField.Multiline = true;
       this.ContainerCodeTextField.Name = "ContainerCodeTextField";
       this.ContainerCodeTextField.Size = new System.Drawing.Size(384, 21);
@@ -120,7 +125,7 @@ namespace ZoneAssigner {
       // SubmitButton
       // 
       this.SubmitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-      this.SubmitButton.Location = new System.Drawing.Point(146, 91);
+      this.SubmitButton.Location = new System.Drawing.Point(146, 106);
       this.SubmitButton.Name = "SubmitButton";
       this.SubmitButton.Size = new System.Drawing.Size(117, 51);
       this.SubmitButton.TabIndex = 7;
@@ -132,7 +137,7 @@ namespace ZoneAssigner {
       // 
       this.ContainerCodeLabel.AutoSize = true;
       this.ContainerCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.ContainerCodeLabel.Location = new System.Drawing.Point(169, 9);
+      this.ContainerCodeLabel.Location = new System.Drawing.Point(169, 24);
       this.ContainerCodeLabel.Name = "ContainerCodeLabel";
       this.ContainerCodeLabel.Size = new System.Drawing.Size(71, 16);
       this.ContainerCodeLabel.TabIndex = 8;
@@ -142,7 +147,7 @@ namespace ZoneAssigner {
       // 
       this.ZoneLabel.AutoSize = true;
       this.ZoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 99.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-      this.ZoneLabel.Location = new System.Drawing.Point(496, 12);
+      this.ZoneLabel.Location = new System.Drawing.Point(496, 27);
       this.ZoneLabel.Name = "ZoneLabel";
       this.ZoneLabel.Size = new System.Drawing.Size(244, 152);
       this.ZoneLabel.TabIndex = 9;
@@ -154,18 +159,50 @@ namespace ZoneAssigner {
       // 
       this.VisualizerPictureBox.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.VisualizerPictureBox.Image = global::ZoneAssigner.Properties.Resources.SKLAD;
-      this.VisualizerPictureBox.Location = new System.Drawing.Point(0, 183);
+      this.VisualizerPictureBox.Location = new System.Drawing.Point(0, 207);
       this.VisualizerPictureBox.Name = "VisualizerPictureBox";
       this.VisualizerPictureBox.Size = new System.Drawing.Size(1022, 512);
       this.VisualizerPictureBox.TabIndex = 10;
       this.VisualizerPictureBox.TabStop = false;
       this.VisualizerPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.VisualizerPictureBox_Paint);
       // 
+      // MenuStrip
+      // 
+      this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.souborToolStripMenuItem});
+      this.MenuStrip.Location = new System.Drawing.Point(0, 0);
+      this.MenuStrip.Name = "MenuStrip";
+      this.MenuStrip.Size = new System.Drawing.Size(1022, 24);
+      this.MenuStrip.TabIndex = 11;
+      // 
+      // souborToolStripMenuItem
+      // 
+      this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_Open,
+            this.ToolStripMenuItem_Save});
+      this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
+      this.souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+      this.souborToolStripMenuItem.Text = "Soubor";
+      // 
+      // ToolStripMenuItem_Open
+      // 
+      this.ToolStripMenuItem_Open.Name = "ToolStripMenuItem_Open";
+      this.ToolStripMenuItem_Open.Size = new System.Drawing.Size(180, 22);
+      this.ToolStripMenuItem_Open.Text = "Otevřít";
+      this.ToolStripMenuItem_Open.Click += new System.EventHandler(this.ToolStripMenuItem_Open_Click);
+      // 
+      // ToolStripMenuItem_Save
+      // 
+      this.ToolStripMenuItem_Save.Name = "ToolStripMenuItem_Save";
+      this.ToolStripMenuItem_Save.Size = new System.Drawing.Size(180, 22);
+      this.ToolStripMenuItem_Save.Text = "Uložit";
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1022, 695);
+      this.ClientSize = new System.Drawing.Size(1022, 719);
+      this.Controls.Add(this.MenuStrip);
       this.Controls.Add(this.VisualizerPictureBox);
       this.Controls.Add(this.ZoneLabel);
       this.Controls.Add(this.ContainerCodeLabel);
@@ -176,8 +213,10 @@ namespace ZoneAssigner {
       this.DoubleBuffered = true;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Form1";
-      this.Text = "Form1";
+      this.Text = "(unset)";
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).EndInit();
+      this.MenuStrip.ResumeLayout(false);
+      this.MenuStrip.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -191,6 +230,10 @@ namespace ZoneAssigner {
     private System.Windows.Forms.Label ContainerCodeLabel;
     private System.Windows.Forms.Label ZoneLabel;
     private System.Windows.Forms.PictureBox VisualizerPictureBox;
+    private System.Windows.Forms.MenuStrip MenuStrip;
+    private System.Windows.Forms.ToolStripMenuItem souborToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Open;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Save;
   }
 }
 

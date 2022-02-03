@@ -1,33 +1,49 @@
 ﻿using Core.Communicator;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using Core.Storage;
 
 namespace ZoneAssigner
 {
   public partial class Form1 : Form {
     public Form1() {
       InitializeComponent();
-      DataProcessing.Setup();
+
+      string PathToLastLayout = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "AGC_Technowizz_Layouts",
+        "Layout.last"
+      );
+
+      if (File.Exists(PathToLastLayout))
+        DataProcessing.Setup(File.ReadAllText(PathToLastLayout));
+      else
+        DataProcessing.Setup();
+
+      this.Text = $"{FormName} ({DataProcessing.ActiveLayout.Name})";
     }
 
-    private Random random = new Random();
+    public const int boxSize = 30;
+    public const int borderWidth = 3;
 
-    protected const int boxSize = 30;
-    protected const int upperSize = 240;
-    protected const int bottomSize = 150;
+    // výška na ose Y
+    public const int upperSize = 240;
+    public const int bottomSize = 150;
 
-    private const int Astart = 0, Cstart = 0;
-    private const int Bstart = 510, Dstart = 870;
+    // vzdálenost na ose X
+    public const int Astart = 0, Cstart = 0;
+    public const int Bstart = 510, Dstart = 870;
 
-    private const int borderWidth = 3;
+    const int HighlightTimeOnMs = 600;
+    const int HighlightTimeOffMs = 300;
+    const int TotalHighlights = 4;
+    const bool LastHighlightOn = true;
 
-    private const int HighlightTimeOnMs = 600;
-    private const int HighlightTimeOffMs = 300;
-    private const int TotalHighlights = 4;
-    private const bool LastHighlightOn = true;
+    const string FormName = "Přiřazovač zón";
 
-    public static Color color = Color.Red;
+    static Color color = Color.Red;
 
     void DelayAction(int millisecond, Action action)
     {
@@ -76,6 +92,7 @@ namespace ZoneAssigner
       else return new();
     }
 
+    // Draw rectangle to highlight zone
     void HighlightZone(string zone, Graphics g)
     {
       Rectangle rect = GetRectangleFromZone(zone);
@@ -87,14 +104,17 @@ namespace ZoneAssigner
     private void VisualizerPictureBox_Paint(object sender, PaintEventArgs e)
     {
       Graphics g = e.Graphics;
+      // Highlight only on submit
       if (submitted)
       {
+        // Last iteration
         if (i == TotalHighlights * 2) 
         {
           i = 0;
-          if (LastHighlightOn)
-            HighlightZone(zone, g);
+          if (LastHighlightOn) HighlightZone(zone, g);
         }
+
+        // Turn highlight on and off
         else if (i % 2 == 0)
         {
           HighlightZone(zone, g);
@@ -141,6 +161,18 @@ namespace ZoneAssigner
     private void TestDataComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
       ContainerCodeTextField.Text = TestDataComboBox.Text;
+    }
+
+    private void ToolStripMenuItem_Open_Click(object sender, EventArgs e)
+    {
+      new OpenFileDialog()
+      {
+        Filter = "Layout files | *.xml",
+        FileName = DataProcessing.ActiveLayout.Name,
+        DefaultExt = "xml",
+        AddExtension = true,
+        InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AGC_Technowizz_Layouts")
+      }.ShowDialog();
     }
 
     private void SubmitHandler(object sender, EventArgs e)
