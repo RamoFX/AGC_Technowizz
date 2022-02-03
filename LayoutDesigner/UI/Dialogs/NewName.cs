@@ -41,14 +41,12 @@ namespace LayoutDesigner.UI.Dialogs {
       if (isValid) {
         this.DialogResult = DialogResult.OK;
         this.FinalName = newName;
-        MessageBox.Show($"{DialogResult}");
         this.Close();
       }
     }
 
     private void Button_Cancel_Click(object sender, EventArgs e) {
       this.DialogResult = DialogResult.Cancel;
-      MessageBox.Show($"{DialogResult}");
       this.Close();
     }
   }
