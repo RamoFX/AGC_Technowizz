@@ -2,7 +2,6 @@
 using System.Linq;
 
 
-
 namespace Core.Communicator {
   public class DatabaseAccess {
     public static string GetCarBrandFromContainerCode(string containerCode) {
@@ -22,10 +21,9 @@ namespace Core.Communicator {
       //  _ => "PO",
       //};
 
-      if (DataProcessing.containerCode_name.ContainsKey(containerCode)) {
+      if (DataProcessing.containerCode_name.ContainsKey(containerCode)) 
         return DataProcessing.containerCode_name[containerCode];
-      }
-
+      
       System.Windows.Forms.MessageBox.Show($"Kód neexistuje\nPoužití náhodné zóny");
 
       return new string[] { "PO", "MS", "SK", "BM" }.ElementAt(new Random().Next(4));
