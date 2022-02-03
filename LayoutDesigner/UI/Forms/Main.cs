@@ -19,7 +19,7 @@ namespace LayoutDesigner.UI.Forms {
 
   public partial class Main : Form {
     // Title
-    private const string TitleBase = "Návrhář rozložení";
+    private const string TitleBase = "Návrhář rozvržení";
 
     private void UpdateTitle(string layoutName, bool isSaved) {
       if (layoutName.Length > 0) {
@@ -29,31 +29,15 @@ namespace LayoutDesigner.UI.Forms {
       }
     }
 
-    private void UpdateTitle() {
-      if (this.CurrentLayout == null) {
-        this.UpdateTitle("", false);
-      } else {
-        this.UpdateTitle(this.CurrentLayout.Name, this.IsLayoutSaved());
-      }
+    private void UpdateTitle(bool isSaved) {
+      this.UpdateTitle(this.CurrentLayout.Name, isSaved);
     }
 
 
 
 
     // Layout properties
-    private Layout _CurrentLayout = null;
-    private int counter = 0;
-
-    private Layout CurrentLayout {
-      get => _CurrentLayout;
-      set {
-        _CurrentLayout = value;
-        this.label1.Text = $"({ counter }) saved == { this.IsLayoutSaved() }";
-        this.label2.Text = $"({ counter }) layout == { this.CurrentLayout != null }";
-        this.counter++;
-      }
-    }
-
+    private Layout CurrentLayout = null;
     private string CurrentLayout_LatestSaveHash = "";
 
     private const string NewLayoutDefaultName = "Nové rozvržení";
@@ -63,7 +47,7 @@ namespace LayoutDesigner.UI.Forms {
     // Layout IO
     private void UnloadCurrentLayout() {
       if (!this.IsLayoutSaved()) {
-        var dialogResult = MessageBox.Show("Návrh rozložení není uložen. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
+        var dialogResult = MessageBox.Show("Rozvržení není uloženo. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
 
         if (dialogResult == DialogResult.Yes) {
           this.Save();
@@ -72,12 +56,16 @@ namespace LayoutDesigner.UI.Forms {
 
       CurrentLayout = null;
       CurrentLayout_LatestSaveHash = "";
-      this.UpdateTitle();
+      this.UpdateTitle("", false);
     }
 
     private void CreateNewLayout() {
+      if (this.CurrentLayout != null) {
+        this.UnloadCurrentLayout();
+      }
+
       this.CurrentLayout = new(NewLayoutDefaultName, new(10, 10));
-      this.UpdateTitle();
+      this.UpdateTitle(false);
     }
 
     private void TryLoadExistingLayout() {
@@ -86,10 +74,9 @@ namespace LayoutDesigner.UI.Forms {
       try {
         this.CurrentLayout = Core.Storage.Layout.Import(layoutName);
         this.CurrentLayout_LatestSaveHash = this.ComputeLayoutHash();
-
         this.UpdateTitle(layoutName, true);
       } catch (System.Xml.XmlException) {
-        MessageBox.Show($"Při načítání rozložehí \"{ layoutName }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
+        MessageBox.Show($"Při načítání rozvržení \"{ layoutName }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
         this.UnloadCurrentLayout();
       }
     }
@@ -107,20 +94,22 @@ namespace LayoutDesigner.UI.Forms {
           // Standard saving
           this.CurrentLayout.Export();
           CurrentLayout_LatestSaveHash = ComputeLayoutHash();
+          this.UpdateTitle(true);
         }
       }
     }
 
     private void SaveAs() {
       NewName newName = new();
-      var dialogResult = newName.ShowDialog(this);
+      newName.ShowDialog(this);
 
       if (newName.DialogResult == DialogResult.OK) {
         Layout newLayout = new(this.CurrentLayout);
         newLayout.Name = newName.FinalName;
         newLayout.Export();
-
-        this.UpdateTitle();
+        this.CurrentLayout = newLayout;
+        this.CurrentLayout_LatestSaveHash = this.ComputeLayoutHash();
+        this.UpdateTitle(true);
       }
     }
 
