@@ -24,6 +24,7 @@ namespace ZoneAssigner {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.TestDataComboBox = new System.Windows.Forms.ComboBox();
       this.ErrorLabel = new System.Windows.Forms.Label();
       this.ContainerCodeTextField = new System.Windows.Forms.TextBox();
@@ -173,6 +174,7 @@ namespace ZoneAssigner {
       this.Controls.Add(this.ErrorLabel);
       this.Controls.Add(this.TestDataComboBox);
       this.DoubleBuffered = true;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Form1";
       this.Text = "Form1";
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).EndInit();
