@@ -11,7 +11,7 @@ namespace Core.Storage {
       try {
         return Directory.GetFiles(Preferences.LayoutsPath);
       } catch (DirectoryNotFoundException) {
-        return new string[] {};
+        return new string[0] {};
       }
     }
 
@@ -21,6 +21,17 @@ namespace Core.Storage {
 
     static public bool IsNameAlreadyTaken(string name) {
       return GetExistingLayoutsNames().Contains(name);
+    }
+
+    public static object GenerateNewLayoutUniqueName(string nameBase) {
+      int nameCollisionPreventiveSuffix = 1;
+      var existingLayoutsNames = GetExistingLayoutsNames();
+
+      while (existingLayoutsNames.Contains($"{ nameBase }{ nameCollisionPreventiveSuffix }")) {
+        nameCollisionPreventiveSuffix++;
+      }
+
+      return $"{ nameBase }{ nameCollisionPreventiveSuffix }";
     }
   }
 }
