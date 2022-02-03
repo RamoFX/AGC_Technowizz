@@ -121,7 +121,7 @@ namespace LayoutDesigner.UI.Forms {
       this.Unload();
 
       // Create new layout
-      this.CurrentLayout = new(LayoutManager.GenerateNewLayoutUniqueName(), new(10, 10));
+      this.CurrentLayout = new(LayoutManager.GenerateNewLayoutUniqueName(NewLayoutNameBase), new(10, 10));
 
       // Post-hooks
       this.Update_ToolStrip_Items_Enabled();
