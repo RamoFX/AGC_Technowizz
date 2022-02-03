@@ -165,14 +165,17 @@ namespace ZoneAssigner
 
     private void ToolStripMenuItem_Open_Click(object sender, EventArgs e)
     {
-      new OpenFileDialog()
+      OpenFileDialog openFileDialog = new OpenFileDialog()
       {
         Filter = "Layout files | *.xml",
         FileName = DataProcessing.ActiveLayout.Name,
         DefaultExt = "xml",
         AddExtension = true,
         InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AGC_Technowizz_Layouts")
-      }.ShowDialog();
+      };
+      openFileDialog.ShowDialog();
+      DataProcessing.ActiveLayout = Core.Storage.Layout.Import(openFileDialog.FileName);
+      this.Text = $"{FormName} ({DataProcessing.ActiveLayout.Name})";
     }
 
     private void SubmitHandler(object sender, EventArgs e)
