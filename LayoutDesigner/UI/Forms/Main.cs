@@ -22,7 +22,7 @@ namespace LayoutDesigner.UI.Forms {
   public partial class Main : Form {
     // Constants
     private const string TitleBase = "Návrhář rozvržení";
-    private const string NewLayoutDefaultName = "Nové rozvržení";
+    private const string NewLayoutNameBase = "Nové rozvržení";
     private const string ExistingLayoutSelectBelow = "Vyberte níže...";
 
 
@@ -40,27 +40,48 @@ namespace LayoutDesigner.UI.Forms {
 
 
 
+    // Layout data
+    private Layout CurrentLayout = null;
+
+    private bool IsLayoutPresent {
+      get => this.CurrentLayout != null;
+    }
+
+    private List<string> ExistingLayoutsNames {
+      get => LayoutManager.GetExistingLayoutsNames().Prepend(ExistingLayoutSelectBelow).ToList();
+    }
+
+
+
     // State
-    private void Update_ToolStripMenuItem_Save_Enabled() {
-      this.ToolStripMenuItem_Save.Enabled = this.CurrentLayout != null && !this.IsLayoutSaved();
-    }
-
-    private void Update_ToolStripMenuItem_SaveAs_Enabled() {
-      this.ToolStripMenuItem_SaveAs.Enabled = this.CurrentLayout != null;
-    }
-
     private void Update_ToolStripMenuItem_Open_Enabled() {
       ToolStripMenuItem_Open.Enabled = this.ExistingLayoutsNames.Count() > 0;
     }
 
+    private void Update_ToolStripMenuItem_Save_Enabled() {
+      bool isEnabled;
+
+      if (!this.IsLayoutPresent) {
+        isEnabled = false;
+      } else {
+        isEnabled = !this.CurrentLayout.IsSaveUpToDate();
+      }
+
+      this.ToolStripMenuItem_Save.Enabled = isEnabled;
+    }
+
+    private void Update_ToolStripMenuItem_SaveAs_Enabled() {
+      this.ToolStripMenuItem_SaveAs.Enabled = this.IsLayoutPresent;
+    }
+
     private void Update_ToolStripMenuItem_Delete_Enabled() {
-      this.ToolStripMenuItem_Delete.Enabled = this.CurrentLayout != null;
+      this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent;
     }
 
     private void Update_ToolStrip_Items_Enabled() {
+      this.Update_ToolStripMenuItem_Open_Enabled();
       this.Update_ToolStripMenuItem_Save_Enabled();
       this.Update_ToolStripMenuItem_SaveAs_Enabled();
-      this.Update_ToolStripMenuItem_Open_Enabled();
       this.Update_ToolStripMenuItem_Delete_Enabled();
     }
 
@@ -73,22 +94,11 @@ namespace LayoutDesigner.UI.Forms {
 
 
 
-    // Layout data
-    private Layout CurrentLayout = null;
-    private string CurrentLayout_LatestSaveHash = "";
-
-    private List<string> ExistingLayoutsNames {
-      get => LayoutManager.GetExistingLayoutsNames().Prepend(ExistingLayoutSelectBelow).ToList();
-    }
-
-
-
-    // Layout IO
-    private void UnloadCurrentLayout() {
-      // Unload only if layout loaded
-      if (this.CurrentLayout != null) {
+    // Layout IO features
+    private void Unload() {
+      if (this.IsLayoutPresent) {
         // If not saved ask user if he wants to save
-        if (!this.IsLayoutSaved()) {
+        if (!this.CurrentLayout.IsSaveUpToDate()) {
           var dialogResult = MessageBox.Show("Rozvržení není uloženo. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
 
           if (dialogResult == DialogResult.Yes) {
@@ -96,38 +106,44 @@ namespace LayoutDesigner.UI.Forms {
           }
         }
 
+        // Unload
         this.ToolStripComboBox_ExistingLayouts.SelectedIndex = 0;
-        this.ChangeCurrentLayout(null);
+        this.CurrentLayout = null;
 
+        // Post-hooks
         this.Update_ToolStrip_Items_Enabled();
         this.UpdateTitle(false);
       }
     }
 
-    private void CreateNewLayout() {
-      this.UnloadCurrentLayout();
+    private void New() {
+      // Pre-hooks
+      this.Unload();
 
-      this.ChangeCurrentLayout(new(NewLayoutDefaultName, new(10, 10)), true);
+      // Create new layout
+      this.CurrentLayout = new(LayoutManager.GenerateNewLayoutName(), new(10, 10));
 
+      // Post-hooks
       this.Update_ToolStrip_Items_Enabled();
       this.UpdateTitle(false);
     }
 
-    private void TryLoadExistingLayout(string existingLayoutName) {
+    private void TryOpen(string existingLayoutName) {
       try {
-        this.ChangeCurrentLayout(Core.Storage.Layout.Import(existingLayoutName));
+        // Try load existing layout
+        this.CurrentLayout = Core.Storage.Layout.Import(existingLayoutName);
 
+        // Post-hooks
         this.Update_ToolStrip_Items_Enabled();
         this.UpdateTitle(true);
       } catch (System.Xml.XmlException) {
         MessageBox.Show($"Při načítání rozvržení \"{ existingLayoutName }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
-        this.UnloadCurrentLayout();
+        this.Unload();
       }
     }
 
     private void SaveBase() {
       this.CurrentLayout.Export();
-      CurrentLayout_LatestSaveHash = this.ComputeCurrentLayoutHash();
 
       this.Update_ToolStrip_Items_Enabled();
       this.UpdateTitle(true);
@@ -135,11 +151,10 @@ namespace LayoutDesigner.UI.Forms {
     }
 
     private void Save() {
-      // Save if layout opened
-      if (this.CurrentLayout != null) {
+      if (this.IsLayoutPresent) {
         // Save if not saved
-        if (!IsLayoutSaved()) {
-          if (this.CurrentLayout_LatestSaveHash == "") {
+        if (!this.CurrentLayout.IsSaveUpToDate()) {
+          if (this.CurrentLayout.IsSaved()) {
             // New file
             this.SaveAs();
           } else {
@@ -154,7 +169,6 @@ namespace LayoutDesigner.UI.Forms {
       if (this.CurrentLayout != null) {
         Func<string, bool> valueValidator = newName => {
           Regex regex = new("^[a-zA-Z]+$");
-          bool alreadyExists = this.ExistingLayoutsNames.Contains(newName);
 
           if (newName.Trim().Length == 0) {
             MessageBox.Show("Textové pole nesmí být prázdné.");
@@ -162,7 +176,7 @@ namespace LayoutDesigner.UI.Forms {
           } else if (!regex.IsMatch(newName)) {
             MessageBox.Show("Textové pole smí obsahovat pouze malá nebo velká písmena A-Z.");
             return false;
-          } else if (alreadyExists) {
+          } else if (LayoutManager.IsNameAlreadyTaken(newName)) {
             MessageBox.Show("Tento název se již používá. Zadejte prosím jiný.");
             return false;
           } else {
@@ -170,7 +184,7 @@ namespace LayoutDesigner.UI.Forms {
           }
         };
 
-        UserTextInput userTextInput = new(valueValidator, "Zadejte nový název rozvržení");
+        UserTextInput userTextInput = new(valueValidator, "Nový název rozvržení");
 
         userTextInput.ShowDialog(this);
 
@@ -195,35 +209,8 @@ namespace LayoutDesigner.UI.Forms {
           File.Delete(layoutPath);
 
           this.Update_ToolStripComboBox_ExistingLayouts_ComboBox_DataSource();
-          this.UnloadCurrentLayout();
+          this.Unload();
         }
-      }
-    }
-
-
-
-    // Helpers
-    private void ChangeCurrentLayout(Layout layout, bool forceEmptyLayoutHash) {
-      // sets current layout and manages layout hash value
-      this.CurrentLayout = layout;
-      this.CurrentLayout_LatestSaveHash = layout == null || forceEmptyLayoutHash  ? "" : this.ComputeCurrentLayoutHash();
-    }
-
-    private void ChangeCurrentLayout(Layout layout) {
-      ChangeCurrentLayout(layout, false);
-    }
-
-    private bool IsLayoutSaved() {
-      return this.ComputeCurrentLayoutHash() == CurrentLayout_LatestSaveHash;
-    }
-
-    private string ComputeCurrentLayoutHash() {
-      string layoutXmlString = this.CurrentLayout.ToXDocument().ToString(SaveOptions.DisableFormatting);
-
-      using (MD5 md5 = MD5.Create()) {
-        return BitConverter.ToString(
-          md5.ComputeHash(Encoding.UTF8.GetBytes(layoutXmlString))
-        ).Replace("-", String.Empty);
       }
     }
 
@@ -244,16 +231,16 @@ namespace LayoutDesigner.UI.Forms {
 
     // Events
     private void ToolStripMenuItem_New_Click(object sender, EventArgs e) {
-      this.CreateNewLayout();
+      this.New();
     }
 
     private void ToolStripComboBox_ExistingLayouts_ComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
       string existingLayoutName = (string) this.ToolStripComboBox_ExistingLayouts.SelectedItem;
 
       if (existingLayoutName == ExistingLayoutSelectBelow) {
-        this.UnloadCurrentLayout();
+        this.Unload();
       } else {
-        this.TryLoadExistingLayout(existingLayoutName);
+        this.TryOpen(existingLayoutName);
       }
     }
 
@@ -278,7 +265,7 @@ namespace LayoutDesigner.UI.Forms {
     }
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
-      this.UnloadCurrentLayout();
+      this.Unload();
     }
 
     private void Main_ResizeEnd(object sender, EventArgs e) {
