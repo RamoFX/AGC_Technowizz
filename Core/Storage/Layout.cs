@@ -39,6 +39,12 @@ namespace Core.Storage {
 
     // Self interactions
     static public string GetPath(string name) {
+      bool directoryExists = Directory.Exists(Preferences.LayoutsPath);
+
+      if (!directoryExists) {
+        Directory.CreateDirectory(Preferences.LayoutsPath);
+      }
+
       return Path.Combine(
         Preferences.LayoutsPath,
         Path.ChangeExtension(name, "xml")
@@ -88,22 +94,14 @@ namespace Core.Storage {
 
     // IO interactions
     public bool Export() {
-      bool didExportedSuccessfuly;
-
       try {
-        if (!Directory.Exists(Preferences.LayoutsPath)) {
-          Directory.CreateDirectory(Preferences.LayoutsPath);
-        }
-
         XDocument document = this.ToXDocument();
         document.Save(this.GetPath());
 
-        didExportedSuccessfuly = true;
+        return true;
       } catch {
-        didExportedSuccessfuly = false;
+        return false;
       }
-
-      return didExportedSuccessfuly;
     }
 
     static public Layout Import(string name) { 
