@@ -50,7 +50,11 @@ namespace Core.Storage {
     }
 
     public string LatestSaveHash() {
-      return Layout.Import(this.Name).ComputeHash();
+      try {
+        return Layout.Import(this.Name).ComputeHash();
+      } catch (FileNotFoundException) {
+        return "";
+      }
     }
     
     public bool IsSaved() {
@@ -58,7 +62,7 @@ namespace Core.Storage {
     }
 
     public bool IsSaveUpToDate() {
-      string hashSavedLayout = Layout.Import(this.Name).ComputeHash();
+      string hashSavedLayout = this.LatestSaveHash();
       string hashCurrentLayout = this.ComputeHash();
 
       bool areUpToDate = hashSavedLayout == hashCurrentLayout;
