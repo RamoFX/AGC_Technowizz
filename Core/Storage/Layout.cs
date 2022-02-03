@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Xml.Linq;
 
 using Core.Helpers;
@@ -37,9 +39,9 @@ namespace Core.Storage {
 
     // Self interactions
     static public string GetPath(string name) {
-      return Paths.JoinPaths(
+      return Path.Combine(
         Preferences.LayoutsPath,
-        Paths.ApplyFileExtension(name, "xml")
+        Path.ChangeExtension(name, "xml")
       );
     }
 

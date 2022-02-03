@@ -61,7 +61,6 @@
     <Compile Include="Helpers\XElementConvertable.cs" />
     <Compile Include="Storage\ZoneType.cs" />
     <Compile Include="Storage\Zone.cs" />
-    <Compile Include="Helpers\Paths.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
