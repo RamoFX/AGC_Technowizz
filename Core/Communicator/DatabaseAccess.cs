@@ -1,13 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Core.Helpers;
+﻿using Core.Helpers;
 using Core.Storage;
+using System;
+using System.Linq;
 
 
-
-namespace Core.Communicator {
+namespace Core.Communicator
+{
   public class DatabaseAccess {
     static public string GetCarBrandFromContainerCode(string containerCode) {
       /*
@@ -19,7 +17,9 @@ namespace Core.Communicator {
        */
 
       // Pseudo database response
-      return containerCode switch {
+      DatabaseAccessDelay();
+      return containerCode switch
+      {
         "0" => "BM",
         "1" => "TO",
         "2" => "NM",
@@ -47,6 +47,7 @@ namespace Core.Communicator {
        */
 
       // Pseudo database response
+      DatabaseAccessDelay();
       return zoneName switch {
         "A1" => 28,
         "B1" => 31,
@@ -78,6 +79,7 @@ namespace Core.Communicator {
         return zn.ToCharArray().Aggregate(0, (sum, @char) => isZoneStorage ? ( sum + @char + random.Next((int) ( zone.MaxCapacity * 0.1 )) ) % zone.MaxCapacity : 0);
       };
 
+      DatabaseAccessDelay();
       return zoneName switch {
         "A1" => zoneNameToAveragePalletsLoad("A1"),
         "B1" => zoneNameToAveragePalletsLoad("B1"),
@@ -90,11 +92,11 @@ namespace Core.Communicator {
     }
 
 
-
     static private readonly Random Random = new();
 
-    static private int GetRandomDelay() {
-      return Random.Next(20, 300);
+    static private void DatabaseAccessDelay() {
+      int delay = Random.Next(20, 300);
+      System.Threading.Thread.Sleep(delay);
     }
   }
 }
