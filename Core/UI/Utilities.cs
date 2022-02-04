@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 
 
-namespace Core.Helpers {
+namespace Core.UI {
   static public class Utilities {
     static public void DelayAction(int millisecond, Action action) {
       Timer timer = new();

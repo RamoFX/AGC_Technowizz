@@ -54,7 +54,7 @@
     <Compile Include="Helpers\DynamicSettings.cs" />
     <Compile Include="Helpers\DynamicSetting.cs" />
     <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Helpers\Utilities.cs" />
+    <Compile Include="UI\Utilities.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="DynamicSettings.cs" />
     <Compile Include="Storage\Layout.cs" />
