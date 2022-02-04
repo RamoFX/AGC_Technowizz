@@ -56,18 +56,18 @@ namespace Core.Storage {
     }
 
     public string LatestSaveHash() {
-      try {
-        return Layout.Import(this.Name).ComputeHash();
-      } catch (FileNotFoundException) {
+      if (this.HasCorrespondingFile()) {
+        return Import(this.Name).ComputeHash();
+      } else {
         return "";
       }
     }
-    
-    public bool IsSaved() {
-      return LayoutManager.GetExistingLayoutsNames().Contains(this.Name);
+
+    public bool HasCorrespondingFile() {
+      return File.Exists(this.GetPath());
     }
 
-    public bool IsSaveUpToDate() {
+    public bool IsCorrespondingFileUpToDate() {
       string hashSavedLayout = this.LatestSaveHash();
       string hashCurrentLayout = this.ComputeHash();
 
@@ -92,21 +92,47 @@ namespace Core.Storage {
 
 
 
-    // IO interactions
-    public bool Export() {
-      try {
-        XDocument document = this.ToXDocument();
-        document.Save(this.GetPath());
-
-        return true;
-      } catch {
-        return false;
+    // File system interactions
+    public void Move(string toName) {
+      if (this.HasCorrespondingFile()) {
+        File.Move(this.GetPath(), GetPath(toName));
       }
     }
 
-    static public Layout Import(string name) { 
-      string path = GetPath(name);
-      XDocument document = XDocument.Load(path);
+    public void Rename(string newName) {
+      string oldName = this.Name;
+
+      // Check if file exists
+      if (this.HasCorrespondingFile()) {
+        // Can be older version
+        Layout oldLayout = Layout.Import(oldName);
+        oldLayout.Move(newName);
+        oldLayout.Name = newName;
+        oldLayout.Export();
+      }
+
+      // Rename
+      this.Name = newName;
+    }
+
+    public void Delete() {
+      if (this.HasCorrespondingFile()) {
+        File.Delete(this.GetPath());
+      }
+    }
+
+    public void Export() {
+      XDocument document = this.ToXDocument();
+      document.Save(this.GetPath());
+    }
+
+    public void ExportAs(string newName) {
+      this.Name = newName;
+      this.Export();
+    }
+
+    static public Layout Import(string name) {
+      XDocument document = XDocument.Load(GetPath(name));
 
       return Layout.FromXDocument(document);
     }

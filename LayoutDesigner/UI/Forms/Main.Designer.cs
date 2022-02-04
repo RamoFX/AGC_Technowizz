@@ -26,42 +26,50 @@ namespace LayoutDesigner.UI.Forms {
     private void InitializeComponent() {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.MenuStrip = new System.Windows.Forms.MenuStrip();
-      this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_New = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripComboBox_ExistingLayouts = new System.Windows.Forms.ToolStripComboBox();
+      this.ToolStripMenuItem_Import = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripComboBox_ImportableLayoutNames = new System.Windows.Forms.ToolStripComboBox();
+      this.ToolStripMenuItem_Close = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-      this.ToolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripMenuItem_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_Export = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_ExportAs = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_Rename = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_Delete = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_OpenInFileExplorer = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
       this.MenuStrip.SuspendLayout();
       this.SuspendLayout();
       // 
       // MenuStrip
       // 
       this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.souborToolStripMenuItem});
+            this.ToolStripMenuItemFile});
       this.MenuStrip.Location = new System.Drawing.Point(0, 0);
       this.MenuStrip.Name = "MenuStrip";
       this.MenuStrip.Size = new System.Drawing.Size(1250, 24);
       this.MenuStrip.TabIndex = 1;
       // 
-      // souborToolStripMenuItem
+      // ToolStripMenuItemFile
       // 
-      this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.ToolStripMenuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_New,
-            this.ToolStripMenuItem_Open,
+            this.ToolStripMenuItem_Import,
+            this.ToolStripMenuItem_Close,
             this.toolStripSeparator2,
-            this.ToolStripMenuItem_Save,
-            this.ToolStripMenuItem_SaveAs,
+            this.ToolStripMenuItem_Export,
+            this.ToolStripMenuItem_ExportAs,
+            this.ToolStripMenuItem_Rename,
             this.ToolStripMenuItem_Delete,
             this.toolStripSeparator1,
-            this.ToolStripMenuItem_OpenInFileExplorer});
-      this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
-      this.souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-      this.souborToolStripMenuItem.Text = "Soubor";
+            this.ToolStripMenuItem_OpenInFileExplorer,
+            this.toolStripSeparator3,
+            this.ToolStripMenuItem_Exit});
+      this.ToolStripMenuItemFile.Name = "ToolStripMenuItemFile";
+      this.ToolStripMenuItemFile.Size = new System.Drawing.Size(57, 20);
+      this.ToolStripMenuItemFile.Text = "Soubor";
       // 
       // ToolStripMenuItem_New
       // 
@@ -70,39 +78,53 @@ namespace LayoutDesigner.UI.Forms {
       this.ToolStripMenuItem_New.Text = "Nový";
       this.ToolStripMenuItem_New.Click += new System.EventHandler(this.ToolStripMenuItem_New_Click);
       // 
-      // ToolStripMenuItem_Open
+      // ToolStripMenuItem_Import
       // 
-      this.ToolStripMenuItem_Open.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripComboBox_ExistingLayouts});
-      this.ToolStripMenuItem_Open.Name = "ToolStripMenuItem_Open";
-      this.ToolStripMenuItem_Open.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_Open.Text = "Otevřít";
+      this.ToolStripMenuItem_Import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripComboBox_ImportableLayoutNames});
+      this.ToolStripMenuItem_Import.Name = "ToolStripMenuItem_Import";
+      this.ToolStripMenuItem_Import.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_Import.Text = "Importovat";
       // 
       // ToolStripComboBox_ExistingLayouts
       // 
-      this.ToolStripComboBox_ExistingLayouts.DropDownWidth = 200;
-      this.ToolStripComboBox_ExistingLayouts.FlatStyle = System.Windows.Forms.FlatStyle.System;
-      this.ToolStripComboBox_ExistingLayouts.Name = "ToolStripComboBox_ExistingLayouts";
-      this.ToolStripComboBox_ExistingLayouts.Size = new System.Drawing.Size(200, 23);
+      this.ToolStripComboBox_ImportableLayoutNames.DropDownWidth = 200;
+      this.ToolStripComboBox_ImportableLayoutNames.FlatStyle = System.Windows.Forms.FlatStyle.System;
+      this.ToolStripComboBox_ImportableLayoutNames.Name = "ToolStripComboBox_ExistingLayouts";
+      this.ToolStripComboBox_ImportableLayoutNames.Size = new System.Drawing.Size(200, 23);
+      // 
+      // ToolStripMenuItem_Close
+      // 
+      this.ToolStripMenuItem_Close.Name = "ToolStripMenuItem_Close";
+      this.ToolStripMenuItem_Close.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_Close.Text = "Zavřít";
+      this.ToolStripMenuItem_Close.Click += new System.EventHandler(this.ToolStripMenuItem_Close_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
       this.toolStripSeparator2.Size = new System.Drawing.Size(294, 6);
       // 
-      // ToolStripMenuItem_Save
+      // ToolStripMenuItem_Export
       // 
-      this.ToolStripMenuItem_Save.Name = "ToolStripMenuItem_Save";
-      this.ToolStripMenuItem_Save.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_Save.Text = "Uložit";
-      this.ToolStripMenuItem_Save.Click += new System.EventHandler(this.ToolStripMenuItem_Save_Click);
+      this.ToolStripMenuItem_Export.Name = "ToolStripMenuItem_Export";
+      this.ToolStripMenuItem_Export.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_Export.Text = "Exportovat";
+      this.ToolStripMenuItem_Export.Click += new System.EventHandler(this.ToolStripMenuItem_Export_Click);
       // 
-      // ToolStripMenuItem_SaveAs
+      // ToolStripMenuItem_ExportAs
       // 
-      this.ToolStripMenuItem_SaveAs.Name = "ToolStripMenuItem_SaveAs";
-      this.ToolStripMenuItem_SaveAs.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_SaveAs.Text = "Uložit jako...";
-      this.ToolStripMenuItem_SaveAs.Click += new System.EventHandler(this.ToolStripMenuItem_SaveAs_Click);
+      this.ToolStripMenuItem_ExportAs.Name = "ToolStripMenuItem_ExportAs";
+      this.ToolStripMenuItem_ExportAs.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_ExportAs.Text = "Exportovat jako...";
+      this.ToolStripMenuItem_ExportAs.Click += new System.EventHandler(this.ToolStripMenuItem_ExportAs_Click);
+      // 
+      // ToolStripMenuItem_Rename
+      // 
+      this.ToolStripMenuItem_Rename.Name = "ToolStripMenuItem_Rename";
+      this.ToolStripMenuItem_Rename.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_Rename.Text = "Přejmenovat...";
+      this.ToolStripMenuItem_Rename.Click += new System.EventHandler(this.ToolStripMenuItem_Rename_Click);
       // 
       // ToolStripMenuItem_Delete
       // 
@@ -122,6 +144,18 @@ namespace LayoutDesigner.UI.Forms {
       this.ToolStripMenuItem_OpenInFileExplorer.Size = new System.Drawing.Size(297, 22);
       this.ToolStripMenuItem_OpenInFileExplorer.Text = "Všechna rozvržení v průzkumníku souborů";
       this.ToolStripMenuItem_OpenInFileExplorer.Click += new System.EventHandler(this.ToolStripMenuItem_OpenInFileExplorer_Click);
+      // 
+      // toolStripSeparator3
+      // 
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(294, 6);
+      // 
+      // ToolStripMenuItem_Exit
+      // 
+      this.ToolStripMenuItem_Exit.Name = "ToolStripMenuItem_Exit";
+      this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_Exit.Text = "Ukončit";
+      this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
       // 
       // Main
       // 
@@ -145,16 +179,20 @@ namespace LayoutDesigner.UI.Forms {
 
     #endregion
     private System.Windows.Forms.MenuStrip MenuStrip;
-    private System.Windows.Forms.ToolStripMenuItem souborToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemFile;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_New;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Open;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Save;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_SaveAs;
-    private System.Windows.Forms.ToolStripComboBox ToolStripComboBox_ExistingLayouts;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Import;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Export;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_ExportAs;
+    private System.Windows.Forms.ToolStripComboBox ToolStripComboBox_ImportableLayoutNames;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_OpenInFileExplorer;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Delete;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Rename;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Close;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
   }
 }
 

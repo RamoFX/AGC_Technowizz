@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 using Core.Storage;
 using LayoutDesigner.UI.Dialogs;
@@ -22,8 +15,7 @@ namespace LayoutDesigner.UI.Forms {
   public partial class Main : Form {
     // Constants
     private const string TitleBase = "Návrhář rozvržení";
-    private const string NewLayoutNameBase = "Novy";
-    private const string ExistingLayoutSelectBelow = "Vyberte níže...";
+    private const string SelectBelow = "Vyberte níže...";
 
 
 
@@ -34,8 +26,8 @@ namespace LayoutDesigner.UI.Forms {
       get => this.CurrentLayout != null;
     }
 
-    private List<string> ExistingLayoutsNames {
-      get => LayoutManager.GetExistingLayoutsNames().Prepend(ExistingLayoutSelectBelow).ToList();
+    private List<string> ImportableLayoutsNames {
+      get => LayoutManager.GetExistingLayoutsNames().Prepend(SelectBelow).ToList();
     }
 
 
@@ -43,28 +35,24 @@ namespace LayoutDesigner.UI.Forms {
     // Constructor
     public Main() {
       InitializeComponent();
+      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
+      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted;
       this.CurrentLayout = null;
-
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.BindingContext = this.BindingContext;
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.DataSource = ExistingLayoutsNames;
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ExistingLayouts_ComboBox_SelectionChangeCommitted;
-
-      this.UpdateControls_Enabled();
-      this.UpdateTitle();
+      this.UpdateState();
     }
 
 
 
-    // Layout IO features
+    // Layout file system IO interactions
     private void Unload(bool force) {
       if (this.IsLayoutPresent) {
         // If not saved ask user if he wants to save
         // If forced then do not ask
-        if (!force && !this.CurrentLayout.IsSaveUpToDate()) {
+        if (!force && !this.CurrentLayout.IsCorrespondingFileUpToDate()) {
           var dialogResult = MessageBox.Show("Rozvržení není uloženo. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
 
           if (dialogResult == DialogResult.Yes) {
-            this.Save();
+            this.Export();
           }
         }
 
@@ -72,9 +60,7 @@ namespace LayoutDesigner.UI.Forms {
         this.CurrentLayout = null;
 
         // Post-hooks
-        this.ToolStripComboBox_ExistingLayouts.SelectedIndex = 0;
-        this.UpdateControls_Enabled();
-        this.UpdateTitle();
+        this.UpdateState();
       }
     }
 
@@ -83,81 +69,69 @@ namespace LayoutDesigner.UI.Forms {
     }
 
     private void New() {
-      // Pre-hooks
-      this.Unload();
+      // Ask for new name
+      var userTextInput = this.GetNewName();
 
-      // Create new layout
-      this.CurrentLayout = new(LayoutManager.GenerateNewLayoutUniqueName(NewLayoutNameBase), new(10, 10));
+      if (userTextInput.DialogResult == DialogResult.OK) {
+        // Pre-hooks
+        this.Unload();
 
-      // Post-hooks
-      this.UpdateControls_Enabled();
-      this.UpdateTitle();
+        // Create new layout
+        this.CurrentLayout = new(userTextInput.FinalValue, new(10, 10));
+
+        // Post-hooks
+        this.UpdateState();
+      }
     }
 
-    private void Open(string name) {
+    private void Import(string name) {
       // May be invalid file
       try {
         this.CurrentLayout = Core.Storage.Layout.Import(name);
 
         // Post-hooks
-        this.UpdateControls_Enabled();
-        this.UpdateTitle();
+        this.UpdateState();
       } catch (System.Xml.XmlException) {
         MessageBox.Show($"Při načítání rozvržení \"{ name }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
       }
     }
 
-    private void SaveBase() {
-      this.CurrentLayout.Export();
-
-      this.UpdateControls_Enabled();
-      this.UpdateTitle();
-      this.UpdateExistingLayouts_DataSource();
-    }
-
-    private void Save() {
+    private void Export() {
       if (this.IsLayoutPresent) {
         // Save if not saved
-        if (!this.CurrentLayout.IsSaveUpToDate()) {
-          if (this.CurrentLayout.IsSaved()) {
-            // New file
-            this.SaveAs();
-          } else {
-            this.SaveBase();
-          }
+        if (!this.CurrentLayout.IsCorrespondingFileUpToDate()) {
+          this.CurrentLayout.Export();
+
+          // Post-hooks
+          this.UpdateState();
         }
       }
     }
 
-    private void SaveAs() {
-      // Save if layout opened
+    private void ExportAs() {
+      // Save if layout present
       if (this.IsLayoutPresent) {
-        Func<string, bool> valueValidator = newName => {
-          newName = newName.Trim();
-          Regex regex = new(@"^[a-zA-Z][a-zA-Z0-9 ]*[a-zA-Z0-9]$");
-
-          if (newName.Length == 0) {
-            MessageBox.Show("Textové pole nesmí být prázdné.");
-            return false;
-          } else if (!regex.IsMatch(newName)) {
-            MessageBox.Show("Textové pole smí obsahovat pouze malá nebo velká písmena A-Z, čísla a mezery. První musí být písmeno. Nesmí začínat nebo končit mezerou.");
-            return false;
-          } else if (LayoutManager.IsNameAlreadyTaken(newName)) {
-            MessageBox.Show("Tento název se již používá. Zadejte prosím jiný.");
-            return false;
-          } else {
-            return true;
-          }
-        };
-
-        UserTextInput userTextInput = new(valueValidator, "Nový název rozvržení");
-
-        userTextInput.ShowDialog(this);
+        var userTextInput = this.GetNewName();
 
         if (userTextInput.DialogResult == DialogResult.OK) {
-          this.CurrentLayout.Name = userTextInput.FinalValue;
+          this.CurrentLayout.ExportAs(userTextInput.FinalValue);
 
-          SaveBase();
+          // Post-hooks
+          this.UpdateState();
+        }
+      }
+    }
+
+    private void Rename() {
+      // Rename if layout present
+      if (this.IsLayoutPresent) {
+        var userTextInput = this.GetNewName();
+
+        if (userTextInput.DialogResult == DialogResult.OK) {
+          this.CurrentLayout.Rename(userTextInput.FinalValue);
+
+          // Post-hooks
+          this.UpdateState();
         }
       }
     }
@@ -169,12 +143,46 @@ namespace LayoutDesigner.UI.Forms {
         var dialogResult = MessageBox.Show($"Rozvržení \"{ this.CurrentLayout.Name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo);
 
         if (dialogResult == DialogResult.Yes) {
-          File.Delete(this.CurrentLayout.GetPath());
+          this.CurrentLayout.Delete();
 
+          // Post-hooks
           this.Unload(true);
-          this.UpdateExistingLayouts_DataSource();
+          this.UpdateState();
         }
       }
+    }
+
+
+
+    // User interaction
+    private UserTextInput GetNewName() {
+      Func<string, bool> valueValidator = newName => {
+        newName = newName.Trim();
+        char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
+
+        bool isEmpty = newName.Length == 0;
+        bool newNameContainsInvalidChars = newName.ToCharArray().Any(newNameChar => invalidFileNameChars.Contains(newNameChar));
+        bool nameAlreadyTaken = LayoutManager.IsNameAlreadyTaken(newName);
+
+        if (isEmpty) {
+          MessageBox.Show("Textové pole nesmí být prázdné.");
+          return false;
+        } else if (newNameContainsInvalidChars) {
+          MessageBox.Show("Textové pole nesmí obsahovat zakázané znaky.");
+          return false;
+        } else if (nameAlreadyTaken) {
+          MessageBox.Show("Tento název se již používá. Zadejte prosím jiný.");
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+      UserTextInput userTextInput = new(valueValidator, "Nový název rozvržení");
+
+      userTextInput.ShowDialog(this);
+
+      return userTextInput;
     }
 
 
@@ -182,48 +190,60 @@ namespace LayoutDesigner.UI.Forms {
     // State
     private void UpdateTitle() {
       if (this.IsLayoutPresent) {
-        this.Text = $"{ TitleBase } - { this.CurrentLayout.Name } ({( this.CurrentLayout.IsSaveUpToDate() ? "uloženo" : "neuloženo" )})";
+        this.Text = $"{ TitleBase } - { this.CurrentLayout.Name } ({( this.CurrentLayout.IsCorrespondingFileUpToDate() ? "uloženo" : "neuloženo" )})";
       } else {
         this.Text = $"{ TitleBase }";
       }
     }
 
-    private void UpdateOpenControl_Enabled() {
-      ToolStripMenuItem_Open.Enabled = this.ExistingLayoutsNames.Count() > 0;
+    private void UpdateImportControl_Enabled() {
+      ToolStripMenuItem_Import.Enabled = this.ImportableLayoutsNames.Count() > 0;
     }
 
-    private void UpdateSaveControl_Enabled() {
-      bool isEnabled;
+    private void UpdateCloseControl_Enabled() {
+      ToolStripMenuItem_Close.Enabled = this.IsLayoutPresent;
+    }
 
-      if (!this.IsLayoutPresent) {
-        isEnabled = false;
+    private void UpdateExportControl_Enabled() {
+      if (this.IsLayoutPresent) {
+        this.ToolStripMenuItem_Export.Enabled = !this.CurrentLayout.IsCorrespondingFileUpToDate();
       } else {
-        isEnabled = !this.CurrentLayout.IsSaveUpToDate();
+        this.ToolStripMenuItem_Export.Enabled = false;
       }
-
-      this.ToolStripMenuItem_Save.Enabled = isEnabled;
     }
 
-    private void UpdateSaveAsControl_Enabled() {
-      this.ToolStripMenuItem_SaveAs.Enabled = this.IsLayoutPresent;
+    private void UpdateExportAsControl_Enabled() {
+      this.ToolStripMenuItem_ExportAs.Enabled = this.IsLayoutPresent;
+    }
+
+    private void UpdateRenameControl_Enabled() {
+      this.ToolStripMenuItem_Rename.Enabled = this.IsLayoutPresent;
     }
 
     private void UpdateDeleteControl_Enabled() {
-      this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent;
-    }
-
-    private void UpdateControls_Enabled() {
-      this.UpdateOpenControl_Enabled();
-      this.UpdateSaveControl_Enabled();
-      this.UpdateSaveAsControl_Enabled();
-      this.UpdateDeleteControl_Enabled();
+      this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent && this.CurrentLayout.HasCorrespondingFile();
     }
 
     private void UpdateExistingLayouts_DataSource() {
-      string selectedValue = (string) this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectedValue;
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.DataSource = ExistingLayoutsNames;
-      int foundIndex = ExistingLayoutsNames.FindIndex(value => value == selectedValue);
-      this.ToolStripComboBox_ExistingLayouts.ComboBox.SelectedIndex = foundIndex == -1 ? 0 : foundIndex;
+      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.DataSource = ImportableLayoutsNames;
+
+      if (this.IsLayoutPresent) {
+        int index = ImportableLayoutsNames.FindIndex(value => value == this.CurrentLayout.Name);
+        this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectedIndex = index == -1 ? 0 : index;
+      } else {
+        this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectedIndex = 0;
+      }
+    }
+
+    private void UpdateState() {
+      this.UpdateTitle();
+      this.UpdateImportControl_Enabled();
+      this.UpdateCloseControl_Enabled();
+      this.UpdateExportControl_Enabled();
+      this.UpdateExportAsControl_Enabled();
+      this.UpdateRenameControl_Enabled();
+      this.UpdateDeleteControl_Enabled();
+      this.UpdateExistingLayouts_DataSource();
     }
 
 
@@ -233,22 +253,28 @@ namespace LayoutDesigner.UI.Forms {
       this.New();
     }
 
-    private void ToolStripComboBox_ExistingLayouts_ComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
-      string existingLayoutName = (string) this.ToolStripComboBox_ExistingLayouts.SelectedItem;
+    private void ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
+      string existingLayoutName = (string) this.ToolStripComboBox_ImportableLayoutNames.SelectedItem;
 
-      if (existingLayoutName == ExistingLayoutSelectBelow) {
-        this.Unload();
-      } else {
-        this.Open(existingLayoutName);
+      if (!(existingLayoutName == SelectBelow)) {
+        this.Import(existingLayoutName);
       }
     }
 
-    private void ToolStripMenuItem_Save_Click(object sender, EventArgs e) {
-      this.Save();
+    private void ToolStripMenuItem_Close_Click(object sender, EventArgs e) {
+      this.Unload();
     }
 
-    private void ToolStripMenuItem_SaveAs_Click(object sender, EventArgs e) {
-      this.SaveAs();
+    private void ToolStripMenuItem_Export_Click(object sender, EventArgs e) {
+      this.Export();
+    }
+
+    private void ToolStripMenuItem_ExportAs_Click(object sender, EventArgs e) {
+      this.ExportAs();
+    }
+
+    private void ToolStripMenuItem_Rename_Click(object sender, EventArgs e) {
+      this.Rename();
     }
 
     private void ToolStripMenuItem_Delete_Click(object sender, EventArgs e) {
@@ -261,6 +287,10 @@ namespace LayoutDesigner.UI.Forms {
       } else {
         MessageBox.Show("Nelze otevřít, rozvržení neexistují. Zkuste nejprve vytvořit nové rozvržení.", "Chyba!");
       }
+    }
+
+    private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) {
+      this.Close();
     }
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {

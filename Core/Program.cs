@@ -43,15 +43,10 @@ namespace Core {
       example.Zones.Add(office);
       example.Zones.Add(export);
 
-      bool didExport = example.Export();
+      example.Export();
 
-      if (didExport) {
-        Console.WriteLine($"Návrh rozložení uložen do \"{ example.GetPath() }\".");
-        return example;
-      } else {
-        Console.WriteLine($"Návrh rozložení nebyl uložen.");
-        return null;
-      }
+      Console.WriteLine($"Návrh rozložení uložen do \"{ example.GetPath() }\".");
+      return example;
     }
 
     static private void ExampleLayoutUsage() {
