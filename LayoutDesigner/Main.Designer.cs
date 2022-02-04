@@ -1,5 +1,5 @@
 ﻿
-namespace LayoutDesigner.UI.Forms {
+namespace LayoutDesigner {
   partial class Main {
     /// <summary>
     /// Required designer variable.

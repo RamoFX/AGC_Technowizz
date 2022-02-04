@@ -8,11 +8,11 @@ using System.Windows.Forms;
 using Core;
 using Core.Storage;
 using Core.UI;
-using LayoutDesigner.UI.Dialogs;
+using Core.UI.Dialogs;
 
 
 
-namespace LayoutDesigner.UI.Forms {
+namespace LayoutDesigner {
 
   public partial class Main : Form {
     // Constants
