@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using Core;
 using Core.Storage;
+using Core.UI;
 using LayoutDesigner.UI.Dialogs;
 
 
@@ -27,7 +29,7 @@ namespace LayoutDesigner.UI.Forms {
     }
 
     private List<string> ImportableLayoutsNames {
-      get => LayoutManager.GetExistingLayoutsNames().Prepend(SelectBelow).ToList();
+      get => LayoutManager.GetExistingLayoutNames().Prepend(SelectBelow).ToList();
     }
 
 
@@ -49,7 +51,7 @@ namespace LayoutDesigner.UI.Forms {
         // If not saved ask user if he wants to save
         // If forced then do not ask
         if (!force && !this.CurrentLayout.IsCorrespondingFileUpToDate()) {
-          var dialogResult = MessageBox.Show("Rozvržení není uloženo. Přejete si ho uložit?", "Pozor!", MessageBoxButtons.YesNo);
+          var dialogResult = MessageBoxes.SaveUnsavedLayoutConfirmation();
 
           if (dialogResult == DialogResult.Yes) {
             this.Export();
@@ -92,7 +94,7 @@ namespace LayoutDesigner.UI.Forms {
         // Post-hooks
         this.UpdateState();
       } catch (System.Xml.XmlException) {
-        MessageBox.Show($"Při načítání rozvržení \"{ name }\" nastala chyba. Pravděpodobně je soubor neplatný nebo poškozený.", "Chyba!");
+        MessageBoxes.LayoutInvalid(name);
       }
     }
 
@@ -140,7 +142,7 @@ namespace LayoutDesigner.UI.Forms {
       // Delete if layout opened
       if (this.IsLayoutPresent) {
         // Ask if user is sure
-        var dialogResult = MessageBox.Show($"Rozvržení \"{ this.CurrentLayout.Name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo);
+        var dialogResult = MessageBoxes.UndoableDeletionConfirmation(this.CurrentLayout.Name);
 
         if (dialogResult == DialogResult.Yes) {
           this.CurrentLayout.Delete();
@@ -165,13 +167,13 @@ namespace LayoutDesigner.UI.Forms {
         bool nameAlreadyTaken = LayoutManager.IsNameAlreadyTaken(newName);
 
         if (isEmpty) {
-          MessageBox.Show("Textové pole nesmí být prázdné.");
+          MessageBoxes.TextFieldCannotBeEmpty();
           return false;
         } else if (newNameContainsInvalidChars) {
-          MessageBox.Show("Textové pole nesmí obsahovat zakázané znaky.");
+          MessageBoxes.TextFieldCannotContainInvalidChars();
           return false;
         } else if (nameAlreadyTaken) {
-          MessageBox.Show("Tento název se již používá. Zadejte prosím jiný.");
+          MessageBoxes.LayoutNameAlreadyExist();
           return false;
         } else {
           return true;
@@ -221,7 +223,7 @@ namespace LayoutDesigner.UI.Forms {
     }
 
     private void UpdateDeleteControl_Enabled() {
-      this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent && this.CurrentLayout.HasCorrespondingFile();
+      this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent && this.CurrentLayout.HasValidCorrespondingFile();
     }
 
     private void UpdateExistingLayouts_DataSource() {
@@ -282,10 +284,10 @@ namespace LayoutDesigner.UI.Forms {
     }
 
     private void ToolStripMenuItem_OpenInFileExplorer_Click(object sender, EventArgs e) {
-      if (Directory.Exists(Preferences.LayoutsPath)) {
-        Process.Start("explorer.exe", Preferences.LayoutsPath);
+      if (Directory.Exists(StaticSettings.LayoutsPath)) {
+        Process.Start("explorer.exe", StaticSettings.LayoutsPath);
       } else {
-        MessageBox.Show("Nelze otevřít, rozvržení neexistují. Zkuste nejprve vytvořit nové rozvržení.", "Chyba!");
+        MessageBoxes.NoLayoutsExist();
       }
     }
 

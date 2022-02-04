@@ -27,8 +27,16 @@ namespace Core.Helpers {
       return CreateElement(name, attributes, null);
     }
 
+    static public XElement CreateElement(XName name,XAttribute attribute) {
+      return CreateElement(name, new XAttribute[1] { attribute }, null);
+    }
+
     static public XElement CreateElement(XName name, IEnumerable<XElement> childrenElements) {
       return CreateElement(name, null, childrenElements);
+    }
+
+    static public XElement CreateElement(XName name, XElement childrenElement) {
+      return CreateElement(name, null, new XElement[1] { childrenElement });
     }
   }
 }

@@ -1,29 +1,102 @@
-﻿using Core.Communicator;
-using System;
+﻿using System;
 using System.Drawing;
-using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
+
+using Core;
 using Core.Storage;
+using Core.Communicator;
+using Core.UI;
+using Core.Helpers;
+
+
 
 namespace ZoneAssigner
 {
-  public partial class Form1 : Form {
-    public Form1() {
+  public partial class Main : Form {
+    public Main() {
       InitializeComponent();
-
-      string PathToLastLayout = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "AGC_Technowizz_Layouts",
-        "Layout.last"
-      );
-
-      if (File.Exists(PathToLastLayout))
-        DataProcessing.Setup(File.ReadAllText(PathToLastLayout));
-      else
-        DataProcessing.Setup();
-
-      this.Text = $"{FormName} ({DataProcessing.ActiveLayout.Name})";
+      Initialize_ComboBox_ValidLayoutNames();
+      InitializeLayout();
+      this.ComboBox_ContainerCodes.DataSource = this.CurrentLayout.Zones
+        .SelectMany(zone => zone.CarBrands)
+        .Distinct()
+        .Select((_, index) => index)
+        .ToList();
     }
+
+
+
+    // Fields & Properties
+    private const string FormName = "Přiřazovač zón";
+    private Layout CurrentLayout;
+
+    /* and so on... */
+
+
+
+    // Events
+    private void ComboBox_ValidLayoutNames_SelectionChangeCommitted(object sender, EventArgs e) {
+      string selectedLayoutName = (string) this.ValidLayoutNames.SelectedItem;
+      this.SetActiveLayout(selectedLayoutName);
+    }
+
+    private void ComboBox_ContainerCodes_SelectedIndexChanged(object sender, EventArgs e) {
+      ContainerCodeTextField.Text = ComboBox_ContainerCodes.Text;
+    }
+
+    /* and so on... */
+
+
+
+    // Initializators
+    private void Initialize_ComboBox_ValidLayoutNames() {
+      this.ValidLayoutNames.ComboBox.BindingContext = this.BindingContext;
+      this.ValidLayoutNames.ComboBox.SelectionChangeCommitted += this.ComboBox_ValidLayoutNames_SelectionChangeCommitted;
+      this.ValidLayoutNames.ComboBox.DataSource = LayoutManager.GetValidLayoutNames().ToList();
+    }
+
+    private void InitializeLayout() {
+      IEnumerable<string> validLayoutNames = LayoutManager.GetValidLayoutNames();
+
+      // Load initial layout
+      if (validLayoutNames.Contains(DynamicSettings.ZA_StartupLayoutName.Value)) {
+        // Startup
+        this.SetActiveLayout(DynamicSettings.ZA_StartupLayoutName.Value);
+      } else if (validLayoutNames.Count() > 0) {
+        // First existing
+        string firstAvailableLayoutName = validLayoutNames.First();
+        this.SetActiveLayout(firstAvailableLayoutName);
+        MessageBoxes.StartupLayoutCorruptedOrDoesntExist();
+      } else {
+        // No layouts
+        MessageBoxes.NoLayoutsExist();
+        Application.Exit();
+      }
+    }
+
+    /* and so on... */
+
+
+
+    // State update
+    private void SetActiveLayout(string name) {
+      try {
+        this.CurrentLayout = Core.Storage.Layout.Import(name);
+        this.ValidLayoutNames.ComboBox.DataSource = LayoutManager.GetExistingLayoutNames().ToList();
+        this.ValidLayoutNames.SelectedItem = name;
+        DynamicSettings.ZA_StartupLayoutName.Value = name;
+        this.Text = $"{FormName} ({name})";
+      } catch {
+        MessageBoxes.LayoutInvalid(name);
+        InitializeLayout();
+      }
+    }
+
+    /* and so on... */
+
+
 
     public const int boxSize = 30;
     public const int borderWidth = 3;
@@ -41,22 +114,7 @@ namespace ZoneAssigner
     const int TotalHighlights = 4;
     const bool LastHighlightOn = true;
 
-    const string FormName = "Přiřazovač zón";
-
     static Color color = Color.Red;
-
-    void DelayAction(int millisecond, Action action)
-    {
-      Timer timer = new Timer();
-      timer.Tick += delegate
-      {
-        action.Invoke();
-        timer.Stop();
-      };
-
-      timer.Interval = millisecond;
-      timer.Start();
-    }
 
     Rectangle GetRectangleFromZone(string zone)
     {
@@ -118,12 +176,12 @@ namespace ZoneAssigner
         else if (i % 2 == 0)
         {
           HighlightZone(zone, g);
-          DelayAction(HighlightTimeOnMs, Refresh);
+          Utilities.DelayAction(HighlightTimeOnMs, Refresh);
           i++;
         }
         else
         {
-          DelayAction(HighlightTimeOffMs, Refresh);
+          Utilities.DelayAction(HighlightTimeOffMs, Refresh);
           i++;
         }
       }
@@ -158,26 +216,6 @@ namespace ZoneAssigner
     bool submitted = false;
     string zone = "";
 
-    private void TestDataComboBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      ContainerCodeTextField.Text = TestDataComboBox.Text;
-    }
-
-    private void ToolStripMenuItem_Open_Click(object sender, EventArgs e)
-    {
-      OpenFileDialog openFileDialog = new OpenFileDialog()
-      {
-        Filter = "Layout files | *.xml",
-        FileName = DataProcessing.ActiveLayout.Name,
-        DefaultExt = "xml",
-        AddExtension = true,
-        InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AGC_Technowizz_Layouts")
-      };
-      openFileDialog.ShowDialog();
-      DataProcessing.ActiveLayout = Core.Storage.Layout.Import(openFileDialog.FileName);
-      this.Text = $"{FormName} ({DataProcessing.ActiveLayout.Name})";
-    }
-
     private void SubmitHandler(object sender, EventArgs e)
     {
       // Check text field
@@ -199,7 +237,11 @@ namespace ZoneAssigner
       {
         // containerCode ---> zone
         string carBrand = DatabaseAccess.GetCarBrandFromContainerCode($"{ containerCode }");
-        zone = DataProcessing.GetZoneFromCarBrand(carBrand);
+        var suitableZones = this.CurrentLayout.GetSuitableZones(carBrand);
+
+        zone = suitableZones.Count() > 0
+          ? suitableZones.First().Name
+          : "×";
 
         ContainerCodeTextField.Clear();
         HideError();

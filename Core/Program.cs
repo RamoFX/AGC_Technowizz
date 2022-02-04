@@ -14,7 +14,10 @@ namespace Core {
   // Use for development testing or debugging, won't be used as entrypoint
   class Program {
     static void Main() {
-      ExampleLayoutUsage();
+      //ExampleLayoutUsage();
+
+      Console.WriteLine("\nPress any key for exit...");
+      Console.ReadKey();
     }
 
     static private Layout? CreateExampleLayout() {
@@ -58,9 +61,7 @@ namespace Core {
 
         Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { string.Join(", ", suitableZonesNames) }");
       }
-
-      Console.WriteLine("Press any key for exit...");
-      Console.ReadKey();
     }
   }
 }
+

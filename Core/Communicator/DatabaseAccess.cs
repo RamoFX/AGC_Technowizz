@@ -1,44 +1,52 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+
+using Core.Helpers;
+using Core.Storage;
+
 
 
 namespace Core.Communicator {
   public class DatabaseAccess {
-    public static string GetCarBrandFromContainerCode(string containerCode) {
+    static public string GetCarBrandFromContainerCode(string containerCode) {
       /*
        * 
-       * Zde by se měl uskutečnit požadavek na databázi SAP
-       * Aplikace posílá: řetězec - číslo čárkového kódu palety
-       * Aplikace přijímá: řetězec - krátké označení auta (např. PO, MS, ...)
+       *  Zde by se měl uskutečnit požadavek na databázi SAP
+       *  Aplikace posílá: řetězec - číslo čárkového kódu palety
+       *  Aplikace přijímá: řetězec - krátké označení auta (např. PO, MS, ...)
        * 
        */
 
-      // Pseudo database
-      //return containerCode switch {
-      //  "1" => "MS",
-      //  "2" => "SK",
-      //  "3" => "BM",
-      //  _ => "PO",
-      //};
-
-      if (DataProcessing.containerCode_name.ContainsKey(containerCode)) 
-        return DataProcessing.containerCode_name[containerCode];
-      
-      System.Windows.Forms.MessageBox.Show($"Kód neexistuje\nPoužití náhodné zóny");
-
-      return new string[] { "PO", "MS", "SK", "BM" }.ElementAt(new Random().Next(4));
+      // Pseudo database response
+      return containerCode switch {
+        "0" => "BM",
+        "1" => "TO",
+        "2" => "NM",
+        "3" => "MY",
+        "4" => "AL",
+        "5" => "PO",
+        "6" => "MS",
+        "7" => "VO",
+        "8" => "SK",
+        "9" => "FI",
+        "10" => "VW",
+        "11" => "FO",
+        "12" => "PE",
+        _ => ""
+      };
     }
 
-    public static int GetZonePalletsCount(string zoneName) {
+    static public int GetZonePalletsCountFromZoneName(string zoneName) {
       /*
        * 
-       * Zde by se měl uskutečnit požadavek na databázi SAP
-       * Aplikace posílá: řetězec - název zóny (např. A1, AB98, ..)
-       * Aplikace přijímá: číslo - počet palet v dané zóně
+       *  Zde by se měl uskutečnit požadavek na databázi SAP
+       *  Aplikace posílá: řetězec - název zóny (např. A1, AB98, ..)
+       *  Aplikace přijímá: číslo - počet palet v dané zóně
        * 
        */
 
-      // Pseudo database
+      // Pseudo database response
       return zoneName switch {
         "A1" => 28,
         "B1" => 31,
@@ -48,6 +56,45 @@ namespace Core.Communicator {
         "C3" => 1,
         _ => 0
       };
+    }
+
+    static public int GetAveragePalletsLoadFromZoneNameAndDaysCount(string zoneName, int daysCount) {
+      /*
+       * 
+       *  Zde by se měl uskutečnit požadavek na databázi SAP
+       *  Aplikace posílá: řetězec - název zóny (např. A1, AB98, ..)
+       *  Aplikace posílá: číslo - počet dní (např. 15, 79, ..)
+       *  Aplikace přijímá: číslo - průměrný počet palet v dané zóně za období daysCount
+       *  
+       */
+
+      // Pseudo database response
+      Func<string, int> zoneNameToAveragePalletsLoad = (zn) => {
+        Random random = new(daysCount);
+        Layout layout = Layout.Import(DynamicSettings.ZA_StartupLayoutName.Value);
+        Zone zone = layout.Zones.Find(zone => zone.Name == zn);
+        bool isZoneStorage = zone.Type == ZoneType.Storage;
+
+        return zn.ToCharArray().Aggregate(0, (sum, @char) => isZoneStorage ? ( sum + @char + random.Next((int) ( zone.MaxCapacity * 0.1 )) ) % zone.MaxCapacity : 0);
+      };
+
+      return zoneName switch {
+        "A1" => zoneNameToAveragePalletsLoad("A1"),
+        "B1" => zoneNameToAveragePalletsLoad("B1"),
+        "B2" => zoneNameToAveragePalletsLoad("B2"),
+        "C1" => zoneNameToAveragePalletsLoad("C1"),
+        "C2" => zoneNameToAveragePalletsLoad("C2"),
+        "C3" => zoneNameToAveragePalletsLoad("C3"),
+        _ => 0
+      };
+    }
+
+
+
+    static private readonly Random Random = new();
+
+    static private int GetRandomDelay() {
+      return Random.Next(20, 300);
     }
   }
 }

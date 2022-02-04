@@ -39,14 +39,14 @@ namespace Core.Storage {
 
     // Self interactions
     static public string GetPath(string name) {
-      bool directoryExists = Directory.Exists(Preferences.LayoutsPath);
+      bool directoryExists = Directory.Exists(StaticSettings.LayoutsPath);
 
       if (!directoryExists) {
-        Directory.CreateDirectory(Preferences.LayoutsPath);
+        Directory.CreateDirectory(StaticSettings.LayoutsPath);
       }
 
       return Path.Combine(
-        Preferences.LayoutsPath,
+        StaticSettings.LayoutsPath,
         Path.ChangeExtension(name, "xml")
       );
     }
@@ -56,15 +56,29 @@ namespace Core.Storage {
     }
 
     public string LatestSaveHash() {
-      if (this.HasCorrespondingFile()) {
+      if (this.HasValidCorrespondingFile()) {
         return Import(this.Name).ComputeHash();
       } else {
         return "";
       }
     }
 
-    public bool HasCorrespondingFile() {
-      return File.Exists(this.GetPath());
+    static public bool HasValidCorrespondingFile(string name) {
+      bool isValid;
+
+      try {
+        Import(name);
+
+        isValid = true;
+      } catch {
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    public bool HasValidCorrespondingFile() {
+      return HasValidCorrespondingFile(this.Name);
     }
 
     public bool IsCorrespondingFileUpToDate() {
@@ -94,7 +108,7 @@ namespace Core.Storage {
 
     // File system interactions
     public void Move(string toName) {
-      if (this.HasCorrespondingFile()) {
+      if (this.HasValidCorrespondingFile()) {
         File.Move(this.GetPath(), GetPath(toName));
       }
     }
@@ -103,7 +117,7 @@ namespace Core.Storage {
       string oldName = this.Name;
 
       // Check if file exists
-      if (this.HasCorrespondingFile()) {
+      if (this.HasValidCorrespondingFile()) {
         // Can be older version
         Layout oldLayout = Layout.Import(oldName);
         oldLayout.Move(newName);
@@ -116,7 +130,7 @@ namespace Core.Storage {
     }
 
     public void Delete() {
-      if (this.HasCorrespondingFile()) {
+      if (this.HasValidCorrespondingFile()) {
         File.Delete(this.GetPath());
       }
     }

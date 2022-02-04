@@ -1,6 +1,6 @@
 ﻿
 namespace ZoneAssigner {
-  partial class Form1 {
+  partial class Main {
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -24,8 +24,8 @@ namespace ZoneAssigner {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-      this.TestDataComboBox = new System.Windows.Forms.ComboBox();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+      this.ComboBox_ContainerCodes = new System.Windows.Forms.ComboBox();
       this.ErrorLabel = new System.Windows.Forms.Label();
       this.ContainerCodeTextField = new System.Windows.Forms.TextBox();
       this.SubmitButton = new System.Windows.Forms.Button();
@@ -33,17 +33,17 @@ namespace ZoneAssigner {
       this.ZoneLabel = new System.Windows.Forms.Label();
       this.VisualizerPictureBox = new System.Windows.Forms.PictureBox();
       this.MenuStrip = new System.Windows.Forms.MenuStrip();
-      this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_Settings = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_StartupLayout = new System.Windows.Forms.ToolStripMenuItem();
+      this.ValidLayoutNames = new System.Windows.Forms.ToolStripComboBox();
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).BeginInit();
       this.MenuStrip.SuspendLayout();
       this.SuspendLayout();
       // 
-      // TestDataComboBox
+      // ComboBox_ContainerCodes
       // 
-      this.TestDataComboBox.FormattingEnabled = true;
-      this.TestDataComboBox.Items.AddRange(new object[] {
+      this.ComboBox_ContainerCodes.FormattingEnabled = true;
+      this.ComboBox_ContainerCodes.Items.AddRange(new object[] {
             "804322612",
             "0805001314",
             "0806822870",
@@ -94,11 +94,11 @@ namespace ZoneAssigner {
             "0805350386",
             "0806421183",
             "0806862018"});
-      this.TestDataComboBox.Location = new System.Drawing.Point(840, 27);
-      this.TestDataComboBox.Name = "TestDataComboBox";
-      this.TestDataComboBox.Size = new System.Drawing.Size(170, 21);
-      this.TestDataComboBox.TabIndex = 1;
-      this.TestDataComboBox.SelectedIndexChanged += new System.EventHandler(this.TestDataComboBox_SelectedIndexChanged);
+      this.ComboBox_ContainerCodes.Location = new System.Drawing.Point(840, 27);
+      this.ComboBox_ContainerCodes.Name = "ComboBox_ContainerCodes";
+      this.ComboBox_ContainerCodes.Size = new System.Drawing.Size(170, 21);
+      this.ComboBox_ContainerCodes.TabIndex = 1;
+      this.ComboBox_ContainerCodes.SelectedIndexChanged += new System.EventHandler(this.ComboBox_ContainerCodes_SelectedIndexChanged);
       // 
       // ErrorLabel
       // 
@@ -107,7 +107,7 @@ namespace ZoneAssigner {
       this.ErrorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
       this.ErrorLabel.Location = new System.Drawing.Point(9, 77);
       this.ErrorLabel.Name = "ErrorLabel";
-      this.ErrorLabel.Size = new System.Drawing.Size(232, 16);
+      this.ErrorLabel.Size = new System.Drawing.Size(233, 16);
       this.ErrorLabel.TabIndex = 5;
       this.ErrorLabel.Text = "Textové pole nesmí být prázdné.";
       this.ErrorLabel.Visible = false;
@@ -139,7 +139,7 @@ namespace ZoneAssigner {
       this.ContainerCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.ContainerCodeLabel.Location = new System.Drawing.Point(169, 24);
       this.ContainerCodeLabel.Name = "ContainerCodeLabel";
-      this.ContainerCodeLabel.Size = new System.Drawing.Size(71, 16);
+      this.ContainerCodeLabel.Size = new System.Drawing.Size(72, 16);
       this.ContainerCodeLabel.TabIndex = 8;
       this.ContainerCodeLabel.Text = "Kód palety";
       // 
@@ -149,7 +149,7 @@ namespace ZoneAssigner {
       this.ZoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 99.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
       this.ZoneLabel.Location = new System.Drawing.Point(496, 27);
       this.ZoneLabel.Name = "ZoneLabel";
-      this.ZoneLabel.Size = new System.Drawing.Size(244, 152);
+      this.ZoneLabel.Size = new System.Drawing.Size(245, 152);
       this.ZoneLabel.TabIndex = 9;
       this.ZoneLabel.Text = "XY";
       this.ZoneLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -169,35 +169,35 @@ namespace ZoneAssigner {
       // MenuStrip
       // 
       this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.souborToolStripMenuItem});
+            this.ToolStripMenuItem_Settings});
       this.MenuStrip.Location = new System.Drawing.Point(0, 0);
       this.MenuStrip.Name = "MenuStrip";
       this.MenuStrip.Size = new System.Drawing.Size(1022, 24);
       this.MenuStrip.TabIndex = 11;
       // 
-      // souborToolStripMenuItem
+      // ToolStripMenuItem_Settings
       // 
-      this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_Open,
-            this.ToolStripMenuItem_Save});
-      this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
-      this.souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-      this.souborToolStripMenuItem.Text = "Soubor";
+      this.ToolStripMenuItem_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_StartupLayout});
+      this.ToolStripMenuItem_Settings.Name = "ToolStripMenuItem_Settings";
+      this.ToolStripMenuItem_Settings.Size = new System.Drawing.Size(71, 20);
+      this.ToolStripMenuItem_Settings.Text = "Nastavení";
       // 
-      // ToolStripMenuItem_Open
+      // ToolStripMenuItem_StartupLayout
       // 
-      this.ToolStripMenuItem_Open.Name = "ToolStripMenuItem_Open";
-      this.ToolStripMenuItem_Open.Size = new System.Drawing.Size(180, 22);
-      this.ToolStripMenuItem_Open.Text = "Otevřít";
-      this.ToolStripMenuItem_Open.Click += new System.EventHandler(this.ToolStripMenuItem_Open_Click);
+      this.ToolStripMenuItem_StartupLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ValidLayoutNames});
+      this.ToolStripMenuItem_StartupLayout.Name = "ToolStripMenuItem_StartupLayout";
+      this.ToolStripMenuItem_StartupLayout.Size = new System.Drawing.Size(175, 22);
+      this.ToolStripMenuItem_StartupLayout.Text = "Spouštěcí rozvržení";
       // 
-      // ToolStripMenuItem_Save
+      // ValidLayoutNames
       // 
-      this.ToolStripMenuItem_Save.Name = "ToolStripMenuItem_Save";
-      this.ToolStripMenuItem_Save.Size = new System.Drawing.Size(180, 22);
-      this.ToolStripMenuItem_Save.Text = "Uložit";
+      this.ValidLayoutNames.DropDownWidth = 200;
+      this.ValidLayoutNames.Name = "ValidLayoutNames";
+      this.ValidLayoutNames.Size = new System.Drawing.Size(200, 23);
       // 
-      // Form1
+      // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -209,10 +209,10 @@ namespace ZoneAssigner {
       this.Controls.Add(this.SubmitButton);
       this.Controls.Add(this.ContainerCodeTextField);
       this.Controls.Add(this.ErrorLabel);
-      this.Controls.Add(this.TestDataComboBox);
+      this.Controls.Add(this.ComboBox_ContainerCodes);
       this.DoubleBuffered = true;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.Name = "Form1";
+      this.Name = "Main";
       this.Text = "(unset)";
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).EndInit();
       this.MenuStrip.ResumeLayout(false);
@@ -223,7 +223,7 @@ namespace ZoneAssigner {
     }
 
     #endregion
-    private System.Windows.Forms.ComboBox TestDataComboBox;
+    private System.Windows.Forms.ComboBox ComboBox_ContainerCodes;
     private System.Windows.Forms.Label ErrorLabel;
     private System.Windows.Forms.TextBox ContainerCodeTextField;
     private System.Windows.Forms.Button SubmitButton;
@@ -231,9 +231,9 @@ namespace ZoneAssigner {
     private System.Windows.Forms.Label ZoneLabel;
     private System.Windows.Forms.PictureBox VisualizerPictureBox;
     private System.Windows.Forms.MenuStrip MenuStrip;
-    private System.Windows.Forms.ToolStripMenuItem souborToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Open;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Save;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Settings;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_StartupLayout;
+    private System.Windows.Forms.ToolStripComboBox ValidLayoutNames;
   }
 }
 

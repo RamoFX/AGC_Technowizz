@@ -27,7 +27,7 @@ namespace Core.Storage {
 
     public int PalletsCurrentlyStored {
       get => this.Type == ZoneType.Storage
-        ? DatabaseAccess.GetZonePalletsCount(this.Name)
+        ? DatabaseAccess.GetZonePalletsCountFromZoneName(this.Name)
         : 0;
     }
 
