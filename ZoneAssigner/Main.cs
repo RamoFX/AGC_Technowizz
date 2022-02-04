@@ -94,21 +94,6 @@ namespace ZoneAssigner
       }
     }
 
-    /* and so on... */
-
-
-
-    public const int boxSize = 30;
-    public const int borderWidth = 3;
-
-    // výška na ose Y
-    public const int upperSize = 240;
-    public const int bottomSize = 150;
-
-    // vzdálenost na ose X
-    public const int Astart = 0, Cstart = 0;
-    public const int Bstart = 510, Dstart = 870;
-
     const int HighlightTimeOnMs = 600;
     const int HighlightTimeOffMs = 300;
     const int TotalHighlights = 4;
@@ -116,49 +101,12 @@ namespace ZoneAssigner
 
     static Color color = Color.Red;
 
-    Rectangle GetRectangleFromZone(string zone)
-    {
-      if (zone != "X")
-      {
-        Rectangle rect = new();
-        switch (zone[0].ToString().ToLower())
-        {
-          case "a":
-            rect.X = Astart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-            rect.Y = 0;
-            rect.Height = upperSize;
-            break;
-          case "b":
-            rect.X = Bstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-            rect.Y = 0;
-            rect.Height = upperSize;
-            break;
-          case "c":
-            rect.X = Cstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-            rect.Y = upperSize + 4 * boxSize;
-            rect.Height = bottomSize;
-            break;
-          case "d":
-            rect.X = Dstart + (Convert.ToInt32(zone.Substring(1)) - 1) * boxSize;
-            rect.Y = upperSize + 4 * boxSize;
-            rect.Height = bottomSize;
-            break;
-        }
-        rect.Width = boxSize;
-        return rect;
-      }
-      else return new();
-    }
-
-    // Draw rectangle to highlight zone
-    void HighlightZone(string zone, Graphics g)
-    {
-      Rectangle rect = GetRectangleFromZone(zone);
-      g.FillRectangle(new SolidBrush(Color.FromArgb(50, color)), rect);
-      g.DrawRectangle(new(color, borderWidth), rect);
-    }
 
     int i = 0;
+    bool submitted = false;
+    Zone zone;
+
+
     private void VisualizerPictureBox_Paint(object sender, PaintEventArgs e)
     {
       Graphics g = e.Graphics;
@@ -169,13 +117,13 @@ namespace ZoneAssigner
         if (i == TotalHighlights * 2) 
         {
           i = 0;
-          if (LastHighlightOn) HighlightZone(zone, g);
+          if (LastHighlightOn) Utilities.Drawer.Draw(zone, color, g);
         }
 
         // Turn highlight on and off
         else if (i % 2 == 0)
         {
-          HighlightZone(zone, g);
+          Utilities.Drawer.Draw(zone, color, g);
           Utilities.DelayAction(HighlightTimeOnMs, Refresh);
           i++;
         }
@@ -213,9 +161,6 @@ namespace ZoneAssigner
       ZoneLabel.Visible = false;
     }
 
-    bool submitted = false;
-    string zone = "";
-
     private void SubmitHandler(object sender, EventArgs e)
     {
       // Check text field
@@ -240,12 +185,12 @@ namespace ZoneAssigner
         var suitableZones = this.CurrentLayout.GetSuitableZones(carBrand);
 
         zone = suitableZones.Count() > 0
-          ? suitableZones.First().Name
-          : "×";
+          ? suitableZones.First()
+          : null;
 
         ContainerCodeTextField.Clear();
         HideError();
-        ShowZone(zone.ToUpper());
+        ShowZone(zone.Name.ToUpper());
         VisualizerPictureBox.Refresh();
       }
     }
