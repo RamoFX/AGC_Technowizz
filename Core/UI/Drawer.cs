@@ -53,11 +53,5 @@ namespace Core.UI {
       } else
         return new();
     }
-
-    /// <summary>
-    /// Returns color that should be a background for drawing specific CarBrand
-    /// </summary>
-    /// <param name="carBrandUsage"></param>
-    /// <returns>Color</returns>
   }
 }
