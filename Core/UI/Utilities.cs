@@ -122,6 +122,27 @@ namespace Core.UI {
         }
         else return new();
       }
+
+      /// <summary>
+      /// Returns color that should be a background for drawing specific CarBrand
+      /// </summary>
+      /// <param name="carBrandUsage"></param>
+      /// <returns>Color</returns>
+      public static Color GetColorByCarBrandUsage(int carBrandUsage)
+      {
+        if (carBrandUsage == 100)
+          return Color.Red;
+        if (carBrandUsage >= 75)
+          return Color.OrangeRed;
+        if (carBrandUsage >= 50)
+          return Color.Orange;
+        if (carBrandUsage >= 25)
+          return Color.Yellow;
+        if (carBrandUsage > 0)
+          return Color.Green;
+
+        return Color.Transparent;
+      }
     }
   }
 }
