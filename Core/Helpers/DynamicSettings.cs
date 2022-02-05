@@ -8,8 +8,10 @@ using System.Linq;
 namespace Core {
   static public partial class DynamicSettings {
     static private void PrepareSettingsFile() {
-      if (!File.Exists(StaticSettings.SettingsFilePath))
+      if (!File.Exists(StaticSettings.SettingsFilePath)) {
+        Directory.CreateDirectory(Path.GetDirectoryName(StaticSettings.SettingsFilePath));
         File.Create(StaticSettings.SettingsFilePath);
+      }
     }
 
     static public void WriteSettingsValue(string key, string value) {
