@@ -5,7 +5,8 @@ using System.Linq;
 
 
 
-namespace Core {
+namespace Core
+{
   static public partial class DynamicSettings {
     static private void PrepareSettingsFile() {
       if (!File.Exists(StaticSettings.SettingsFilePath)) {
