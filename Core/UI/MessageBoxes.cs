@@ -13,6 +13,10 @@ namespace Core.UI {
       MessageBox.Show("Rozvržení nenalezeny. Zkuste nejprve vytvořit nové rozvržení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
+    static public void NoSettingsExist() {
+      MessageBox.Show("Žadná nastavení nenalezena. Zkuste nejprve spustit ostatní aplikace.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
     static public void LayoutInvalid(string name) {
       MessageBox.Show($"Rozvržení \"{ name }\" je poškozené.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
@@ -34,9 +38,17 @@ namespace Core.UI {
 
 
 
+    // Successes
+    static public void SettingsWriteSuccessful()
+    {
+      MessageBox.Show("Zapsání nastavení bylo úspěšné", "Správně!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+
+
     // Confirmation
     static public DialogResult SaveUnsavedLayout() {
-      return MessageBox.Show("Rozvržení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+      return MessageBox.Show("Rozvržení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
     }
 
     static public DialogResult UndoableDeletion(string name) {
