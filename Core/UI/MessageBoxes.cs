@@ -6,7 +6,7 @@ namespace Core.UI {
   static public class MessageBoxes {
     // Errors
     static public void StartupLayoutCorruptedOrDoesntExist() {
-      MessageBox.Show("Spoučtěcí rozvržení je poškozené nebo neexistuje.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      MessageBox.Show("Spouštěcí rozvržení je poškozené nebo neexistuje.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     static public void NoLayoutsExist() {
