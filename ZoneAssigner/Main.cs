@@ -19,18 +19,19 @@ namespace ZoneAssigner
       InitializeComponent();
       Initialize_ComboBox_ValidLayoutNames();
       InitializeLayout();
-      this.ComboBox_ContainerCodes.DataSource = this.CurrentLayout.Zones
-        .SelectMany(zone => zone.CarBrands)
-        .Distinct()
-        .Select((_, index) => index)
-        .ToList();
+      Initialize_ComboBox_ContainerCodes();
     }
 
 
 
     // Fields & Properties
     private const string FormName = "Přiřazovač zón";
+
     private Layout CurrentLayout;
+
+    private readonly List<string> ValidLayoutNames = LayoutManager.GetValidLayoutNames().ToList();
+
+
 
     /* and so on... */
 
@@ -38,12 +39,12 @@ namespace ZoneAssigner
 
     // Events
     private void ComboBox_ValidLayoutNames_SelectionChangeCommitted(object sender, EventArgs e) {
-      string selectedLayoutName = (string) this.ValidLayoutNames.SelectedItem;
+      string selectedLayoutName = (string) this.Menu_ValidLayoutNames.SelectedItem;
       this.SetActiveLayout(selectedLayoutName);
     }
 
     private void ComboBox_ContainerCodes_SelectedIndexChanged(object sender, EventArgs e) {
-      ContainerCodeTextField.Text = ComboBox_ContainerCodes.Text;
+      TextField_ContainerCode.Text = ComboBox_ContainerCodes.Text;
     }
 
     /* and so on... */
@@ -52,22 +53,19 @@ namespace ZoneAssigner
 
     // Initializators
     private void Initialize_ComboBox_ValidLayoutNames() {
-      this.ValidLayoutNames.ComboBox.BindingContext = this.BindingContext;
-      this.ValidLayoutNames.ComboBox.SelectionChangeCommitted += this.ComboBox_ValidLayoutNames_SelectionChangeCommitted;
-      this.ValidLayoutNames.ComboBox.DataSource = LayoutManager.GetValidLayoutNames().ToList();
+      this.Menu_ValidLayoutNames.ComboBox.BindingContext = this.BindingContext;
+      this.Menu_ValidLayoutNames.ComboBox.SelectionChangeCommitted += this.ComboBox_ValidLayoutNames_SelectionChangeCommitted;
+      this.Menu_ValidLayoutNames.ComboBox.DataSource = ValidLayoutNames;
     }
 
     private void InitializeLayout() {
-      IEnumerable<string> validLayoutNames = LayoutManager.GetValidLayoutNames();
-
       // Load initial layout
-      if (validLayoutNames.Contains(DynamicSettings.ZA_StartupLayoutName.Value)) {
+      if (ValidLayoutNames.Contains(DynamicSettings.ZA_StartupLayoutName.Value)) {
         // Startup
         this.SetActiveLayout(DynamicSettings.ZA_StartupLayoutName.Value);
-      } else if (validLayoutNames.Count() > 0) {
+      } else if (ValidLayoutNames.Count() > 0) {
         // First existing
-        string firstAvailableLayoutName = validLayoutNames.First();
-        this.SetActiveLayout(firstAvailableLayoutName);
+        this.SetActiveLayout(ValidLayoutNames.First());
         MessageBoxes.StartupLayoutCorruptedOrDoesntExist();
       } else {
         // No layouts
@@ -76,23 +74,31 @@ namespace ZoneAssigner
       }
     }
 
+    private void Initialize_ComboBox_ContainerCodes() {
+      this.ComboBox_ContainerCodes.DataSource = this.CurrentLayout.Zones
+        .SelectMany(zone => zone.CarBrands)
+        .Distinct()
+        .Select((_, index) => index)
+        .ToList();
+    }
+
     /* and so on... */
 
 
 
     // State update
     private void SetActiveLayout(string name) {
-      try {
-        this.CurrentLayout = Core.Storage.Layout.Import(name);
-        this.ValidLayoutNames.ComboBox.DataSource = LayoutManager.GetExistingLayoutNames().ToList();
-        this.ValidLayoutNames.SelectedItem = name;
-        DynamicSettings.ZA_StartupLayoutName.Value = name;
-        this.Text = $"{FormName} ({name})";
-      } catch {
-        MessageBoxes.LayoutInvalid(name);
-        InitializeLayout();
-      }
+      this.CurrentLayout = Core.Storage.Layout.Import(name);
+      this.Text = $"{FormName} ({name})";
+      this.Menu_ValidLayoutNames.SelectedItem = name;
+      DynamicSettings.ZA_StartupLayoutName.Value = name;
+
+      Initialize_ComboBox_ContainerCodes();
     }
+
+    /* and so on... */
+
+
 
     const int HighlightTimeOnMs = 600;
     const int HighlightTimeOffMs = 300;
@@ -164,8 +170,8 @@ namespace ZoneAssigner
     private void SubmitHandler(object sender, EventArgs e)
     {
       // Check text field
-      bool containerCodeEmpty = ContainerCodeTextField.Text.Trim().Length == 0;
-      bool containerCodeNotOnlyNumbers = !int.TryParse(ContainerCodeTextField.Text, out int containerCode);
+      bool containerCodeEmpty = TextField_ContainerCode.Text.Trim().Length == 0;
+      bool containerCodeNotOnlyNumbers = !int.TryParse(TextField_ContainerCode.Text, out int containerCode);
       submitted = true;
 
       if (containerCodeEmpty)
@@ -182,15 +188,11 @@ namespace ZoneAssigner
       {
         // containerCode ---> zone
         string carBrand = DatabaseAccess.GetCarBrandFromContainerCode($"{ containerCode }");
-        var suitableZones = this.CurrentLayout.GetSuitableZones(carBrand);
+        zone = this.CurrentLayout.GetFirstSuitableZoneOrDefault(carBrand);
 
-        zone = suitableZones.Count() > 0
-          ? suitableZones.First()
-          : null;
-
-        ContainerCodeTextField.Clear();
+        TextField_ContainerCode.Clear();
         HideError();
-        ShowZone(zone.Name.ToUpper());
+        ShowZone(zone?.Name ?? "×"); // Can be default(Zone) == null
         VisualizerPictureBox.Refresh();
       }
     }

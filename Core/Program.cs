@@ -25,7 +25,7 @@ namespace Core {
         return carBrands;
       }
 
-      Layout example = new("Example", new(15, 8));
+      Layout example2 = new("Example2", new(15, 8));
 
       Zone a1 = new("A1", new(0, 0), new(5, 3), 4, ZoneType.Storage, CarBrands("BM", "TO", "NM", "MY"));
       Zone b1 = new("B1", new(5, 0), new(5, 4), 4, ZoneType.Storage, CarBrands("AL"));
@@ -37,19 +37,19 @@ namespace Core {
       Zone export = new("Export", new(11, 5), new(4, 3), 0, ZoneType.Other);
       Zone office = new("Office", new(0, 5), new(4, 3), 0, ZoneType.Other);
 
-      example.Zones.Add(a1);
-      example.Zones.Add(b1);
-      example.Zones.Add(b2);
-      example.Zones.Add(c1);
-      example.Zones.Add(c2);
-      example.Zones.Add(c3);
-      example.Zones.Add(office);
-      example.Zones.Add(export);
+      example2.Zones.Add(a1);
+      example2.Zones.Add(b1);
+      example2.Zones.Add(b2);
+      example2.Zones.Add(c1);
+      example2.Zones.Add(c2);
+      example2.Zones.Add(c3);
+      example2.Zones.Add(office);
+      example2.Zones.Add(export);
 
-      example.Export();
+      example2.Export();
 
-      Console.WriteLine($"Návrh rozložení uložen do \"{ example.GetPath() }\".");
-      return example;
+      Console.WriteLine($"Návrh rozložení uložen do \"{ example2.GetPath() }\".");
+      return example2;
     }
 
     static private void ExampleLayoutUsage() {
@@ -57,9 +57,9 @@ namespace Core {
 
       if (exampleLayout != null) {
         const string carBrand = "AL";
-        IEnumerable<string> suitableZonesNames = exampleLayout.GetSuitableZones(carBrand).Select(zone => zone.Name);
+        string zone = exampleLayout.GetFirstSuitableZoneOrDefault(carBrand)?.Name ?? "×";
 
-        Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { string.Join(", ", suitableZonesNames) }");
+        Console.WriteLine($"Kam ukládat palety pro značku \"{ carBrand }\"? \nSem: { zone }");
       }
     }
   }

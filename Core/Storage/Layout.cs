@@ -100,8 +100,8 @@ namespace Core.Storage {
 
 
     // Zone interactions
-    public IEnumerable<Zone> GetSuitableZones(string carBrand) {
-      return this.Zones.FindAll(zone => zone.IsSuitable(carBrand));
+    public Zone GetFirstSuitableZoneOrDefault(string carBrand) {
+      return this.Zones.FirstOrDefault(zone => zone.IsSuitable(carBrand));
     }
 
 

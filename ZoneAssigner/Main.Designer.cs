@@ -27,15 +27,15 @@ namespace ZoneAssigner {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.ComboBox_ContainerCodes = new System.Windows.Forms.ComboBox();
       this.ErrorLabel = new System.Windows.Forms.Label();
-      this.ContainerCodeTextField = new System.Windows.Forms.TextBox();
+      this.TextField_ContainerCode = new System.Windows.Forms.TextBox();
       this.SubmitButton = new System.Windows.Forms.Button();
       this.ContainerCodeLabel = new System.Windows.Forms.Label();
       this.ZoneLabel = new System.Windows.Forms.Label();
       this.VisualizerPictureBox = new System.Windows.Forms.PictureBox();
       this.MenuStrip = new System.Windows.Forms.MenuStrip();
-      this.ToolStripMenuItem_Settings = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripMenuItem_StartupLayout = new System.Windows.Forms.ToolStripMenuItem();
-      this.ValidLayoutNames = new System.Windows.Forms.ToolStripComboBox();
+      this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
+      this.Menu_StartupLayout = new System.Windows.Forms.ToolStripMenuItem();
+      this.Menu_ValidLayoutNames = new System.Windows.Forms.ToolStripComboBox();
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).BeginInit();
       this.MenuStrip.SuspendLayout();
       this.SuspendLayout();
@@ -112,15 +112,15 @@ namespace ZoneAssigner {
       this.ErrorLabel.Text = "Textové pole nesmí být prázdné.";
       this.ErrorLabel.Visible = false;
       // 
-      // ContainerCodeTextField
+      // TextField_ContainerCode
       // 
-      this.ContainerCodeTextField.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.ContainerCodeTextField.Location = new System.Drawing.Point(12, 43);
-      this.ContainerCodeTextField.Multiline = true;
-      this.ContainerCodeTextField.Name = "ContainerCodeTextField";
-      this.ContainerCodeTextField.Size = new System.Drawing.Size(384, 21);
-      this.ContainerCodeTextField.TabIndex = 6;
-      this.ContainerCodeTextField.TextChanged += new System.EventHandler(this.SubmitOnEnter);
+      this.TextField_ContainerCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.TextField_ContainerCode.Location = new System.Drawing.Point(12, 43);
+      this.TextField_ContainerCode.Multiline = true;
+      this.TextField_ContainerCode.Name = "TextField_ContainerCode";
+      this.TextField_ContainerCode.Size = new System.Drawing.Size(384, 21);
+      this.TextField_ContainerCode.TabIndex = 6;
+      this.TextField_ContainerCode.TextChanged += new System.EventHandler(this.SubmitOnEnter);
       // 
       // SubmitButton
       // 
@@ -169,33 +169,33 @@ namespace ZoneAssigner {
       // MenuStrip
       // 
       this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_Settings});
+            this.Menu_Settings});
       this.MenuStrip.Location = new System.Drawing.Point(0, 0);
       this.MenuStrip.Name = "MenuStrip";
       this.MenuStrip.Size = new System.Drawing.Size(1022, 24);
       this.MenuStrip.TabIndex = 11;
       // 
-      // ToolStripMenuItem_Settings
+      // Menu_Settings
       // 
-      this.ToolStripMenuItem_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_StartupLayout});
-      this.ToolStripMenuItem_Settings.Name = "ToolStripMenuItem_Settings";
-      this.ToolStripMenuItem_Settings.Size = new System.Drawing.Size(71, 20);
-      this.ToolStripMenuItem_Settings.Text = "Nastavení";
+      this.Menu_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_StartupLayout});
+      this.Menu_Settings.Name = "Menu_Settings";
+      this.Menu_Settings.Size = new System.Drawing.Size(71, 20);
+      this.Menu_Settings.Text = "Nastavení";
       // 
-      // ToolStripMenuItem_StartupLayout
+      // Menu_StartupLayout
       // 
-      this.ToolStripMenuItem_StartupLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ValidLayoutNames});
-      this.ToolStripMenuItem_StartupLayout.Name = "ToolStripMenuItem_StartupLayout";
-      this.ToolStripMenuItem_StartupLayout.Size = new System.Drawing.Size(175, 22);
-      this.ToolStripMenuItem_StartupLayout.Text = "Spouštěcí rozvržení";
+      this.Menu_StartupLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_ValidLayoutNames});
+      this.Menu_StartupLayout.Name = "Menu_StartupLayout";
+      this.Menu_StartupLayout.Size = new System.Drawing.Size(180, 22);
+      this.Menu_StartupLayout.Text = "Spouštěcí rozvržení";
       // 
-      // ValidLayoutNames
+      // Menu_ValidLayoutNames
       // 
-      this.ValidLayoutNames.DropDownWidth = 200;
-      this.ValidLayoutNames.Name = "ValidLayoutNames";
-      this.ValidLayoutNames.Size = new System.Drawing.Size(200, 23);
+      this.Menu_ValidLayoutNames.DropDownWidth = 200;
+      this.Menu_ValidLayoutNames.Name = "Menu_ValidLayoutNames";
+      this.Menu_ValidLayoutNames.Size = new System.Drawing.Size(200, 23);
       // 
       // Main
       // 
@@ -207,7 +207,7 @@ namespace ZoneAssigner {
       this.Controls.Add(this.ZoneLabel);
       this.Controls.Add(this.ContainerCodeLabel);
       this.Controls.Add(this.SubmitButton);
-      this.Controls.Add(this.ContainerCodeTextField);
+      this.Controls.Add(this.TextField_ContainerCode);
       this.Controls.Add(this.ErrorLabel);
       this.Controls.Add(this.ComboBox_ContainerCodes);
       this.DoubleBuffered = true;
@@ -225,15 +225,15 @@ namespace ZoneAssigner {
     #endregion
     private System.Windows.Forms.ComboBox ComboBox_ContainerCodes;
     private System.Windows.Forms.Label ErrorLabel;
-    private System.Windows.Forms.TextBox ContainerCodeTextField;
+    private System.Windows.Forms.TextBox TextField_ContainerCode;
     private System.Windows.Forms.Button SubmitButton;
     private System.Windows.Forms.Label ContainerCodeLabel;
     private System.Windows.Forms.Label ZoneLabel;
     private System.Windows.Forms.PictureBox VisualizerPictureBox;
     private System.Windows.Forms.MenuStrip MenuStrip;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Settings;
-    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_StartupLayout;
-    private System.Windows.Forms.ToolStripComboBox ValidLayoutNames;
+    private System.Windows.Forms.ToolStripMenuItem Menu_Settings;
+    private System.Windows.Forms.ToolStripMenuItem Menu_StartupLayout;
+    private System.Windows.Forms.ToolStripComboBox Menu_ValidLayoutNames;
   }
 }
 

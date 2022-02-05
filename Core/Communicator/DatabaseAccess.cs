@@ -92,6 +92,7 @@ namespace Core.Communicator
     }
 
 
+
     static private readonly Random Random = new();
 
     static private void DatabaseAccessDelay() {
