@@ -27,12 +27,6 @@ namespace Core.UI {
     {
       const int borderWidth = 3;
 
-      const int upperSize = 240;
-      const int bottomSize = 150;
-
-      const int Astart = 0, Cstart = 0;
-      const int Bstart = 510, Dstart = 870;
-
       /// <summary>
       /// Draws rectangles on all zones in layout with specific color
       /// </summary>
