@@ -1,11 +1,8 @@
-﻿using Core.Helpers;
-using Core.Storage;
-using System;
-using System.Linq;
+﻿using System;
+using System.Threading;
 
 
-namespace Core.Communicator
-{
+namespace Communicator {
   public class DatabaseAccess {
     static private readonly Random Random = new();
 
@@ -23,8 +20,7 @@ namespace Core.Communicator
       // Pseudo database response
       DatabaseAccessDelay();
 
-      return containerCode switch
-      {
+      return containerCode switch {
         "0" => "BM",
         "1" => "TO",
         "2" => "NM",
@@ -111,24 +107,15 @@ namespace Core.Communicator
        */
 
       // Pseudo database response
-      Func<string, int> zoneNameToAveragePalletsLoad = (zn) => {
-        Random random = new(daysCount);
-        Layout layout = Layout.Import(DynamicSettings.ZA_StartupLayoutName.Value);
-        Zone zone = layout.Zones.Find(zone => zone.Name == zn);
-        bool isZoneStorage = zone.Type == ZoneType.Storage;
-
-        return zn.ToCharArray().Aggregate(0, (sum, @char) => isZoneStorage ? ( sum + @char + random.Next((int) ( zone.MaxCapacity * 0.1 )) ) % zone.MaxCapacity : 0);
-      };
-
       DatabaseAccessDelay();
 
       return zoneName switch {
-        "A1" => zoneNameToAveragePalletsLoad("A1"),
-        "B1" => zoneNameToAveragePalletsLoad("B1"),
-        "B2" => zoneNameToAveragePalletsLoad("B2"),
-        "C1" => zoneNameToAveragePalletsLoad("C1"),
-        "C2" => zoneNameToAveragePalletsLoad("C2"),
-        "C3" => zoneNameToAveragePalletsLoad("C3"),
+        "A1" => 40,
+        "B1" => 35,
+        "B2" => 34,
+        "C1" => 10,
+        "C2" => 9,
+        "C3" => 1,
         _ => 0
       };
     }
@@ -137,7 +124,7 @@ namespace Core.Communicator
 
     static private void DatabaseAccessDelay() {
       int delay = Random.Next(20, 300);
-      System.Threading.Thread.Sleep(delay);
+      Thread.Sleep(delay);
     }
   }
 }

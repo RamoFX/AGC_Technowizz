@@ -5,18 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-using Core.Communicator;
+using Communicator;
 using Core.Helpers;
 
 
 
 namespace Core.Storage {
   public class CarBrand : XElementConvertable<CarBrand> {
-    // References
-    public Zone ZoneParent;
-
-
-
     // Main properties
     public string Name;
     public Point Location;
@@ -24,17 +19,52 @@ namespace Core.Storage {
 
 
 
+    // Other properties
+    private Layout LayoutParent;
+    private Zone ZoneParent;
+    private bool UseDatabaseAccess = false;
+
+
+
     // Computation fields
     public int MaxCapacity {
-      get => this.Size.Width * this.Size.Height * this.ZoneParent.LayoutParent.VerticalCapacity;
+      get => this.Size.Width * this.Size.Height * this.LayoutParent.VerticalCapacity;
     }
 
     public int PalletsCurrentlyStored {
-      get => DatabaseAccess.GetZonePalletsCount(this.ZoneParent.LayoutParent.WarehouseName, this.ZoneParent.Name, this.Name);
+      get {
+        if (this.UseDatabaseAccess) {
+          return DatabaseAccess.GetZonePalletsCount(this.LayoutParent.WarehouseName, this.ZoneParent.Name, this.Name);
+        } else {
+          return 0;
+        }
+      }
     }
 
     public int PalletsCanBeStored {
       get => this.MaxCapacity - this.PalletsCurrentlyStored;
+    }
+
+    public int PalletsCurrentlyStoredPercent {
+      get => (int) Math.Round((decimal) this.PalletsCurrentlyStored / this.MaxCapacity * 100);
+    }
+
+    public CarBrandUsage Usage {
+      get {
+        if (this.PalletsCurrentlyStoredPercent == 100) {
+          return CarBrandUsage.Full;
+        } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
+          return CarBrandUsage.AlmostFull;
+        } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
+          return CarBrandUsage.AboveHalf;
+        } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
+          return CarBrandUsage.BelowHalf;
+        } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
+          return CarBrandUsage.AlmostEmpty;
+        } else {
+          return CarBrandUsage.Empty;
+        }
+      }
     }
 
 
@@ -46,13 +76,16 @@ namespace Core.Storage {
       this.Size = size;
     }
 
-    public CarBrand(CarBrand from) : this(from.Name, from.Location, from.Size) { }
+    public CarBrand(CarBrand from)
+      : this(from.Name, from.Location, from.Size) { }
 
 
 
     // Initializators
-    public void InitZoneParent(Zone zone) {
-      this.ZoneParent = zone;
+    public void Initialize(Layout layoutParent, Zone zoneParent, bool useDatabaseAccess) {
+      this.LayoutParent = layoutParent;
+      this.ZoneParent = zoneParent;
+      this.UseDatabaseAccess = useDatabaseAccess;
     }
 
 

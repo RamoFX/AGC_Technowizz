@@ -3,18 +3,12 @@ using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 
-using Core.Communicator;
 using Core.Helpers;
 
 
 
 namespace Core.Storage {
   public class Zone : XElementConvertable<Zone> {
-    // References
-    public Layout LayoutParent;
-
-
-
     // Main properties
     public string Name;
     public Point Location;
@@ -24,13 +18,36 @@ namespace Core.Storage {
 
 
 
+    // Other properties & fields
+    private Layout LayoutParent;
+    private bool _UseDatabaseAccess = false;
+
+    private bool UseDatabaseAccess {
+      get => this._UseDatabaseAccess;
+      set {
+        this._UseDatabaseAccess = value;
+
+        foreach (CarBrand carBrand in this.CarBrands) {
+          carBrand.Initialize(this.LayoutParent, this, this._UseDatabaseAccess);
+        }
+      }
+    }
+
+
+
     // Computation fields
     public int MaxCapacity {
       get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.MaxCapacity);
     }
 
     public int PalletsCurrentlyStored {
-      get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStored);
+      get {
+        if (this.UseDatabaseAccess) {
+          return this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStored);
+        } else {
+          return 0;
+        }
+      }
     }
 
     public int PalletsCanBeStored {
@@ -48,15 +65,18 @@ namespace Core.Storage {
       this.CarBrands = carBrands.ToList();
     }
 
-    public Zone(string name, Point location, Size size, ZoneType type) : this(name, location, size, type, new CarBrand[0] { }) { }
+    public Zone(string name, Point location, Size size, ZoneType type)
+      : this(name, location, size, type, new CarBrand[0] { }) { }
 
-    public Zone(Zone from) : this(from.Name, from.Location, from.Size, from.Type, from.CarBrands) { }
+    public Zone(Zone from)
+      : this(from.Name, from.Location, from.Size, from.Type, from.CarBrands) { }
 
 
 
     // Initializators
-    public void InitializeLayoutParent(Layout layout) {
-      this.LayoutParent = layout;
+    public void Initialize(Layout layoutParent, bool useDatabaseAccess) {
+      this.LayoutParent = layoutParent;
+      this.UseDatabaseAccess = useDatabaseAccess;
     }
 
 
