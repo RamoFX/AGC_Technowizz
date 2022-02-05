@@ -7,7 +7,11 @@ using System.Linq;
 namespace Core.Communicator
 {
   public class DatabaseAccess {
-    static public string GetCarBrandFromContainerCode(string containerCode) {
+    static private readonly Random Random = new();
+
+
+
+    static public string GetCarBrand(string containerCode) {
       /*
        * 
        *  Zde by se měl uskutečnit požadavek na databázi SAP
@@ -18,6 +22,7 @@ namespace Core.Communicator
 
       // Pseudo database response
       DatabaseAccessDelay();
+
       return containerCode switch
       {
         "0" => "BM",
@@ -37,29 +42,65 @@ namespace Core.Communicator
       };
     }
 
-    static public int GetZonePalletsCountFromZoneName(string zoneName) {
+    static public int GetZonePalletsCount(string warehouseName, string zoneName, string carBrandName) {
       /*
        * 
        *  Zde by se měl uskutečnit požadavek na databázi SAP
+       *  Aplikace posílá: řetězec - název skladu (např. CCx, ..)
        *  Aplikace posílá: řetězec - název zóny (např. A1, AB98, ..)
-       *  Aplikace přijímá: číslo - počet palet v dané zóně
+       *  Aplikace posílá: řetězec - název značky nebo modelu auta (např. BM, MS, VO, ..)
+       *  Aplikace přijímá: číslo - počet palet pro danou značku nebo model auta v dané zóně
        * 
        */
 
       // Pseudo database response
       DatabaseAccessDelay();
-      return zoneName switch {
-        "A1" => 28,
-        "B1" => 31,
-        "B2" => 17,
-        "C1" => 5,
-        "C2" => 9,
-        "C3" => 1,
-        _ => 0
-      };
+
+      if (warehouseName == "CCx") {
+        return zoneName switch {
+          _ => 0
+        };
+      } else if (warehouseName == "Neobvyklý") {
+        return zoneName switch {
+          "A1" => carBrandName switch {
+            "BM" => 20,
+            "TO" => 15,
+            "NM" => 5,
+            _ => 0
+          },
+          "B1" => carBrandName switch {
+            "MY" => 11,
+            "AL" => 16,
+            "PO" => 7,
+            "MS" => 1,
+            _ => 0
+          },
+          "B2" => carBrandName switch {
+            "VO" => 17,
+            "SK" => 17,
+            _ => 0
+          },
+          "C1" => carBrandName switch {
+            "FI" => 5,
+            "FO" => 5,
+            _ => 0
+          },
+          "C2" => carBrandName switch {
+            "VW" => 9,
+            _ => 0
+          },
+          "C3" => carBrandName switch {
+            "PE" => 1,
+            _ => 0
+          },
+          _ => 0
+        };
+      } else {
+        return 0;
+      }
     }
 
-    static public int GetAveragePalletsLoadFromZoneNameAndDaysCount(string zoneName, int daysCount) {
+    static public int GetAveragePalletsLoad(string zoneName, int daysCount) {
       /*
        * 
        *  Zde by se měl uskutečnit požadavek na databázi SAP
@@ -80,6 +121,7 @@ namespace Core.Communicator
       };
 
       DatabaseAccessDelay();
+
       return zoneName switch {
         "A1" => zoneNameToAveragePalletsLoad("A1"),
         "B1" => zoneNameToAveragePalletsLoad("B1"),
@@ -92,8 +134,6 @@ namespace Core.Communicator
     }
 
 
-
-    static private readonly Random Random = new();
 
     static private void DatabaseAccessDelay() {
       int delay = Random.Next(20, 300);

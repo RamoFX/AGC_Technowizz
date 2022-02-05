@@ -54,6 +54,7 @@
     <Compile Include="Helpers\DynamicSettings.cs" />
     <Compile Include="Helpers\DynamicSetting.cs" />
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Storage\CarBrand.cs" />
     <Compile Include="UI\Utilities.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="DynamicSettings.cs" />

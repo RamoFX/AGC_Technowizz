@@ -13,27 +13,55 @@ using Core.Helpers;
 
 namespace Core.Storage {
   public class Layout : XDocumentConvertable<Layout> {
+    // Main properties
     public string Name;
+    public string WarehouseName;
     public Size Size;
+    public int VerticalCapacity;
     public List<Zone> Zones;
 
 
 
-    public int MaxCapacity { get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity); }
-    public int PalletsCurrentlyStored { get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored); }
-    public int PalletsCanBeStored { get => this.MaxCapacity - this.PalletsCurrentlyStored; }
+    // Computation fields
+    public int MaxCapacity {
+      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity);
+    }
+
+    public int PalletsCurrentlyStored {
+      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
+    }
+
+    public int PalletsCanBeStored {
+      get => this.MaxCapacity - this.PalletsCurrentlyStored;
+    }
 
 
 
-    public Layout(string name, Size size, IEnumerable<Zone> zones) {
+    // Constructors
+    public Layout(string name, string warehouseName, Size size, int verticalCapacity, IEnumerable<Zone> zones) {
       this.Name = name;
+      this.WarehouseName = warehouseName;
       this.Size = size;
+      this.VerticalCapacity = verticalCapacity;
       this.Zones = zones.ToList();
     }
 
-    public Layout(string name, Size size) : this(name, size, new Zone[0] {}) { }
+    public Layout(string name, string warehouseName, Size size, int verticalCapacity) : this(name, warehouseName, size, verticalCapacity, new Zone[0] {}) { }
 
-    public Layout(Layout from) : this(from.Name, from.Size, from.Zones) { }
+    public Layout(Layout from) : this(from.Name, from.WarehouseName, from.Size, from.VerticalCapacity, from.Zones) { }
+
+
+
+    // Initializators
+    public void InitializeAll() {
+      foreach (Zone zone in this.Zones) {
+        zone.InitializeLayoutParent(this);
+
+        foreach (CarBrand carBrand in zone.CarBrands) {
+          carBrand.InitZoneParent(zone);
+        }
+      }
+    }
 
 
 
@@ -101,7 +129,7 @@ namespace Core.Storage {
 
     // Zone interactions
     public Zone GetFirstSuitableZoneOrDefault(string carBrand) {
-      return this.Zones.FirstOrDefault(zone => zone.IsSuitable(carBrand));
+      return this.Zones.FirstOrDefault(zone => zone.IsLoadable(carBrand));
     }
 
 
@@ -163,10 +191,12 @@ namespace Core.Storage {
       // Root
       XAttribute[] rootAttributes = {
         new("name", this.Name),
-        new("size", this.Size.ToCustomString())
+        new("warehouseName", this.WarehouseName),
+        new("size", this.Size.ToCustomString()),
+        new("verticalCapacity", this.VerticalCapacity)
       };
 
-      XElement root = XmlLinqUtilities.CreateElement("Layout", rootAttributes, new XElement[] { zones });
+      XElement root = XmlLinqUtilities.CreateElement("Layout", rootAttributes, zones);
 
       // Document
       XDocument document = new(root);
@@ -178,10 +208,15 @@ namespace Core.Storage {
       XElement root = document.Root;
 
       string name = root.Attribute("name").Value;
+      string warehouseName = root.Attribute("warehouseName").Value;
       Size size = root.Attribute("size").Value.ToSize();
+      int verticalCapacity = root.Attribute("verticalCapacity").Value.ToInt();
       IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
 
-      return new Layout(name, size, zones);
+      Layout layout = new(name, warehouseName, size, verticalCapacity, zones);
+      layout.InitializeAll();
+
+      return layout;
     }
   }
 }
