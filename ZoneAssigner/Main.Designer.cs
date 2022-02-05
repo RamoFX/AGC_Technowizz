@@ -43,57 +43,6 @@ namespace ZoneAssigner {
       // ComboBox_ContainerCodes
       // 
       this.ComboBox_ContainerCodes.FormattingEnabled = true;
-      this.ComboBox_ContainerCodes.Items.AddRange(new object[] {
-            "804322612",
-            "0805001314",
-            "0806822870",
-            "0806857505",
-            "0805232131",
-            "0804610458",
-            "0806884913",
-            "0806775119",
-            "0806574299",
-            "0806722973",
-            "0806375845",
-            "0806803104",
-            "0806899356",
-            "0806823575",
-            "0806861758",
-            "0806820566",
-            "0806226364",
-            "0806796702",
-            "0806818295",
-            "0806499073",
-            "0806309604",
-            "0806627423",
-            "0806815362",
-            "0806802595",
-            "0806809537",
-            "0806580397",
-            "0806884070",
-            "0804570963",
-            "0806868461",
-            "0806780770",
-            "0806890234",
-            "0806834957",
-            "0806724770",
-            "0806658323",
-            "0806888623",
-            "0803410269",
-            "0804267710",
-            "0806836117",
-            "0806082889",
-            "0806723706",
-            "0806821953",
-            "0806896472",
-            "0806778821",
-            "0806724472",
-            "0806226352",
-            "0806349708",
-            "0806821692",
-            "0805350386",
-            "0806421183",
-            "0806862018"});
       this.ComboBox_ContainerCodes.Location = new System.Drawing.Point(840, 27);
       this.ComboBox_ContainerCodes.Name = "ComboBox_ContainerCodes";
       this.ComboBox_ContainerCodes.Size = new System.Drawing.Size(170, 21);
@@ -188,7 +137,7 @@ namespace ZoneAssigner {
       this.Menu_StartupLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_ValidLayoutNames});
       this.Menu_StartupLayout.Name = "Menu_StartupLayout";
-      this.Menu_StartupLayout.Size = new System.Drawing.Size(180, 22);
+      this.Menu_StartupLayout.Size = new System.Drawing.Size(175, 22);
       this.Menu_StartupLayout.Text = "Spouštěcí rozvržení";
       // 
       // Menu_ValidLayoutNames

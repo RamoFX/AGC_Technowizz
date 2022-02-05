@@ -57,15 +57,16 @@ namespace ZoneAssigner
       } else {
         // No layouts
         MessageBoxes.NoLayoutsExist();
-        Application.Exit();
+        Application.Exit(); // WTF???????
       }
     }
 
     private void Initialize_ComboBox_ContainerCodes() {
       this.ComboBox_ContainerCodes.DataSource = this.CurrentLayout.Zones
         .SelectMany(zone => zone.CarBrands)
-        .Distinct()
+        .Select(carBrand => carBrand.Name)
         .Select((_, index) => index)
+        .Distinct()
         .ToList();
     }
 
