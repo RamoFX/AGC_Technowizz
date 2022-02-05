@@ -163,6 +163,7 @@ namespace ZoneAssigner {
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Main";
       this.Text = "(unset)";
+      this.Load += new System.EventHandler(this.Main_Load);
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).EndInit();
       this.MenuStrip.ResumeLayout(false);
       this.MenuStrip.PerformLayout();

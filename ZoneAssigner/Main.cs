@@ -17,9 +17,6 @@ namespace ZoneAssigner
   public partial class Main : Form {
     public Main() {
       InitializeComponent();
-      Initialize_ComboBox_ValidLayoutNames();
-      InitializeLayout();
-      Initialize_ComboBox_ContainerCodes();
     }
 
 
@@ -57,7 +54,7 @@ namespace ZoneAssigner
       } else {
         // No layouts
         MessageBoxes.NoLayoutsExist();
-        Application.Exit(); // WTF???????
+        Environment.Exit(0);
       }
     }
 
@@ -176,6 +173,12 @@ namespace ZoneAssigner
     private void SubmitOnEnter(object sender, EventArgs e)
     {
 
+    }
+
+    private void Main_Load(object sender, EventArgs e) {
+      Initialize_ComboBox_ValidLayoutNames();
+      InitializeLayout();
+      Initialize_ComboBox_ContainerCodes();
     }
   }
 }
