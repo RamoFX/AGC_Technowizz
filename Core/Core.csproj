@@ -85,9 +85,6 @@
     <Compile Include="UI\MessageBoxes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="UI\Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>

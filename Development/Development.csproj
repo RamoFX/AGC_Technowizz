@@ -41,9 +41,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Communicator\Communicator.csproj">
       <Project>{5aa69357-42c9-4c92-9cfe-a808a42ad0c8}</Project>
       <Name>Communicator</Name>
