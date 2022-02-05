@@ -31,17 +31,5 @@ namespace Core
       string maybeValue = lines.FirstOrDefault(line => line.StartsWith(key));
       return maybeValue != default ? maybeValue.Split(StaticSettings.SettingsSeparator)[1] : fallback;
     }
-
-    static public Dictionary<string, string> ReadAllSetings()
-    {
-      Dictionary<string, string> settings = new();
-      PrepareSettingsFile();
-      foreach (string line in File.ReadAllLines(StaticSettings.SettingsFilePath)) 
-      {
-        string[] splitLine = line.Split(StaticSettings.SettingsSeparator);
-        settings.Add(splitLine[0], string.Join(StaticSettings.SettingsSeparator.ToString(), splitLine.Skip(1)));
-      }
-      return settings;
-    }
   }
 }
