@@ -59,6 +59,12 @@ namespace Core.Storage {
 
 
 
+    // Other fields
+    public Color OutlineColor = StaticSettings.LayoutOutlineColor;
+    public Color GridColor = StaticSettings.LayoutGridColor;
+
+
+
     // Constructors
     public Layout(string name, string warehouseName, Size size, int verticalCapacity, IEnumerable<Zone> zones) {
       this.Name = name;
