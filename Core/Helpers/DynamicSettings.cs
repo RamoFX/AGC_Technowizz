@@ -10,7 +10,7 @@ namespace Core {
     static private void PrepareSettingsFile() {
       if (!File.Exists(StaticSettings.SettingsFilePath)) {
         Directory.CreateDirectory(Path.GetDirectoryName(StaticSettings.SettingsFilePath));
-        File.Create(StaticSettings.SettingsFilePath);
+        using var fileStream = File.Create(StaticSettings.SettingsFilePath);
       }
     }
 
