@@ -98,13 +98,6 @@ namespace ZoneAssigner
 
     /* and so on... */
 
-
-
-    const int HighlightTimeOnMs = 600;
-    const int HighlightTimeOffMs = 300;
-    const int TotalHighlights = 4;
-    const bool LastHighlightOn = true;
-
     static Color color = Color.Red;
 
 
@@ -120,27 +113,27 @@ namespace ZoneAssigner
       if (submitted)
       {
         // Last iteration
-        if (i == TotalHighlights * 2) 
+        if (i == Convert.ToInt32(DynamicSettings.ZA_TotalHighlightFlashes.Value) * 2) 
         {
           i = 0;
-          if (LastHighlightOn) Utilities.Drawer.Draw(zone, color, g);
+          if (Convert.ToBoolean(DynamicSettings.ZA_LastHighlightOnOff.Value)) Utilities.Drawer.Draw(zone, color, g);
         }
 
         // Turn highlight on and off
         else if (i % 2 == 0)
         {
           Utilities.Drawer.Draw(zone, color, g);
-          Utilities.DelayAction(HighlightTimeOnMs, Refresh);
+          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.ZA_HighlightTimeOn.Value), Refresh);
           i++;
         }
         else
         {
-          Utilities.DelayAction(HighlightTimeOffMs, Refresh);
+          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.ZA_HighlightTimeOff.Value), Refresh);
           i++;
         }
       }
     }
-
+    
     // Error
     private void ShowError(string errorText)
     {

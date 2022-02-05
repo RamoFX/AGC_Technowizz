@@ -25,17 +25,7 @@ namespace Core.UI {
 
     public static class Drawer
     {
-      const int boxSize = 30;
       const int borderWidth = 3;
-
-      const int upperSize = 240;
-      const int bottomSize = 150;
-
-      const int Astart = 0, Cstart = 0;
-      const int Bstart = 510, Dstart = 870;
-
-      const int HighlightTimeOnMs = 600;
-      const int HighlightTimeOffMs = 300;
 
       /// <summary>
       /// Draws rectangles on all zones in layout with specific color
@@ -49,33 +39,12 @@ namespace Core.UI {
         List<Rectangle> rectangles = new();
         foreach (Zone zone in layout.Zones.Where(zone => zone.Type == ZoneType.Storage))
         {
-          if (zone.Name != "X")
+          if (zone != null)
           {
-            Rectangle rect = new();
-            switch (zone.Name[0])
-            {
-              case 'A':
-                rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-                rect.Y = 0;
-                rect.Height = upperSize;
-                break;
-              case 'B':
-                rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-                rect.Y = 0;
-                rect.Height = upperSize;
-                break;
-              case 'C':
-                rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-                rect.Y = upperSize + 4 * boxSize;
-                rect.Height = bottomSize;
-                break;
-              case 'D':
-                rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-                rect.Y = upperSize + 4 * boxSize;
-                rect.Height = bottomSize;
-                break;
-            }
-            rect.Width = boxSize;
+            Rectangle rect = new(zone.Location.X * StaticSettings.UnitSize,
+                                 zone.Location.Y * StaticSettings.UnitSize,
+                                 zone.Size.Width * StaticSettings.UnitSize,
+                                 zone.Size.Height * StaticSettings.UnitSize);
             rectangles.Add(rect);
           }
         }
@@ -95,36 +64,36 @@ namespace Core.UI {
       {
         if (zone != null)
         {
-          Rectangle rect = new();
-          switch (zone.Name[0])
-          {
-            case 'A':
-              rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-              rect.Y = 0;
-              rect.Height = upperSize;
-              break;
-            case 'B':
-              rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-              rect.Y = 0;
-              rect.Height = upperSize;
-              break;
-            case 'C':
-              rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-              rect.Y = upperSize + 4 * boxSize;
-              rect.Height = bottomSize;
-              break;
-            case 'D':
-              rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-              rect.Y = upperSize + 4 * boxSize;
-              rect.Height = bottomSize;
-              break;
-          }
-          rect.Width = boxSize;
+          Rectangle rect = new(zone.Location.X * StaticSettings.UnitSize,
+                               zone.Location.Y * StaticSettings.UnitSize,
+                               zone.Size.Width * StaticSettings.UnitSize,
+                               zone.Size.Height * StaticSettings.UnitSize);
           g.FillRectangle(new SolidBrush(Color.FromArgb(64, color)), rect);
           g.DrawRectangle(new(color, borderWidth), rect);
           return rect;
         }
         else return new();
+      }
+
+      /// <summary>
+      /// Returns color that should be a background for drawing specific CarBrand
+      /// </summary>
+      /// <param name="carBrandUsage"></param>
+      /// <returns>Color</returns>
+      public static Color GetColorByCarBrandUsage(int carBrandUsage)
+      {
+        if (carBrandUsage == 100)
+          return Color.Red;
+        if (carBrandUsage >= 75)
+          return Color.OrangeRed;
+        if (carBrandUsage >= 50)
+          return Color.Orange;
+        if (carBrandUsage >= 25)
+          return Color.Yellow;
+        if (carBrandUsage > 0)
+          return Color.Green;
+
+        return Color.Transparent;
       }
     }
   }

@@ -18,6 +18,10 @@ namespace Core {
 
 
 
+    // Drawing
+    public const int              UnitSize        = 30;
+
+
     // Dynamic settings
     public const string           SettingsFileName = "Settings.ukvp"; // ukvp == Unordered key-value pairs
     static public readonly string SettingsFilePath = Path.Combine(SolutionPath, SettingsFileName);
