@@ -51,7 +51,7 @@ namespace LayoutDesigner {
         // If not saved ask user if he wants to save
         // If forced then do not ask
         if (!force && !this.CurrentLayout.IsCorrespondingFileUpToDate()) {
-          var dialogResult = MessageBoxes.SaveUnsavedLayoutConfirmation();
+          var dialogResult = MessageBoxes.SaveUnsavedLayout();
 
           if (dialogResult == DialogResult.Yes) {
             this.Export();
@@ -142,7 +142,7 @@ namespace LayoutDesigner {
       // Delete if layout opened
       if (this.IsLayoutPresent) {
         // Ask if user is sure
-        var dialogResult = MessageBoxes.UndoableDeletionConfirmation(this.CurrentLayout.Name);
+        var dialogResult = MessageBoxes.UndoableDeletion(this.CurrentLayout.Name);
 
         if (dialogResult == DialogResult.Yes) {
           this.CurrentLayout.Delete();
