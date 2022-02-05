@@ -49,23 +49,28 @@ namespace Core.Storage {
       get => (int) Math.Round((decimal) this.PalletsCurrentlyStored / this.MaxCapacity * 100);
     }
 
-    public CarBrandUsage Usage {
+
+
+    // Other fields
+    public Color FillColor {
       get {
         if (this.PalletsCurrentlyStoredPercent == 100) {
-          return CarBrandUsage.Full;
+          return StaticSettings.CarBrandFillColor_Full;
         } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
-          return CarBrandUsage.AlmostFull;
+          return StaticSettings.CarBrandFillColor_AlmostFull;
         } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
-          return CarBrandUsage.AboveHalf;
+          return StaticSettings.CarBrandFillColor_AboveHalf;
         } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
-          return CarBrandUsage.BelowHalf;
+          return StaticSettings.CarBrandFillColor_BelowHalf;
         } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
-          return CarBrandUsage.AlmostEmpty;
+          return StaticSettings.CarBrandFillColor_AlmostEmpty;
         } else {
-          return CarBrandUsage.Empty;
+          return StaticSettings.CarBrandFillColor_Empty;
         }
       }
     }
+
+    public readonly Color OutlineColor = Color.Cyan;
 
 
 
