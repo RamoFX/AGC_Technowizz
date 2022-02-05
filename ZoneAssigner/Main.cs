@@ -78,7 +78,7 @@ namespace ZoneAssigner
     // State update
     private void SetActiveLayout(string name) {
       this.CurrentLayout = Core.Storage.Layout.Import(name);
-      this.CurrentLayout.InitializeAll();
+      this.CurrentLayout.Initialize(true);
       this.Text = $"{FormName} ({name})";
       this.Menu_ValidLayoutNames.SelectedItem = name;
       DynamicSettings.ZA_StartupLayoutName.Value = name;

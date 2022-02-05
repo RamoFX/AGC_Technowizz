@@ -55,6 +55,7 @@
     <Compile Include="Helpers\DynamicSetting.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Storage\CarBrand.cs" />
+    <Compile Include="Storage\CarBrandUsage.cs" />
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
     </Compile>

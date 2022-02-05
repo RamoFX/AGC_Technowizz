@@ -22,13 +22,35 @@ namespace Core.Storage {
 
 
 
+    // Other properties
+    private bool _UseDatabaseAccess = false;
+
+    private bool UseDatabaseAccess {
+      get => this._UseDatabaseAccess;
+      set {
+        this._UseDatabaseAccess = value;
+
+        foreach (Zone zone in this.Zones) {
+          zone.Initialize(this, this._UseDatabaseAccess);
+        }
+      }
+    }
+
+
+
     // Computation fields
     public int MaxCapacity {
       get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity);
     }
 
     public int PalletsCurrentlyStored {
-      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
+      get {
+        if (this.UseDatabaseAccess) {
+          return this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
+        } else {
+          return 0;
+        }
+      }
     }
 
     public int PalletsCanBeStored {
@@ -46,21 +68,17 @@ namespace Core.Storage {
       this.Zones = zones.ToList();
     }
 
-    public Layout(string name, string warehouseName, Size size, int verticalCapacity) : this(name, warehouseName, size, verticalCapacity, new Zone[0] {}) { }
+    public Layout(string name, string warehouseName, Size size, int verticalCapacity)
+      : this(name, warehouseName, size, verticalCapacity, new Zone[0] {}) { }
 
-    public Layout(Layout from) : this(from.Name, from.WarehouseName, from.Size, from.VerticalCapacity, from.Zones) { }
+    public Layout(Layout from)
+      : this(from.Name, from.WarehouseName, from.Size, from.VerticalCapacity, from.Zones) { }
 
 
 
     // Initializators
-    public void InitializeAll() {
-      foreach (Zone zone in this.Zones) {
-        zone.InitializeLayoutParent(this);
-
-        foreach (CarBrand carBrand in zone.CarBrands) {
-          carBrand.InitZoneParent(zone);
-        }
-      }
+    public void Initialize(bool useDatabaseAccess) {
+      this.UseDatabaseAccess = useDatabaseAccess;
     }
 
 
@@ -214,7 +232,6 @@ namespace Core.Storage {
       IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
 
       Layout layout = new(name, warehouseName, size, verticalCapacity, zones);
-      layout.InitializeAll();
 
       return layout;
     }
