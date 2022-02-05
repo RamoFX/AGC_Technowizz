@@ -134,13 +134,13 @@ namespace ZoneAssigner
         if (i == Convert.ToInt32(DynamicSettings.ZA_TotalHighlightFlashes.Value) * 2) 
         {
           i = 0;
-          if (Convert.ToBoolean(DynamicSettings.ZA_LastHighlightOnOff.Value)) Utilities.Drawer.Draw(zone, color, g);
+          if (Convert.ToBoolean(DynamicSettings.ZA_LastHighlightOnOff.Value)) Drawer.Draw(zone, color, g);
         }
 
         // Turn highlight on and off
         else if (i % 2 == 0)
         {
-          Utilities.Drawer.Draw(zone, color, g);
+          Drawer.Draw(zone, color, g);
           Utilities.DelayAction(Convert.ToInt32(DynamicSettings.ZA_HighlightTimeOn.Value), Refresh);
           i++;
         }

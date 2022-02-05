@@ -11,8 +11,6 @@ using Core.Storage;
 
 namespace Core.UI {
   public static class Drawer {
-    const int borderWidth = 3;
-
     /// <summary>
     /// Draws rectangles on all zones in layout with specific color
     /// </summary>
@@ -32,7 +30,7 @@ namespace Core.UI {
         }
       }
       g.FillRectangles(new SolidBrush(Color.FromArgb(64, color)), rectangles.ToArray());
-      g.DrawRectangles(new(color, borderWidth), rectangles.ToArray());
+      g.DrawRectangles(new(color, StaticSettings.OutlineSize), rectangles.ToArray());
       return rectangles.ToArray();
     }
 
@@ -50,7 +48,7 @@ namespace Core.UI {
                              zone.Size.Width * StaticSettings.UnitSize,
                              zone.Size.Height * StaticSettings.UnitSize);
         g.FillRectangle(new SolidBrush(Color.FromArgb(64, color)), rect);
-        g.DrawRectangle(new(color, borderWidth), rect);
+        g.DrawRectangle(new(color, StaticSettings.OutlineSize), rect);
         return rect;
       } else
         return new();
