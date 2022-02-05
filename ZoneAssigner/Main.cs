@@ -26,28 +26,15 @@ namespace ZoneAssigner
 
     // Fields & Properties
     private const string FormName = "Přiřazovač zón";
-
-    private Layout CurrentLayout;
-
+    private static readonly Color color = Color.Red;
     private readonly List<string> ValidLayoutNames = LayoutManager.GetValidLayoutNames().ToList();
 
+    private Layout CurrentLayout;
+    private Zone zone;
 
+    private int i = 0;
+    private bool submitted = false;
 
-    /* and so on... */
-
-
-
-    // Events
-    private void ComboBox_ValidLayoutNames_SelectionChangeCommitted(object sender, EventArgs e) {
-      string selectedLayoutName = (string) this.Menu_ValidLayoutNames.SelectedItem;
-      this.SetActiveLayout(selectedLayoutName);
-    }
-
-    private void ComboBox_ContainerCodes_SelectedIndexChanged(object sender, EventArgs e) {
-      TextField_ContainerCode.Text = ComboBox_ContainerCodes.Text;
-    }
-
-    /* and so on... */
 
 
 
@@ -82,13 +69,12 @@ namespace ZoneAssigner
         .ToList();
     }
 
-    /* and so on... */
-
 
 
     // State update
     private void SetActiveLayout(string name) {
       this.CurrentLayout = Core.Storage.Layout.Import(name);
+      this.CurrentLayout.InitializeAll();
       this.Text = $"{FormName} ({name})";
       this.Menu_ValidLayoutNames.SelectedItem = name;
       DynamicSettings.ZA_StartupLayoutName.Value = name;
@@ -96,15 +82,37 @@ namespace ZoneAssigner
       Initialize_ComboBox_ContainerCodes();
     }
 
-    /* and so on... */
+    private void ShowError(string errorText) {
+      ErrorLabel.Text = errorText;
+      ErrorLabel.Visible = true;
+    }
 
-    static Color color = Color.Red;
+    private void HideError() {
+      ErrorLabel.Text = "";
+      ErrorLabel.Visible = false;
+    }
+
+    private void ShowZone(string zone) {
+      ZoneLabel.Text = zone;
+      ZoneLabel.Visible = true;
+    }
+
+    private void HideZone() {
+      ZoneLabel.Text = "--";
+      ZoneLabel.Visible = false;
+    }
 
 
-    int i = 0;
-    bool submitted = false;
-    Zone zone;
 
+    // Events
+    private void ComboBox_ValidLayoutNames_SelectionChangeCommitted(object sender, EventArgs e) {
+      string selectedLayoutName = (string) this.Menu_ValidLayoutNames.SelectedItem;
+      this.SetActiveLayout(selectedLayoutName);
+    }
+
+    private void ComboBox_ContainerCodes_SelectedIndexChanged(object sender, EventArgs e) {
+      TextField_ContainerCode.Text = ComboBox_ContainerCodes.Text;
+    }
 
     private void VisualizerPictureBox_Paint(object sender, PaintEventArgs e)
     {
@@ -133,32 +141,6 @@ namespace ZoneAssigner
         }
       }
     }
-    
-    // Error
-    private void ShowError(string errorText)
-    {
-      ErrorLabel.Text = errorText;
-      ErrorLabel.Visible = true;
-    }
-
-    private void HideError()
-    {
-      ErrorLabel.Text = "";
-      ErrorLabel.Visible = false;
-    }
-
-    // Zone
-    private void ShowZone(string zone)
-    {
-      ZoneLabel.Text = zone;
-      ZoneLabel.Visible = true;
-    }
-
-    private void HideZone()
-    {
-      ZoneLabel.Text = "--";
-      ZoneLabel.Visible = false;
-    }
 
     private void SubmitHandler(object sender, EventArgs e)
     {
@@ -180,7 +162,7 @@ namespace ZoneAssigner
       else
       {
         // containerCode ---> zone
-        string carBrand = DatabaseAccess.GetCarBrandFromContainerCode($"{ containerCode }");
+        string carBrand = DatabaseAccess.GetCarBrand($"{ containerCode }");
         zone = this.CurrentLayout.GetFirstSuitableZoneOrDefault(carBrand);
 
         TextField_ContainerCode.Clear();
