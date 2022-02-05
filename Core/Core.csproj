@@ -55,6 +55,12 @@
     <Compile Include="Helpers\DynamicSetting.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Storage\CarBrand.cs" />
+    <Compile Include="UI\Dialogs\Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Help.Designer.cs">
+      <DependentUpon>Help.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Utilities.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="DynamicSettings.cs" />
@@ -79,6 +85,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\Dialogs\Help.resx">
+      <DependentUpon>Help.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\UserTextInput.resx">
       <DependentUpon>UserTextInput.cs</DependentUpon>
     </EmbeddedResource>

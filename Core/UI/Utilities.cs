@@ -10,6 +10,16 @@ using System.Windows.Forms;
 
 
 namespace Core.UI {
+  public struct Colors
+  {
+    public static Color Color100 { get => Color.Red; }
+    public static Color Color99_75 { get => Color.FromArgb(255, 130, 0); }
+    public static Color Color74_50 { get => Color.FromArgb(255, 200, 0); }
+    public static Color Color49_25 { get => Color.Yellow; }
+    public static Color Color24_1 { get => Color.Lime; }
+    public static Color Color0 { get => Color.Transparent; }
+  }
+
   static public class Utilities {
     static public void DelayAction(int millisecond, Action action) {
       Timer timer = new();
@@ -84,15 +94,15 @@ namespace Core.UI {
       {
         int carBrandUsage = carBrand.PalletsCurrentlyStored / carBrand.MaxCapacity;
         if (carBrandUsage == 100)
-          return Color.Red;
+          return Colors.Color100;
         if (carBrandUsage >= 75)
-          return Color.OrangeRed;
+          return Colors.Color99_75;
         if (carBrandUsage >= 50)
-          return Color.Orange;
+          return Colors.Color74_50;
         if (carBrandUsage >= 25)
-          return Color.Yellow;
+          return Colors.Color49_25;
         if (carBrandUsage > 0)
-          return Color.Green;
+          return Colors.Color24_1;
 
         return Color.Transparent;
       }

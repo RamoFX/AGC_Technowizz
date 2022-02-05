@@ -36,6 +36,7 @@ namespace ZoneAssigner {
       this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
       this.Menu_StartupLayout = new System.Windows.Forms.ToolStripMenuItem();
       this.Menu_ValidLayoutNames = new System.Windows.Forms.ToolStripComboBox();
+      this.ToolStripMenuItem_Help = new System.Windows.Forms.ToolStripMenuItem();
       ((System.ComponentModel.ISupportInitialize)(this.VisualizerPictureBox)).BeginInit();
       this.MenuStrip.SuspendLayout();
       this.SuspendLayout();
@@ -56,7 +57,7 @@ namespace ZoneAssigner {
       this.ErrorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
       this.ErrorLabel.Location = new System.Drawing.Point(9, 77);
       this.ErrorLabel.Name = "ErrorLabel";
-      this.ErrorLabel.Size = new System.Drawing.Size(233, 16);
+      this.ErrorLabel.Size = new System.Drawing.Size(232, 16);
       this.ErrorLabel.TabIndex = 5;
       this.ErrorLabel.Text = "Textové pole nesmí být prázdné.";
       this.ErrorLabel.Visible = false;
@@ -69,7 +70,6 @@ namespace ZoneAssigner {
       this.TextField_ContainerCode.Name = "TextField_ContainerCode";
       this.TextField_ContainerCode.Size = new System.Drawing.Size(384, 21);
       this.TextField_ContainerCode.TabIndex = 6;
-      this.TextField_ContainerCode.TextChanged += new System.EventHandler(this.SubmitOnEnter);
       // 
       // SubmitButton
       // 
@@ -88,7 +88,7 @@ namespace ZoneAssigner {
       this.ContainerCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.ContainerCodeLabel.Location = new System.Drawing.Point(169, 24);
       this.ContainerCodeLabel.Name = "ContainerCodeLabel";
-      this.ContainerCodeLabel.Size = new System.Drawing.Size(72, 16);
+      this.ContainerCodeLabel.Size = new System.Drawing.Size(71, 16);
       this.ContainerCodeLabel.TabIndex = 8;
       this.ContainerCodeLabel.Text = "Kód palety";
       // 
@@ -98,7 +98,7 @@ namespace ZoneAssigner {
       this.ZoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 99.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
       this.ZoneLabel.Location = new System.Drawing.Point(496, 27);
       this.ZoneLabel.Name = "ZoneLabel";
-      this.ZoneLabel.Size = new System.Drawing.Size(245, 152);
+      this.ZoneLabel.Size = new System.Drawing.Size(244, 152);
       this.ZoneLabel.TabIndex = 9;
       this.ZoneLabel.Text = "XY";
       this.ZoneLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -127,7 +127,8 @@ namespace ZoneAssigner {
       // Menu_Settings
       // 
       this.Menu_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_StartupLayout});
+            this.Menu_StartupLayout,
+            this.ToolStripMenuItem_Help});
       this.Menu_Settings.Name = "Menu_Settings";
       this.Menu_Settings.Size = new System.Drawing.Size(71, 20);
       this.Menu_Settings.Text = "Nastavení";
@@ -137,7 +138,7 @@ namespace ZoneAssigner {
       this.Menu_StartupLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_ValidLayoutNames});
       this.Menu_StartupLayout.Name = "Menu_StartupLayout";
-      this.Menu_StartupLayout.Size = new System.Drawing.Size(175, 22);
+      this.Menu_StartupLayout.Size = new System.Drawing.Size(180, 22);
       this.Menu_StartupLayout.Text = "Spouštěcí rozvržení";
       // 
       // Menu_ValidLayoutNames
@@ -145,6 +146,13 @@ namespace ZoneAssigner {
       this.Menu_ValidLayoutNames.DropDownWidth = 200;
       this.Menu_ValidLayoutNames.Name = "Menu_ValidLayoutNames";
       this.Menu_ValidLayoutNames.Size = new System.Drawing.Size(200, 23);
+      // 
+      // ToolStripMenuItem_Help
+      // 
+      this.ToolStripMenuItem_Help.Name = "ToolStripMenuItem_Help";
+      this.ToolStripMenuItem_Help.Size = new System.Drawing.Size(180, 22);
+      this.ToolStripMenuItem_Help.Text = "Nápověda";
+      this.ToolStripMenuItem_Help.Click += new System.EventHandler(this.ToolStripMenuItem_Help_Click);
       // 
       // Main
       // 
@@ -160,7 +168,9 @@ namespace ZoneAssigner {
       this.Controls.Add(this.ErrorLabel);
       this.Controls.Add(this.ComboBox_ContainerCodes);
       this.DoubleBuffered = true;
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+      this.MaximizeBox = false;
       this.Name = "Main";
       this.Text = "(unset)";
       this.Load += new System.EventHandler(this.Main_Load);
@@ -184,6 +194,7 @@ namespace ZoneAssigner {
     private System.Windows.Forms.ToolStripMenuItem Menu_Settings;
     private System.Windows.Forms.ToolStripMenuItem Menu_StartupLayout;
     private System.Windows.Forms.ToolStripComboBox Menu_ValidLayoutNames;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Help;
   }
 }
 

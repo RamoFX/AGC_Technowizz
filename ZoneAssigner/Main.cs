@@ -8,7 +8,6 @@ using Core;
 using Core.Storage;
 using Core.Communicator;
 using Core.UI;
-using Core.Helpers;
 
 
 
@@ -17,6 +16,13 @@ namespace ZoneAssigner
   public partial class Main : Form {
     public Main() {
       InitializeComponent();
+    }
+
+    private void Main_Load(object sender, EventArgs e)
+    {
+      Initialize_ComboBox_ValidLayoutNames();
+      InitializeLayout();
+      Initialize_ComboBox_ContainerCodes();
     }
 
 
@@ -100,6 +106,12 @@ namespace ZoneAssigner
       ZoneLabel.Visible = false;
     }
 
+    private void ShowHelp()
+    {
+      Core.UI.Dialogs.Help help = new Core.UI.Dialogs.Help();
+      help.Show();
+    }
+
 
 
     // Events
@@ -170,15 +182,9 @@ namespace ZoneAssigner
       }
     }
 
-    private void SubmitOnEnter(object sender, EventArgs e)
+    private void ToolStripMenuItem_Help_Click(object sender, EventArgs e)
     {
-
-    }
-
-    private void Main_Load(object sender, EventArgs e) {
-      Initialize_ComboBox_ValidLayoutNames();
-      InitializeLayout();
-      Initialize_ComboBox_ContainerCodes();
+      ShowHelp();
     }
   }
 }
