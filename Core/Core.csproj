@@ -65,6 +65,7 @@
     <Compile Include="UI\Dialogs\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Drawer.cs" />
     <Compile Include="UI\Utilities.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="DynamicSettings.cs" />
