@@ -25,7 +25,6 @@ namespace Core.UI {
 
     public static class Drawer
     {
-      const int boxSize = 30;
       const int borderWidth = 3;
 
       const int upperSize = 240;
@@ -33,9 +32,6 @@ namespace Core.UI {
 
       const int Astart = 0, Cstart = 0;
       const int Bstart = 510, Dstart = 870;
-
-      const int HighlightTimeOnMs = 600;
-      const int HighlightTimeOffMs = 300;
 
       /// <summary>
       /// Draws rectangles on all zones in layout with specific color
@@ -55,27 +51,27 @@ namespace Core.UI {
             switch (zone.Name[0])
             {
               case 'A':
-                rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
+                rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
                 rect.Y = 0;
                 rect.Height = upperSize;
                 break;
               case 'B':
-                rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
+                rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
                 rect.Y = 0;
                 rect.Height = upperSize;
                 break;
               case 'C':
-                rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-                rect.Y = upperSize + 4 * boxSize;
+                rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
+                rect.Y = upperSize + 4 * StaticSettings.UnitSize;
                 rect.Height = bottomSize;
                 break;
               case 'D':
-                rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-                rect.Y = upperSize + 4 * boxSize;
+                rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
+                rect.Y = upperSize + 4 * StaticSettings.UnitSize;
                 rect.Height = bottomSize;
                 break;
             }
-            rect.Width = boxSize;
+            rect.Width = StaticSettings.UnitSize;
             rectangles.Add(rect);
           }
         }
@@ -99,27 +95,27 @@ namespace Core.UI {
           switch (zone.Name[0])
           {
             case 'A':
-              rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
+              rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
               rect.Y = 0;
               rect.Height = upperSize;
               break;
             case 'B':
-              rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
+              rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
               rect.Y = 0;
               rect.Height = upperSize;
               break;
             case 'C':
-              rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-              rect.Y = upperSize + 4 * boxSize;
+              rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
+              rect.Y = upperSize + 4 * StaticSettings.UnitSize;
               rect.Height = bottomSize;
               break;
             case 'D':
-              rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * boxSize;
-              rect.Y = upperSize + 4 * boxSize;
+              rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
+              rect.Y = upperSize + 4 * StaticSettings.UnitSize;
               rect.Height = bottomSize;
               break;
           }
-          rect.Width = boxSize;
+          rect.Width = StaticSettings.UnitSize;
           g.FillRectangle(new SolidBrush(Color.FromArgb(64, color)), rect);
           g.DrawRectangle(new(color, borderWidth), rect);
           return rect;
