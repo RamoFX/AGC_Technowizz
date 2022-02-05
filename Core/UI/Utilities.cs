@@ -45,33 +45,12 @@ namespace Core.UI {
         List<Rectangle> rectangles = new();
         foreach (Zone zone in layout.Zones.Where(zone => zone.Type == ZoneType.Storage))
         {
-          if (zone.Name != "X")
+          if (zone != null)
           {
-            Rectangle rect = new();
-            switch (zone.Name[0])
-            {
-              case 'A':
-                rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-                rect.Y = 0;
-                rect.Height = upperSize;
-                break;
-              case 'B':
-                rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-                rect.Y = 0;
-                rect.Height = upperSize;
-                break;
-              case 'C':
-                rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-                rect.Y = upperSize + 4 * StaticSettings.UnitSize;
-                rect.Height = bottomSize;
-                break;
-              case 'D':
-                rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-                rect.Y = upperSize + 4 * StaticSettings.UnitSize;
-                rect.Height = bottomSize;
-                break;
-            }
-            rect.Width = StaticSettings.UnitSize;
+            Rectangle rect = new(zone.Location.X * StaticSettings.UnitSize,
+                                 zone.Location.Y * StaticSettings.UnitSize,
+                                 zone.Size.Width * StaticSettings.UnitSize,
+                                 zone.Size.Height * StaticSettings.UnitSize);
             rectangles.Add(rect);
           }
         }
@@ -91,31 +70,10 @@ namespace Core.UI {
       {
         if (zone != null)
         {
-          Rectangle rect = new();
-          switch (zone.Name[0])
-          {
-            case 'A':
-              rect.X = Astart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-              rect.Y = 0;
-              rect.Height = upperSize;
-              break;
-            case 'B':
-              rect.X = Bstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-              rect.Y = 0;
-              rect.Height = upperSize;
-              break;
-            case 'C':
-              rect.X = Cstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-              rect.Y = upperSize + 4 * StaticSettings.UnitSize;
-              rect.Height = bottomSize;
-              break;
-            case 'D':
-              rect.X = Dstart + (Convert.ToInt32(zone.Name.Substring(1)) - 1) * StaticSettings.UnitSize;
-              rect.Y = upperSize + 4 * StaticSettings.UnitSize;
-              rect.Height = bottomSize;
-              break;
-          }
-          rect.Width = StaticSettings.UnitSize;
+          Rectangle rect = new(zone.Location.X * StaticSettings.UnitSize,
+                               zone.Location.Y * StaticSettings.UnitSize,
+                               zone.Size.Width * StaticSettings.UnitSize,
+                               zone.Size.Height * StaticSettings.UnitSize);
           g.FillRectangle(new SolidBrush(Color.FromArgb(64, color)), rect);
           g.DrawRectangle(new(color, borderWidth), rect);
           return rect;
