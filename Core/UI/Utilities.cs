@@ -80,8 +80,9 @@ namespace Core.UI {
       /// </summary>
       /// <param name="carBrandUsage"></param>
       /// <returns>Color</returns>
-      public static Color GetColorByCarBrandUsage(int carBrandUsage)
+      public static Color GetColorByCarBrandUsage(CarBrand carBrand)
       {
+        int carBrandUsage = carBrand.PalletsCurrentlyStored / carBrand.MaxCapacity;
         if (carBrandUsage == 100)
           return Color.Red;
         if (carBrandUsage >= 75)
