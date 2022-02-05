@@ -56,6 +56,19 @@ namespace Core.Storage {
 
 
 
+    // Other fields
+    public Color OutlineColor {
+      get {
+        if (this.Type == ZoneType.Storage) {
+          return StaticSettings.ZoneOutlineColor_Storage;
+        } else {
+          return StaticSettings.ZoneOutlineColor_Other;
+        }
+      }
+    }
+
+
+
     // Constructors
     public Zone(string name, Point location, Size size, ZoneType type, IEnumerable<CarBrand> carBrands) {
       this.Name = name;

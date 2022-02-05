@@ -26,8 +26,8 @@ namespace Core {
     static public readonly Color            LayoutOutlineColor = Color.DarkGray;
     static public readonly Color               LayoutGridColor = Color.LightGray;
 
-    static public readonly Color       ZoneStorageOutlineColor = Color.SkyBlue;
-    static public readonly Color         ZoneOtherOutlineColor = Color.Magenta;
+    static public readonly Color      ZoneOutlineColor_Storage = Color.SkyBlue;
+    static public readonly Color        ZoneOutlineColor_Other = Color.Magenta;
 
     static public readonly Color          CarBrandOutlineColor = Color.Cyan;
 
