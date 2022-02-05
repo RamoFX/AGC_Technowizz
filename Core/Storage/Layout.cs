@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Helpers;
+using Core.UI;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -7,11 +9,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
 
-using Core.Helpers;
-
-
-
-namespace Core.Storage {
+namespace Core.Storage
+{
   public class Layout : XDocumentConvertable<Layout> {
     // Main properties
     public string Name;
@@ -60,8 +59,8 @@ namespace Core.Storage {
 
 
     // Other fields
-    public Color OutlineColor = StaticSettings.LayoutOutlineColor;
-    public Color GridColor = StaticSettings.LayoutGridColor;
+    public Color OutlineColor = Colors.FromStringToColor(DynamicSettings.LayoutOutlineColor.Value);
+    public Color GridColor = Colors.FromStringToColor(DynamicSettings.LayoutGridColor.Value);
 
 
 

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Communicator;
+using Core.Helpers;
+using Core.UI;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
-using Communicator;
-using Core.Helpers;
-
-
-
-namespace Core.Storage {
+namespace Core.Storage
+{
   public class CarBrand : XElementConvertable<CarBrand> {
     // Main properties
     public string Name;
@@ -55,17 +51,17 @@ namespace Core.Storage {
     public Color FillColor {
       get {
         if (this.PalletsCurrentlyStoredPercent == 100) {
-          return StaticSettings.CarBrandFillColor_Full;
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_Full.Value);
         } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
-          return StaticSettings.CarBrandFillColor_AlmostFull;
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AlmostFull.Value);
         } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
-          return StaticSettings.CarBrandFillColor_AboveHalf;
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AboveHalf.Value);
         } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
-          return StaticSettings.CarBrandFillColor_BelowHalf;
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_BelowHalf.Value);
         } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
-          return StaticSettings.CarBrandFillColor_AlmostEmpty;
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AlmostEmpty.Value);
         } else {
-          return StaticSettings.CarBrandFillColor_Empty;
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_Empty.Value);
         }
       }
     }

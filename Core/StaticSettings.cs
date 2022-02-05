@@ -23,22 +23,6 @@ namespace Core {
     public const           int                        UnitSize = 30;
     public const           int                     OutlineSize = 4;
 
-    static public readonly Color            LayoutOutlineColor = Color.DarkGray;
-    static public readonly Color               LayoutGridColor = Color.LightGray;
-
-    static public readonly Color      ZoneOutlineColor_Storage = Color.SkyBlue;
-    static public readonly Color        ZoneOutlineColor_Other = Color.Magenta;
-
-    static public readonly Color          CarBrandOutlineColor = Color.Cyan;
-
-    static public readonly Color        CarBrandFillColor_Full = Color.Red;
-    static public readonly Color  CarBrandFillColor_AlmostFull = Color.OrangeRed;
-    static public readonly Color   CarBrandFillColor_AboveHalf = Color.Orange;
-    static public readonly Color   CarBrandFillColor_BelowHalf = Color.Yellow;
-    static public readonly Color CarBrandFillColor_AlmostEmpty = Color.LimeGreen;
-    static public readonly Color       CarBrandFillColor_Empty = Color.Transparent;
-
-
 
     // Dynamic settings
     public const           string  SettingsFileName = "Settings.ukvp"; // ukvp == Unordered key-value pairs

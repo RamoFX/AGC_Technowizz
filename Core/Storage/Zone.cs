@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Core.Helpers;
+using Core.UI;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 
-using Core.Helpers;
-
-
-
-namespace Core.Storage {
+namespace Core.Storage
+{
   public class Zone : XElementConvertable<Zone> {
     // Main properties
     public string Name;
@@ -60,9 +59,9 @@ namespace Core.Storage {
     public Color OutlineColor {
       get {
         if (this.Type == ZoneType.Storage) {
-          return StaticSettings.ZoneOutlineColor_Storage;
+          return Colors.FromStringToColor(DynamicSettings.ZoneOutlineColor_Storage.Value);
         } else {
-          return StaticSettings.ZoneOutlineColor_Other;
+          return Colors.FromStringToColor(DynamicSettings.ZoneOutlineColor_Other.Value);
         }
       }
     }
