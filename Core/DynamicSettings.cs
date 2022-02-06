@@ -23,6 +23,6 @@ namespace Core {
     static public DynamicSetting   CarBrandColor_AboveHalf = new("CarBrandFillColor_AboveHalf",   "@255,165,0");
     static public DynamicSetting   CarBrandColor_BelowHalf = new("CarBrandFillColor_BelowHalf",   "Yellow");
     static public DynamicSetting CarBrandColor_AlmostEmpty = new("CarBrandFillColor_AlmostEmpty", "LimeGreen");
-    static public DynamicSetting       CarBrandColor_Empty = new("CarBrandFillColor_Empty",       "#ffff");
+    static public DynamicSetting       CarBrandColor_Empty = new("CarBrandFillColor_Empty",       "Transparent");
   }
 }
