@@ -20,23 +20,21 @@ namespace Core {
 
 
     // Visual
-    public const           int                        UnitSize = 30;
-    public const           int                     OutlineSize = 4;
+    public const           int                    UnitSize = 30;
+    public const           int                 OutlineSize = 4;
 
-    static public readonly Color            LayoutOutlineColor = Color.DarkGray;
-    static public readonly Color               LayoutGridColor = Color.LightGray;
+    static public readonly Color               LayoutColor = Color.DarkGray;
+    static public readonly Color                 GridColor = Color.LightGray;
 
-    static public readonly Color      ZoneOutlineColor_Storage = Color.SkyBlue;
-    static public readonly Color        ZoneOutlineColor_Other = Color.Magenta;
+    static public readonly Color         ZoneColor_Storage = Color.DarkBlue;
+    static public readonly Color           ZoneColor_Other = Color.DeepPink;
 
-    static public readonly Color          CarBrandOutlineColor = Color.Cyan;
-
-    static public readonly Color        CarBrandFillColor_Full = Color.Red;
-    static public readonly Color  CarBrandFillColor_AlmostFull = Color.OrangeRed;
-    static public readonly Color   CarBrandFillColor_AboveHalf = Color.Orange;
-    static public readonly Color   CarBrandFillColor_BelowHalf = Color.Yellow;
-    static public readonly Color CarBrandFillColor_AlmostEmpty = Color.LimeGreen;
-    static public readonly Color       CarBrandFillColor_Empty = Color.Transparent;
+    static public readonly Color        CarBrandColor_Full = Color.Red;
+    static public readonly Color  CarBrandColor_AlmostFull = Color.OrangeRed;
+    static public readonly Color   CarBrandColor_AboveHalf = Color.Orange;
+    static public readonly Color   CarBrandColor_BelowHalf = Color.Yellow;
+    static public readonly Color CarBrandColor_AlmostEmpty = Color.DarkSeaGreen;
+    static public readonly Color       CarBrandColor_Empty = Color.DarkCyan;
 
 
 
@@ -44,5 +42,10 @@ namespace Core {
     public const           string  SettingsFileName = "Settings.ukvp"; // ukvp == Unordered key-value pairs
     static public readonly string  SettingsFilePath = Path.Combine(SolutionPath, SettingsFileName);
     public const           char   SettingsSeparator = ':';
+
+
+
+    // Other
+    public const char CustomStringSeparator = ',';
   }
 }
