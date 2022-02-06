@@ -126,6 +126,7 @@ namespace Communicator {
     static private int CallsCount = 0;
 
     static private void DatabaseAccessDelay() {
+      CallsCount++;
       int delay = Random.Next(20, 300);
 #if DEBUG
       Thread.Sleep(delay);
