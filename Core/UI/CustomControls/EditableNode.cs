@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
+using System;
 
 namespace Core.UI.CustomControls
 {
@@ -35,15 +36,21 @@ namespace Core.UI.CustomControls
   {
     public static void Add(this Panel panel, EditableNode node)
     {
-      node.Location = new System.Drawing.Point(
-        node.Location.X,
-        (panel.Controls.Count) * node.Height
-      );
-      panel.Controls.Add(node);
+      if (!panel.Controls.Contains(node))
+      {
+        node.Location = new System.Drawing.Point(
+          node.Location.X,
+          (panel.Controls.Count) * node.Height
+        );
+        panel.Controls.Add(node);
+      }
     }
-    public static void Remove(this Panel panel, EditableNode node)
+    public static bool Remove(this Panel panel, EditableNode node)
     {
-      panel.Controls.Remove(node);
+      if (panel.Controls.Contains(node)) { 
+        panel.Controls.Remove(node); 
+        return true; 
+      } return false;
     }
   }
 }
