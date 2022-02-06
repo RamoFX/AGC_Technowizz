@@ -52,16 +52,16 @@ namespace Development {
           new("PO", new(7, 2), new(2, 2)),
           new("MS", new(9, 2), new(1, 2))
         }),
-        new("B2", new(4, 5), new(4, 2), ZoneType.Storage, new CarBrand[] {
-          new("VO", new(4, 5), new(4, 1)),
-          new("SK", new(4, 6), new(4, 1))
+        new("B2", new(4, 6), new(4, 2), ZoneType.Storage, new CarBrand[] {
+          new("VO", new(4, 6), new(4, 1)),
+          new("SK", new(4, 7), new(4, 1))
         }),
         new("C1", new(11, 0), new(4, 2), ZoneType.Storage, new CarBrand[] {
           new("FI", new(11, 0), new(2, 2)),
           new("FO", new(13, 0), new(2, 2))
         }),
-        new("C2", new(12, 3), new(1, 3), ZoneType.Storage, new CarBrand[] {
-          new("VW", new(12, 3), new(1, 3))
+        new("C2", new(12, 3), new(3, 1), ZoneType.Storage, new CarBrand[] {
+          new("VW", new(12, 3), new(3, 1))
         }),
         new("C3", new(9, 6), new(1, 1), ZoneType.Storage, new CarBrand[] {
           new("PE", new(9, 6), new(1, 1))
