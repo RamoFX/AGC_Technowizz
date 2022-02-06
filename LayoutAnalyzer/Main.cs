@@ -157,7 +157,7 @@ namespace LayoutAnalyzer {
       this.CurrentLayout = layout;
 
       if (this.IsLayoutPresent) {
-        this.CurrentLayout.Initialize(false); // TODO: Fix
+        this.CurrentLayout.Initialize(true);
       }
 
       // Post-hooks

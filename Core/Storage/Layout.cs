@@ -256,7 +256,7 @@ namespace Core.Storage {
       layout.Zones = this.Zones;
 
       // Only non-cloned layout should be used for Communicator.DatabaseAccess communication
-      layout.Initialize(false);
+      layout.Initialize(true);
 
       return layout;
     }

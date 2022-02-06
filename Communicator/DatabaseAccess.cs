@@ -129,7 +129,7 @@ namespace Communicator {
       CallsCount++;
       int delay = Random.Next(20, 300);
 #if DEBUG
-      Thread.Sleep(delay);
+      //Thread.Sleep(delay);
 #endif
     }
 
