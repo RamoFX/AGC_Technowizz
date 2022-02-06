@@ -12,17 +12,17 @@ namespace Core {
     static public DynamicSetting    ZA_LastHighlightOnOff = new("ZA_LastHighlightOnOff",    "true");
 
     // Colors
-    static public DynamicSetting               LayoutColor = new("LayoutOutlineColor",            "@169,169,169");
-    static public DynamicSetting                 GridColor = new("LayoutGridColor",               "@211,211,211");
+    static public DynamicSetting               LayoutColor = new("LayoutColor",               "DarkGray");
+    static public DynamicSetting                 GridColor = new("GridColor",                 "LightGray");
 
-    static public DynamicSetting         ZoneColor_Storage = new("ZoneOutlineColor_Storage",      "@135,206,235");
-    static public DynamicSetting           ZoneColor_Other = new("ZoneOutlineColor_Other",        "@255,0,255");
+    static public DynamicSetting         ZoneColor_Storage = new("ZoneColor_Storage",         "DarkBlue");
+    static public DynamicSetting           ZoneColor_Other = new("ZoneColor_Other",           "DeepPink");
 
-    static public DynamicSetting        CarBrandColor_Full = new("CarBrandFillColor_Full",        "Red");
-    static public DynamicSetting  CarBrandColor_AlmostFull = new("CarBrandFillColor_AlmostFull",  "@255,69,0");
-    static public DynamicSetting   CarBrandColor_AboveHalf = new("CarBrandFillColor_AboveHalf",   "@255,165,0");
-    static public DynamicSetting   CarBrandColor_BelowHalf = new("CarBrandFillColor_BelowHalf",   "Yellow");
-    static public DynamicSetting CarBrandColor_AlmostEmpty = new("CarBrandFillColor_AlmostEmpty", "LimeGreen");
-    static public DynamicSetting       CarBrandColor_Empty = new("CarBrandFillColor_Empty",       "#ffff");
+    static public DynamicSetting        CarBrandColor_Full = new("CarBrandColor_Full",        "Red");
+    static public DynamicSetting  CarBrandColor_AlmostFull = new("CarBrandColor_AlmostFull",  "OrangeRed");
+    static public DynamicSetting   CarBrandColor_AboveHalf = new("CarBrandColor_AboveHalf",   "Orange");
+    static public DynamicSetting   CarBrandColor_BelowHalf = new("CarBrandColor_BelowHalf",   "Yellow");
+    static public DynamicSetting CarBrandColor_AlmostEmpty = new("CarBrandColor_AlmostEmpty", "DarkSeaGreen");
+    static public DynamicSetting       CarBrandColor_Empty = new("CarBrandColor_Empty",       "DarkCyan");
   }
 }
