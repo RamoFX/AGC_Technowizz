@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Core;
 using Core.Storage;
 using Core.UI;
-using Core.UI.Dialogs;
+using Core.Helpers;
 
 
 
@@ -255,6 +255,51 @@ namespace LayoutAnalyzer {
 
 
 
+    // Create items on StatusStrip
+    private void StatusStripInitialization()
+    {
+
+      for (int i = 0; i < 6; i++)
+      {
+        Bitmap bitmap = new(32, 32, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+        Graphics g = Graphics.FromImage(bitmap);
+        Color color = Color.Transparent;
+        string text = "";
+        switch (i) {
+          case 0:
+            color = DynamicSettings.CarBrandColor_Full.Value.ToColor();
+            text = "100%";
+            break;
+          case 1:
+            color = DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor();
+            text = "99% - 75%";
+            break;
+          case 2:
+            color = DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor();
+            text = "74% - 50%";
+            break;
+          case 3:
+            color = DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor();
+            text = "49% - 25%";
+            break;
+          case 4:
+            color = DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor();
+            text = "24% - 1%";
+            break;
+          case 5:
+            color = DynamicSettings.CarBrandColor_Empty.Value.ToColor();
+            text = "0%";
+            break;
+        }
+
+        g.Clear(statusStrip.BackColor);
+        g.FillRectangle(new SolidBrush(color), 0, 0, 32, 32);
+        statusStrip.Items.Add(text, bitmap);
+      }
+    }
+
+
+
     // Main events
     private void Main_Load(object sender, EventArgs e) {
       this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
@@ -264,6 +309,7 @@ namespace LayoutAnalyzer {
       // Post-hooks
       this.SetCurrentLayout(null);
       this.UpdateState();
+      this.StatusStripInitialization();
     }
 
     private void Main_Resize(object sender, EventArgs e) {

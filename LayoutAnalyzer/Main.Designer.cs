@@ -36,7 +36,7 @@ namespace LayoutAnalyzer {
       this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
       this.TreeView_Layout = new System.Windows.Forms.TreeView();
       this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
-      this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+      this.statusStrip = new System.Windows.Forms.StatusStrip();
       this.MenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
       this.SuspendLayout();
@@ -138,20 +138,20 @@ namespace LayoutAnalyzer {
       this.PictureBox_Layout.TabIndex = 2;
       this.PictureBox_Layout.TabStop = false;
       // 
-      // statusStrip1
+      // statusStrip
       // 
-      this.statusStrip1.Location = new System.Drawing.Point(0, 548);
-      this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(1067, 22);
-      this.statusStrip1.TabIndex = 3;
-      this.statusStrip1.Text = "statusStrip1";
+      this.statusStrip.Location = new System.Drawing.Point(0, 548);
+      this.statusStrip.Name = "statusStrip";
+      this.statusStrip.Size = new System.Drawing.Size(1067, 22);
+      this.statusStrip.TabIndex = 3;
+      this.statusStrip.Text = "statusStrip1";
       // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1067, 570);
-      this.Controls.Add(this.statusStrip1);
+      this.Controls.Add(this.statusStrip);
       this.Controls.Add(this.PictureBox_Layout);
       this.Controls.Add(this.TreeView_Layout);
       this.Controls.Add(this.MenuStrip);
@@ -184,7 +184,7 @@ namespace LayoutAnalyzer {
     private System.Windows.Forms.TreeView TreeView_Layout;
     private System.Windows.Forms.PictureBox PictureBox_Layout;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Close;
-    private System.Windows.Forms.StatusStrip statusStrip1;
+    private System.Windows.Forms.StatusStrip statusStrip;
   }
 }
 
