@@ -33,10 +33,6 @@ namespace LayoutDesigner {
 
     private object CurrentSelection;
 
-    private bool IsSelectionPresent {
-      get => this.CurrentSelection != null;
-    }
-
     private List<string> ImportableLayoutsNames {
       get => LayoutManager.GetExistingLayoutNames().Prepend(SelectBelow).ToList();
     }
@@ -67,6 +63,7 @@ namespace LayoutDesigner {
 
         // Unload
         this.CurrentLayout = null;
+        this.CurrentSelection = null;
 
         // Post-hooks
         this.UpdateState();
@@ -353,13 +350,7 @@ namespace LayoutDesigner {
     }
 
     private void CurrentSelectionChangedHandler() {
-      if (this.IsSelectionPresent) {
-        this.PropertyGrid_CurrentSelection.SelectedObjects = new object[] { this.CurrentSelection };
-      } else {
-        this.PropertyGrid_CurrentSelection.ResetSelectedProperty();
-      }
-
-      this.PropertyGrid_CurrentSelection.Refresh();
+      this.PropertyGrid_CurrentSelection.SelectedObject = this.CurrentSelection;
     }
 
 
@@ -452,8 +443,15 @@ namespace LayoutDesigner {
       this.DrawLayout();
     }
 
+
+
+    // Other
     private void TreeView_Layout_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
       this.SetCurrentSelection(e.Node.FullPath);
+    }
+
+    private void PropertyGrid_CurrentSelection_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
+      this.UpdateState();
     }
   }
 }

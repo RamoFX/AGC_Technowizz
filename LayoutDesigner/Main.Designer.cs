@@ -210,6 +210,7 @@ namespace LayoutDesigner {
       this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(241, 284);
       this.PropertyGrid_CurrentSelection.TabIndex = 3;
       this.PropertyGrid_CurrentSelection.ToolbarVisible = false;
+      this.PropertyGrid_CurrentSelection.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid_CurrentSelection_PropertyValueChanged);
       // 
       // Main
       // 
