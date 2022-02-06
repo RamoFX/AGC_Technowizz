@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
@@ -8,46 +9,46 @@ using Core.Helpers;
 
 
 namespace Core.Storage {
-  public class Zone : XElementConvertable<Zone> {
-    // Main properties
+  public class Zone : XElementConvertable<Zone>, IStorageMember {
+    // Main
     public string Name;
-    public Point Location;
-    public Size Size;
     public ZoneType Type;
     public List<CarBrand> CarBrands;
 
 
 
-    // Other properties & fields
-    private Layout LayoutParent;
-    private bool _UseDatabaseAccess = false;
+    // IVisualizable
+    public Point Location { get; set; }
 
-    private bool UseDatabaseAccess {
-      get => this._UseDatabaseAccess;
-      set {
-        this._UseDatabaseAccess = value;
+    public Size Size { get; set; }
 
-        foreach (CarBrand carBrand in this.CarBrands) {
-          carBrand.Initialize(this.LayoutParent, this, this._UseDatabaseAccess);
+    public Rectangle Rectangle {
+      get => new(this.Location, this.Size);
+    }
+
+    public Color Color {
+      get {
+        if (this.Type == ZoneType.Storage) {
+          return StaticSettings.ZoneColor_Storage;
+        } else {
+          return StaticSettings.ZoneColor_Other;
         }
       }
     }
 
 
 
-    // Computation fields
+    // Computations
     public int MaxCapacity {
       get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.MaxCapacity);
     }
 
     public int PalletsCurrentlyStored {
-      get {
-        if (this.UseDatabaseAccess) {
-          return this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStored);
-        } else {
-          return 0;
-        }
-      }
+      get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStored);
+    }
+
+    public int PalletsCurrentlyStoredPercent {
+      get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStoredPercent);
     }
 
     public int PalletsCanBeStored {
@@ -56,16 +57,9 @@ namespace Core.Storage {
 
 
 
-    // Other fields
-    public Color OutlineColor {
-      get {
-        if (this.Type == ZoneType.Storage) {
-          return StaticSettings.ZoneOutlineColor_Storage;
-        } else {
-          return StaticSettings.ZoneOutlineColor_Other;
-        }
-      }
-    }
+    // Other
+    private Layout LayoutParent;
+    private bool UseDatabaseAccess;
 
 
 
@@ -90,6 +84,10 @@ namespace Core.Storage {
     public void Initialize(Layout layoutParent, bool useDatabaseAccess) {
       this.LayoutParent = layoutParent;
       this.UseDatabaseAccess = useDatabaseAccess;
+
+      foreach (CarBrand carBrand in this.CarBrands) {
+        carBrand.Initialize(this.LayoutParent, this, this.UseDatabaseAccess);
+      }
     }
 
 
@@ -138,6 +136,23 @@ namespace Core.Storage {
       IEnumerable<CarBrand> carBrads = element.Elements().Select( carBrandElement => CarBrand.FromXElement(carBrandElement));
 
       return new Zone(name, location, size, type, carBrads);
+    }
+
+
+
+    // ICloneable
+    public object Clone() {
+      Zone zone = (Zone) this.MemberwiseClone();
+
+      zone.Name = this.Name;
+      zone.Location = this.Location;
+      zone.Size = this.Size;
+      zone.Type = this.Type;
+      zone.CarBrands = this.CarBrands;
+
+      zone.Initialize(this.LayoutParent, this.UseDatabaseAccess);
+
+      return zone;
     }
   }
 }

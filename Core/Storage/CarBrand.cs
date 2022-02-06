@@ -11,22 +11,42 @@ using Core.Helpers;
 
 
 namespace Core.Storage {
-  public class CarBrand : XElementConvertable<CarBrand> {
-    // Main properties
+  public class CarBrand : XElementConvertable<CarBrand>, IStorageMember {
+    // Main
     public string Name;
-    public Point Location;
-    public Size Size;
 
 
 
-    // Other properties
-    private Layout LayoutParent;
-    private Zone ZoneParent;
-    private bool UseDatabaseAccess = false;
+    // IVisualizable
+    public Point Location { get; set; }
+
+    public Size Size { get; set; }
+
+    public Rectangle Rectangle {
+      get => new(this.Location, this.Size);
+    }
+
+    public Color Color {
+      get {
+        if (this.PalletsCurrentlyStoredPercent == 100) {
+          return StaticSettings.CarBrandColor_Full;
+        } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
+          return StaticSettings.CarBrandColor_AlmostFull;
+        } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
+          return StaticSettings.CarBrandColor_AboveHalf;
+        } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
+          return StaticSettings.CarBrandColor_BelowHalf;
+        } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
+          return StaticSettings.CarBrandColor_AlmostEmpty;
+        } else {
+          return StaticSettings.CarBrandColor_Empty;
+        }
+      }
+    }
 
 
 
-    // Computation fields
+    // Computations
     public int MaxCapacity {
       get => this.Size.Width * this.Size.Height * this.LayoutParent.VerticalCapacity;
     }
@@ -41,38 +61,22 @@ namespace Core.Storage {
       }
     }
 
-    public int PalletsCanBeStored {
-      get => this.MaxCapacity - this.PalletsCurrentlyStored;
-    }
-
     public int PalletsCurrentlyStoredPercent {
       get => (int) Math.Round((decimal) this.PalletsCurrentlyStored / this.MaxCapacity * 100);
     }
 
-
-
-    // Other fields
-    public Color FillColor {
-      get {
-        if (this.PalletsCurrentlyStoredPercent == 100) {
-          return StaticSettings.CarBrandFillColor_Full;
-        } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
-          return StaticSettings.CarBrandFillColor_AlmostFull;
-        } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
-          return StaticSettings.CarBrandFillColor_AboveHalf;
-        } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
-          return StaticSettings.CarBrandFillColor_BelowHalf;
-        } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
-          return StaticSettings.CarBrandFillColor_AlmostEmpty;
-        } else {
-          return StaticSettings.CarBrandFillColor_Empty;
-        }
-      }
+    public int PalletsCanBeStored {
+      get => this.MaxCapacity - this.PalletsCurrentlyStored;
     }
 
-    public readonly Color OutlineColor = Color.Cyan;
 
 
+    // Other
+    private Layout LayoutParent;
+    private Zone ZoneParent;
+    private bool UseDatabaseAccess = false;
+
+    
 
     // Constructors
     public CarBrand(string name, Point location, Size size) {
@@ -119,6 +123,21 @@ namespace Core.Storage {
       Size size = element.Attribute("size").Value.ToSize();
 
       return new(name, location, size);
+    }
+
+
+
+    // ICloneable
+    public object Clone() {
+      CarBrand carBrand = (CarBrand) this.MemberwiseClone();
+
+      carBrand.Name = this.Name;
+      carBrand.Location = this.Location;
+      carBrand.Size = this.Size;
+
+      carBrand.Initialize(this.LayoutParent, this.ZoneParent, this.UseDatabaseAccess);
+
+      return carBrand;
     }
   }
 }

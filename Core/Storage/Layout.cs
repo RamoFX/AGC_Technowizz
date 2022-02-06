@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Xml.Linq;
 
@@ -12,45 +13,44 @@ using Core.Helpers;
 
 
 namespace Core.Storage {
-  public class Layout : XDocumentConvertable<Layout> {
-    // Main properties
+  public class Layout : XDocumentConvertable<Layout>, IStorageMember {
+    // Main
     public string Name;
     public string WarehouseName;
-    public Size Size;
     public int VerticalCapacity;
     public List<Zone> Zones;
 
 
 
-    // Other properties
-    private bool _UseDatabaseAccess = false;
+    // IVisualizable
+    public Point Location {
+      get => new(0, 0);
+      set { } // Fuck the rules
+    }
 
-    private bool UseDatabaseAccess {
-      get => this._UseDatabaseAccess;
-      set {
-        this._UseDatabaseAccess = value;
+    public Size Size { get; set; }
 
-        foreach (Zone zone in this.Zones) {
-          zone.Initialize(this, this._UseDatabaseAccess);
-        }
-      }
+    public Rectangle Rectangle {
+      get => new(this.Location, this.Size);
+    }
+
+    public Color Color {
+      get => StaticSettings.LayoutColor;
     }
 
 
 
-    // Computation fields
+    // Computations
     public int MaxCapacity {
       get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity);
     }
 
     public int PalletsCurrentlyStored {
-      get {
-        if (this.UseDatabaseAccess) {
-          return this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
-        } else {
-          return 0;
-        }
-      }
+      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
+    }
+
+    public int PalletsCurrentlyStoredPercent {
+      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStoredPercent);
     }
 
     public int PalletsCanBeStored {
@@ -59,9 +59,8 @@ namespace Core.Storage {
 
 
 
-    // Other fields
-    public Color OutlineColor = StaticSettings.LayoutOutlineColor;
-    public Color GridColor = StaticSettings.LayoutGridColor;
+    // Other
+    private bool UseDatabaseAccess;
 
 
 
@@ -85,6 +84,10 @@ namespace Core.Storage {
     // Initializators
     public void Initialize(bool useDatabaseAccess) {
       this.UseDatabaseAccess = useDatabaseAccess;
+
+      foreach (Zone zone in this.Zones) {
+        zone.Initialize(this, this.UseDatabaseAccess);
+      }
     }
 
 
@@ -238,6 +241,24 @@ namespace Core.Storage {
       IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
 
       Layout layout = new(name, warehouseName, size, verticalCapacity, zones);
+
+      return layout;
+    }
+
+
+
+    // ICloneable
+    public object Clone() {
+      Layout layout = (Layout) this.MemberwiseClone();
+
+      layout.Name = this.Name;
+      layout.WarehouseName = this.WarehouseName;
+      layout.Location = this.Location; // Pointless since Layout's Location is always new Point(0, 0)
+      layout.Size = this.Size;
+      layout.VerticalCapacity = this.VerticalCapacity;
+      layout.Zones = this.Zones;
+
+      layout.Initialize(this.UseDatabaseAccess);
 
       return layout;
     }

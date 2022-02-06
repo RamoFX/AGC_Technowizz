@@ -57,6 +57,8 @@
     <Compile Include="Helpers\DynamicSetting.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Storage\CarBrand.cs" />
+    <Compile Include="Storage\IStorageMember.cs" />
+    <Compile Include="Storage\IVisualizable.cs" />
     <Compile Include="UI\Colors.cs" />
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
