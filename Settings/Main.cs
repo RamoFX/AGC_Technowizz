@@ -82,35 +82,47 @@ namespace Settings
       {
         case "ZA_StartupLayoutName":
           return "Název počátečního rozložení";
+
         case "ZA_HighlightTimeOn":
           return "Čas rozsvícení zóny (blikání)";
+
         case "ZA_HighlightTimeOff":
           return "Čas zhasnutí zóny (blikání)";
+
         case "ZA_TotalHighlightFlashes":
           return "Celkový počet rozsvícení zóny";
+
         case "ZA_LastHighlightOnOff":
           return "Nechat zónu rozsvícenou";
-        case "LayoutOutlineColor":
+
+        case "LayoutColor":
           return "Barva okrajů";
-        case "LayoutGridColor":
+
+        case "GridColor":
           return "Barva mřížky ";
-        case "ZoneOutlineColor_Storage":
+
+        case "ZoneColor_Storage":
           return "Barva skladovácích prostorů";
-        case "ZoneOutlineColor_Other":
+
+        case "ZoneColor_Other":
           return "Barva ostatních prosotrů";
-        case "CarBrandOutlineColor":
-          return "Barva okraje zóny";
-        case "CarBrandFillColor_Full":
+
+        case "CarBrandColor_Full":
           return "Barva plné zóny";
-        case "CarBrandFillColor_AlmostFull":
+
+        case "CarBrandColor_AlmostFull":
           return "Barva skoro plné zóny";
-        case "CarBrandFillColor_AboveHalf":
+
+        case "CarBrandColor_AboveHalf":
           return "Barva zóny zaplněné nad polovinu";
-        case "CarBrandFillColor_BelowHalf":
+
+        case "CarBrandColor_BelowHalf":
           return "Barva zóny zaplněné do poloviny";
-        case "CarBrandFillColor_AlmostEmpty":
+
+        case "CarBrandColor_AlmostEmpty":
           return "Barva skoro prázdné zóny";
-        case "CarBrandFillColor_Empty":
+
+        case "CarBrandColor_Empty":
           return "Barva prázdné zóny";
       }
       return "";
