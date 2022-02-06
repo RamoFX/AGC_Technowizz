@@ -138,7 +138,7 @@ namespace ZoneAssigner {
       this.Menu_StartupLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_ValidLayoutNames});
       this.Menu_StartupLayout.Name = "Menu_StartupLayout";
-      this.Menu_StartupLayout.Size = new System.Drawing.Size(180, 22);
+      this.Menu_StartupLayout.Size = new System.Drawing.Size(175, 22);
       this.Menu_StartupLayout.Text = "Spouštěcí rozvržení";
       // 
       // Menu_ValidLayoutNames
@@ -150,7 +150,7 @@ namespace ZoneAssigner {
       // ToolStripMenuItem_Help
       // 
       this.ToolStripMenuItem_Help.Name = "ToolStripMenuItem_Help";
-      this.ToolStripMenuItem_Help.Size = new System.Drawing.Size(180, 22);
+      this.ToolStripMenuItem_Help.Size = new System.Drawing.Size(175, 22);
       this.ToolStripMenuItem_Help.Text = "Nápověda";
       this.ToolStripMenuItem_Help.Click += new System.EventHandler(this.ToolStripMenuItem_Help_Click);
       // 
