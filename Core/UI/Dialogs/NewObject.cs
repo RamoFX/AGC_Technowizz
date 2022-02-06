@@ -11,11 +11,13 @@ namespace Core.UI.Dialogs {
 
 
 
-    public NewObject(Func<object, bool> valueValidator, string labelText) {
+    public NewObject(Func<object, bool> valueValidator, object initialObject, string labelText) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
       this.ValueValidator = valueValidator;
+      this.PropertyGrid.SelectedObject = initialObject;
       this.Label.Text = labelText;
+
     }
 
 
