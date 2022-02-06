@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 using System;
+using System.Collections.Generic;
 
 namespace Core.UI.CustomControls
 {
@@ -34,8 +35,8 @@ namespace Core.UI.CustomControls
       set => valueTextBox.Text = value;
     }
 
-    [Description("Validation function"), Category("Other")]
-    Func<string, bool> ValueValidation { get; set; }
+    [Description("Validation function"), Category("Data")]
+    public Func<string, bool> ValueValidation { get; set; }
 
     public EditableNode()
     {
@@ -70,6 +71,14 @@ namespace Core.UI.CustomControls
         panel.Controls.Remove(node); 
         return true; 
       } return false;
+    }
+
+    public static IEnumerable<EditableNode> GetAllEditableNodes(this Panel panel)
+    {
+      foreach (Control control in panel.Controls)
+      {
+        if (control is EditableNode) yield return (EditableNode)control;
+      }
     }
   }
 }

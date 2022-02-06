@@ -16,7 +16,8 @@ namespace Development.UI
     {
       LabelTitle = "Label Title",
       Label = "Label",
-      Value = "Value"
+      DefaultValue = "Default Value",
+      ValueValidation = text => !string.IsNullOrEmpty(text)
     };
 
     private void button1_Click(object sender, EventArgs e)
