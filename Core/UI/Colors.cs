@@ -13,12 +13,11 @@ namespace Core.UI {
     {
       switch (hexColor.Length)
       {
-        case 4:
-          hexColor += "F";
-          goto case 3;
         case 3:
-          string color = "";
           hexColor += "F";
+          goto case 4;
+        case 4:
+          string color = "";
           foreach (char c in hexColor)
             color += c + c.ToString();
           hexColor = color;
