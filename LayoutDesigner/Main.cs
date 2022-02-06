@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
 using Core;
+using Core.Helpers;
 using Core.Storage;
 using Core.UI;
 using Core.UI.Dialogs;
@@ -34,13 +36,14 @@ namespace LayoutDesigner {
 
 
 
+    // Form and its Controls data
+    private int HeightOffset;
+
+
+
     // Constructor
     public Main() {
       InitializeComponent();
-      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
-      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted;
-      this.CurrentLayout = null;
-      this.UpdateState();
     }
 
 
@@ -54,7 +57,7 @@ namespace LayoutDesigner {
           var dialogResult = MessageBoxes.SaveUnsavedLayout();
 
           if (dialogResult == DialogResult.Yes) {
-            this.Export();
+            this.Save();
           }
         }
 
@@ -79,26 +82,22 @@ namespace LayoutDesigner {
         this.Unload();
 
         // Create new layout
-        this.CurrentLayout = new(userTextInput.FinalValue, new(10, 10));
-
-        // Post-hooks
-        this.UpdateState();
+        this.SetCurrentLayout(new(userTextInput.FinalValue, "", new(10, 10), 4));
       }
     }
 
-    private void Import(string name) {
-      // May be invalid file
-      try {
-        this.CurrentLayout = Core.Storage.Layout.Import(name);
+    private void Open(string name) {
+      IEnumerable<string> validLayoutNames = LayoutManager.GetValidLayoutNames();
 
-        // Post-hooks
-        this.UpdateState();
-      } catch (System.Xml.XmlException) {
+      if (validLayoutNames.Contains(name)) {
+        Layout layout = Core.Storage.Layout.Import(name);
+        this.SetCurrentLayout(layout);
+      } else {
         MessageBoxes.LayoutInvalid(name);
       }
     }
 
-    private void Export() {
+    private void Save() {
       if (this.IsLayoutPresent) {
         // Save if not saved
         if (!this.CurrentLayout.IsCorrespondingFileUpToDate()) {
@@ -110,7 +109,7 @@ namespace LayoutDesigner {
       }
     }
 
-    private void ExportAs() {
+    private void SaveAs() {
       // Save if layout present
       if (this.IsLayoutPresent) {
         var userTextInput = this.GetNewName();
@@ -199,23 +198,23 @@ namespace LayoutDesigner {
     }
 
     private void UpdateImportControl_Enabled() {
-      ToolStripMenuItem_Import.Enabled = this.ImportableLayoutsNames.Count() > 0;
+      ToolStripMenuItem_Open.Enabled = this.ImportableLayoutsNames.Count() > 0;
     }
 
     private void UpdateCloseControl_Enabled() {
       ToolStripMenuItem_Close.Enabled = this.IsLayoutPresent;
     }
 
-    private void UpdateExportControl_Enabled() {
+    private void UpdateSaveControl_Enabled() {
       if (this.IsLayoutPresent) {
-        this.ToolStripMenuItem_Export.Enabled = !this.CurrentLayout.IsCorrespondingFileUpToDate();
+        this.ToolStripMenuItem_Save.Enabled = !this.CurrentLayout.IsCorrespondingFileUpToDate();
       } else {
-        this.ToolStripMenuItem_Export.Enabled = false;
+        this.ToolStripMenuItem_Save.Enabled = false;
       }
     }
 
-    private void UpdateExportAsControl_Enabled() {
-      this.ToolStripMenuItem_ExportAs.Enabled = this.IsLayoutPresent;
+    private void UpdateSaveAsControl_Enabled() {
+      this.ToolStripMenuItem_SaveAs.Enabled = this.IsLayoutPresent;
     }
 
     private void UpdateRenameControl_Enabled() {
@@ -241,16 +240,77 @@ namespace LayoutDesigner {
       this.UpdateTitle();
       this.UpdateImportControl_Enabled();
       this.UpdateCloseControl_Enabled();
-      this.UpdateExportControl_Enabled();
-      this.UpdateExportAsControl_Enabled();
+      this.UpdateSaveControl_Enabled();
+      this.UpdateSaveAsControl_Enabled();
       this.UpdateRenameControl_Enabled();
       this.UpdateDeleteControl_Enabled();
       this.UpdateExistingLayouts_DataSource();
+
+      // Post-hooks
+      this.CurrentLayoutChangedHandler();
+    }
+
+    private void SetCurrentLayout(Layout layout) {
+      this.CurrentLayout = layout;
+
+      if (this.IsLayoutPresent) {
+        this.CurrentLayout.Initialize(false);
+      }
+
+      // Post-hooks
+      this.UpdateState();
     }
 
 
 
-    // Events
+    // Visual
+    private void DrawLayout() {
+      if (this.IsLayoutPresent) {
+        Drawer.DrawLayout(this.PictureBox_Layout, this.CurrentLayout, new(SystemInformation.VerticalScrollBarWidth, 0));
+      }
+    }
+
+
+
+    // Handlers
+    private void CurrentLayoutChangedHandler() {
+      // TreeView
+      this.TreeView_Layout.Nodes.Clear();
+
+      if (this.IsLayoutPresent) {
+        // Main
+        int Main_MinimumWidth = this.CurrentLayout.Size.Width * StaticSettings.UnitSize + this.TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth;
+        int Main_MinimumHeight = this.CurrentLayout.Size.Height * StaticSettings.UnitSize + this.HeightOffset;
+
+        this.MinimumSize = new Size(Main_MinimumWidth, Main_MinimumHeight);
+
+        // TreeView
+        var rootNode = TreeView_Layout.Nodes.Add(this.CurrentLayout.Name);
+
+        foreach (Zone zone in this.CurrentLayout.Zones) {
+          var zoneNode = rootNode.Nodes.Add(zone.Name);
+
+          foreach (CarBrand carBrand in zone.CarBrands) {
+            zoneNode.Nodes.Add(carBrand.Name);
+          }
+        }
+
+        this.TreeView_Layout.ExpandAll();
+
+        // Draw
+        this.DrawLayout();
+      } else {
+        // Set current form minimum size
+        this.MinimumSize = new Size(TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth, 256);
+
+        // Clear last drawing
+        this.PictureBox_Layout.CreateGraphics().Clear(this.PictureBox_Layout.BackColor);
+      }
+    }
+
+
+
+    // MenuStrip children events
     private void ToolStripMenuItem_New_Click(object sender, EventArgs e) {
       this.New();
     }
@@ -259,7 +319,7 @@ namespace LayoutDesigner {
       string existingLayoutName = (string) this.ToolStripComboBox_ImportableLayoutNames.SelectedItem;
 
       if (!(existingLayoutName == SelectBelow)) {
-        this.Import(existingLayoutName);
+        this.Open(existingLayoutName);
       }
     }
 
@@ -267,12 +327,12 @@ namespace LayoutDesigner {
       this.Unload();
     }
 
-    private void ToolStripMenuItem_Export_Click(object sender, EventArgs e) {
-      this.Export();
+    private void ToolStripMenuItem_Save_Click(object sender, EventArgs e) {
+      this.Save();
     }
 
-    private void ToolStripMenuItem_ExportAs_Click(object sender, EventArgs e) {
-      this.ExportAs();
+    private void ToolStripMenuItem_SaveAs_Click(object sender, EventArgs e) {
+      this.SaveAs();
     }
 
     private void ToolStripMenuItem_Rename_Click(object sender, EventArgs e) {
@@ -295,12 +355,34 @@ namespace LayoutDesigner {
       this.Close();
     }
 
+
+
+    // Main events
+    private void Main_Load(object sender, EventArgs e) {
+      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
+      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted;
+      this.HeightOffset = this.Height - this.TreeView_Layout.Height;
+
+      // Post-hooks
+      this.SetCurrentLayout(null);
+      this.UpdateState();
+    }
+
+    private void Main_Resize(object sender, EventArgs e) {
+      this.TreeView_Layout.Height = this.Height - HeightOffset;
+
+      this.PictureBox_Layout.Width = this.Width - this.TreeView_Layout.Width;
+      this.PictureBox_Layout.Height = this.Height - this.HeightOffset;
+
+      this.DrawLayout();
+    }
+
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
       this.Unload();
     }
 
-    private void Main_ResizeEnd(object sender, EventArgs e) {
-
+    private void Main_Paint(object sender, PaintEventArgs e) {
+      this.DrawLayout();
     }
   }
 }
