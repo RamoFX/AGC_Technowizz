@@ -140,7 +140,7 @@ namespace LayoutAnalyzer {
       this.CurrentLayout = layout;
 
       if (this.IsLayoutPresent) {
-        this.CurrentLayout.Initialize(true);
+        this.CurrentLayout.Initialize(false); // TODO: Fix
       }
 
       // Post-hooks
