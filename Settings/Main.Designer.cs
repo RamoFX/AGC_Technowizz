@@ -40,7 +40,7 @@
       this.treeView_settings.Dock = System.Windows.Forms.DockStyle.Left;
       this.treeView_settings.Location = new System.Drawing.Point(0, 0);
       this.treeView_settings.Name = "treeView_settings";
-      this.treeView_settings.Size = new System.Drawing.Size(189, 450);
+      this.treeView_settings.Size = new System.Drawing.Size(208, 450);
       this.treeView_settings.TabIndex = 0;
       this.treeView_settings.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_settings_AfterSelect);
       // 
@@ -48,18 +48,18 @@
       // 
       this.settingsValue_TextBox.Enabled = false;
       this.settingsValue_TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-      this.settingsValue_TextBox.Location = new System.Drawing.Point(195, 12);
+      this.settingsValue_TextBox.Location = new System.Drawing.Point(214, 12);
       this.settingsValue_TextBox.Name = "settingsValue_TextBox";
-      this.settingsValue_TextBox.Size = new System.Drawing.Size(179, 20);
+      this.settingsValue_TextBox.Size = new System.Drawing.Size(160, 20);
       this.settingsValue_TextBox.TabIndex = 1;
       this.settingsValue_TextBox.Visible = false;
       // 
       // SubmitButtom
       // 
       this.SubmitButtom.Enabled = false;
-      this.SubmitButtom.Location = new System.Drawing.Point(195, 38);
+      this.SubmitButtom.Location = new System.Drawing.Point(214, 38);
       this.SubmitButtom.Name = "SubmitButtom";
-      this.SubmitButtom.Size = new System.Drawing.Size(179, 23);
+      this.SubmitButtom.Size = new System.Drawing.Size(160, 23);
       this.SubmitButtom.TabIndex = 2;
       this.SubmitButtom.Text = "Zapsat hodnotu";
       this.SubmitButtom.UseVisualStyleBackColor = true;

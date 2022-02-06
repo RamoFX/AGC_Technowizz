@@ -8,7 +8,7 @@ namespace Core {
     static public DynamicSetting ZA_HighlightTimeOn            = new("ZA_HighlightTimeOn", "600");
     static public DynamicSetting ZA_HighlightTimeOff           = new("ZA_HighlightTimeOff", "400");
     static public DynamicSetting ZA_TotalHighlightFlashes      = new("ZA_TotalHighlightFlashes", "4");
-    static public DynamicSetting ZA_LastHighlightOnOff         = new("ZA_LastHighlightOn", "true");
+    static public DynamicSetting ZA_LastHighlightOnOff         = new("ZA_LastHighlightOnOff", "true");
 
     static public DynamicSetting LayoutOutlineColor            = new("LayoutOutlineColor", "@169,169,169");
     static public DynamicSetting LayoutGridColor               = new("LayoutGridColor", "@211,211,211");
@@ -18,11 +18,11 @@ namespace Core {
 
     static public DynamicSetting CarBrandOutlineColor          = new("CarBrandOutlineColor", "@0,255,255");
 
-    static public DynamicSetting CarBrandFillColor_Full        = new("CarBrandFillColor_Full", "@255,0,0");
+    static public DynamicSetting CarBrandFillColor_Full        = new("CarBrandFillColor_Full", "Red");
     static public DynamicSetting CarBrandFillColor_AlmostFull  = new("CarBrandFillColor_AlmostFull", "@255,69,0");
     static public DynamicSetting CarBrandFillColor_AboveHalf   = new("CarBrandFillColor_AboveHalf", "@255,165,0");
-    static public DynamicSetting CarBrandFillColor_BelowHalf   = new("CarBrandFillColor_BelowHalf", "@255,255,0");
-    static public DynamicSetting CarBrandFillColor_AlmostEmpty = new("CarBrandFillColor_AlmostEmpty", "@50,205,50");
+    static public DynamicSetting CarBrandFillColor_BelowHalf   = new("CarBrandFillColor_BelowHalf", "Yellow");
+    static public DynamicSetting CarBrandFillColor_AlmostEmpty = new("CarBrandFillColor_AlmostEmpty", "LimeGreen");
     static public DynamicSetting CarBrandFillColor_Empty       = new("CarBrandFillColor_Empty", "#ffff");
   }
 }
