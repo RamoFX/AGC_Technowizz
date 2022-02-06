@@ -99,6 +99,23 @@ namespace LayoutAnalyzer {
 
 
     // State
+    private void UpdateTreeView()
+    {
+      TreeView_Layout.Nodes.Clear();
+      if (IsLayoutPresent)
+        foreach (var zone in CurrentLayout.Zones)
+        {
+          List<string> subTexts = new();
+
+          foreach (var carBrand in zone.CarBrands)
+          {
+            subTexts.Add(carBrand.Name + " : " + carBrand.PalletsCurrentlyStoredPercent + " %");
+          }
+
+          this.AddToTreeView(zone.Name, subTexts.ToArray());
+        }
+    }
+
     private void UpdateTitle() {
       if (this.IsLayoutPresent) {
         this.Text = $"{ TitleBase } - { this.CurrentLayout.Name }";
@@ -161,7 +178,7 @@ namespace LayoutAnalyzer {
     // Handlers
     private void CurrentLayoutChangedHandler() {
       // TreeView
-      this.TreeView_Layout.Nodes.Clear();
+      this.UpdateTreeView();
 
       if (this.IsLayoutPresent) {
         // Main
@@ -219,6 +236,21 @@ namespace LayoutAnalyzer {
 
     private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) {
       this.Close();
+    }
+
+
+
+    // TreeView events
+    private void AddToTreeView(string text, params string[] subTexts)
+    {
+      TreeNode treeNode = new(text, AddToTreeViewChild(subTexts).ToArray());
+      TreeView_Layout.Nodes.Add(treeNode);
+    }
+
+    private IEnumerable<TreeNode> AddToTreeViewChild(params string[] subTexts)
+    {
+      foreach (string text in subTexts)
+        yield return new(text);
     }
 
 
