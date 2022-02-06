@@ -29,13 +29,14 @@ namespace LayoutAnalyzer {
       this.ToolStripMenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripComboBox_ImportableLayoutNames = new System.Windows.Forms.ToolStripComboBox();
+      this.ToolStripMenuItem_Close = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_OpenInFileExplorer = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
       this.TreeView_Layout = new System.Windows.Forms.TreeView();
       this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
-      this.ToolStripMenuItem_Close = new System.Windows.Forms.ToolStripMenuItem();
+      this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.MenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
       this.SuspendLayout();
@@ -79,6 +80,14 @@ namespace LayoutAnalyzer {
       this.ToolStripComboBox_ImportableLayoutNames.Name = "ToolStripComboBox_ImportableLayoutNames";
       this.ToolStripComboBox_ImportableLayoutNames.Size = new System.Drawing.Size(200, 23);
       // 
+      // ToolStripMenuItem_Close
+      // 
+      this.ToolStripMenuItem_Close.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.ToolStripMenuItem_Close.Name = "ToolStripMenuItem_Close";
+      this.ToolStripMenuItem_Close.Size = new System.Drawing.Size(297, 22);
+      this.ToolStripMenuItem_Close.Text = "Zavřít";
+      this.ToolStripMenuItem_Close.Click += new System.EventHandler(this.ToolStripMenuItem_Close_Click);
+      // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -113,7 +122,7 @@ namespace LayoutAnalyzer {
       this.TreeView_Layout.Name = "TreeView_Layout";
       this.TreeView_Layout.PathSeparator = ".";
       this.TreeView_Layout.ShowNodeToolTips = true;
-      this.TreeView_Layout.Size = new System.Drawing.Size(200, 546);
+      this.TreeView_Layout.Size = new System.Drawing.Size(200, 524);
       this.TreeView_Layout.TabIndex = 0;
       // 
       // PictureBox_Layout
@@ -125,23 +134,24 @@ namespace LayoutAnalyzer {
       this.PictureBox_Layout.Location = new System.Drawing.Point(199, 24);
       this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
       this.PictureBox_Layout.Name = "PictureBox_Layout";
-      this.PictureBox_Layout.Size = new System.Drawing.Size(868, 546);
+      this.PictureBox_Layout.Size = new System.Drawing.Size(868, 524);
       this.PictureBox_Layout.TabIndex = 2;
       this.PictureBox_Layout.TabStop = false;
       // 
-      // ToolStripMenuItem_Close
+      // statusStrip1
       // 
-      this.ToolStripMenuItem_Close.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-      this.ToolStripMenuItem_Close.Name = "ToolStripMenuItem_Close";
-      this.ToolStripMenuItem_Close.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_Close.Text = "Zavřít";
-      this.ToolStripMenuItem_Close.Click += new System.EventHandler(this.ToolStripMenuItem_Close_Click);
+      this.statusStrip1.Location = new System.Drawing.Point(0, 548);
+      this.statusStrip1.Name = "statusStrip1";
+      this.statusStrip1.Size = new System.Drawing.Size(1067, 22);
+      this.statusStrip1.TabIndex = 3;
+      this.statusStrip1.Text = "statusStrip1";
       // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1067, 570);
+      this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.PictureBox_Layout);
       this.Controls.Add(this.TreeView_Layout);
       this.Controls.Add(this.MenuStrip);
@@ -174,6 +184,7 @@ namespace LayoutAnalyzer {
     private System.Windows.Forms.TreeView TreeView_Layout;
     private System.Windows.Forms.PictureBox PictureBox_Layout;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Close;
+    private System.Windows.Forms.StatusStrip statusStrip1;
   }
 }
 
