@@ -23,7 +23,7 @@ namespace Core.Storage {
       get => new(this.Location, this.Size);
     }
 
-    public Color Color {
+    public Color Color { // Doesn't return right color because it does only first time: Drawer inside create a lot of copies that have disallowed using C.DA, so output is after only empty
       get {
         int palletsCurrentlyStoredPercent = this.PalletsCurrentlyStoredPercent;
 
