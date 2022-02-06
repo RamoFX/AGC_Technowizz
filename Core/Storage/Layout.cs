@@ -1,6 +1,4 @@
-﻿using Core.Helpers;
-using Core.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -37,7 +35,7 @@ namespace Core.Storage {
     }
 
     public Color Color {
-      get => StaticSettings.LayoutColor;
+      get => DynamicSettings.LayoutColor.Value.ToColor();
     }
 
 
@@ -77,9 +75,6 @@ namespace Core.Storage {
 
     public Layout(string name, string warehouseName, Size size, int verticalCapacity)
       : this(name, warehouseName, size, verticalCapacity, new Zone[0] {}) { }
-
-    public Layout(Layout from)
-      : this(from.Name, from.WarehouseName, from.Size, from.VerticalCapacity, from.Zones) { }
 
 
 

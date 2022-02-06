@@ -1,7 +1,4 @@
-﻿using Communicator;
-using Core.Helpers;
-using Core.UI;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Xml.Linq;
 
@@ -29,17 +26,17 @@ namespace Core.Storage {
     public Color Color {
       get {
         if (this.PalletsCurrentlyStoredPercent == 100) {
-          return StaticSettings.CarBrandColor_Full;
+          return DynamicSettings.CarBrandColor_Full.Value.ToColor();
         } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
-          return StaticSettings.CarBrandColor_AlmostFull;
+          return DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor();
         } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
-          return StaticSettings.CarBrandColor_AboveHalf;
+          return DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor();
         } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
-          return StaticSettings.CarBrandColor_BelowHalf;
+          return DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor();
         } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
-          return StaticSettings.CarBrandColor_AlmostEmpty;
+          return DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor();
         } else {
-          return StaticSettings.CarBrandColor_Empty;
+          return DynamicSettings.CarBrandColor_Empty.Value.ToColor();
         }
       }
     }
@@ -70,24 +67,6 @@ namespace Core.Storage {
     }
 
 
-    // Other fields
-    public Color FillColor {
-      get {
-        if (this.PalletsCurrentlyStoredPercent == 100) {
-          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_Full.Value);
-        } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
-          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AlmostFull.Value);
-        } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
-          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AboveHalf.Value);
-        } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
-          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_BelowHalf.Value);
-        } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
-          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AlmostEmpty.Value);
-        } else {
-          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_Empty.Value);
-        }
-      }
-    }
 
     // Other
     private Layout LayoutParent;
@@ -102,9 +81,6 @@ namespace Core.Storage {
       this.Location = location;
       this.Size = size;
     }
-
-    public CarBrand(CarBrand from)
-      : this(from.Name, from.Location, from.Size) { }
 
 
 

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Core.Helpers;
+
+
 
 namespace Core.UI.Dialogs
 {
@@ -19,12 +16,12 @@ namespace Core.UI.Dialogs
 
     private void Help_Load(object sender, EventArgs e)
     {
-      Color100_PictureBox.BackColor = Colors.FromStringToColor(DynamicSettings.CarBrandColor_Full.Value);
-      Color99_75_PictureBox.BackColor = Colors.FromStringToColor(DynamicSettings.CarBrandColor_AlmostFull.Value);
-      Color74_50_PictureBox.BackColor = Colors.FromStringToColor(DynamicSettings.CarBrandColor_AboveHalf.Value);
-      Color49_25_PictureBox.BackColor = Colors.FromStringToColor(DynamicSettings.CarBrandColor_BelowHalf.Value);
-      Color24_1_PictureBox.BackColor = Colors.FromStringToColor(DynamicSettings.CarBrandColor_AlmostEmpty.Value);
-      Color0_PictureBox.BackColor = Colors.FromStringToColor(DynamicSettings.CarBrandColor_Empty.Value);
+      Color100_PictureBox.BackColor = DynamicSettings.CarBrandColor_Full.Value.ToColor();
+      Color99_75_PictureBox.BackColor = DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor();
+      Color74_50_PictureBox.BackColor = DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor();
+      Color49_25_PictureBox.BackColor = DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor();
+      Color24_1_PictureBox.BackColor = DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor();
+      Color0_PictureBox.BackColor = DynamicSettings.CarBrandColor_Empty.Value.ToColor();
     }
   }
 }

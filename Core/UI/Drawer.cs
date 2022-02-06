@@ -77,7 +77,7 @@ namespace Core.UI {
 
     // Draw
     static void DrawGrid(Graphics graphics, Layout layout, int unitSize) {
-      Pen pen = StaticSettings.GridColor.ToPen();
+      Pen pen = DynamicSettings.GridColor.Value.ToColor().ToPen();
 
       for (int x = 1; x < layout.Size.Width; x++) {
         for (int y = 1; y < layout.Size.Height; y++) {

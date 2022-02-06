@@ -29,9 +29,9 @@ namespace Core.Storage {
     public Color Color {
       get {
         if (this.Type == ZoneType.Storage) {
-          return StaticSettings.ZoneColor_Storage;
+          return DynamicSettings.ZoneColor_Storage.Value.ToColor();
         } else {
-          return StaticSettings.ZoneColor_Other;
+          return DynamicSettings.ZoneColor_Other.Value.ToColor();
         }
       }
     }
@@ -74,9 +74,6 @@ namespace Core.Storage {
 
     public Zone(string name, Point location, Size size, ZoneType type)
       : this(name, location, size, type, new CarBrand[0] { }) { }
-
-    public Zone(Zone from)
-      : this(from.Name, from.Location, from.Size, from.Type, from.CarBrands) { }
 
 
 

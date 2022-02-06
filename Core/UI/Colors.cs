@@ -9,19 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.UI {
   public static class Colors {
-    static public Color FromStringToColor(string colorString)
-    {
-      if (colorString.StartsWith("#"))
-        return Color.FromArgb(Convert.ToInt32(HexConverter(colorString.Substring(1)), 16));
-      if (colorString.StartsWith("@"))
-      {
-        IEnumerable<int> colors = colorString.Substring(1).Split(',').Select(color => Convert.ToInt32(color));
-        return Color.FromArgb(colors.ElementAt(0), colors.ElementAt(1), colors.ElementAt(2)); 
-      }
-      return Color.FromName(colorString);
-    }
-
-    static string HexConverter(string hexColor)
+    static public string HexConverter(string hexColor)
     {
       switch (hexColor.Length)
       {

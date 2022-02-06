@@ -4,12 +4,26 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
+using Core.UI;
 using Core.Storage;
 
 
 
 namespace Core.Helpers {
   static public class Extensions {
+    // Color
+    static public Color ToColor(this string colorString) {
+      if (colorString.StartsWith("#"))
+        return Color.FromArgb(Convert.ToInt32(Colors.HexConverter(colorString.Substring(1)), 16));
+      if (colorString.StartsWith("@")) {
+        IEnumerable<int> colors = colorString.Substring(1).Split(',').Select(color => Convert.ToInt32(color));
+        return Color.FromArgb(colors.ElementAt(0), colors.ElementAt(1), colors.ElementAt(2));
+      }
+      return Color.FromName(colorString);
+    }
+
+
+
     // To string
     static public string ToCustomString(this Size size) {
       return $"{ size.Width }{ StaticSettings.CustomStringSeparator }{ size.Height }";
@@ -213,6 +227,7 @@ namespace Core.Helpers {
 
       return fixedStorageMembers;
     }
+
 
 
     // Drawing IStorageMember
