@@ -4,7 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
+using Core.Helpers;
 using Core.Storage;
 
 
@@ -52,6 +54,89 @@ namespace Core.UI {
         return rect;
       } else
         return new();
+    }
+
+
+
+    // Helpers
+    static int CalculateUnitSize(Control control, Layout layout, Size offset) {
+      // Final unit size - fit to screen size or if too small apply default StaticSettting's size
+      int unitSize_windowAdapted = Math.Min(
+        (control.Width - offset.Width) / layout.Size.Width,
+        (control.Height - offset.Height) / layout.Size.Height
+      );
+
+      int unitSize_preferred = unitSize_windowAdapted < StaticSettings.UnitSize
+        ? StaticSettings.UnitSize
+        : unitSize_windowAdapted;
+
+      return unitSize_preferred;
+    }
+
+
+
+    // Draw
+    static void DrawGrid(Graphics graphics, Layout layout, int unitSize) {
+      Pen pen = StaticSettings.GridColor.ToPen();
+
+      for (int x = 1; x < layout.Size.Width; x++) {
+        for (int y = 1; y < layout.Size.Height; y++) {
+          graphics.DrawLine(
+            pen,
+            new Point(0, y).Scale(unitSize),
+            new Point(layout.Size.Width, y).Scale(unitSize)
+          );
+
+          //Rectangle rectangle = new(x, y, x + 1, y + 1);
+          //DrawOutline(graphics, pen, rectangle.Scale(unitSize));
+        }
+
+        graphics.DrawLine(
+          pen,
+          new Point(x, 0).Scale(unitSize),
+          new Point(x, layout.Size.Height).Scale(unitSize)
+        );
+      }
+    }
+
+    static public void DrawLayout(Control drawControl, Layout layout, Size offset) {
+      // Preparation
+      Graphics graphics = drawControl.CreateGraphics();
+      int unitSize = CalculateUnitSize(drawControl, layout, offset);
+
+      // Clear previous drawing
+      graphics.Clear(drawControl.BackColor);
+
+      // Grid
+      DrawGrid(graphics, layout, unitSize);
+
+      // Layout
+      var layoutReady = layout.Scale(unitSize).IndentateInside(0);
+
+      graphics.DrawVisualizable(layoutReady);
+
+      // Zones
+      var zones = layout.Zones;
+      var zonesReady = zones.Scale(unitSize).IndentateInside(1);
+
+      graphics.DrawVisualizables(zonesReady);
+
+      // CarBrands
+      for (int zoneIndex = 0; zoneIndex < zones.Count(); zoneIndex++) {
+        var zone = zones.ElementAt(zoneIndex);
+        var zoneReady = zonesReady.ElementAt(zoneIndex);
+
+        var carBrands = zone.CarBrands;
+        var carBrandsReady = carBrands.Scale(unitSize).IndentateInside(2);
+
+        graphics.DrawVisualizables(
+          carBrandsReady.FixNestedIndentation(zoneReady, 1)
+        );
+      }
+    }
+
+    static public void DrawLayout(Layout layout, Control control) {
+      DrawLayout(control, layout, new());
     }
   }
 }
