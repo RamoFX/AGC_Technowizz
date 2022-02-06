@@ -413,6 +413,8 @@ namespace LayoutDesigner {
 
     // Main events
     private void Main_Load(object sender, EventArgs e) {
+      MessageBox.Show("Uncaught exception", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); // Fix
+
       this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
       this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted;
 
