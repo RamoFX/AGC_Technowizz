@@ -66,6 +66,12 @@
     <Compile Include="UI\Dialogs\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Dialogs\NewObject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\NewObject.Designer.cs">
+      <DependentUpon>NewObject.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Drawer.cs" />
     <Compile Include="UI\Utilities.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
@@ -89,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\NewObject.resx">
+      <DependentUpon>NewObject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\UserTextInput.resx">
       <DependentUpon>UserTextInput.cs</DependentUpon>
