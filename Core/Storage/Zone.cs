@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
@@ -11,21 +12,35 @@ using Core.Helpers;
 namespace Core.Storage {
   public class Zone : XElementConvertable<Zone>, IStorageMember {
     // Main
-    public string Name;
-    public ZoneType Type;
+    [Browsable(true)]
+    [DisplayName("Název zóny")]
+    public string Name { get; set; }
+
+    [Browsable(true)]
+    [DisplayName("Typ zóny")]
+    [Description("Storage nebo Other. Storage - zóna určena pro nakládání palet. Other - jiné využití.")]
+    public ZoneType Type { get; set; }
+
+    [Browsable(false)]
     public List<CarBrand> CarBrands;
 
 
 
     // IVisualizable
+    [Browsable(true)]
+    [DisplayName("Pozice zóny")]
     public Point Location { get; set; }
 
+    [Browsable(true)]
+    [DisplayName("Rozměr zóny")]
     public Size Size { get; set; }
 
+    [Browsable(false)]
     public Rectangle Rectangle {
       get => new(this.Location, this.Size);
     }
 
+    [Browsable(false)]
     public Color Color {
       get {
         if (this.Type == ZoneType.Storage) {
@@ -39,18 +54,22 @@ namespace Core.Storage {
 
 
     // Computations
+    [Browsable(false)]
     public int MaxCapacity {
       get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.MaxCapacity);
     }
 
+    [Browsable(false)]
     public int PalletsCurrentlyStored {
       get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStored);
     }
 
+    [Browsable(false)]
     public int PalletsCurrentlyStoredPercent {
       get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStoredPercent);
     }
 
+    [Browsable(false)]
     public int PalletsCanBeStored {
       get => this.MaxCapacity - this.PalletsCurrentlyStored;
     }

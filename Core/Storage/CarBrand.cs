@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Xml.Linq;
 
@@ -10,19 +11,28 @@ using Core.Helpers;
 namespace Core.Storage {
   public class CarBrand : XElementConvertable<CarBrand>, IStorageMember {
     // Main
-    public string Name;
+    [Browsable(true)]
+    [DisplayName("Název značky nebo modelu")]
+    public string Name { get; set; }
 
 
 
     // IVisualizable
+    [Browsable(true)]
+    [DisplayName("Pozice plochy")]
+    [Description("Pozor! Pozice je relativní vůči zóně, ve které se nachází!")]
     public Point Location { get; set; }
 
+    [Browsable(true)]
+    [DisplayName("Rozměr plochy")]
     public Size Size { get; set; }
 
+    [Browsable(false)]
     public Rectangle Rectangle {
       get => new(this.Location, this.Size);
     }
 
+    [Browsable(false)]
     public Color Color { // Doesn't return right color because it does only first time: Drawer inside create a lot of copies that have disallowed using C.DA, so output is after only empty
       get {
         int palletsCurrentlyStoredPercent = this.PalletsCurrentlyStoredPercent;
@@ -46,10 +56,12 @@ namespace Core.Storage {
 
 
     // Computations
+    [Browsable(false)]
     public int MaxCapacity {
       get => this.Size.Width * this.Size.Height * this.LayoutParent.VerticalCapacity;
     }
 
+    [Browsable(false)]
     public int PalletsCurrentlyStored {
       get {
         if (this.UseDatabaseAccess) {
@@ -60,10 +72,12 @@ namespace Core.Storage {
       }
     }
 
+    [Browsable(false)]
     public int PalletsCurrentlyStoredPercent {
       get => (int) Math.Round((decimal) this.PalletsCurrentlyStored / this.MaxCapacity * 100);
     }
 
+    [Browsable(false)]
     public int PalletsCanBeStored {
       get => this.MaxCapacity - this.PalletsCurrentlyStored;
     }

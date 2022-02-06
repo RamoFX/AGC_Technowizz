@@ -184,7 +184,7 @@ namespace LayoutDesigner {
       this.TreeView_Layout.Name = "TreeView_Layout";
       this.TreeView_Layout.PathSeparator = ".";
       this.TreeView_Layout.ShowNodeToolTips = true;
-      this.TreeView_Layout.Size = new System.Drawing.Size(200, 313);
+      this.TreeView_Layout.Size = new System.Drawing.Size(241, 263);
       this.TreeView_Layout.TabIndex = 0;
       this.TreeView_Layout.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_Layout_NodeMouseClick);
       // 
@@ -194,21 +194,20 @@ namespace LayoutDesigner {
       this.PictureBox_Layout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.PictureBox_Layout.ErrorImage = null;
       this.PictureBox_Layout.InitialImage = null;
-      this.PictureBox_Layout.Location = new System.Drawing.Point(199, 24);
+      this.PictureBox_Layout.Location = new System.Drawing.Point(240, 24);
       this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
       this.PictureBox_Layout.Name = "PictureBox_Layout";
-      this.PictureBox_Layout.Size = new System.Drawing.Size(868, 546);
+      this.PictureBox_Layout.Size = new System.Drawing.Size(827, 546);
       this.PictureBox_Layout.TabIndex = 2;
       this.PictureBox_Layout.TabStop = false;
       // 
       // PropertyGrid_CurrentSelection
       // 
-      this.PropertyGrid_CurrentSelection.HelpVisible = false;
-      this.PropertyGrid_CurrentSelection.Location = new System.Drawing.Point(0, 336);
+      this.PropertyGrid_CurrentSelection.Location = new System.Drawing.Point(0, 286);
       this.PropertyGrid_CurrentSelection.Margin = new System.Windows.Forms.Padding(0);
       this.PropertyGrid_CurrentSelection.Name = "PropertyGrid_CurrentSelection";
       this.PropertyGrid_CurrentSelection.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(200, 234);
+      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(241, 284);
       this.PropertyGrid_CurrentSelection.TabIndex = 3;
       this.PropertyGrid_CurrentSelection.ToolbarVisible = false;
       // 

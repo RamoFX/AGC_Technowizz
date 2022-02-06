@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,25 +16,40 @@ using Core.Helpers;
 namespace Core.Storage {
   public class Layout : XDocumentConvertable<Layout>, IStorageMember {
     // Main
-    public string Name;
-    public string WarehouseName;
-    public int VerticalCapacity;
+    [Browsable(true)]
+    [DisplayName("Název")]
+    public string Name { get; set; }
+
+    [Browsable(true)]
+    [DisplayName("Název skladu")]
+    [Description("Musí se shodovat s názvem skladu v databázi, se kterou komunikuje.")]
+    public string WarehouseName { get; set; }
+
+    [Browsable(true)]
+    [DisplayName("Vertikální kapacita")]
+    public int VerticalCapacity { get; set; }
+
     public List<Zone> Zones;
 
 
 
     // IVisualizable
+    [Browsable(false)]
     public Point Location {
       get => new(0, 0);
       set { } // Fuck the rules
     }
 
+    [Browsable(true)]
+    [DisplayName("Rozměr")]
     public Size Size { get; set; }
 
+    [Browsable(false)]
     public Rectangle Rectangle {
       get => new(this.Location, this.Size);
     }
 
+    [Browsable(false)]
     public Color Color {
       get => DynamicSettings.LayoutColor.Value.ToColor();
     }
@@ -41,18 +57,22 @@ namespace Core.Storage {
 
 
     // Computations
+    [Browsable(false)]
     public int MaxCapacity {
       get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity);
     }
 
+    [Browsable(false)]
     public int PalletsCurrentlyStored {
       get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
     }
 
+    [Browsable(false)]
     public int PalletsCurrentlyStoredPercent {
       get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStoredPercent);
     }
 
+    [Browsable(false)]
     public int PalletsCanBeStored {
       get => this.MaxCapacity - this.PalletsCurrentlyStored;
     }
@@ -256,7 +276,7 @@ namespace Core.Storage {
       layout.Zones = this.Zones;
 
       // Only non-cloned layout should be used for Communicator.DatabaseAccess communication
-      layout.Initialize(true);
+      layout.Initialize(false);
 
       return layout;
     }
