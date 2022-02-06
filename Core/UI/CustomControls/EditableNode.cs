@@ -24,11 +24,30 @@ namespace Core.UI.CustomControls
     public string Value
     {
       get => valueTextBox.Text;
+      private set => valueTextBox.Text = value;
+    }
+
+    [Description("Default Value"), Category("Data")]
+    public string DefaultValue
+    {
+      get => valueTextBox.Text;
       set => valueTextBox.Text = value;
     }
+
+    [Description("Validation function"), Category("Other")]
+    Func<string, bool> ValueValidation { get; set; }
+
     public EditableNode()
     {
       InitializeComponent();
+    }
+
+    private void Submit(object sender, EventArgs e)
+    {
+      if (ValueValidation(valueTextBox.Text))
+        Value = valueTextBox.Text;
+      else
+        Value = DefaultValue;
     }
   }
 

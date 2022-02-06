@@ -70,6 +70,7 @@
       this.buttonSubmit.TabIndex = 2;
       this.buttonSubmit.Text = "Zadat";
       this.buttonSubmit.UseVisualStyleBackColor = true;
+      this.buttonSubmit.Click += new System.EventHandler(this.Submit);
       // 
       // EditableNode
       // 
@@ -83,6 +84,7 @@
       this.Size = new System.Drawing.Size(280, 37);
       this.ResumeLayout(false);
       this.PerformLayout();
+
     }
 
     #endregion
