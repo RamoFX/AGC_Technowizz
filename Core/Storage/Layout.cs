@@ -255,7 +255,8 @@ namespace Core.Storage {
       layout.VerticalCapacity = this.VerticalCapacity;
       layout.Zones = this.Zones;
 
-      layout.Initialize(this.UseDatabaseAccess);
+      // Only non-cloned layout should be used for Communicator.DatabaseAccess communication
+      layout.Initialize(false);
 
       return layout;
     }
