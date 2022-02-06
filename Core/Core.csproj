@@ -59,6 +59,7 @@
     <Compile Include="Storage\CarBrand.cs" />
     <Compile Include="Storage\IStorageMember.cs" />
     <Compile Include="Storage\IVisualizable.cs" />
+    <Compile Include="Storage\StorageMemberType.cs" />
     <Compile Include="UI\Colors.cs" />
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>

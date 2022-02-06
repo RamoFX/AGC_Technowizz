@@ -14,10 +14,6 @@ namespace Development
 
       Console.WriteLine("\nPress any key for exit...");
       Console.ReadKey();
-
-      Application.EnableVisualStyles();
-      Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new UI.EditableControls());
     }
 
     static private Layout CreateLayout_Example1() {

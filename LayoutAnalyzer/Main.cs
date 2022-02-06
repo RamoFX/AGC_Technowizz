@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using Core;
 using Core.UI;
 using Core.Storage;
-using Core.UI.CustomControls;
 
 namespace LayoutAnalyzer
 {
