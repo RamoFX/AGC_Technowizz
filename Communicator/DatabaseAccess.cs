@@ -1,13 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 
 namespace Communicator {
   public class DatabaseAccess {
-    static private readonly Random Random = new();
-
-
-
     static public string GetCarBrand(string containerCode) {
       /*
        * 
@@ -122,9 +120,21 @@ namespace Communicator {
 
 
 
+    // Sleep
+    static private readonly Random Random = new();
+
+    static private int CallsCount = 0;
+
     static private void DatabaseAccessDelay() {
       int delay = Random.Next(20, 300);
+      Debug.WriteLine($"Sleeping ({ CallsCount++ })... ");
+#if DEBUG
       Thread.Sleep(delay);
+#endif
+    }
+
+    static public int GetTotalCallsCount() {
+      return CallsCount;
     }
   }
 }
