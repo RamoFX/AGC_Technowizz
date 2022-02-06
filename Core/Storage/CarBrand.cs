@@ -12,7 +12,7 @@ namespace Core.Storage {
   public class CarBrand : XElementConvertable<CarBrand>, IStorageMember {
     // Main
     [Browsable(true)]
-    [DisplayName("Název značky nebo modelu")]
+    [DisplayName("Značka auta")]
     public string Name { get; set; }
 
 
