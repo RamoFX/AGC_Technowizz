@@ -25,15 +25,17 @@ namespace Core.Storage {
 
     public Color Color {
       get {
-        if (this.PalletsCurrentlyStoredPercent == 100) {
+        int palletsCurrentlyStoredPercent = this.PalletsCurrentlyStoredPercent;
+
+        if (palletsCurrentlyStoredPercent == 100) {
           return DynamicSettings.CarBrandColor_Full.Value.ToColor();
-        } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
+        } else if (palletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
           return DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor();
-        } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
+        } else if (palletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
           return DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor();
-        } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
+        } else if (palletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
           return DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor();
-        } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
+        } else if (palletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
           return DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor();
         } else {
           return DynamicSettings.CarBrandColor_Empty.Value.ToColor();
