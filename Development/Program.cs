@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core.Storage;
+
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
-using Core.Storage;
-
-
-
-namespace Development {
+namespace Development
+{
   class Program {
     static void Main() {
       //CreateLayout_Example1();
@@ -18,6 +14,10 @@ namespace Development {
 
       Console.WriteLine("\nPress any key for exit...");
       Console.ReadKey();
+
+      Application.EnableVisualStyles();
+      Application.SetCompatibleTextRenderingDefault(false);
+      Application.Run(new UI.EditableControls());
     }
 
     static private Layout CreateLayout_Example1() {

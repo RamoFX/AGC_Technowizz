@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Communicator;
+using Core.Helpers;
+using Core.UI;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 using Communicator;
@@ -70,6 +70,24 @@ namespace Core.Storage {
     }
 
 
+    // Other fields
+    public Color FillColor {
+      get {
+        if (this.PalletsCurrentlyStoredPercent == 100) {
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_Full.Value);
+        } else if (this.PalletsCurrentlyStoredPercent < 100 && this.PalletsCurrentlyStoredPercent >= 75) {
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AlmostFull.Value);
+        } else if (this.PalletsCurrentlyStoredPercent < 75 && this.PalletsCurrentlyStoredPercent >= 50) {
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AboveHalf.Value);
+        } else if (this.PalletsCurrentlyStoredPercent < 50 && this.PalletsCurrentlyStoredPercent >= 25) {
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_BelowHalf.Value);
+        } else if (this.PalletsCurrentlyStoredPercent < 25 && this.PalletsCurrentlyStoredPercent > 0) {
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_AlmostEmpty.Value);
+        } else {
+          return Colors.FromStringToColor(DynamicSettings.CarBrandFillColor_Empty.Value);
+        }
+      }
+    }
 
     // Other
     private Layout LayoutParent;

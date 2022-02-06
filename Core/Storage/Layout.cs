@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Helpers;
+using Core.UI;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;

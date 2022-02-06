@@ -30,7 +30,7 @@ namespace Settings
 
     private void SubmitHandler(object sender, EventArgs e)
     {
-      string selectedSetting = treeView_settings.SelectedNode.Parent.Text;
+      string selectedSetting = treeView_settings.SelectedNode.Parent.Tag.ToString();
       string value = settingsValue_TextBox.Text;
       DynamicSettings.WriteSettingsValue(selectedSetting, value);
       MessageBoxes.SettingsWriteSuccessful();
@@ -70,9 +70,50 @@ namespace Settings
         {
           treeNodeValues.Add(new TreeNode(text));
         }
-        TreeNode treeNodeKey = new TreeNode(name, treeNodeValues.ToArray());
+        TreeNode treeNodeKey = new TreeNode(ToReadableString(name), treeNodeValues.ToArray());
+        treeNodeKey.Tag = name;
         treeView_settings.Nodes.Add(treeNodeKey);
       }
+    }
+
+    string ToReadableString(string PropertyName)
+    {
+      switch (PropertyName)
+      {
+        case "ZA_StartupLayoutName":
+          return "Název počátečního rozložení";
+        case "ZA_HighlightTimeOn":
+          return "Čas rozsvícení zóny (blikání)";
+        case "ZA_HighlightTimeOff":
+          return "Čas zhasnutí zóny (blikání)";
+        case "ZA_TotalHighlightFlashes":
+          return "Celkový počet rozsvícení zóny";
+        case "ZA_LastHighlightOnOff":
+          return "Nechat zónu rozsvícenou";
+        case "LayoutOutlineColor":
+          return "Barva okrajů";
+        case "LayoutGridColor":
+          return "Barva mřížky ";
+        case "ZoneOutlineColor_Storage":
+          return "Barva skladovácích prostorů";
+        case "ZoneOutlineColor_Other":
+          return "Barva ostatních prosotrů";
+        case "CarBrandOutlineColor":
+          return "Barva okraje zóny";
+        case "CarBrandFillColor_Full":
+          return "Barva plné zóny";
+        case "CarBrandFillColor_AlmostFull":
+          return "Barva skoro plné zóny";
+        case "CarBrandFillColor_AboveHalf":
+          return "Barva zóny zaplněné nad polovinu";
+        case "CarBrandFillColor_BelowHalf":
+          return "Barva zóny zaplněné do poloviny";
+        case "CarBrandFillColor_AlmostEmpty":
+          return "Barva skoro prázdné zóny";
+        case "CarBrandFillColor_Empty":
+          return "Barva prázdné zóny";
+      }
+      return "";
     }
   }
 }
