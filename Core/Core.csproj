@@ -58,6 +58,18 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Storage\CarBrand.cs" />
     <Compile Include="UI\Colors.cs" />
+    <Compile Include="UI\CustomControls\EditableNode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\EditableNode.Designer.cs">
+      <DependentUpon>EditableNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControls\TreeViewEditable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CustomControls\TreeViewEditable.Designer.cs">
+      <DependentUpon>TreeViewEditable.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +98,12 @@
     <Compile Include="UI\MessageBoxes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\CustomControls\EditableNode.resx">
+      <DependentUpon>EditableNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControls\TreeViewEditable.resx">
+      <DependentUpon>TreeViewEditable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>
