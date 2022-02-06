@@ -42,6 +42,7 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
       this.TreeView_Layout = new System.Windows.Forms.TreeView();
       this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
+      this.PropertyGrid_CurrentSelection = new System.Windows.Forms.PropertyGrid();
       this.MenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
       this.SuspendLayout();
@@ -199,11 +200,23 @@ namespace LayoutDesigner {
       this.PictureBox_Layout.TabIndex = 2;
       this.PictureBox_Layout.TabStop = false;
       // 
+      // PropertyGrid_CurrentSelection
+      // 
+      this.PropertyGrid_CurrentSelection.HelpVisible = false;
+      this.PropertyGrid_CurrentSelection.Location = new System.Drawing.Point(0, 336);
+      this.PropertyGrid_CurrentSelection.Margin = new System.Windows.Forms.Padding(0);
+      this.PropertyGrid_CurrentSelection.Name = "PropertyGrid_CurrentSelection";
+      this.PropertyGrid_CurrentSelection.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(200, 234);
+      this.PropertyGrid_CurrentSelection.TabIndex = 3;
+      this.PropertyGrid_CurrentSelection.ToolbarVisible = false;
+      // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1067, 570);
+      this.Controls.Add(this.PropertyGrid_CurrentSelection);
       this.Controls.Add(this.PictureBox_Layout);
       this.Controls.Add(this.TreeView_Layout);
       this.Controls.Add(this.MenuStrip);
@@ -242,6 +255,7 @@ namespace LayoutDesigner {
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
     private System.Windows.Forms.TreeView TreeView_Layout;
     private System.Windows.Forms.PictureBox PictureBox_Layout;
+    private System.Windows.Forms.PropertyGrid PropertyGrid_CurrentSelection;
   }
 }
 
