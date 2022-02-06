@@ -186,6 +186,7 @@ namespace LayoutDesigner {
       this.TreeView_Layout.ShowNodeToolTips = true;
       this.TreeView_Layout.Size = new System.Drawing.Size(200, 313);
       this.TreeView_Layout.TabIndex = 0;
+      this.TreeView_Layout.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_Layout_NodeMouseClick);
       // 
       // PictureBox_Layout
       // 

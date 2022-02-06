@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 using Core;
@@ -15,7 +17,6 @@ using Core.UI.Dialogs;
 
 
 namespace LayoutDesigner {
-
   public partial class Main : Form {
     // Constants
     private const string TitleBase = "Návrhář rozvržení";
@@ -23,20 +24,23 @@ namespace LayoutDesigner {
 
 
 
-    // Layout data
+    // Data
     private Layout CurrentLayout;
 
     private bool IsLayoutPresent {
       get => this.CurrentLayout != null;
     }
 
+    private object CurrentSelection;
+
+    private bool IsSelectionPresent {
+      get => this.CurrentSelection != null;
+    }
+
     private List<string> ImportableLayoutsNames {
       get => LayoutManager.GetExistingLayoutNames().Prepend(SelectBelow).ToList();
     }
 
-
-
-    // Form and its Controls data
     private int HeightOffset;
 
 
@@ -188,7 +192,7 @@ namespace LayoutDesigner {
 
 
 
-    // State
+    // Update state
     private void UpdateTitle() {
       if (this.IsLayoutPresent) {
         this.Text = $"{ TitleBase } - { this.CurrentLayout.Name } ({( this.CurrentLayout.IsCorrespondingFileUpToDate() ? "uloženo" : "neuloženo" )})";
@@ -248,8 +252,12 @@ namespace LayoutDesigner {
 
       // Post-hooks
       this.CurrentLayoutChangedHandler();
+      this.CurrentSelectionChangedHandler();
     }
 
+
+
+    // Set state
     private void SetCurrentLayout(Layout layout) {
       this.CurrentLayout = layout;
 
@@ -261,18 +269,51 @@ namespace LayoutDesigner {
       this.UpdateState();
     }
 
+    private void SetCurrentSelection(string path) {
+      string[] pathPieces = path.Split(this.TreeView_Layout.PathSeparator.ToCharArray());
+      int level = pathPieces.Length - 1;
+      object currentSelection = null;
 
+      // Find currentSelection which can be Layout, Zone or CarBrand
+      if (level >= 0 && level <= 2) {
+        if (level == 0) {
+          if (pathPieces[level] == this.CurrentLayout.Name) {
+            currentSelection = this.CurrentLayout;
+          }
+        } else {
+          foreach (Zone zone in this.CurrentLayout.Zones) {
+            if (level == 1) {
+              if (pathPieces[level] == zone.Name) {
+                currentSelection = zone;
 
-    // Visual
-    private void DrawLayout() {
-      if (this.IsLayoutPresent) {
-        Drawer.DrawLayout(this.PictureBox_Layout, this.CurrentLayout, new(SystemInformation.VerticalScrollBarWidth, 0));
+                break;
+              }
+            } else {
+              if (pathPieces[1] == zone.Name) {
+                foreach (CarBrand carBrand in zone.CarBrands) {
+                  if (pathPieces[level] == carBrand.Name) {
+                    currentSelection = carBrand;
+
+                    break;
+                  }
+                }
+
+                break;
+              }
+            }
+          }
+        }
       }
+
+      this.CurrentSelection = currentSelection;
+
+      // Post-hooks
+      this.CurrentSelectionChangedHandler();
     }
 
 
 
-    // Handlers
+    // Handle state
     private void CurrentLayoutChangedHandler() {
       // TreeView
       this.TreeView_Layout.Nodes.Clear();
@@ -301,10 +342,32 @@ namespace LayoutDesigner {
         this.DrawLayout();
       } else {
         // Set current form minimum size
-        this.MinimumSize = new Size(TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth, 256);
+        this.MinimumSize = new Size(
+          TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth,
+          this.PropertyGrid_CurrentSelection.Height * 2
+        );
 
         // Clear last drawing
         this.PictureBox_Layout.CreateGraphics().Clear(this.PictureBox_Layout.BackColor);
+      }
+    }
+
+    private void CurrentSelectionChangedHandler() {
+      if (this.IsSelectionPresent) {
+        this.PropertyGrid_CurrentSelection.SelectedObjects = new object[] { this.CurrentSelection };
+      } else {
+        this.PropertyGrid_CurrentSelection.ResetSelectedProperty();
+      }
+
+      this.PropertyGrid_CurrentSelection.Refresh();
+    }
+
+
+
+    // Visual
+    private void DrawLayout() {
+      if (this.IsLayoutPresent) {
+        Drawer.DrawLayout(this.PictureBox_Layout, this.CurrentLayout, new(SystemInformation.VerticalScrollBarWidth, 0));
       }
     }
 
@@ -361,6 +424,7 @@ namespace LayoutDesigner {
     private void Main_Load(object sender, EventArgs e) {
       this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
       this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted;
+
       this.HeightOffset = this.Height - this.TreeView_Layout.Height;
 
       // Post-hooks
@@ -371,8 +435,11 @@ namespace LayoutDesigner {
     private void Main_Resize(object sender, EventArgs e) {
       this.TreeView_Layout.Height = this.Height - HeightOffset;
 
+      this.PropertyGrid_CurrentSelection.Location = new(0, this.TreeView_Layout.Location.Y + this.TreeView_Layout.Height);
+
       this.PictureBox_Layout.Width = this.Width - this.TreeView_Layout.Width;
-      this.PictureBox_Layout.Height = this.Height - this.HeightOffset;
+      //this.PictureBox_Layout.Height = this.Height - this.HeightOffset;
+      this.PictureBox_Layout.Height = this.TreeView_Layout.Height + this.PropertyGrid_CurrentSelection.Height;
 
       this.DrawLayout();
     }
@@ -383,6 +450,10 @@ namespace LayoutDesigner {
 
     private void Main_Paint(object sender, PaintEventArgs e) {
       this.DrawLayout();
+    }
+
+    private void TreeView_Layout_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
+      this.SetCurrentSelection(e.Node.FullPath);
     }
   }
 }
