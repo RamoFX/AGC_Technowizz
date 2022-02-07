@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Operators.cs" />
     <Compile Include="Helpers\DynamicSettings.cs" />
     <Compile Include="Helpers\DynamicSetting.cs" />
     <Compile Include="Extensions\Method.cs" />
