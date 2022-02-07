@@ -32,9 +32,9 @@ namespace Core.UI.Dialogs {
       // 
       // Button_Apply
       // 
-      this.Button_Apply.Location = new System.Drawing.Point(60, 364);
+      this.Button_Apply.Location = new System.Drawing.Point(62, 364);
       this.Button_Apply.Name = "Button_Apply";
-      this.Button_Apply.Size = new System.Drawing.Size(101, 34);
+      this.Button_Apply.Size = new System.Drawing.Size(174, 34);
       this.Button_Apply.TabIndex = 6;
       this.Button_Apply.Text = "Použít";
       this.Button_Apply.UseVisualStyleBackColor = true;
@@ -52,9 +52,9 @@ namespace Core.UI.Dialogs {
       // 
       // Button_Cancel
       // 
-      this.Button_Cancel.Location = new System.Drawing.Point(172, 364);
+      this.Button_Cancel.Location = new System.Drawing.Point(241, 364);
       this.Button_Cancel.Name = "Button_Cancel";
-      this.Button_Cancel.Size = new System.Drawing.Size(101, 34);
+      this.Button_Cancel.Size = new System.Drawing.Size(174, 34);
       this.Button_Cancel.TabIndex = 4;
       this.Button_Cancel.Text = "Storno";
       this.Button_Cancel.UseVisualStyleBackColor = true;
@@ -62,10 +62,10 @@ namespace Core.UI.Dialogs {
       // 
       // PropertyGrid
       // 
-      this.PropertyGrid.Location = new System.Drawing.Point(60, 63);
+      this.PropertyGrid.Location = new System.Drawing.Point(62, 63);
       this.PropertyGrid.Name = "PropertyGrid";
       this.PropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-      this.PropertyGrid.Size = new System.Drawing.Size(213, 295);
+      this.PropertyGrid.Size = new System.Drawing.Size(353, 295);
       this.PropertyGrid.TabIndex = 7;
       this.PropertyGrid.ToolbarVisible = false;
       // 
@@ -73,7 +73,7 @@ namespace Core.UI.Dialogs {
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(333, 428);
+      this.ClientSize = new System.Drawing.Size(477, 428);
       this.Controls.Add(this.PropertyGrid);
       this.Controls.Add(this.Button_Apply);
       this.Controls.Add(this.Label);
