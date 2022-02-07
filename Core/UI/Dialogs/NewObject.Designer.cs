@@ -64,6 +64,7 @@ namespace Core.UI.Dialogs {
       // 
       this.PropertyGrid.Location = new System.Drawing.Point(60, 63);
       this.PropertyGrid.Name = "PropertyGrid";
+      this.PropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
       this.PropertyGrid.Size = new System.Drawing.Size(213, 295);
       this.PropertyGrid.TabIndex = 7;
       this.PropertyGrid.ToolbarVisible = false;

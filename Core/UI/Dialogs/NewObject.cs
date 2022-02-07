@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Storage;
+using System;
 using System.Windows.Forms;
 
 
@@ -17,18 +18,16 @@ namespace Core.UI.Dialogs {
       this.ValueValidator = valueValidator;
       this.PropertyGrid.SelectedObject = initialObject;
       this.Label.Text = labelText;
-
     }
 
 
 
     private void Button_Apply_Click(object sender, EventArgs e) {
-      object newObject = PropertyGrid.SelectedObject;
-      bool isValid = this.ValueValidator(newObject);
+      bool isValid = this.ValueValidator(this.PropertyGrid.SelectedObject);
 
       if (isValid) {
         this.DialogResult = DialogResult.OK;
-        this.FinalValue = newObject;
+        this.FinalValue = this.PropertyGrid.SelectedObject;
         this.Close();
       }
     }
