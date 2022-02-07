@@ -1,19 +1,19 @@
-﻿using Core.Storage;
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Development
-{
+using Core.Storage;
+
+
+
+namespace Development {
   class Program {
     static void Main() {
       //CreateLayout_Example1();
-      CreateLayout_Example2();
+      //CreateLayout_Example2();
 
-      Console.WriteLine("\nPress any key for exit...");
-      Console.ReadKey();
+      Application.Run(new Core.UI.Dialogs.Dialog("Výběr"));
     }
 
     static private Layout CreateLayout_Example1() {
