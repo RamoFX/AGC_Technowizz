@@ -64,11 +64,11 @@ namespace Core.UI {
 
     // Confirmation
     static public DialogResult SaveUnsavedLayout() {
-      return MessageBox.Show("Rozvržení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      return MessageBox.Show("Rozvržení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
     }
 
     static public DialogResult UndoableDeletion(string name) {
-      return MessageBox.Show($"Rozvržení \"{ name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      return MessageBox.Show($"Rozvržení \"{ name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
     }
   }
 }
