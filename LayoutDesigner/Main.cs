@@ -33,8 +33,8 @@ namespace LayoutDesigner {
 
     private object CurrentSelection;
 
-    private List<string> ImportableLayoutsNames {
-      get => LayoutManager.GetExistingLayoutNames().Prepend(SelectBelow).ToList();
+    private List<string> ValidLayoutNames {
+      get => LayoutManager.GetExistingLayoutNames().ToList();
     }
 
     private int HeightOffset;
@@ -50,24 +50,30 @@ namespace LayoutDesigner {
 
     // File
     private void Unload(bool force) {
-      if (this.IsLayoutPresent) {
-        // If not saved ask user if he wants to save
-        // If forced then do not ask
-        if (!force && !this.CurrentLayout.IsCorrespondingFileUpToDate()) {
-          var dialogResult = MessageBoxes.SaveUnsavedLayout();
+      if (!this.IsLayoutPresent) {
+        return;
+      }
 
-          if (dialogResult == DialogResult.Yes) {
-            this.Save();
-          }
+      // If not saved ask user if he wants to save
+      // If forced then do not ask
+      if (!force && !this.CurrentLayout.IsCorrespondingFileUpToDate()) {
+        var dialogResult = MessageBoxes.SaveUnsavedLayout();
+
+        if (dialogResult == DialogResult.Cancel) {
+          return;
         }
 
-        // Unload
-        this.CurrentLayout = null;
-        this.CurrentSelection = null;
-
-        // Post-hooks
-        this.UpdateState();
+        if (dialogResult == DialogResult.Yes) {
+          this.Save();
+        }
       }
+
+      // Unload
+      this.CurrentLayout = null;
+      this.CurrentSelection = null;
+
+      // Post-hooks
+      this.UpdateState();
     }
 
     private void Unload() {
@@ -384,7 +390,7 @@ namespace LayoutDesigner {
                      || carBrand.Location.X + carBrand.Size.Width > parentZone.Location.X + parentZone.Size.Width
                      || carBrand.Location.Y + carBrand.Size.Height > parentZone.Location.Y + parentZone.Size.Height;
 
-        bool doesIntersectWithOtherCarBrand = parentZone.CarBrands.Any(currentCarBrand => parentZone.Rectangle.IntersectsWith(currentCarBrand.Rectangle)); // Bug
+        bool doesIntersectWithOtherCarBrand = parentZone.CarBrands.Any(currentCarBrand => carBrand.Rectangle.IntersectsWith(currentCarBrand.Rectangle)); // Bug
 
 
 
@@ -427,7 +433,7 @@ namespace LayoutDesigner {
     }
 
     private void UpdateOpenControl_Enabled() {
-      ToolStripMenuItem_Open.Enabled = this.ImportableLayoutsNames.Count() > 0;
+      ToolStripMenuItem_Open.Enabled = this.ValidLayoutNames.Count() > 0;
     }
 
     private void UpdateCloseControl_Enabled() {
