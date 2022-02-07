@@ -56,17 +56,24 @@ namespace Core.Storage {
     // Computations
     [Browsable(false)]
     public int MaxCapacity {
-      get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.MaxCapacity);
+      get => this.CarBrands.Sum(carBrand => carBrand.MaxCapacity);
     }
 
     [Browsable(false)]
     public int PalletsCurrentlyStored {
-      get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStored);
+      get => this.CarBrands.Sum(carBrand => carBrand.PalletsCurrentlyStored);
     }
 
     [Browsable(false)]
     public int PalletsCurrentlyStoredPercent {
-      get => this.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.PalletsCurrentlyStoredPercent);
+      get {
+        if (this.CarBrands.Count == 0)
+          return 0;
+
+        double average = this.CarBrands.Average(carBrand => carBrand.PalletsCurrentlyStoredPercent);
+
+        return (int) Math.Round(average);
+      }
     }
 
     [Browsable(false)]

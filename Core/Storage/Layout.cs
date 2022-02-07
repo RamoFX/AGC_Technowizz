@@ -69,7 +69,14 @@ namespace Core.Storage {
 
     [Browsable(false)]
     public int PalletsCurrentlyStoredPercent {
-      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStoredPercent);
+      get {
+        if (this.Zones.Count == 0)
+          return 0;
+
+        double average = this.Zones.Average(carBrand => carBrand.PalletsCurrentlyStoredPercent);
+
+        return (int) Math.Round(average);
+      }
     }
 
     [Browsable(false)]
