@@ -116,7 +116,6 @@ namespace LayoutAnalyzer {
       // 
       // TreeView_Layout
       // 
-      this.TreeView_Layout.LabelEdit = true;
       this.TreeView_Layout.Location = new System.Drawing.Point(0, 24);
       this.TreeView_Layout.Margin = new System.Windows.Forms.Padding(0);
       this.TreeView_Layout.Name = "TreeView_Layout";

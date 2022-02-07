@@ -99,7 +99,25 @@ namespace LayoutAnalyzer {
     // State
     private void UpdateTreeView()
     {
-      TreeView_Layout.Nodes.Clear();
+      if (IsLayoutPresent)
+      {
+
+        TreeView_Layout.Nodes.Clear();
+        var rootNode = TreeView_Layout.Nodes.Add($"{this.CurrentLayout.Name} : {this.CurrentLayout.PalletsCurrentlyStoredPercent} %");
+
+        foreach (Zone zone in this.CurrentLayout.Zones)
+        {
+          var zoneNode = rootNode.Nodes.Add(zone.Name + (zone.Type == ZoneType.Storage ? " : " + zone.PalletsCurrentlyStoredPercent + " %" : ""));
+
+          foreach (CarBrand carBrand in zone.CarBrands)
+          {
+            zoneNode.Nodes.Add($"{carBrand.Name} : {carBrand.PalletsCurrentlyStoredPercent} %");
+          }
+        }
+
+        this.TreeView_Layout.ExpandAll();
+      }
+      /*
       if (IsLayoutPresent)
         foreach (var zone in CurrentLayout.Zones)
         {
@@ -110,8 +128,8 @@ namespace LayoutAnalyzer {
             subTexts.Add(carBrand.Name + " : " + carBrand.PalletsCurrentlyStoredPercent + " %");
           }
 
-          this.AddToTreeView(zone.Name, subTexts.ToArray());
-        }
+          TreeNode treeNode = this.AddToTreeView(zone.Name + " : " + zone.PalletsCurrentlyStoredPercent + " %", subTexts.ToArray());
+        }*/
     }
 
     private void UpdateTitle() {
@@ -239,10 +257,16 @@ namespace LayoutAnalyzer {
 
 
     // TreeView events
-    private void AddToTreeView(string text, params string[] subTexts)
+    private void AddToTreeViewParent(string text, params string[] subTexts)
     {
       TreeNode treeNode = new(text, AddToTreeViewChild(subTexts).ToArray());
       TreeView_Layout.Nodes.Add(treeNode);
+    }
+
+    private IEnumerable<TreeNode> AddToTreeView(string text, params string[] subTexts)
+    {
+      foreach (string txt in subTexts)
+        yield return new(txt, AddToTreeViewChild(subTexts).ToArray());
     }
 
     private IEnumerable<TreeNode> AddToTreeViewChild(params string[] subTexts)
