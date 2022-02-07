@@ -426,7 +426,7 @@ namespace LayoutDesigner {
       }
     }
 
-    private void UpdateImportControl_Enabled() {
+    private void UpdateOpenControl_Enabled() {
       ToolStripMenuItem_Open.Enabled = this.ImportableLayoutsNames.Count() > 0;
     }
 
@@ -474,7 +474,7 @@ namespace LayoutDesigner {
 
     private void UpdateState() {
       this.UpdateTitle();
-      this.UpdateImportControl_Enabled();
+      this.UpdateOpenControl_Enabled();
       this.UpdateCloseControl_Enabled();
       this.UpdateSaveControl_Enabled();
       this.UpdateSaveAsControl_Enabled();
