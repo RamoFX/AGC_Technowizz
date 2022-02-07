@@ -9,12 +9,20 @@ namespace Core.UI.Dialogs {
     public Func<string, bool> ValueValidator;
     public string FinalValue;
 
-    public UserTextInput(Func<string, bool> valueValidator, string labelText) {
+
+
+    public UserTextInput(Func<string, bool> validator, string label, string initialValue) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
-      this.ValueValidator = valueValidator;
-      this.Label.Text = labelText;
+      this.ValueValidator = validator;
+      this.Label.Text = label;
+      this.TextBox.Text = initialValue;
     }
+
+    public UserTextInput(Func<string, bool> validator, string label)
+      : this(validator, label, "") { }
+
+
 
     private void Button_Apply_Click(object sender, EventArgs e) {
       string newName = TextBox.Text;
@@ -26,6 +34,8 @@ namespace Core.UI.Dialogs {
         this.Close();
       }
     }
+
+
 
     private void Button_Cancel_Click(object sender, EventArgs e) {
       this.DialogResult = DialogResult.Cancel;
