@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
 using System.Xml.Linq;
-
+using Core.Extensions;
 using Core.Helpers;
 
 

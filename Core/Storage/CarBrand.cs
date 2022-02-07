@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Xml.Linq;
 
 using Communicator;
+using Core.Extensions;
 using Core.Helpers;
 
 

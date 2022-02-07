@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Core.Extensions;
 
-using Core.Helpers;
-
-
-
-namespace Core.UI.Dialogs
-{
+namespace Core.UI.Dialogs {
   public partial class Help : Form
   {
     public Help()

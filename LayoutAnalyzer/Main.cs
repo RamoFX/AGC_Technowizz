@@ -9,9 +9,7 @@ using System.Windows.Forms;
 using Core;
 using Core.Storage;
 using Core.UI;
-using Core.Helpers;
-
-
+using Core.Extensions;
 
 namespace LayoutAnalyzer {
 

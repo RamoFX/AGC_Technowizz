@@ -55,11 +55,17 @@
   <ItemGroup>
     <Compile Include="Helpers\DynamicSettings.cs" />
     <Compile Include="Helpers\DynamicSetting.cs" />
-    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Extensions\Method.cs" />
     <Compile Include="Storage\CarBrand.cs" />
     <Compile Include="Storage\IStorageMember.cs" />
     <Compile Include="Storage\IVisualizable.cs" />
     <Compile Include="UI\Colors.cs" />
+    <Compile Include="UI\Dialogs\Dialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\Dialog.Designer.cs">
+      <DependentUpon>Dialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     <Compile Include="UI\MessageBoxes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\Dialogs\Dialog.resx">
+      <DependentUpon>Dialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>

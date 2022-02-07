@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Core.Helpers;
+using Core.Extensions;
 using Core.Storage;
 
 

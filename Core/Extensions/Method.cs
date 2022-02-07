@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 
 using Core.UI;
 using Core.Storage;
 
 
 
-namespace Core.Helpers {
-  static public class Extensions {
+namespace Core.Extensions {
+  static public class Method {
     // Color
     static public Color ToColor(this string colorString) {
       if (colorString.StartsWith("#"))
@@ -39,7 +38,7 @@ namespace Core.Helpers {
     static public Size ToSize(this string value) {
       string[] values = value.Split(StaticSettings.CustomStringSeparator);
       int width = int.Parse(values[0]);
-      int height= int.Parse(values[1]);
+      int height = int.Parse(values[1]);
 
       return new Size(width, height);
     }
