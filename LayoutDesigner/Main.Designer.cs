@@ -29,7 +29,6 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_New = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
-      this.ToolStripComboBox_ImportableLayoutNames = new System.Windows.Forms.ToolStripComboBox();
       this.ToolStripMenuItem_Close = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +42,12 @@ namespace LayoutDesigner {
       this.TreeView_Layout = new System.Windows.Forms.TreeView();
       this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
       this.PropertyGrid_CurrentSelection = new System.Windows.Forms.PropertyGrid();
+      this.ToolStripMenuItem_Layout = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_NewZone = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_NewCarBrand = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_RemoveZone = new System.Windows.Forms.ToolStripMenuItem();
+      this.ToolStripMenuItem_RemoveCarBrand = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.MenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
       this.SuspendLayout();
@@ -50,7 +55,8 @@ namespace LayoutDesigner {
       // MenuStrip
       // 
       this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_File});
+            this.ToolStripMenuItem_File,
+            this.ToolStripMenuItem_Layout});
       this.MenuStrip.Location = new System.Drawing.Point(0, 0);
       this.MenuStrip.Name = "MenuStrip";
       this.MenuStrip.Padding = new System.Windows.Forms.Padding(0);
@@ -82,24 +88,17 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_New.Name = "ToolStripMenuItem_New";
       this.ToolStripMenuItem_New.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
       this.ToolStripMenuItem_New.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_New.Text = "Nový";
+      this.ToolStripMenuItem_New.Text = "Nový...";
       this.ToolStripMenuItem_New.Click += new System.EventHandler(this.ToolStripMenuItem_New_Click);
       // 
       // ToolStripMenuItem_Open
       // 
       this.ToolStripMenuItem_Open.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-      this.ToolStripMenuItem_Open.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripComboBox_ImportableLayoutNames});
       this.ToolStripMenuItem_Open.Name = "ToolStripMenuItem_Open";
+      this.ToolStripMenuItem_Open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
       this.ToolStripMenuItem_Open.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_Open.Text = "Otevřít";
-      // 
-      // ToolStripComboBox_ImportableLayoutNames
-      // 
-      this.ToolStripComboBox_ImportableLayoutNames.DropDownWidth = 200;
-      this.ToolStripComboBox_ImportableLayoutNames.FlatStyle = System.Windows.Forms.FlatStyle.System;
-      this.ToolStripComboBox_ImportableLayoutNames.Name = "ToolStripComboBox_ImportableLayoutNames";
-      this.ToolStripComboBox_ImportableLayoutNames.Size = new System.Drawing.Size(200, 23);
+      this.ToolStripMenuItem_Open.Text = "Otevřít...";
+      this.ToolStripMenuItem_Open.Click += new System.EventHandler(this.ToolStripMenuItem_Open_Click);
       // 
       // ToolStripMenuItem_Close
       // 
@@ -184,7 +183,7 @@ namespace LayoutDesigner {
       this.TreeView_Layout.Name = "TreeView_Layout";
       this.TreeView_Layout.PathSeparator = ".";
       this.TreeView_Layout.ShowNodeToolTips = true;
-      this.TreeView_Layout.Size = new System.Drawing.Size(241, 263);
+      this.TreeView_Layout.Size = new System.Drawing.Size(315, 263);
       this.TreeView_Layout.TabIndex = 0;
       this.TreeView_Layout.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_Layout_NodeMouseClick);
       // 
@@ -194,10 +193,10 @@ namespace LayoutDesigner {
       this.PictureBox_Layout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.PictureBox_Layout.ErrorImage = null;
       this.PictureBox_Layout.InitialImage = null;
-      this.PictureBox_Layout.Location = new System.Drawing.Point(240, 24);
+      this.PictureBox_Layout.Location = new System.Drawing.Point(314, 24);
       this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
       this.PictureBox_Layout.Name = "PictureBox_Layout";
-      this.PictureBox_Layout.Size = new System.Drawing.Size(827, 546);
+      this.PictureBox_Layout.Size = new System.Drawing.Size(753, 546);
       this.PictureBox_Layout.TabIndex = 2;
       this.PictureBox_Layout.TabStop = false;
       // 
@@ -207,10 +206,55 @@ namespace LayoutDesigner {
       this.PropertyGrid_CurrentSelection.Margin = new System.Windows.Forms.Padding(0);
       this.PropertyGrid_CurrentSelection.Name = "PropertyGrid_CurrentSelection";
       this.PropertyGrid_CurrentSelection.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(241, 284);
+      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(315, 284);
       this.PropertyGrid_CurrentSelection.TabIndex = 3;
       this.PropertyGrid_CurrentSelection.ToolbarVisible = false;
       this.PropertyGrid_CurrentSelection.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid_CurrentSelection_PropertyValueChanged);
+      // 
+      // ToolStripMenuItem_Layout
+      // 
+      this.ToolStripMenuItem_Layout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_NewZone,
+            this.ToolStripMenuItem_NewCarBrand,
+            this.toolStripSeparator4,
+            this.ToolStripMenuItem_RemoveZone,
+            this.ToolStripMenuItem_RemoveCarBrand});
+      this.ToolStripMenuItem_Layout.Name = "ToolStripMenuItem_Layout";
+      this.ToolStripMenuItem_Layout.Size = new System.Drawing.Size(69, 24);
+      this.ToolStripMenuItem_Layout.Text = "Rozvržení";
+      // 
+      // ToolStripMenuItem_NewZone
+      // 
+      this.ToolStripMenuItem_NewZone.Name = "ToolStripMenuItem_NewZone";
+      this.ToolStripMenuItem_NewZone.Size = new System.Drawing.Size(198, 22);
+      this.ToolStripMenuItem_NewZone.Text = "Nová zóna...";
+      this.ToolStripMenuItem_NewZone.Click += new System.EventHandler(this.ToolStripMenuItem_NewZone_Click);
+      // 
+      // ToolStripMenuItem_NewCarBrand
+      // 
+      this.ToolStripMenuItem_NewCarBrand.Name = "ToolStripMenuItem_NewCarBrand";
+      this.ToolStripMenuItem_NewCarBrand.Size = new System.Drawing.Size(198, 22);
+      this.ToolStripMenuItem_NewCarBrand.Text = "Nová značka auta...";
+      this.ToolStripMenuItem_NewCarBrand.Click += new System.EventHandler(this.ToolStripMenuItem_NewCarBrand_Click);
+      // 
+      // ToolStripMenuItem_RemoveZone
+      // 
+      this.ToolStripMenuItem_RemoveZone.Name = "ToolStripMenuItem_RemoveZone";
+      this.ToolStripMenuItem_RemoveZone.Size = new System.Drawing.Size(198, 22);
+      this.ToolStripMenuItem_RemoveZone.Text = "Odstranit zónu...";
+      this.ToolStripMenuItem_RemoveZone.Click += new System.EventHandler(this.ToolStripMenuItem_RemoveZone_Click);
+      // 
+      // ToolStripMenuItem_RemoveCarBrand
+      // 
+      this.ToolStripMenuItem_RemoveCarBrand.Name = "ToolStripMenuItem_RemoveCarBrand";
+      this.ToolStripMenuItem_RemoveCarBrand.Size = new System.Drawing.Size(198, 22);
+      this.ToolStripMenuItem_RemoveCarBrand.Text = "Odstranit značku auta...";
+      this.ToolStripMenuItem_RemoveCarBrand.Click += new System.EventHandler(this.ToolStripMenuItem_RemoveCarBrand_Click);
+      // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
       // 
       // Main
       // 
@@ -243,7 +287,6 @@ namespace LayoutDesigner {
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_File;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_New;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Open;
-    private System.Windows.Forms.ToolStripComboBox ToolStripComboBox_ImportableLayoutNames;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Close;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Save;
@@ -257,6 +300,12 @@ namespace LayoutDesigner {
     private System.Windows.Forms.TreeView TreeView_Layout;
     private System.Windows.Forms.PictureBox PictureBox_Layout;
     private System.Windows.Forms.PropertyGrid PropertyGrid_CurrentSelection;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Layout;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_NewZone;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_NewCarBrand;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_RemoveZone;
+    private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_RemoveCarBrand;
   }
 }
 

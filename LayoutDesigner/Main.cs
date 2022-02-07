@@ -48,7 +48,7 @@ namespace LayoutDesigner {
 
 
 
-    // Layout file system IO interactions
+    // File
     private void Unload(bool force) {
       if (this.IsLayoutPresent) {
         // If not saved ask user if he wants to save
@@ -76,25 +76,26 @@ namespace LayoutDesigner {
 
     private void New() {
       // Ask for new name
-      var userTextInput = this.GetNewName();
+      NewObject newLayout = this.CreateNewLayout();
 
-      if (userTextInput.DialogResult == DialogResult.OK) {
+      if (newLayout.DialogResult == DialogResult.OK) {
         // Pre-hooks
         this.Unload();
 
-        // Create new layout
-        this.SetCurrentLayout(new(userTextInput.FinalValue, "", new(10, 10), 4));
+        // Post-hooks
+        this.SetCurrentLayout((Layout) newLayout.FinalValue);
       }
     }
 
-    private void Open(string name) {
-      IEnumerable<string> validLayoutNames = LayoutManager.GetValidLayoutNames();
+    private void Open() {
+      UserSelect selectLayoutName = GetSelect(LayoutManager.GetValidLayoutNames(), "Vyberte rozvržení");
 
-      if (validLayoutNames.Contains(name)) {
-        Layout layout = Core.Storage.Layout.Import(name);
+      if (selectLayoutName.DialogResult == DialogResult.OK) {
+        string layoutName = (string) selectLayoutName.FinalValue;
+
+        Layout layout = Core.Storage.Layout.Import(layoutName);
+
         this.SetCurrentLayout(layout);
-      } else {
-        MessageBoxes.LayoutInvalid(name);
       }
     }
 
@@ -156,7 +157,118 @@ namespace LayoutDesigner {
 
 
 
+    // Layout
+    private void NewZone() {
+      if (this.IsLayoutPresent) {
+        int totalLayoutArea = this.CurrentLayout.Size.Width * this.CurrentLayout.Size.Height; // Implement
+        int totalZonesArea = this.CurrentLayout.Zones.Aggregate(0, (sum, zone) => sum + zone.Size.Width * zone.Size.Height); // Implement
+
+        bool layoutHasAvailableArea = totalLayoutArea > totalZonesArea;
+
+        if (!layoutHasAvailableArea) {
+          MessageBoxes.AreaFull();
+        } else {
+          NewObject newZone = CreateNewZone();
+
+          if (newZone.DialogResult == DialogResult.OK) {
+            this.CurrentLayout.Zones.Add((Zone) newZone.FinalValue);
+
+            // Post-hooks
+            this.UpdateState();
+          }
+        }
+      }
+    }
+
+    private void NewCarBrand() {
+      if (this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0) {
+        IEnumerable<Zone> zones = this.CurrentLayout.Zones.Where(zone => zone.Type == ZoneType.Storage);
+
+        // Implement line 161, 162
+
+        if (zones.Count() == 0) {
+          MessageBoxes.NoAvailableZone();
+        } else {
+          UserSelect zoneSelect = GetSelect(zones, "Name", "Vyberte zónu");
+
+          if (zoneSelect.DialogResult == DialogResult.OK) {
+            Zone zone = (Zone) zoneSelect.FinalValue;
+
+            // Calculate areas for Zone and its CarBrands
+            int zoneArea = zone.Size.Width * zone.Size.Height;
+            int zoneCarBrandsArea = zone.CarBrands.Aggregate(0, (sum, carBrand) => sum + carBrand.Size.Width * carBrand.Size.Height);
+
+            bool hasSuitableArea = zoneCarBrandsArea < zoneArea;
+
+            if (!hasSuitableArea) {
+              MessageBoxes.AreaFull();
+            } else {
+              NewObject newCarBrand = CreateNewCarBrand(zone);
+
+              if (newCarBrand.DialogResult == DialogResult.OK) {
+                zone.CarBrands.Add((CarBrand) newCarBrand.FinalValue);
+
+                // Post-hooks
+                this.UpdateState();
+              }
+            }
+          }
+        }
+      }
+    }
+
+    private void RemoveZone() {
+      if (this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0) {
+        UserSelect zoneSelect = GetSelect(this.CurrentLayout.Zones, "Name", "Vyberte zónu");
+
+        if (zoneSelect.DialogResult == DialogResult.OK) {
+          Zone zone = (Zone) zoneSelect.FinalValue;
+
+          this.CurrentLayout.Zones.Remove(zone);
+
+          // Post-hooks
+          this.UpdateState();
+        }
+      }
+    }
+
+    private void RemoveCarBrand() {
+      if (this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0
+        && this.CurrentLayout.Zones.SelectMany(zone => zone.CarBrands).Count() > 0) {
+        UserSelect zoneSelect = GetSelect(this.CurrentLayout.Zones.Where(zone => zone.CarBrands.Count() > 0), "Name", "Vyberte zónu");
+
+        if (zoneSelect.DialogResult == DialogResult.OK) {
+          Zone zone = (Zone) zoneSelect.FinalValue;
+
+          UserSelect carBrandSelect = GetSelect(zone.CarBrands, "Name", "Vyberte značku auta");
+
+          if (carBrandSelect.DialogResult == DialogResult.OK) {
+            CarBrand carBrand = (CarBrand) carBrandSelect.FinalValue;
+
+            zone.CarBrands.Remove(carBrand);
+
+            // Post-hooks
+            this.UpdateState();
+          }
+        }
+      }
+    }
+
+
+
     // User interaction
+    private UserSelect GetSelect(IEnumerable<object> selectItems, string displayMember, string label) {
+      UserSelect userSelect = new(selectItems.ToList(), displayMember, label);
+
+      userSelect.ShowDialog(this);
+
+      return userSelect;
+    }
+
+    private UserSelect GetSelect(IEnumerable<object> selectItems, string label) {
+      return this.GetSelect(selectItems, "", label);
+    }
+
     private UserTextInput GetNewName() {
       Func<string, bool> valueValidator = newName => {
         newName = newName.Trim();
@@ -167,13 +279,13 @@ namespace LayoutDesigner {
         bool nameAlreadyTaken = LayoutManager.IsNameAlreadyTaken(newName);
 
         if (isEmpty) {
-          MessageBoxes.TextFieldCannotBeEmpty();
+          MessageBoxes.ValueCannotBeEmpty();
           return false;
         } else if (newNameContainsInvalidChars) {
           MessageBoxes.TextFieldCannotContainInvalidChars();
           return false;
         } else if (nameAlreadyTaken) {
-          MessageBoxes.LayoutNameAlreadyExist();
+          MessageBoxes.NameAlreadyInUse();
           return false;
         } else {
           return true;
@@ -185,6 +297,122 @@ namespace LayoutDesigner {
       userTextInput.ShowDialog(this);
 
       return userTextInput;
+    }
+
+    private NewObject CreateNewLayout() {
+      Func<object, bool> validator = obj => {
+        Layout layout = (Layout) obj;
+
+        bool isNameEmpty = layout.Name.Trim().Length == 0;
+        bool isNameAlreadyInUse = LayoutManager.GetExistingLayoutNames().Contains(layout.Name);
+
+        if (isNameEmpty) {
+          MessageBoxes.ValueCannotBeEmpty();
+          return false;
+        } else if (isNameAlreadyInUse) {
+          MessageBoxes.NameAlreadyInUse();
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+      Layout initialLayout = new("Nové rozvržení", "", new(10, 10), 4);
+
+      NewObject newLayout = new(validator, initialLayout, "Nová zóna");
+
+      newLayout.ShowDialog(this);
+
+      return newLayout;
+    }
+
+    private NewObject CreateNewZone() {
+      Func<object, bool> validator = obj => {
+        Zone zone = (Zone) obj;
+
+
+
+        bool isNameEmpty = zone.Name.Trim().Length == 0;
+
+        bool isNameAlreadyInUse = this.CurrentLayout.Zones.Select(zone => zone.Name).Contains(zone.Name);
+
+        bool isBeyond = zone.Location.X < this.CurrentLayout.Location.X
+                     || zone.Location.Y < this.CurrentLayout.Location.Y
+                     || zone.Location.X + zone.Size.Width > this.CurrentLayout.Size.Width
+                     || zone.Location.Y + zone.Size.Height > this.CurrentLayout.Size.Height;
+
+        bool doesIntersectWithOtherZone = this.CurrentLayout.Zones.Any(currentZone => zone.Rectangle.IntersectsWith(currentZone.Rectangle));
+
+
+
+        if (isNameEmpty) {
+          MessageBoxes.ValueCannotBeEmpty();
+          return false;
+        } else if (isNameAlreadyInUse) {
+          MessageBoxes.NameAlreadyInUse();
+          return false;
+        } else if (isBeyond) {
+          MessageBoxes.CantBeBeyond();
+          return false;
+        } else if (doesIntersectWithOtherZone) {
+          MessageBoxes.CantIntersect();
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+      Zone initialZone = new("Nová zóna", new(0, 0), new(1, 1), ZoneType.Storage);
+
+      NewObject newZone = new(validator, initialZone, "Nová zóna");
+
+      newZone.ShowDialog(this);
+
+      return newZone;
+    }
+
+    private NewObject CreateNewCarBrand(Zone parentZone) {
+      Func<object, bool> validator = obj => {
+        CarBrand carBrand = (CarBrand) obj;
+
+        bool isNameEmpty = carBrand.Name.Trim().Length == 0;
+
+        bool isNameAlreadyInUse = parentZone.CarBrands.Select(currentCarBrand => currentCarBrand.Name).Contains(carBrand.Name);
+
+        bool isBeyond = carBrand.Location.X < parentZone.Location.X
+                     || carBrand.Location.Y < parentZone.Location.Y
+                     || carBrand.Location.X + carBrand.Size.Width > parentZone.Location.X + parentZone.Size.Width
+                     || carBrand.Location.Y + carBrand.Size.Height > parentZone.Location.Y + parentZone.Size.Height;
+
+        bool doesIntersectWithOtherCarBrand = parentZone.CarBrands.Any(currentCarBrand => parentZone.Rectangle.IntersectsWith(currentCarBrand.Rectangle)); // Bug
+
+
+
+        if (isNameEmpty) {
+          MessageBoxes.ValueCannotBeEmpty();
+          return false;
+        } else if (isNameAlreadyInUse) {
+          MessageBoxes.NameAlreadyInUse();
+          return false;
+        } else if (isBeyond) {
+          MessageBoxes.CantBeBeyond();
+          return false;
+        } else if (doesIntersectWithOtherCarBrand) {
+          MessageBoxes.CantIntersect();
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+
+      CarBrand initialCarBrand = new("Nová značka auta", new(0, 0), new(1, 1));
+
+      NewObject newCarBrand = new(validator, initialCarBrand, "Nová značka auta");
+
+      newCarBrand.ShowDialog(this);
+
+      return newCarBrand;
     }
 
 
@@ -226,15 +454,22 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_Delete.Enabled = this.IsLayoutPresent && this.CurrentLayout.HasValidCorrespondingFile();
     }
 
-    private void UpdateExistingLayouts_DataSource() {
-      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.DataSource = ImportableLayoutsNames;
+    private void UpdateNewZoneControl_Enabled() {
+      this.ToolStripMenuItem_NewZone.Enabled = this.IsLayoutPresent;
+    }
 
-      if (this.IsLayoutPresent) {
-        int index = ImportableLayoutsNames.FindIndex(value => value == this.CurrentLayout.Name);
-        this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectedIndex = index == -1 ? 0 : index;
-      } else {
-        this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectedIndex = 0;
-      }
+    private void UpdateNewCarBrandControl_Enabled() {
+      this.ToolStripMenuItem_NewCarBrand.Enabled = this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0;
+    }
+
+    private void UpdateRemoveZoneControl_Enabled() {
+      this.ToolStripMenuItem_RemoveZone.Enabled = this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0;
+    }
+
+    private void UpdateRemoveCarBrandControl_Enabled() {
+      this.ToolStripMenuItem_RemoveCarBrand.Enabled = this.IsLayoutPresent
+        && this.CurrentLayout.Zones.Count > 0
+        && this.CurrentLayout.Zones.SelectMany(zone => zone.CarBrands).Count() > 0;
     }
 
     private void UpdateState() {
@@ -245,7 +480,10 @@ namespace LayoutDesigner {
       this.UpdateSaveAsControl_Enabled();
       this.UpdateRenameControl_Enabled();
       this.UpdateDeleteControl_Enabled();
-      this.UpdateExistingLayouts_DataSource();
+      this.UpdateNewZoneControl_Enabled();
+      this.UpdateNewCarBrandControl_Enabled();
+      this.UpdateRemoveZoneControl_Enabled();
+      this.UpdateRemoveCarBrandControl_Enabled();
 
       // Post-hooks
       this.CurrentLayoutChangedHandler();
@@ -364,17 +602,17 @@ namespace LayoutDesigner {
 
 
 
-    // MenuStrip children events
+    // File
     private void ToolStripMenuItem_New_Click(object sender, EventArgs e) {
       this.New();
     }
 
-    private void ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
-      string existingLayoutName = (string) this.ToolStripComboBox_ImportableLayoutNames.SelectedItem;
 
-      if (!(existingLayoutName == SelectBelow)) {
-        this.Open(existingLayoutName);
-      }
+    private void ToolStripMenuItem_Open_Click(object sender, EventArgs e) {
+      this.Open();
+    }
+
+    private void ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
     }
 
     private void ToolStripMenuItem_Close_Click(object sender, EventArgs e) {
@@ -411,13 +649,27 @@ namespace LayoutDesigner {
 
 
 
+    // Layout
+    private void ToolStripMenuItem_NewZone_Click(object sender, EventArgs e) {
+      this.NewZone();
+    }
+
+    private void ToolStripMenuItem_NewCarBrand_Click(object sender, EventArgs e) {
+      this.NewCarBrand();
+    }
+
+    private void ToolStripMenuItem_RemoveZone_Click(object sender, EventArgs e) {
+      this.RemoveZone();
+    }
+
+    private void ToolStripMenuItem_RemoveCarBrand_Click(object sender, EventArgs e) {
+      this.RemoveCarBrand();
+    }
+
+
+
     // Main events
     private void Main_Load(object sender, EventArgs e) {
-      MessageBox.Show("Uncaught exception", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); // Fix
-
-      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.BindingContext = this.BindingContext;
-      this.ToolStripComboBox_ImportableLayoutNames.ComboBox.SelectionChangeCommitted += this.ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted;
-
       this.HeightOffset = this.Height - this.TreeView_Layout.Height;
 
       // Post-hooks
