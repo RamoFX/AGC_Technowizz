@@ -17,12 +17,12 @@ namespace Core.Storage {
   public class Layout : XDocumentConvertable<Layout>, IStorageMember {
     // Main
     [Browsable(true)]
-    [DisplayName("Název")]
+    [DisplayName("Název rozvržení")]
     public string Name { get; set; }
 
     [Browsable(true)]
     [DisplayName("Název skladu")]
-    [Description("Musí se shodovat s názvem skladu v databázi, se kterou komunikuje.")]
+    [Description("Musí se shodovat s názvem skladu nebo jiným identifikátorem v databázi, se kterou komunikuje.")]
     public string WarehouseName { get; set; }
 
     [Browsable(true)]
@@ -41,7 +41,7 @@ namespace Core.Storage {
     }
 
     [Browsable(true)]
-    [DisplayName("Rozměr")]
+    [DisplayName("Rozměry")]
     public Size Size { get; set; }
 
     [Browsable(false)]

@@ -19,12 +19,12 @@ namespace Core.Storage {
 
     // IVisualizable
     [Browsable(true)]
-    [DisplayName("Pozice plochy")]
-    [Description("Pozor! Pozice je relativní vůči zóně, ve které se nachází!")]
+    [DisplayName("Absolutní souřadnice")]
+    [Description("Souřadnice vůči rozvržení.")]
     public Point Location { get; set; }
 
     [Browsable(true)]
-    [DisplayName("Rozměr plochy")]
+    [DisplayName("Rozměry")]
     public Size Size { get; set; }
 
     [Browsable(false)]

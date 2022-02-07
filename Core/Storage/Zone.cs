@@ -13,12 +13,12 @@ namespace Core.Storage {
   public class Zone : XElementConvertable<Zone>, IStorageMember {
     // Main
     [Browsable(true)]
-    [DisplayName("Název zóny")]
+    [DisplayName("Název")]
     public string Name { get; set; }
 
     [Browsable(true)]
-    [DisplayName("Typ zóny")]
-    [Description("Storage nebo Other. Storage - zóna určena pro nakládání palet. Other - jiné využití.")]
+    [DisplayName("Typ")]
+    [Description("Storage - zóna určena pro uložení palet. Other - jiné využití zóny (např. zóna exportu).")]
     public ZoneType Type { get; set; }
 
     [Browsable(false)]
@@ -28,11 +28,11 @@ namespace Core.Storage {
 
     // IVisualizable
     [Browsable(true)]
-    [DisplayName("Pozice zóny")]
+    [DisplayName("Souřadnice")]
     public Point Location { get; set; }
 
     [Browsable(true)]
-    [DisplayName("Rozměr zóny")]
+    [DisplayName("Rozměry")]
     public Size Size { get; set; }
 
     [Browsable(false)]
