@@ -1,8 +1,11 @@
 ﻿using Core;
 using Core.UI;
+using Core.Extensions;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -17,115 +20,116 @@ namespace Settings
 
     private void Main_Load(object sender, EventArgs e)
     {
-      LoadSettingsToTreeView();
+      propertyGrid.SelectedObject = new __Properties();
+      propertyGrid.PropertySort = PropertySort.Categorized;
+    }
+  }
+
+  class __Properties
+  {
+    [DisplayName("Název počátečního rozložení")]
+    [Category("Rozložení")]
+    public string ZA_StartupLayoutName {
+      get => DynamicSettings.ZA_StartupLayoutName.Value;
+      set => DynamicSettings.ZA_StartupLayoutName.Value = value;
     }
 
-    private void treeView_settings_AfterSelect(object sender, TreeViewEventArgs e)
-    {
-      if (treeView_settings.SelectedNode.Parent != null)
-        WriteToSettingsValueTextBox(treeView_settings.SelectedNode.Text);
-      else
-        HideSettingsWrite();
+    [DisplayName("Čas rozsvícení zóny (blikání)")]
+    [Category("Čas (ms)")]
+    public int ZA_HighlightTimeOn {
+      get => DynamicSettings.ZA_HighlightTimeOn.Value.ToInt();
+      set => DynamicSettings.ZA_HighlightTimeOn.Value = value.ToString();
     }
 
-    private void SubmitHandler(object sender, EventArgs e)
-    {
-      string selectedSetting = treeView_settings.SelectedNode.Parent.Tag.ToString();
-      string value = settingsValue_TextBox.Text;
-      DynamicSettings.WriteSettingsValue(selectedSetting, value);
-      MessageBoxes.SettingsWriteSuccessful();
-      HideSettingsWrite();
-      LoadSettingsToTreeView();
+    [DisplayName("Čas zhasnutí zóny (blikání)")]
+    [Category("Čas (ms)")]
+    public int ZA_HighlightTimeOff {
+      get => DynamicSettings.ZA_HighlightTimeOff.Value.ToInt();
+      set => DynamicSettings.ZA_HighlightTimeOff.Value = value.ToString();
     }
 
-    void WriteToSettingsValueTextBox(string text)
-    {
-      settingsValue_TextBox.Text = text;
-      settingsValue_TextBox.Enabled = true;
-      settingsValue_TextBox.Visible = true;
-      SubmitButtom.Enabled = true;
-      SubmitButtom.Visible = true;
+    [DisplayName("Celkový počet rozsvícení zóny")]
+    [Category("Blikání")]
+    public int ZA_TotalHighlightFlashes { 
+      get => DynamicSettings.ZA_TotalHighlightFlashes.Value.ToInt(); 
+      set => DynamicSettings.ZA_TotalHighlightFlashes.Value = value.ToString(); 
     }
 
-    void HideSettingsWrite()
-    {
-      settingsValue_TextBox.Enabled = false;
-      settingsValue_TextBox.Visible = false;
-      SubmitButtom.Enabled = false;
-      SubmitButtom.Visible = false;
+    [DisplayName("Nechat zónu rozsvícenou")]
+    [Category("Blikání")]
+    public bool ZA_LastHighlightOnOff { 
+      get => DynamicSettings.ZA_LastHighlightOnOff.Value.ToBool(); 
+      set => DynamicSettings.ZA_LastHighlightOnOff.Value = value.ToString();
     }
 
-    void LoadSettingsToTreeView()
-    {
-      treeView_settings.Nodes.Clear();
-      FieldInfo[] fields = typeof(DynamicSettings).GetFields(BindingFlags.Static | BindingFlags.Public);
-
-      foreach (FieldInfo fi in fields)
-      {
-        string name = fi.Name;
-        string value = (fi.GetValue(null) as Core.Helpers.DynamicSetting).Value;
-
-        List<TreeNode> treeNodeValues = new List<TreeNode>();
-        foreach (string text in value.Split(StaticSettings.SettingsSeparator))
-        {
-          treeNodeValues.Add(new TreeNode(text));
-        }
-        TreeNode treeNodeKey = new TreeNode(ToReadableString(name), treeNodeValues.ToArray());
-        treeNodeKey.Tag = name;
-        treeView_settings.Nodes.Add(treeNodeKey);
-      }
+    [DisplayName("Barva okrajů")]
+    [Category("Barva")]
+    public Color LayoutColor { 
+      get => DynamicSettings.LayoutColor.Value.ToColor(); 
+      set => DynamicSettings.LayoutColor.Value = value.Name; 
     }
 
-    string ToReadableString(string PropertyName)
-    {
-      switch (PropertyName)
-      {
-        case "ZA_StartupLayoutName":
-          return "Název počátečního rozložení";
+    [DisplayName("Barva mřížky")]
+    [Category("Barva")]
+    public Color GridColor { 
+      get => DynamicSettings.GridColor.Value.ToColor(); 
+      set => DynamicSettings.GridColor.Value = value.Name; 
+    }
 
-        case "ZA_HighlightTimeOn":
-          return "Čas rozsvícení zóny (blikání)";
+    [DisplayName("Barva skladovácích prostorů")]
+    [Category("Barva")]
+    public Color ZoneColor_Storage { 
+      get => DynamicSettings.ZoneColor_Storage.Value.ToColor(); 
+      set => DynamicSettings.ZoneColor_Storage.Value = value.Name; 
+    }
 
-        case "ZA_HighlightTimeOff":
-          return "Čas zhasnutí zóny (blikání)";
+    [DisplayName("Barva ostatních prosotrů")]
+    [Category("Barva")]
+    public Color ZoneColor_Other { 
+      get => DynamicSettings.ZoneColor_Other.Value.ToColor(); 
+      set => DynamicSettings.ZoneColor_Other.Value = value.Name; 
+    }
 
-        case "ZA_TotalHighlightFlashes":
-          return "Celkový počet rozsvícení zóny";
+    [DisplayName("Barva plné zóny")]
+    [Category("Barva")]
+    public Color CarBrandColor_Full { 
+      get => DynamicSettings.CarBrandColor_Full.Value.ToColor(); 
+      set => DynamicSettings.CarBrandColor_Full.Value = value.Name; 
+    }
 
-        case "ZA_LastHighlightOnOff":
-          return "Nechat zónu rozsvícenou";
+    [DisplayName("Barva skoro plné zóny")]
+    [Category("Barva")]
+    public Color CarBrandColor_AlmostFull { 
+      get => DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor(); 
+      set => DynamicSettings.CarBrandColor_AlmostFull.Value = value.Name; 
+    }
 
-        case "LayoutColor":
-          return "Barva okrajů";
+    [DisplayName("Barva zóny zaplněné nad polovinu")]
+    [Category("Barva")]
+    public Color CarBrandColor_AboveHalf { 
+      get => DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor(); 
+      set => DynamicSettings.CarBrandColor_AboveHalf.Value = value.Name; 
+    }
 
-        case "GridColor":
-          return "Barva mřížky ";
+    [DisplayName("Barva zóny zaplněné do poloviny")]
+    [Category("Barva")]
+    public Color CarBrandColor_BelowHalf {
+      get => DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor(); 
+      set => DynamicSettings.CarBrandColor_BelowHalf.Value = value.Name;
+    }
 
-        case "ZoneColor_Storage":
-          return "Barva skladovácích prostorů";
+    [DisplayName("Barva skoro prázdné zóny")]
+    [Category("Barva")]
+    public Color CarBrandColor_AlmostEmpty { 
+      get => DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor(); 
+      set => DynamicSettings.CarBrandColor_AlmostEmpty.Value = value.Name;
+    }
 
-        case "ZoneColor_Other":
-          return "Barva ostatních prosotrů";
-
-        case "CarBrandColor_Full":
-          return "Barva plné zóny";
-
-        case "CarBrandColor_AlmostFull":
-          return "Barva skoro plné zóny";
-
-        case "CarBrandColor_AboveHalf":
-          return "Barva zóny zaplněné nad polovinu";
-
-        case "CarBrandColor_BelowHalf":
-          return "Barva zóny zaplněné do poloviny";
-
-        case "CarBrandColor_AlmostEmpty":
-          return "Barva skoro prázdné zóny";
-
-        case "CarBrandColor_Empty":
-          return "Barva prázdné zóny";
-      }
-      return "";
+    [DisplayName("Barva prázdné zóny")]
+    [Category("Barva")]
+    public Color CarBrandColor_Empty {
+      get => DynamicSettings.CarBrandColor_Empty.Value.ToColor();
+      set => DynamicSettings.CarBrandColor_Empty.Value = value.Name;
     }
   }
 }

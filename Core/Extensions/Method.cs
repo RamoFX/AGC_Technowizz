@@ -51,6 +51,10 @@ namespace Core.Extensions {
       return int.Parse(value);
     }
 
+    static public bool ToBool(this string value) {
+      return bool.Parse(value);
+    }
+
     static public ZoneType ToZoneType(this string value, bool ignoreCase) {
       return (ZoneType) Enum.Parse(typeof(ZoneType), value, ignoreCase);
     }
