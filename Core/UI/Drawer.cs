@@ -85,9 +85,6 @@ namespace Core.UI {
             new Point(0, y).Scale(unitSize),
             new Point(layout.Size.Width, y).Scale(unitSize)
           );
-
-          //Rectangle rectangle = new(x, y, x + 1, y + 1);
-          //DrawOutline(graphics, pen, rectangle.Scale(unitSize));
         }
 
         graphics.DrawLine(
@@ -136,6 +133,25 @@ namespace Core.UI {
 
     static public void DrawLayout(Layout layout, Control control) {
       DrawLayout(control, layout, new());
+    }
+
+    static public void DrawLayout(Graphics graphics, Layout layout) {
+      int unitSize = StaticSettings.UnitSize;
+
+      // Grid
+      DrawGrid(graphics, layout, unitSize);
+
+      // Layout
+      var layoutReady = layout.Scale(unitSize);
+
+      graphics.DrawVisualizable(layoutReady);
+
+      // Zones
+      foreach (Zone zone in layout.Zones) {
+
+      }
+
+      // CarBrands
     }
   }
 }
