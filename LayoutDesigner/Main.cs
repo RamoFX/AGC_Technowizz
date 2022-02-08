@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 using Core;
+using Core.Extensions;
 using Core.Helpers;
 using Core.Storage;
 using Core.UI;
@@ -20,7 +21,6 @@ namespace LayoutDesigner {
   public partial class Main : Form {
     // Constants
     private const string TitleBase = "Návrhář rozvržení";
-    private const string SelectBelow = "Vyberte níže...";
 
 
 
@@ -37,13 +37,36 @@ namespace LayoutDesigner {
       get => LayoutManager.GetExistingLayoutNames().ToList();
     }
 
-    private int HeightOffset;
+    private readonly int TitleBarHeight;
+
+    private readonly Graphics Graphics;
 
 
 
     // Constructor
     public Main() {
       InitializeComponent();
+
+      this.TitleBarHeight = this.RectangleToScreen(this.ClientRectangle).Top - this.Top;
+      this.Graphics = this.PictureBox_Layout.CreateGraphics();
+
+      // Minimum size
+      int left = this.SplitContainer_Vertical.Panel1MinSize;
+      int right = this.SplitContainer_Vertical.Panel2MinSize;
+      int splitterWidth = this.SplitContainer_Vertical.SplitterWidth;
+
+      int top = this.SplitContainer_Horizontal.Panel1MinSize;
+      int bottom = this.SplitContainer_Horizontal.Panel2MinSize;
+      int splittedHeight = this.SplitContainer_Horizontal.SplitterWidth;
+
+      int minimalWidth = left + right + splitterWidth;
+      int minimalHeight = top + bottom + splittedHeight + this.TitleBarHeight + this.MenuStrip.Height;
+
+      this.MinimumSize = new Size(minimalWidth, minimalHeight);
+
+      // Post-hooks
+      this.SetCurrentLayout(null);
+      this.UpdateState();
     }
 
 
@@ -556,16 +579,13 @@ namespace LayoutDesigner {
 
     // Handle state
     private void CurrentLayoutChangedHandler() {
+      // Draw
+      this.DrawLayout();
+
       // TreeView
       this.TreeView_Layout.Nodes.Clear();
 
       if (this.IsLayoutPresent) {
-        // Main
-        int Main_MinimumWidth = this.CurrentLayout.Size.Width * StaticSettings.UnitSize + this.TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth;
-        int Main_MinimumHeight = this.CurrentLayout.Size.Height * StaticSettings.UnitSize + this.HeightOffset;
-
-        this.MinimumSize = new Size(Main_MinimumWidth, Main_MinimumHeight);
-
         // TreeView
         var rootNode = TreeView_Layout.Nodes.Add(this.CurrentLayout.Name);
 
@@ -578,18 +598,6 @@ namespace LayoutDesigner {
         }
 
         this.TreeView_Layout.ExpandAll();
-
-        // Draw
-        this.DrawLayout();
-      } else {
-        // Set current form minimum size
-        this.MinimumSize = new Size(
-          TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth,
-          this.PropertyGrid_CurrentSelection.Height * 2
-        );
-
-        // Clear last drawing
-        this.PictureBox_Layout.CreateGraphics().Clear(this.PictureBox_Layout.BackColor);
       }
     }
 
@@ -603,16 +611,25 @@ namespace LayoutDesigner {
     private void DrawLayout() {
       if (this.IsLayoutPresent) {
         Drawer.DrawLayout(this.PictureBox_Layout, this.CurrentLayout, new(SystemInformation.VerticalScrollBarWidth, 0));
+
+        //this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UnitSize);
+
+        //Drawer.DrawLayout(this.Graphics, this.CurrentLayout);
       }
+
+      if (this.Graphics == null) {
+        return;
+      }
+
+      this.Graphics.Clear(this.PictureBox_Layout.BackColor);
     }
 
 
 
-    // File
+    // File (Tool strip menu item)
     private void ToolStripMenuItem_New_Click(object sender, EventArgs e) {
       this.New();
     }
-
 
     private void ToolStripMenuItem_Open_Click(object sender, EventArgs e) {
       this.Open();
@@ -655,7 +672,7 @@ namespace LayoutDesigner {
 
 
 
-    // Layout
+    // Layout (Tool strip menu item)
     private void ToolStripMenuItem_NewZone_Click(object sender, EventArgs e) {
       this.NewZone();
     }
@@ -674,25 +691,15 @@ namespace LayoutDesigner {
 
 
 
-    // Main events
-    private void Main_Load(object sender, EventArgs e) {
-      this.HeightOffset = this.Height - this.TreeView_Layout.Height;
-
-      // Post-hooks
-      this.SetCurrentLayout(null);
-      this.UpdateState();
+    // Window (Main)
+    private void Main_ResizeEnd(object sender, EventArgs e) {
+      this.DrawLayout();
     }
 
     private void Main_Resize(object sender, EventArgs e) {
-      this.TreeView_Layout.Height = this.Height - HeightOffset;
-
-      this.PropertyGrid_CurrentSelection.Location = new(0, this.TreeView_Layout.Location.Y + this.TreeView_Layout.Height);
-
-      this.PictureBox_Layout.Width = this.Width - this.TreeView_Layout.Width;
-      //this.PictureBox_Layout.Height = this.Height - this.HeightOffset;
-      this.PictureBox_Layout.Height = this.TreeView_Layout.Height + this.PropertyGrid_CurrentSelection.Height;
-
-      this.DrawLayout();
+      // Split containers
+      this.SplitContainer_Vertical.Width = this.Width;
+      this.SplitContainer_Vertical.Height = this.Height - this.TitleBarHeight - this.MenuStrip.Height;
     }
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
@@ -705,6 +712,36 @@ namespace LayoutDesigner {
 
 
 
+    // Split container vertical
+    private void SplitContainer_Vertical_Panel1_Resize(object sender, EventArgs e) {
+      SplitterPanel panel = this.SplitContainer_Vertical.Panel1;
+      Size size = new(panel.Width, panel.Height);
+
+      this.SplitContainer_Horizontal.Size = size;
+
+      // Why does it disappear?
+      this.DrawLayout();
+    }
+
+
+
+    // Split container horizontal
+    private void SplitContainer_Horizontal_Panel1_Resize(object sender, EventArgs e) {
+      SplitterPanel panel = this.SplitContainer_Horizontal.Panel1;
+      Size size = new(panel.Width, panel.Height);
+
+      this.TreeView_Layout.Size = size;
+    }
+
+    private void SplitContainer_Horizontal_Panel2_Resize(object sender, EventArgs e) {
+      SplitterPanel panel = this.SplitContainer_Horizontal.Panel2;
+      Size size = new(panel.Width, panel.Height);
+
+      this.PropertyGrid_CurrentSelection.Size = size;
+    }
+
+
+
     // Other
     private void TreeView_Layout_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
       this.SetCurrentSelection(e.Node.FullPath);
@@ -712,6 +749,10 @@ namespace LayoutDesigner {
 
     private void PropertyGrid_CurrentSelection_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
       this.UpdateState();
+    }
+
+    private void PictureBox_Layout_Paint(object sender, PaintEventArgs e) {
+      //MessageBox.Show("PictureBox_Layout_Paint");
     }
   }
 }

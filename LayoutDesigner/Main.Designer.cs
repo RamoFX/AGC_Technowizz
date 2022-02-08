@@ -39,17 +39,27 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_OpenInFileExplorer = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
-      this.TreeView_Layout = new System.Windows.Forms.TreeView();
-      this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
-      this.PropertyGrid_CurrentSelection = new System.Windows.Forms.PropertyGrid();
       this.ToolStripMenuItem_Layout = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_NewZone = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_NewCarBrand = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.ToolStripMenuItem_RemoveZone = new System.Windows.Forms.ToolStripMenuItem();
       this.ToolStripMenuItem_RemoveCarBrand = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+      this.TreeView_Layout = new System.Windows.Forms.TreeView();
+      this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
+      this.PropertyGrid_CurrentSelection = new System.Windows.Forms.PropertyGrid();
+      this.SplitContainer_Horizontal = new System.Windows.Forms.SplitContainer();
+      this.SplitContainer_Vertical = new System.Windows.Forms.SplitContainer();
       this.MenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Horizontal)).BeginInit();
+      this.SplitContainer_Horizontal.Panel1.SuspendLayout();
+      this.SplitContainer_Horizontal.Panel2.SuspendLayout();
+      this.SplitContainer_Horizontal.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Vertical)).BeginInit();
+      this.SplitContainer_Vertical.Panel1.SuspendLayout();
+      this.SplitContainer_Vertical.Panel2.SuspendLayout();
+      this.SplitContainer_Vertical.SuspendLayout();
       this.SuspendLayout();
       // 
       // MenuStrip
@@ -60,7 +70,7 @@ namespace LayoutDesigner {
       this.MenuStrip.Location = new System.Drawing.Point(0, 0);
       this.MenuStrip.Name = "MenuStrip";
       this.MenuStrip.Padding = new System.Windows.Forms.Padding(0);
-      this.MenuStrip.Size = new System.Drawing.Size(1067, 24);
+      this.MenuStrip.Size = new System.Drawing.Size(965, 24);
       this.MenuStrip.TabIndex = 1;
       // 
       // ToolStripMenuItem_File
@@ -175,42 +185,6 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_Exit.Text = "Ukončit";
       this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
       // 
-      // TreeView_Layout
-      // 
-      this.TreeView_Layout.LabelEdit = true;
-      this.TreeView_Layout.Location = new System.Drawing.Point(0, 24);
-      this.TreeView_Layout.Margin = new System.Windows.Forms.Padding(0);
-      this.TreeView_Layout.Name = "TreeView_Layout";
-      this.TreeView_Layout.PathSeparator = ".";
-      this.TreeView_Layout.ShowNodeToolTips = true;
-      this.TreeView_Layout.Size = new System.Drawing.Size(315, 263);
-      this.TreeView_Layout.TabIndex = 0;
-      this.TreeView_Layout.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_Layout_NodeMouseClick);
-      // 
-      // PictureBox_Layout
-      // 
-      this.PictureBox_Layout.BackColor = System.Drawing.Color.White;
-      this.PictureBox_Layout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.PictureBox_Layout.ErrorImage = null;
-      this.PictureBox_Layout.InitialImage = null;
-      this.PictureBox_Layout.Location = new System.Drawing.Point(314, 24);
-      this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
-      this.PictureBox_Layout.Name = "PictureBox_Layout";
-      this.PictureBox_Layout.Size = new System.Drawing.Size(753, 546);
-      this.PictureBox_Layout.TabIndex = 2;
-      this.PictureBox_Layout.TabStop = false;
-      // 
-      // PropertyGrid_CurrentSelection
-      // 
-      this.PropertyGrid_CurrentSelection.Location = new System.Drawing.Point(0, 286);
-      this.PropertyGrid_CurrentSelection.Margin = new System.Windows.Forms.Padding(0);
-      this.PropertyGrid_CurrentSelection.Name = "PropertyGrid_CurrentSelection";
-      this.PropertyGrid_CurrentSelection.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(315, 284);
-      this.PropertyGrid_CurrentSelection.TabIndex = 3;
-      this.PropertyGrid_CurrentSelection.ToolbarVisible = false;
-      this.PropertyGrid_CurrentSelection.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid_CurrentSelection_PropertyValueChanged);
-      // 
       // ToolStripMenuItem_Layout
       // 
       this.ToolStripMenuItem_Layout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -237,6 +211,11 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_NewCarBrand.Text = "Nová značka auta...";
       this.ToolStripMenuItem_NewCarBrand.Click += new System.EventHandler(this.ToolStripMenuItem_NewCarBrand_Click);
       // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
+      // 
       // ToolStripMenuItem_RemoveZone
       // 
       this.ToolStripMenuItem_RemoveZone.Name = "ToolStripMenuItem_RemoveZone";
@@ -251,32 +230,119 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_RemoveCarBrand.Text = "Odstranit značku auta...";
       this.ToolStripMenuItem_RemoveCarBrand.Click += new System.EventHandler(this.ToolStripMenuItem_RemoveCarBrand_Click);
       // 
-      // toolStripSeparator4
+      // TreeView_Layout
       // 
-      this.toolStripSeparator4.Name = "toolStripSeparator4";
-      this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
+      this.TreeView_Layout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.TreeView_Layout.CausesValidation = false;
+      this.TreeView_Layout.FullRowSelect = true;
+      this.TreeView_Layout.Location = new System.Drawing.Point(0, 0);
+      this.TreeView_Layout.Margin = new System.Windows.Forms.Padding(0);
+      this.TreeView_Layout.Name = "TreeView_Layout";
+      this.TreeView_Layout.PathSeparator = ".";
+      this.TreeView_Layout.ShowNodeToolTips = true;
+      this.TreeView_Layout.Size = new System.Drawing.Size(250, 328);
+      this.TreeView_Layout.TabIndex = 0;
+      this.TreeView_Layout.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_Layout_NodeMouseClick);
+      // 
+      // PictureBox_Layout
+      // 
+      this.PictureBox_Layout.ErrorImage = null;
+      this.PictureBox_Layout.InitialImage = null;
+      this.PictureBox_Layout.Location = new System.Drawing.Point(0, 0);
+      this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
+      this.PictureBox_Layout.Name = "PictureBox_Layout";
+      this.PictureBox_Layout.Size = new System.Drawing.Size(711, 570);
+      this.PictureBox_Layout.TabIndex = 2;
+      this.PictureBox_Layout.TabStop = false;
+      this.PictureBox_Layout.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Layout_Paint);
+      // 
+      // PropertyGrid_CurrentSelection
+      // 
+      this.PropertyGrid_CurrentSelection.Location = new System.Drawing.Point(0, 0);
+      this.PropertyGrid_CurrentSelection.Margin = new System.Windows.Forms.Padding(0);
+      this.PropertyGrid_CurrentSelection.Name = "PropertyGrid_CurrentSelection";
+      this.PropertyGrid_CurrentSelection.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+      this.PropertyGrid_CurrentSelection.Size = new System.Drawing.Size(250, 238);
+      this.PropertyGrid_CurrentSelection.TabIndex = 3;
+      this.PropertyGrid_CurrentSelection.ToolbarVisible = false;
+      this.PropertyGrid_CurrentSelection.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid_CurrentSelection_PropertyValueChanged);
+      // 
+      // SplitContainer_Horizontal
+      // 
+      this.SplitContainer_Horizontal.CausesValidation = false;
+      this.SplitContainer_Horizontal.Location = new System.Drawing.Point(0, 0);
+      this.SplitContainer_Horizontal.Margin = new System.Windows.Forms.Padding(0);
+      this.SplitContainer_Horizontal.Name = "SplitContainer_Horizontal";
+      this.SplitContainer_Horizontal.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // SplitContainer_Horizontal.Panel1
+      // 
+      this.SplitContainer_Horizontal.Panel1.BackColor = System.Drawing.SystemColors.Control;
+      this.SplitContainer_Horizontal.Panel1.Controls.Add(this.TreeView_Layout);
+      this.SplitContainer_Horizontal.Panel1.Resize += new System.EventHandler(this.SplitContainer_Horizontal_Panel1_Resize);
+      this.SplitContainer_Horizontal.Panel1MinSize = 200;
+      // 
+      // SplitContainer_Horizontal.Panel2
+      // 
+      this.SplitContainer_Horizontal.Panel2.Controls.Add(this.PropertyGrid_CurrentSelection);
+      this.SplitContainer_Horizontal.Panel2.Resize += new System.EventHandler(this.SplitContainer_Horizontal_Panel2_Resize);
+      this.SplitContainer_Horizontal.Panel2MinSize = 200;
+      this.SplitContainer_Horizontal.Size = new System.Drawing.Size(250, 570);
+      this.SplitContainer_Horizontal.SplitterDistance = 328;
+      this.SplitContainer_Horizontal.TabIndex = 5;
+      // 
+      // SplitContainer_Vertical
+      // 
+      this.SplitContainer_Vertical.BackColor = System.Drawing.SystemColors.Control;
+      this.SplitContainer_Vertical.CausesValidation = false;
+      this.SplitContainer_Vertical.Location = new System.Drawing.Point(0, 24);
+      this.SplitContainer_Vertical.Margin = new System.Windows.Forms.Padding(0);
+      this.SplitContainer_Vertical.Name = "SplitContainer_Vertical";
+      // 
+      // SplitContainer_Vertical.Panel1
+      // 
+      this.SplitContainer_Vertical.Panel1.Controls.Add(this.SplitContainer_Horizontal);
+      this.SplitContainer_Vertical.Panel1.Resize += new System.EventHandler(this.SplitContainer_Vertical_Panel1_Resize);
+      this.SplitContainer_Vertical.Panel1MinSize = 250;
+      // 
+      // SplitContainer_Vertical.Panel2
+      // 
+      this.SplitContainer_Vertical.Panel2.Controls.Add(this.PictureBox_Layout);
+      this.SplitContainer_Vertical.Panel2MinSize = 500;
+      this.SplitContainer_Vertical.Size = new System.Drawing.Size(965, 570);
+      this.SplitContainer_Vertical.SplitterDistance = 250;
+      this.SplitContainer_Vertical.TabIndex = 6;
       // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1067, 570);
-      this.Controls.Add(this.PropertyGrid_CurrentSelection);
-      this.Controls.Add(this.PictureBox_Layout);
-      this.Controls.Add(this.TreeView_Layout);
+      this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+      this.CausesValidation = false;
+      this.ClientSize = new System.Drawing.Size(965, 594);
+      this.Controls.Add(this.SplitContainer_Vertical);
       this.Controls.Add(this.MenuStrip);
+      this.DoubleBuffered = true;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.MenuStrip;
       this.Name = "Main";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "(unset)";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-      this.Load += new System.EventHandler(this.Main_Load);
+      this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
       this.Paint += new System.Windows.Forms.PaintEventHandler(this.Main_Paint);
       this.Resize += new System.EventHandler(this.Main_Resize);
       this.MenuStrip.ResumeLayout(false);
       this.MenuStrip.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).EndInit();
+      this.SplitContainer_Horizontal.Panel1.ResumeLayout(false);
+      this.SplitContainer_Horizontal.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Horizontal)).EndInit();
+      this.SplitContainer_Horizontal.ResumeLayout(false);
+      this.SplitContainer_Vertical.Panel1.ResumeLayout(false);
+      this.SplitContainer_Vertical.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Vertical)).EndInit();
+      this.SplitContainer_Vertical.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -306,6 +372,8 @@ namespace LayoutDesigner {
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_RemoveZone;
     private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_RemoveCarBrand;
+    private System.Windows.Forms.SplitContainer SplitContainer_Horizontal;
+    private System.Windows.Forms.SplitContainer SplitContainer_Vertical;
   }
 }
 
