@@ -128,15 +128,15 @@ namespace Core.Extensions {
 
 
     // Identation IStorageMember
-    static public IStorageMember IndentateInside(this IStorageMember storageMembers, int level) {
-      IStorageMember identatedStorageMembers = (IStorageMember) storageMembers.Clone();
+    static public IStorageMember IndentateInside(this IStorageMember storageMember, int level) {
+      IStorageMember identatedStorageMember = (IStorageMember) storageMember.Clone();
 
       for (int levelIndex = 0; levelIndex < level; levelIndex++) {
-        identatedStorageMembers.Location = identatedStorageMembers.Location.IndentateInside(true);
-        identatedStorageMembers.Size = identatedStorageMembers.Size.IndentateInside(false);
+        identatedStorageMember.Location = identatedStorageMember.Location.IndentateInside(true);
+        identatedStorageMember.Size = identatedStorageMember.Size.IndentateInside(false);
       }
 
-      return identatedStorageMembers;
+      return identatedStorageMember;
     }
 
     static public IEnumerable<IStorageMember> IndentateInside(this IEnumerable<IStorageMember> storageMembers, int level) {
