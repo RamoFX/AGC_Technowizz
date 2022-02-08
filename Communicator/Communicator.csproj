@@ -49,11 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseAccess.GetPalletsCount.cs" />
-    <Compile Include="DatabaseAccess.GetCarBrandName.cs" />
-    <Compile Include="DatabaseAccess.Preferences.cs" />
-    <Compile Include="DatabaseAccess.Utilities.cs" />
+    <Compile Include="DatabaseAccess\GetPalletsCount.cs" />
+    <Compile Include="DatabaseAccess\GetCarBrandName.cs" />
+    <Compile Include="DatabaseAccess\Public.cs" />
+    <Compile Include="DatabaseAccess\InternalUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
