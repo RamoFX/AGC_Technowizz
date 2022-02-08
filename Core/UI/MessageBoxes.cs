@@ -68,7 +68,7 @@ namespace Core.UI {
     }
 
     static public DialogResult UndoableDeletion(string name) {
-      return MessageBox.Show($"Rozvržení \"{ name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+      return MessageBox.Show($"Rozvržení \"{ name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
   }
 }
