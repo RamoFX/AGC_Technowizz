@@ -30,6 +30,11 @@
       // Pseudo database response //
       //////////////////////////////
 
+      if (daysPeriod == 0)
+        return 0;
+
+
+
       if (warehouseName == "CCx") {
         return zoneName switch {
           _ => 0
