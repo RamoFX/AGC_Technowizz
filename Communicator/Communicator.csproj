@@ -49,7 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseAccess.cs" />
+    <Compile Include="DatabaseAccess.GetPalletsCount.cs" />
+    <Compile Include="DatabaseAccess.GetCarBrandName.cs" />
+    <Compile Include="DatabaseAccess.Preferences.cs" />
+    <Compile Include="DatabaseAccess.Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
