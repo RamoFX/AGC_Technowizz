@@ -1,17 +1,17 @@
 ﻿namespace Communicator {
   public partial class DatabaseAccess {
-    static public string GetCarBrandName(string warehouseName, string containerCode) {
+    static public string GetCarBrandName(string warehouseName, string palletCode) {
       /*
-       * 
+       *
        *  Zde by se měl uskutečnit požadavek na databázi SAP
-       *  
+       *
        *  Aplikace posílá:
        *    - řetězec warehouseName (název skladu, např. CCx, ...)
-       *    - řetězec containerCode (číslo čárkového kódu palety)
-       *    
+       *    - řetězec palletCode (číslo čárkového kódu palety)
+       *
        *  Aplikace přijímá:
        *    - řetězec (název značky nebo modelu auta , např. BM, MS, VO, ...)
-       *  
+       *
        */
 
 
@@ -29,7 +29,7 @@
       //////////////////////////////
 
       if (warehouseName == "CCx") {
-        return containerCode switch {
+        return palletCode switch {
           _ => ""
         };
       }
@@ -37,7 +37,7 @@
 
 
       if (warehouseName == "Neobvyklý") {
-        return containerCode switch {
+        return palletCode switch {
           "0" => "BM",
           "1" => "TO",
           "2" => "NM",

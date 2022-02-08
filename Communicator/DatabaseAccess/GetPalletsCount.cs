@@ -1,19 +1,19 @@
 ﻿namespace Communicator {
   public partial class DatabaseAccess {
-    static public int GetPalletsCount(string warehouseName, string zoneName, string carBrandName, int daysCount) {
+    static public int GetPalletsCount(string warehouseName, string zoneName, string carBrandName, int daysPeriod) {
       /*
-       * 
+       *
        *  Zde by se měl uskutečnit požadavek na databázi SAP
-       *  
+       *
        *  Aplikace posílá:
        *    - řetězec warehouseName (název skladu, např. CCx, ...)
        *    - řetězec zoneName (název zóny, např. A1, AB98, ...)
        *    - řetězec carBrandName (název značky nebo modelu auta , např. BM, MS, VO, ...)
        *    - číslo daysCount - počet dní (např. 15, 79, ...)
-       *    
+       *
        *  Aplikace přijímá:
        *    - číslo (průměrný počet palet v dané zóně za období daysCount)
-       *  
+       *
        */
 
 
