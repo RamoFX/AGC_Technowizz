@@ -18,10 +18,19 @@
 
 
 
+      ////////////
+      // Guards //
+      ////////////
+
+      if (daysPeriod == 0)
+        return 0;
+
+
+
       ///////////////////////////
       // Pseudo database delay //
       ///////////////////////////
-      
+
       SimulateDelay();
 
 
@@ -29,11 +38,6 @@
       //////////////////////////////
       // Pseudo database response //
       //////////////////////////////
-
-      if (daysPeriod == 0)
-        return 0;
-
-
 
       if (warehouseName == "CCx") {
         return zoneName switch {
