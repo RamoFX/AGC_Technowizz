@@ -36,7 +36,7 @@
 
 
 
-      if (warehouseName == "Neobvyklý") {
+      if (warehouseName == "example") {
         return palletCode switch {
           "0" => "BM",
           "1" => "TO",

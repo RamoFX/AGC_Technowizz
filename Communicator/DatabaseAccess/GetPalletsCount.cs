@@ -47,7 +47,7 @@
 
 
 
-      if (warehouseName == "Neobvyklý") {
+      if (warehouseName == "example") {
         return zoneName switch {
           "A1" => carBrandName switch {
             "BM" => 20,
