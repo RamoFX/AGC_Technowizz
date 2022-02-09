@@ -18,13 +18,19 @@ namespace Core.Extensions {
       return new Size(width, height);
     }
 
+
+
     static public Point ToPoint(this string value) {
       return new Point(value.ToSize());
     }
 
+
+
     static public int ToInt(this string value) {
       return int.Parse(value);
     }
+
+
 
     static public ZoneType ToZoneType(this string value, bool ignoreCase) {
       return (ZoneType) Enum.Parse(typeof(ZoneType), value, ignoreCase);

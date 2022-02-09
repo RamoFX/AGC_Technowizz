@@ -14,9 +14,13 @@ namespace Core.Extensions {
       return new SolidBrush(color);
     }
 
+
+
     static public SolidBrush Transparentize(this SolidBrush brush, int alpha) {
       return new SolidBrush(brush.Color.Transparentize(alpha));
     }
+
+
 
     static public SolidBrush Transparentize(this SolidBrush brush) {
       return new SolidBrush(brush.Color.Transparentize());

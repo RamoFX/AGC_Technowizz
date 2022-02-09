@@ -20,9 +20,13 @@ namespace Core.Extensions {
       return Color.FromName(colorString);
     }
 
+
+
     static public Color Transparentize(this Color color, int alpha) {
       return Color.FromArgb(alpha, color);
     }
+
+
 
     static public Color Transparentize(this Color color) {
       return color.Transparentize(200);

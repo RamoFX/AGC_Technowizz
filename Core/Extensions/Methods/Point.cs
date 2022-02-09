@@ -14,6 +14,8 @@ namespace Core.Extensions {
       return new(point.X * multiplier, point.Y * multiplier);
     }
 
+
+
     static public Point Shift(this Point point, Point shift) {
       return new(
         point.X + shift.X,

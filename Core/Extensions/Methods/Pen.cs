@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 
 using Core.UI;
 using Core.Storage;
-
-
+using System.Windows.Forms;
 
 namespace Core.Extensions {
   static public partial class Methods {
@@ -14,14 +14,27 @@ namespace Core.Extensions {
       return new Pen(color, size);
     }
 
-    static public Pen Dashed(this Pen pen) {
+
+
+    static public Pen Style(this Pen pen, DashStyle dashStyle, params float[] pattern) {
       Pen newPen = new(pen.Color, pen.Width);
 
-      int width = StaticSettings.OutlineSize;
-      newPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-      newPen.DashPattern = new float[] { width, width * 2 };
+      newPen.DashStyle = dashStyle;
+      newPen.DashPattern = pattern;
 
       return newPen;
+    }
+
+
+
+    static public Pen Dashed(this Pen pen, params float[] pattern) {
+      return pen.Style(DashStyle.Dash, pattern);
+    }
+
+
+
+    static public Pen Dotted(this Pen pen, params float[] pattern) {
+      return pen.Style(DashStyle.Dot, pattern);
     }
   }
 }

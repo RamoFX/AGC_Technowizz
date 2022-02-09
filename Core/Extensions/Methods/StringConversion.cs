@@ -14,6 +14,8 @@ namespace Core.Extensions {
       return $"{ size.Width }{ StaticSettings.CustomStringSeparator }{ size.Height }";
     }
 
+
+
     static public string ToCustomString(this Point point) {
       return new Size(point).ToCustomString();
     }
