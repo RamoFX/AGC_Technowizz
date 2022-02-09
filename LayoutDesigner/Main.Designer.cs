@@ -330,7 +330,6 @@ namespace LayoutDesigner {
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "(unset)";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-      this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
       this.Resize += new System.EventHandler(this.Main_Resize);
       this.MenuStrip.ResumeLayout(false);
       this.MenuStrip.PerformLayout();

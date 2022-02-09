@@ -677,11 +677,6 @@ namespace LayoutDesigner {
 
 
     // Window (Main)
-    private void Main_ResizeEnd(object sender, EventArgs e) {
-      // How to fire picture box layout paint?
-      //this.DrawLayout();
-    }
-
     private void Main_Resize(object sender, EventArgs e) {
       // Split containers
       this.SplitContainer_Vertical.Width = this.Width;
@@ -700,9 +695,6 @@ namespace LayoutDesigner {
       Size size = new(panel.Width, panel.Height);
 
       this.SplitContainer_Horizontal.Size = size;
-
-      // How to fire picture box layout paint?
-      //this.DrawLayout();
     }
 
 
