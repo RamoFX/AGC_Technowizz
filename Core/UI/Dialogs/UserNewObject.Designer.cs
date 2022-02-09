@@ -1,6 +1,6 @@
 ﻿
 namespace Core.UI.Dialogs {
-  partial class NewObject {
+  partial class UserNewObject {
     /// <summary>
     /// Required designer variable.
     /// </summary>
