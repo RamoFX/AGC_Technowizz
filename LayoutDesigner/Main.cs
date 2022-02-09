@@ -39,8 +39,6 @@ namespace LayoutDesigner {
 
     private readonly int TitleBarHeight;
 
-    private readonly Graphics Graphics;
-
 
 
     // Constructor
@@ -48,7 +46,6 @@ namespace LayoutDesigner {
       InitializeComponent();
 
       this.TitleBarHeight = this.RectangleToScreen(this.ClientRectangle).Top - this.Top;
-      this.Graphics = this.PictureBox_Layout.CreateGraphics();
 
       // Minimum size
       int left = this.SplitContainer_Vertical.Panel1MinSize;
@@ -82,10 +79,6 @@ namespace LayoutDesigner {
       if (!force && !this.CurrentLayout.IsCorrespondingFileUpToDate()) {
         var dialogResult = MessageBoxes.SaveUnsavedLayout();
 
-        if (dialogResult == DialogResult.Cancel) {
-          return;
-        }
-
         if (dialogResult == DialogResult.Yes) {
           this.Save();
         }
@@ -104,13 +97,13 @@ namespace LayoutDesigner {
     }
 
     private void New() {
-      // Ask for new name
-      NewObject newLayout = this.CreateNewLayout();
+      // Pre-hooks
+      this.Unload();
+
+      // Setup new object
+      UserNewObject newLayout = this.CreateNewLayout();
 
       if (newLayout.DialogResult == DialogResult.OK) {
-        // Pre-hooks
-        this.Unload();
-
         // Post-hooks
         this.SetCurrentLayout((Layout) newLayout.FinalValue);
       }
@@ -197,7 +190,7 @@ namespace LayoutDesigner {
         if (!layoutHasAvailableArea) {
           MessageBoxes.AreaFull();
         } else {
-          NewObject newZone = CreateNewZone();
+          UserNewObject newZone = CreateNewZone();
 
           if (newZone.DialogResult == DialogResult.OK) {
             this.CurrentLayout.Zones.Add((Zone) newZone.FinalValue);
@@ -232,7 +225,7 @@ namespace LayoutDesigner {
             if (!hasSuitableArea) {
               MessageBoxes.AreaFull();
             } else {
-              NewObject newCarBrand = CreateNewCarBrand(zone);
+              UserNewObject newCarBrand = CreateNewCarBrand(zone);
 
               if (newCarBrand.DialogResult == DialogResult.OK) {
                 zone.CarBrands.Add((CarBrand) newCarBrand.FinalValue);
@@ -328,7 +321,7 @@ namespace LayoutDesigner {
       return userTextInput;
     }
 
-    private NewObject CreateNewLayout() {
+    private UserNewObject CreateNewLayout() {
       Func<object, bool> validator = obj => {
         Layout layout = (Layout) obj;
 
@@ -346,16 +339,16 @@ namespace LayoutDesigner {
         }
       };
 
-      Layout initialLayout = new("Nové rozvržení", "", new(10, 10), 4);
+      Layout initialLayout = new("Nové rozvržení", "", new(10, 10));
 
-      NewObject newLayout = new(validator, initialLayout, "Nová zóna");
+      UserNewObject newLayout = new(validator, initialLayout, "Nová zóna");
 
       newLayout.ShowDialog(this);
 
       return newLayout;
     }
 
-    private NewObject CreateNewZone() {
+    private UserNewObject CreateNewZone() {
       Func<object, bool> validator = obj => {
         Zone zone = (Zone) obj;
 
@@ -393,14 +386,14 @@ namespace LayoutDesigner {
 
       Zone initialZone = new("Nová zóna", new(0, 0), new(1, 1), ZoneType.Storage);
 
-      NewObject newZone = new(validator, initialZone, "Nová zóna");
+      UserNewObject newZone = new(validator, initialZone, "Nová zóna");
 
       newZone.ShowDialog(this);
 
       return newZone;
     }
 
-    private NewObject CreateNewCarBrand(Zone parentZone) {
+    private UserNewObject CreateNewCarBrand(Zone parentZone) {
       Func<object, bool> validator = obj => {
         CarBrand carBrand = (CarBrand) obj;
 
@@ -435,9 +428,9 @@ namespace LayoutDesigner {
       };
 
 
-      CarBrand initialCarBrand = new("Nová značka auta", new(0, 0), new(1, 1));
+      CarBrand initialCarBrand = new("Nová značka auta", new(0, 0), new(1, 1), 4);
 
-      NewObject newCarBrand = new(validator, initialCarBrand, "Nová značka auta");
+      UserNewObject newCarBrand = new(validator, initialCarBrand, "Nová značka auta");
 
       newCarBrand.ShowDialog(this);
 
@@ -526,7 +519,7 @@ namespace LayoutDesigner {
       this.CurrentLayout = layout;
 
       if (this.IsLayoutPresent) {
-        this.CurrentLayout.Initialize(false);
+        this.CurrentLayout.Initialize(0);
       }
 
       // Post-hooks
@@ -580,13 +573,12 @@ namespace LayoutDesigner {
     // Handle state
     private void CurrentLayoutChangedHandler() {
       // Draw
-      this.DrawLayout();
+      this.PictureBox_Layout.Refresh();
 
       // TreeView
       this.TreeView_Layout.Nodes.Clear();
 
       if (this.IsLayoutPresent) {
-        // TreeView
         var rootNode = TreeView_Layout.Nodes.Add(this.CurrentLayout.Name);
 
         foreach (Zone zone in this.CurrentLayout.Zones) {
@@ -608,20 +600,13 @@ namespace LayoutDesigner {
 
 
     // Visual
-    private void DrawLayout() {
+    private void DrawLayout(Graphics graphics) {
+      graphics.Clear(this.PictureBox_Layout.BackColor);
+
       if (this.IsLayoutPresent) {
-        Drawer.DrawLayout(this.PictureBox_Layout, this.CurrentLayout, new(SystemInformation.VerticalScrollBarWidth, 0));
-
-        //this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UnitSize);
-
-        //Drawer.DrawLayout(this.Graphics, this.CurrentLayout);
+        this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UnitSize);
+        Drawer.DrawLayout(graphics, this.CurrentLayout);
       }
-
-      if (this.Graphics == null) {
-        return;
-      }
-
-      this.Graphics.Clear(this.PictureBox_Layout.BackColor);
     }
 
 
@@ -693,7 +678,8 @@ namespace LayoutDesigner {
 
     // Window (Main)
     private void Main_ResizeEnd(object sender, EventArgs e) {
-      this.DrawLayout();
+      // How to fire picture box layout paint?
+      //this.DrawLayout();
     }
 
     private void Main_Resize(object sender, EventArgs e) {
@@ -706,10 +692,6 @@ namespace LayoutDesigner {
       this.Unload();
     }
 
-    private void Main_Paint(object sender, PaintEventArgs e) {
-      this.DrawLayout();
-    }
-
 
 
     // Split container vertical
@@ -719,8 +701,8 @@ namespace LayoutDesigner {
 
       this.SplitContainer_Horizontal.Size = size;
 
-      // Why does it disappear?
-      this.DrawLayout();
+      // How to fire picture box layout paint?
+      //this.DrawLayout();
     }
 
 
@@ -752,7 +734,7 @@ namespace LayoutDesigner {
     }
 
     private void PictureBox_Layout_Paint(object sender, PaintEventArgs e) {
-      //MessageBox.Show("PictureBox_Layout_Paint");
+      this.DrawLayout(e.Graphics);
     }
   }
 }
