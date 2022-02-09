@@ -103,15 +103,15 @@ namespace LayoutAnalyzer {
       {
 
         TreeView_Layout.Nodes.Clear();
-        var rootNode = TreeView_Layout.Nodes.Add($"{this.CurrentLayout.Name} : {this.CurrentLayout.PalletsCurrentlyStoredPercent} %");
+        var rootNode = TreeView_Layout.Nodes.Add($"{this.CurrentLayout.Name} : {this.CurrentLayout.StoredPercent} %");
 
         foreach (Zone zone in this.CurrentLayout.Zones)
         {
-          var zoneNode = rootNode.Nodes.Add(zone.Name + (zone.Type == ZoneType.Storage ? " : " + zone.PalletsCurrentlyStoredPercent + " %" : ""));
+          var zoneNode = rootNode.Nodes.Add(zone.Name + (zone.Type == ZoneType.Storage ? " : " + zone.StoredPercent + " %" : ""));
 
           foreach (CarBrand carBrand in zone.CarBrands)
           {
-            zoneNode.Nodes.Add($"{carBrand.Name} : {carBrand.PalletsCurrentlyStoredPercent} %");
+            zoneNode.Nodes.Add($"{carBrand.Name} : {carBrand.StoredPercent} %");
           }
         }
 
@@ -173,7 +173,7 @@ namespace LayoutAnalyzer {
       this.CurrentLayout = layout;
 
       if (this.IsLayoutPresent) {
-        this.CurrentLayout.Initialize(true);
+        this.CurrentLayout.Initialize(100);
       }
 
       // Post-hooks

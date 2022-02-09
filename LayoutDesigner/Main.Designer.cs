@@ -70,7 +70,7 @@ namespace LayoutDesigner {
       this.MenuStrip.Location = new System.Drawing.Point(0, 0);
       this.MenuStrip.Name = "MenuStrip";
       this.MenuStrip.Padding = new System.Windows.Forms.Padding(0);
-      this.MenuStrip.Size = new System.Drawing.Size(965, 24);
+      this.MenuStrip.Size = new System.Drawing.Size(1241, 24);
       this.MenuStrip.TabIndex = 1;
       // 
       // ToolStripMenuItem_File
@@ -251,7 +251,7 @@ namespace LayoutDesigner {
       this.PictureBox_Layout.Location = new System.Drawing.Point(0, 0);
       this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
       this.PictureBox_Layout.Name = "PictureBox_Layout";
-      this.PictureBox_Layout.Size = new System.Drawing.Size(711, 570);
+      this.PictureBox_Layout.Size = new System.Drawing.Size(987, 570);
       this.PictureBox_Layout.TabIndex = 2;
       this.PictureBox_Layout.TabStop = false;
       this.PictureBox_Layout.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Layout_Paint);
@@ -307,9 +307,10 @@ namespace LayoutDesigner {
       // 
       // SplitContainer_Vertical.Panel2
       // 
+      this.SplitContainer_Vertical.Panel2.AutoScroll = true;
       this.SplitContainer_Vertical.Panel2.Controls.Add(this.PictureBox_Layout);
-      this.SplitContainer_Vertical.Panel2MinSize = 500;
-      this.SplitContainer_Vertical.Size = new System.Drawing.Size(965, 570);
+      this.SplitContainer_Vertical.Panel2MinSize = 750;
+      this.SplitContainer_Vertical.Size = new System.Drawing.Size(1241, 570);
       this.SplitContainer_Vertical.SplitterDistance = 250;
       this.SplitContainer_Vertical.TabIndex = 6;
       // 
@@ -319,7 +320,7 @@ namespace LayoutDesigner {
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
       this.CausesValidation = false;
-      this.ClientSize = new System.Drawing.Size(965, 594);
+      this.ClientSize = new System.Drawing.Size(1241, 594);
       this.Controls.Add(this.SplitContainer_Vertical);
       this.Controls.Add(this.MenuStrip);
       this.DoubleBuffered = true;
@@ -330,7 +331,6 @@ namespace LayoutDesigner {
       this.Text = "(unset)";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
       this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
-      this.Paint += new System.Windows.Forms.PaintEventHandler(this.Main_Paint);
       this.Resize += new System.EventHandler(this.Main_Resize);
       this.MenuStrip.ResumeLayout(false);
       this.MenuStrip.PerformLayout();

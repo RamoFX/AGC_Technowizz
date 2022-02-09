@@ -73,6 +73,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsProperties\Colors.cs" />
+    <Compile Include="SettingsProperties\Highlight.cs" />
+    <Compile Include="SettingsProperties\Layout.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -14,35 +15,25 @@ using Core.Helpers;
 
 
 namespace Core.Storage {
-  public class Layout : XDocumentConvertable<Layout>, IStorageMember {
-    // Main
-    [Browsable(true)]
-    [DisplayName("Název rozvržení")]
+  public class Layout : XDocumentConvertable<Layout>, IEnumerable<Zone> {
+    [Browsable(true), DisplayName("Název rozvržení")]
     public string Name { get; set; }
 
-    [Browsable(true)]
-    [DisplayName("Název skladu")]
+
+
+    [Browsable(true), DisplayName("Název skladu")]
     [Description("Musí se shodovat s názvem skladu nebo jiným identifikátorem v databázi, se kterou komunikuje.")]
     public string WarehouseName { get; set; }
 
-    [Browsable(true)]
-    [DisplayName("Vertikální kapacita")]
-    public int VerticalCapacity { get; set; }
-
-    public List<Zone> Zones;
 
 
-
-    // IVisualizable
-    [Browsable(false)]
-    public Point Location {
-      get => new(0, 0);
-      set { } // Fuck the rules
-    }
-
-    [Browsable(true)]
-    [DisplayName("Rozměry")]
+    [Browsable(true), DisplayName("Rozměry")]
     public Size Size { get; set; }
+
+
+
+    [Browsable(false)]
+    public readonly Point Location = new(0, 0);
 
     [Browsable(false)]
     public Rectangle Rectangle {
@@ -50,79 +41,98 @@ namespace Core.Storage {
     }
 
     [Browsable(false)]
-    public Color Color {
-      get => DynamicSettings.LayoutColor.Value.ToColor();
+    public readonly Color Color = DynamicSettings.LayoutColor.Value.ToColor();
+
+    [Browsable(false)]
+    public readonly List<Zone> Zones;
+
+
+
+    // Data
+    [Browsable(false)]
+    public int Area {
+      get => this.Size.Width * this.Size.Height;
     }
 
+    [Browsable(false)]
+    public int Area_Zones {
+      get => this.Sum(zone => zone.Area);
+    }
 
-
-    // Computations
     [Browsable(false)]
     public int MaxCapacity {
-      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.MaxCapacity);
+      get => this.Sum(zone => zone.MaxCapacity);
     }
 
     [Browsable(false)]
-    public int PalletsCurrentlyStored {
-      get => this.Zones.Aggregate(0, (sum, zone) => sum + zone.PalletsCurrentlyStored);
+    public int Stored {
+      get => this.Sum(zone => zone.Stored);
     }
 
     [Browsable(false)]
-    public int PalletsCurrentlyStoredPercent {
+    public int StoredPercent {
       get {
         if (this.Zones.Count == 0)
           return 0;
 
-        double average = this.Zones.Average(carBrand => carBrand.PalletsCurrentlyStoredPercent);
+        double average = this.Average(carBrand => carBrand.StoredPercent);
 
         return (int) Math.Round(average);
       }
     }
 
     [Browsable(false)]
-    public int PalletsCanBeStored {
-      get => this.MaxCapacity - this.PalletsCurrentlyStored;
+    public int CanStore {
+      get => this.Sum(zone => zone.CanStore);
     }
 
 
 
-    // Other
-    private bool UseDatabaseAccess;
+    // Indexer
+    public Zone this[int index] {
+      get => this.Zones[index];
+    }
+
+
+
+    // References
+    [Browsable(false)]
+    internal int DaysPeriod;
 
 
 
     // Constructors
-    public Layout(string name, string warehouseName, Size size, int verticalCapacity, IEnumerable<Zone> zones) {
+    public Layout(string name, string warehouseName, Size size, IEnumerable<Zone> zones) {
       this.Name = name;
       this.WarehouseName = warehouseName;
       this.Size = size;
-      this.VerticalCapacity = verticalCapacity;
       this.Zones = zones.ToList();
     }
 
-    public Layout(string name, string warehouseName, Size size, int verticalCapacity)
-      : this(name, warehouseName, size, verticalCapacity, new Zone[0] {}) { }
+    public Layout(string name, string warehouseName, Size size)
+      : this(name, warehouseName, size, new Zone[0] {}) { }
 
 
 
     // Initializators
-    public void Initialize(bool useDatabaseAccess) {
-      this.UseDatabaseAccess = useDatabaseAccess;
-
-      foreach (Zone zone in this.Zones) {
-        zone.Initialize(this, this.UseDatabaseAccess);
+    public void Initialize(int daysPeriod) {
+      this.DaysPeriod = daysPeriod;
+      
+      foreach (Zone zone in this) {
+        zone.Initialize(this);
       }
     }
 
 
 
     // Self interactions
-    static public string GetPath(string name) {
-      bool directoryExists = Directory.Exists(StaticSettings.LayoutsPath);
+    public void Add(Zone zone) {
+      zone.Initialize(this);
+      this.Zones.Add(zone);
+    }
 
-      if (!directoryExists) {
-        Directory.CreateDirectory(StaticSettings.LayoutsPath);
-      }
+    static public string GetPath(string name) {
+      LayoutManager.EnsureLayoutDirectory();
 
       return Path.Combine(
         StaticSettings.LayoutsPath,
@@ -135,11 +145,10 @@ namespace Core.Storage {
     }
 
     public string LatestSaveHash() {
-      if (this.HasValidCorrespondingFile()) {
-        return Import(this.Name).ComputeHash();
-      } else {
+      if (!this.HasValidCorrespondingFile())
         return "";
-      }
+
+      return Import(this.Name).ComputeHash();
     }
 
     static public bool HasValidCorrespondingFile(string name) {
@@ -244,7 +253,6 @@ namespace Core.Storage {
         new("name", this.Name),
         new("warehouseName", this.WarehouseName),
         new("size", this.Size.ToCustomString()),
-        new("verticalCapacity", this.VerticalCapacity)
       };
 
       XElement root = XmlLinqUtilities.CreateElement("Layout", rootAttributes, zones);
@@ -261,31 +269,24 @@ namespace Core.Storage {
       string name = root.Attribute("name").Value;
       string warehouseName = root.Attribute("warehouseName").Value;
       Size size = root.Attribute("size").Value.ToSize();
-      int verticalCapacity = root.Attribute("verticalCapacity").Value.ToInt();
       IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
 
-      Layout layout = new(name, warehouseName, size, verticalCapacity, zones);
+      Layout layout = new(name, warehouseName, size, zones);
 
       return layout;
     }
 
 
 
-    // ICloneable
-    public object Clone() {
-      Layout layout = (Layout) this.MemberwiseClone();
+    // IEnumerable
+    public IEnumerator<Zone> GetEnumerator() {
+      foreach (Zone zone in this.Zones) {
+        yield return zone;
+      }
+    }
 
-      layout.Name = this.Name;
-      layout.WarehouseName = this.WarehouseName;
-      layout.Location = this.Location; // Pointless since Layout's Location is always new Point(0, 0)
-      layout.Size = this.Size;
-      layout.VerticalCapacity = this.VerticalCapacity;
-      layout.Zones = this.Zones;
-
-      // Only non-cloned layout should be used for Communicator.DatabaseAccess communication
-      layout.Initialize(false);
-
-      return layout;
+    IEnumerator IEnumerable.GetEnumerator() {
+      return this.GetEnumerator();
     }
   }
 }

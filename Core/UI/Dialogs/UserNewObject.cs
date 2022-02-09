@@ -4,14 +4,14 @@ using System.Windows.Forms;
 
 
 namespace Core.UI.Dialogs {
-  public partial class NewObject : Form {
+  public partial class UserNewObject : Form {
     public new DialogResult DialogResult;
     public Func<object, bool> ValueValidator;
     public object FinalValue;
 
 
 
-    public NewObject(Func<object, bool> valueValidator, object initialObject, string labelText) {
+    public UserNewObject(Func<object, bool> valueValidator, object initialObject, string labelText) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
       this.ValueValidator = valueValidator;
