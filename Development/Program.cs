@@ -11,13 +11,11 @@ namespace Development {
   class Program {
     static void Main() {
       //CreateLayout_Example1();
-      //CreateLayout_Example2();
-
-      Application.Run(new Core.UI.Dialogs.Dialog("Výběr"));
+      CreateLayout_Example2();
     }
 
     static private Layout CreateLayout_Example1() {
-      Layout layout = new("Příklad 1", "CCx", new(99999, 99999), 4);
+      Layout layout = new("Příklad 1", "CCx", new(99999, 99999));
 
 
 
@@ -36,37 +34,39 @@ namespace Development {
     }
 
     static private Layout CreateLayout_Example2() {
-      Layout layout = new("Příklad 2", "Neobvyklý", new(15, 8), 4, new Zone[] {
+      Layout layout = new("Příklad 2", "example", new(15, 8), new Zone[] {
         new("A1", new(0, 0), new(5, 3), ZoneType.Storage, new CarBrand[] {
-          new("BM", new(0, 0), new(5, 1)),
-          new("TO", new(0, 1), new(5, 1)),
-          new("NM", new(0, 2), new(5, 1))
+          new("BM", new(0, 0), new(5, 1), 4),
+          new("TO", new(0, 1), new(5, 1), 4),
+          new("NM", new(0, 2), new(5, 1), 4)
         }),
         new("B1", new(5, 0), new(5, 4), ZoneType.Storage, new CarBrand[] {
-          new("MY", new(5, 0), new(5, 2)),
-          new("AL", new(5, 2), new(2, 2)),
-          new("PO", new(7, 2), new(2, 2)),
-          new("MS", new(9, 2), new(1, 2))
+          new("MY", new(0, 0), new(5, 2), 4),
+          new("AL", new(0, 2), new(2, 2), 4),
+          new("PO", new(2, 2), new(2, 2), 4),
+          new("MS", new(4, 2), new(1, 2), 4)
         }),
         new("B2", new(4, 6), new(4, 2), ZoneType.Storage, new CarBrand[] {
-          new("VO", new(4, 6), new(4, 1)),
-          new("SK", new(4, 7), new(4, 1))
+          new("VO", new(0, 0), new(4, 1), 4),
+          new("SK", new(0, 1), new(4, 1), 4)
         }),
         new("C1", new(11, 0), new(4, 2), ZoneType.Storage, new CarBrand[] {
-          new("FI", new(11, 0), new(2, 2)),
-          new("FO", new(13, 0), new(2, 2))
+          new("FI", new(0, 0), new(2, 2), 4),
+          new("FO", new(2, 0), new(2, 2), 4)
         }),
         new("C2", new(12, 3), new(3, 1), ZoneType.Storage, new CarBrand[] {
-          new("VW", new(12, 3), new(3, 1))
+          new("VW", new(0, 0), new(3, 1), 4)
         }),
         new("C3", new(9, 6), new(1, 1), ZoneType.Storage, new CarBrand[] {
-          new("PE", new(9, 6), new(1, 1))
+          new("PE", new(0, 0), new(1, 1), 4)
         }),
         new("Export", new(11, 5), new(4, 3), ZoneType.Other),
         new("Office", new(0, 5), new(4, 3), ZoneType.Other)
       });
 
       layout.Export();
+
+      LayoutManager.EnsureLayoutDirectory();
       Process.Start("explorer.exe", Path.GetDirectoryName(layout.GetPath()));
 
       return layout;

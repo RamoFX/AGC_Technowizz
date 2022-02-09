@@ -50,9 +50,9 @@ namespace ZoneAssigner
 
     private void InitializeLayout() {
       // Load initial layout
-      if (ValidLayoutNames.Contains(DynamicSettings.ZA_StartupLayoutName.Value)) {
+      if (ValidLayoutNames.Contains(DynamicSettings.StartupLayoutName.Value)) {
         // Startup
-        this.SetActiveLayout(DynamicSettings.ZA_StartupLayoutName.Value);
+        this.SetActiveLayout(DynamicSettings.StartupLayoutName.Value);
       } else if (ValidLayoutNames.Count() > 0) {
         // First existing
         this.SetActiveLayout(ValidLayoutNames.First());
@@ -78,10 +78,10 @@ namespace ZoneAssigner
     // State update
     private void SetActiveLayout(string name) {
       this.CurrentLayout = Core.Storage.Layout.Import(name);
-      this.CurrentLayout.Initialize(true);
+      this.CurrentLayout.Initialize(1);
       this.Text = $"{FormName} ({name})";
       this.Menu_ValidLayoutNames.SelectedItem = name;
-      DynamicSettings.ZA_StartupLayoutName.Value = name;
+      DynamicSettings.StartupLayoutName.Value = name;
 
       Initialize_ComboBox_ContainerCodes();
     }
@@ -131,22 +131,22 @@ namespace ZoneAssigner
       if (submitted)
       {
         // Last iteration
-        if (i == Convert.ToInt32(DynamicSettings.ZA_TotalHighlightFlashes.Value) * 2) 
+        if (i == Convert.ToInt32(DynamicSettings.Highlight_TotalFlashesCount.Value) * 2) 
         {
           i = 0;
-          if (Convert.ToBoolean(DynamicSettings.ZA_LastHighlightOnOff.Value)) Drawer.Draw(zone, color, g);
+          if (Convert.ToBoolean(DynamicSettings.Highlight_TotalFlashesCount.Value)) Drawer.Draw(zone, color, g);
         }
 
         // Turn highlight on and off
         else if (i % 2 == 0)
         {
           Drawer.Draw(zone, color, g);
-          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.ZA_HighlightTimeOn.Value), Refresh);
+          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.Highlight_CycleDuration.Value) / 2, Refresh);
           i++;
         }
         else
         {
-          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.ZA_HighlightTimeOff.Value), Refresh);
+          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.Highlight_CycleDuration.Value) / 2, Refresh);
           i++;
         }
       }
@@ -156,7 +156,7 @@ namespace ZoneAssigner
     {
       // Check text field
       bool containerCodeEmpty = TextField_ContainerCode.Text.Trim().Length == 0;
-      bool containerCodeNotOnlyNumbers = !int.TryParse(TextField_ContainerCode.Text, out int containerCode);
+      bool containerCodeNotOnlyNumbers = !int.TryParse(TextField_ContainerCode.Text, out int palletCode);
       submitted = true;
 
       if (containerCodeEmpty)
@@ -172,7 +172,7 @@ namespace ZoneAssigner
       else
       {
         // containerCode ---> zone
-        string carBrand = DatabaseAccess.GetCarBrand($"{ containerCode }");
+        string carBrand = DatabaseAccess.GetCarBrandName(this.CurrentLayout.WarehouseName, $"{ palletCode }");
         zone = this.CurrentLayout.GetFirstSuitableZoneOrDefault(carBrand);
 
         TextField_ContainerCode.Clear();
