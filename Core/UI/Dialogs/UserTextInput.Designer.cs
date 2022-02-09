@@ -36,6 +36,8 @@ namespace Core.UI.Dialogs {
       this.TextBox.Name = "TextBox";
       this.TextBox.Size = new System.Drawing.Size(254, 20);
       this.TextBox.TabIndex = 0;
+      this.TextBox.TabStop = false;
+      this.TextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyboardShortcuts);
       // 
       // Button_Cancel
       // 
@@ -43,6 +45,7 @@ namespace Core.UI.Dialogs {
       this.Button_Cancel.Name = "Button_Cancel";
       this.Button_Cancel.Size = new System.Drawing.Size(101, 33);
       this.Button_Cancel.TabIndex = 1;
+      this.Button_Cancel.TabStop = false;
       this.Button_Cancel.Text = "Storno";
       this.Button_Cancel.UseVisualStyleBackColor = true;
       this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
@@ -53,7 +56,7 @@ namespace Core.UI.Dialogs {
       this.Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Label.Location = new System.Drawing.Point(59, 31);
       this.Label.Name = "Label";
-      this.Label.Size = new System.Drawing.Size(48, 16);
+      this.Label.Size = new System.Drawing.Size(47, 16);
       this.Label.TabIndex = 2;
       this.Label.Text = "(unset)";
       // 
@@ -63,6 +66,7 @@ namespace Core.UI.Dialogs {
       this.Button_Apply.Name = "Button_Apply";
       this.Button_Apply.Size = new System.Drawing.Size(101, 33);
       this.Button_Apply.TabIndex = 3;
+      this.Button_Apply.TabStop = false;
       this.Button_Apply.Text = "Použít";
       this.Button_Apply.UseVisualStyleBackColor = true;
       this.Button_Apply.Click += new System.EventHandler(this.Button_Apply_Click);
@@ -81,6 +85,7 @@ namespace Core.UI.Dialogs {
       this.Name = "UserTextInput";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Zadejte hodnotu";
+      this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyboardShortcuts);
       this.ResumeLayout(false);
       this.PerformLayout();
 

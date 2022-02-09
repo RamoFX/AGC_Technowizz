@@ -18,10 +18,24 @@ namespace Settings
       InitializeComponent();
     }
 
+    __Properties properties = new __Properties();
+
     private void Main_Load(object sender, EventArgs e)
     {
-      propertyGrid.SelectedObject = new __Properties();
+      propertyGrid.SelectedObject = properties;
       propertyGrid.PropertySort = PropertySort.Categorized;
+    }
+
+    private void buttonResetSettings_Click(object sender, EventArgs e)
+    {
+      if (MessageBox.Show(
+      $"Opravdu chcete resetovat všechna nastavení?",
+      "Varování!",
+      MessageBoxButtons.YesNo) == DialogResult.Yes)
+      {
+        properties.ResetSettings();
+        propertyGrid.SelectedObject = properties;
+      }
     }
   }
 
@@ -130,6 +144,25 @@ namespace Settings
     public Color CarBrandColor_Empty {
       get => DynamicSettings.CarBrandColor_Empty.Value.ToColor();
       set => DynamicSettings.CarBrandColor_Empty.Value = value.Name;
+    }
+
+    public void ResetSettings()
+    {
+      ZA_StartupLayoutName = DynamicSettings.ZA_StartupLayoutName.Fallback;
+      ZA_HighlightTimeOn = DynamicSettings.ZA_HighlightTimeOn.Fallback.ToInt();
+      ZA_HighlightTimeOff = DynamicSettings.ZA_HighlightTimeOff.Fallback.ToInt();
+      ZA_TotalHighlightFlashes = DynamicSettings.ZA_TotalHighlightFlashes.Fallback.ToInt();
+      ZA_LastHighlightOnOff = DynamicSettings.ZA_LastHighlightOnOff.Fallback.ToBool();
+      LayoutColor = DynamicSettings.LayoutColor.Fallback.ToColor();
+      GridColor = DynamicSettings.GridColor.Fallback.ToColor();
+      ZoneColor_Storage = DynamicSettings.ZoneColor_Storage.Fallback.ToColor();
+      ZoneColor_Other = DynamicSettings.ZoneColor_Other.Fallback.ToColor();
+      CarBrandColor_Full = DynamicSettings.CarBrandColor_Full.Fallback.ToColor();
+      CarBrandColor_AlmostFull = DynamicSettings.CarBrandColor_AlmostFull.Fallback.ToColor();
+      CarBrandColor_AboveHalf = DynamicSettings.CarBrandColor_AboveHalf.Fallback.ToColor();
+      CarBrandColor_BelowHalf = DynamicSettings.CarBrandColor_BelowHalf.Fallback.ToColor();
+      CarBrandColor_AlmostEmpty = DynamicSettings.CarBrandColor_AlmostEmpty.Fallback.ToColor();
+      CarBrandColor_Empty = DynamicSettings.CarBrandColor_Empty.Fallback.ToColor();
     }
   }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Core.Helpers {
   public class DynamicSetting {
     private readonly string Key;
-    private readonly string Fallback;
+    public readonly string Fallback;
 
     public string Value {
       get => DynamicSettings.ReadSettingsValue(this.Key, this.Fallback);

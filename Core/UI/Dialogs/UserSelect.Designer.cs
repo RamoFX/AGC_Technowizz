@@ -36,6 +36,7 @@ namespace Core.UI.Dialogs {
       this.Button_Apply.Name = "Button_Apply";
       this.Button_Apply.Size = new System.Drawing.Size(101, 34);
       this.Button_Apply.TabIndex = 9;
+      this.Button_Apply.TabStop = false;
       this.Button_Apply.Text = "Použít";
       this.Button_Apply.UseVisualStyleBackColor = true;
       this.Button_Apply.Click += new System.EventHandler(this.Button_Apply_Click);
@@ -46,7 +47,7 @@ namespace Core.UI.Dialogs {
       this.Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Label.Location = new System.Drawing.Point(58, 33);
       this.Label.Name = "Label";
-      this.Label.Size = new System.Drawing.Size(48, 16);
+      this.Label.Size = new System.Drawing.Size(47, 16);
       this.Label.TabIndex = 8;
       this.Label.Text = "(unset)";
       // 
@@ -56,6 +57,7 @@ namespace Core.UI.Dialogs {
       this.Button_Cancel.Name = "Button_Cancel";
       this.Button_Cancel.Size = new System.Drawing.Size(101, 34);
       this.Button_Cancel.TabIndex = 7;
+      this.Button_Cancel.TabStop = false;
       this.Button_Cancel.Text = "Storno";
       this.Button_Cancel.UseVisualStyleBackColor = true;
       this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
@@ -67,8 +69,10 @@ namespace Core.UI.Dialogs {
       this.ListBox.Name = "ListBox";
       this.ListBox.Size = new System.Drawing.Size(213, 186);
       this.ListBox.TabIndex = 10;
+      this.ListBox.TabStop = false;
+      this.ListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBox_MouseDoubleClick);
       // 
-      // NewSelect
+      // UserSelect
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -78,9 +82,10 @@ namespace Core.UI.Dialogs {
       this.Controls.Add(this.Label);
       this.Controls.Add(this.Button_Cancel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-      this.Name = "NewSelect";
+      this.Name = "UserSelect";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Výběr";
+      this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyboardShortcuts);
       this.ResumeLayout(false);
       this.PerformLayout();
 

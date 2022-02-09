@@ -35,7 +35,8 @@ namespace Core.UI.Dialogs {
       this.Button_Apply.Location = new System.Drawing.Point(62, 364);
       this.Button_Apply.Name = "Button_Apply";
       this.Button_Apply.Size = new System.Drawing.Size(174, 34);
-      this.Button_Apply.TabIndex = 6;
+      this.Button_Apply.TabIndex = 1;
+      this.Button_Apply.TabStop = false;
       this.Button_Apply.Text = "Použít";
       this.Button_Apply.UseVisualStyleBackColor = true;
       this.Button_Apply.Click += new System.EventHandler(this.Button_Apply_Click);
@@ -46,8 +47,8 @@ namespace Core.UI.Dialogs {
       this.Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Label.Location = new System.Drawing.Point(57, 35);
       this.Label.Name = "Label";
-      this.Label.Size = new System.Drawing.Size(48, 16);
-      this.Label.TabIndex = 5;
+      this.Label.Size = new System.Drawing.Size(47, 16);
+      this.Label.TabIndex = 0;
       this.Label.Text = "(unset)";
       // 
       // Button_Cancel
@@ -55,7 +56,8 @@ namespace Core.UI.Dialogs {
       this.Button_Cancel.Location = new System.Drawing.Point(241, 364);
       this.Button_Cancel.Name = "Button_Cancel";
       this.Button_Cancel.Size = new System.Drawing.Size(174, 34);
-      this.Button_Cancel.TabIndex = 4;
+      this.Button_Cancel.TabIndex = 2;
+      this.Button_Cancel.TabStop = false;
       this.Button_Cancel.Text = "Storno";
       this.Button_Cancel.UseVisualStyleBackColor = true;
       this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
@@ -67,6 +69,7 @@ namespace Core.UI.Dialogs {
       this.PropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
       this.PropertyGrid.Size = new System.Drawing.Size(353, 295);
       this.PropertyGrid.TabIndex = 7;
+      this.PropertyGrid.TabStop = false;
       this.PropertyGrid.ToolbarVisible = false;
       // 
       // NewObject
@@ -82,6 +85,7 @@ namespace Core.UI.Dialogs {
       this.Name = "NewObject";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Nový objekt";
+      this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyboardShortcuts);
       this.ResumeLayout(false);
       this.PerformLayout();
 

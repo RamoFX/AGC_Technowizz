@@ -41,5 +41,20 @@ namespace Core.UI.Dialogs {
       this.DialogResult = DialogResult.Cancel;
       this.Close();
     }
+
+
+
+    private void KeyboardShortcuts(object sender, KeyEventArgs e)
+    {
+      switch (e.KeyCode)
+      {
+        case Keys.Enter:
+          Button_Apply.PerformClick();
+          break;
+        case Keys.Escape:
+          Button_Cancel.PerformClick();
+          break;
+      }
+    }
   }
 }

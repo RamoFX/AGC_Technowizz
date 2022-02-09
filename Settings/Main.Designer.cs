@@ -30,21 +30,37 @@
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+      this.buttonResetSettings = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // propertyGrid
       // 
+      this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
       this.propertyGrid.Location = new System.Drawing.Point(0, 0);
       this.propertyGrid.Name = "propertyGrid";
-      this.propertyGrid.Size = new System.Drawing.Size(286, 451);
+      this.propertyGrid.Size = new System.Drawing.Size(383, 450);
       this.propertyGrid.TabIndex = 3;
       this.propertyGrid.ToolbarVisible = false;
+      // 
+      // buttonResetSettings
+      // 
+      this.buttonResetSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.buttonResetSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+      this.buttonResetSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.buttonResetSettings.Location = new System.Drawing.Point(338, 427);
+      this.buttonResetSettings.Name = "buttonResetSettings";
+      this.buttonResetSettings.Size = new System.Drawing.Size(45, 23);
+      this.buttonResetSettings.TabIndex = 4;
+      this.buttonResetSettings.Text = "Reset";
+      this.buttonResetSettings.UseVisualStyleBackColor = true;
+      this.buttonResetSettings.Click += new System.EventHandler(this.buttonResetSettings_Click);
       // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(286, 450);
+      this.ClientSize = new System.Drawing.Size(383, 450);
+      this.Controls.Add(this.buttonResetSettings);
       this.Controls.Add(this.propertyGrid);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Main";
@@ -56,6 +72,7 @@
 
     #endregion
         private System.Windows.Forms.PropertyGrid propertyGrid;
-    }
+    private System.Windows.Forms.Button buttonResetSettings;
+  }
 }
 
