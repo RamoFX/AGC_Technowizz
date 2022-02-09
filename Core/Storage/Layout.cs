@@ -41,7 +41,7 @@ namespace Core.Storage {
     }
 
     [Browsable(false)]
-    public readonly Color Color = DynamicSettings.NeutralColor_Dark.Value.ToColor();
+    public readonly Color Color = DynamicSettings.LayoutColor.Value.ToColor();
 
     [Browsable(false)]
     public readonly List<Zone> Zones;

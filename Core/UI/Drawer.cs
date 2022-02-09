@@ -16,9 +16,9 @@ namespace Core.UI {
       int unitSize = StaticSettings.UnitSize;
       int outlineSize = StaticSettings.OutlineSize * 0 + 1;
 
-      Pen penNeutralLight = DynamicSettings.NeutralColor_Light.Value.ToColor().ToPen(outlineSize);
+      Pen penNeutralLight = DynamicSettings.GridColor.Value.ToColor().ToPen(outlineSize);
 
-      Pen penNeutralDark = DynamicSettings.NeutralColor_Dark.Value.ToColor().ToPen(outlineSize);
+      Pen penNeutralDark = DynamicSettings.LayoutColor.Value.ToColor().ToPen(outlineSize);
 
 
 

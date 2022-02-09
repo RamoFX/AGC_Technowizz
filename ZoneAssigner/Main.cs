@@ -141,12 +141,12 @@ namespace ZoneAssigner
         else if (i % 2 == 0)
         {
           Drawer.Draw(zone, color, g);
-          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.Highlight_CycleDuration.Value) / 2, Refresh);
+          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.Highlight_Duration.Value) * 2, Refresh);
           i++;
         }
         else
         {
-          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.Highlight_CycleDuration.Value) / 2, Refresh);
+          Utilities.DelayAction(Convert.ToInt32(DynamicSettings.Highlight_Duration.Value) * 2, Refresh);
           i++;
         }
       }
