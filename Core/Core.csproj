@@ -53,31 +53,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Methods\Brush.cs" />
+    <Compile Include="Extensions\Methods\Color.cs" />
+    <Compile Include="Extensions\Methods\ObjectConversion.cs" />
+    <Compile Include="Extensions\Methods\Pen.cs" />
+    <Compile Include="Extensions\Methods\Point.cs" />
+    <Compile Include="Extensions\Methods\Rectangle.cs" />
+    <Compile Include="Extensions\Methods\Size.cs" />
+    <Compile Include="Extensions\Methods\StringConversion.cs" />
     <Compile Include="Extensions\Operators.cs" />
     <Compile Include="Helpers\DynamicSettings.cs" />
     <Compile Include="Helpers\DynamicSetting.cs" />
-    <Compile Include="Extensions\Method.cs" />
     <Compile Include="Storage\CarBrand.cs" />
-    <Compile Include="Storage\IStorageMember.cs" />
-    <Compile Include="Storage\IVisualizable.cs" />
     <Compile Include="UI\Colors.cs" />
-    <Compile Include="UI\Dialogs\Dialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Dialogs\Dialog.Designer.cs">
-      <DependentUpon>Dialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Dialogs\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\NewObject.cs">
+    <Compile Include="UI\Dialogs\UserNewObject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\NewObject.Designer.cs">
-      <DependentUpon>NewObject.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\UserNewObject.Designer.cs">
+      <DependentUpon>UserNewObject.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Dialogs\UserSelect.cs">
       <SubType>Form</SubType>
@@ -106,14 +105,11 @@
     <Compile Include="UI\MessageBoxes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\Dialogs\Dialog.resx">
-      <DependentUpon>Dialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\NewObject.resx">
-      <DependentUpon>NewObject.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\UserNewObject.resx">
+      <DependentUpon>UserNewObject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\UserSelect.resx">
       <DependentUpon>UserSelect.cs</DependentUpon>
