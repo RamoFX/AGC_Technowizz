@@ -374,7 +374,7 @@ namespace LayoutDesigner {
           MessageBoxes.NameAlreadyInUse();
           return false;
         } else if (isBeyond) {
-          MessageBoxes.CantBeBeyond();
+          MessageBoxes.CantBeOutOfBounds();
           return false;
         } else if (doesIntersectWithOtherZone) {
           MessageBoxes.CantIntersect();
@@ -401,10 +401,7 @@ namespace LayoutDesigner {
 
         bool isNameAlreadyInUse = parentZone.CarBrands.Select(currentCarBrand => currentCarBrand.Name).Contains(carBrand.Name);
 
-        bool isBeyond = carBrand.Location.X < parentZone.Location.X
-                     || carBrand.Location.Y < parentZone.Location.Y
-                     || carBrand.Location.X + carBrand.Size.Width > parentZone.Location.X + parentZone.Size.Width
-                     || carBrand.Location.Y + carBrand.Size.Height > parentZone.Location.Y + parentZone.Size.Height;
+        bool isOutOfBounds = !parentZone.Rectangle.Contains(carBrand.Rectangle.Shift(parentZone.Location));
 
         bool doesIntersectWithOtherCarBrand = parentZone.CarBrands.Any(currentCarBrand => carBrand.Rectangle.IntersectsWith(currentCarBrand.Rectangle)); // Bug
 
@@ -416,8 +413,8 @@ namespace LayoutDesigner {
         } else if (isNameAlreadyInUse) {
           MessageBoxes.NameAlreadyInUse();
           return false;
-        } else if (isBeyond) {
-          MessageBoxes.CantBeBeyond();
+        } else if (isOutOfBounds) {
+          MessageBoxes.CantBeOutOfBounds();
           return false;
         } else if (doesIntersectWithOtherCarBrand) {
           MessageBoxes.CantIntersect();

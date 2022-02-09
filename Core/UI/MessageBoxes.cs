@@ -36,7 +36,7 @@ namespace Core.UI {
       MessageBox.Show("Použijte prosím jiný název, tento se již používá.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
-    static public void CantBeBeyond() {
+    static public void CantBeOutOfBounds() {
       MessageBox.Show("Nesmí být mimo okraje.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
