@@ -268,21 +268,37 @@ namespace LayoutDesigner {
       Func<object, bool> validator = obj => {
         Layout layout = (Layout) obj;
 
+
+
         bool isNameEmpty = layout.Name.Trim().Length == 0;
+
         bool isNameAlreadyInUse = LayoutManager.GetExistingLayoutNames().Contains(layout.Name);
+
+        bool hasInvalidSize = layout.Size.Width < 1 || layout.Size.Height < 1;
+
+
 
         if (isNameEmpty) {
           MessageBoxes.ValueCannotBeEmpty();
           return false;
-        } else if (isNameAlreadyInUse) {
+        }
+        
+        if (isNameAlreadyInUse) {
           MessageBoxes.NameAlreadyInUse();
           return false;
-        } else {
-          return true;
         }
+
+        if (hasInvalidSize) {
+          MessageBoxes.InvalidSize();
+          return false;
+        }
+
+
+
+        return true;
       };
 
-      Layout initialLayout = new("Nové rozvržení", "", new(10, 10));
+      Layout initialLayout = new("Nové rozvržení", "warehouse-1", new(10, 10));
 
       UserNewObject newLayout = new(validator, initialLayout, "Nová zóna");
 
@@ -307,6 +323,8 @@ namespace LayoutDesigner {
 
         bool doesIntersectWithOtherZone = this.CurrentLayout.Zones.Any(currentZone => zone.Rectangle.IntersectsWith(currentZone.Rectangle));
 
+        bool hasInvalidSize = zone.Size.Width < 1 || zone.Size.Height < 1;
+
 
 
         if (isNameEmpty) {
@@ -328,9 +346,14 @@ namespace LayoutDesigner {
           MessageBoxes.CantBeOutOfBounds();
           return false;
         }
-        
+
         if (doesIntersectWithOtherZone) {
           MessageBoxes.CantIntersect();
+          return false;
+        }
+
+        if (hasInvalidSize) {
+          MessageBoxes.InvalidSize();
           return false;
         }
 

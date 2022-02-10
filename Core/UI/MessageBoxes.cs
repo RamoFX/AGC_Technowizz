@@ -56,7 +56,11 @@ namespace Core.UI {
       MessageBox.Show("Vertikální kapacita musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
+    static public void InvalidSize() {
+      MessageBox.Show("Každej rozměr musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
 
+    
 
     // Confirmation
     static public DialogResult SaveUnsavedLayout() {
