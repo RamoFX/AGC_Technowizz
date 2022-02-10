@@ -108,8 +108,12 @@ namespace Core.Storage {
 
     // Constructors
     public Zone(string name, ZoneType type, int verticalCapacity, string carBrand, Size size, Point location) {
-      if (name == default || type == default || verticalCapacity == default || carBrand == default || size == default || location == default) {
+      if (name == default || verticalCapacity == default || carBrand == default) {
         throw new ArgumentNullException();
+      }
+
+      if (size.Width < 1 || size.Height < 1) {
+        throw new ArgumentException();
       }
 
       this.Name = name;

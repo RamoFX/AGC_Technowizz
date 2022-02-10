@@ -103,8 +103,12 @@ namespace Core.Storage {
 
     // Constructors
     public Layout(string name, string warehouseName, Size size, IEnumerable<Zone> zones) {
-      if (name == default || warehouseName == default || size == default || zones == default) {
+      if (name == default || warehouseName == default || zones == default) {
         throw new ArgumentNullException();
+      }
+
+      if (size.Width < 1 || size.Height < 1) {
+        throw new ArgumentException();
       }
 
       this.Name = name;
