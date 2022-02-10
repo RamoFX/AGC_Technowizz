@@ -24,8 +24,8 @@ namespace Core.UI {
 
 
     // Warnings
-    static public void ValueCannotBeEmpty() {
-      MessageBox.Show("Hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    static public void NameCannotBeEmpty() {
+      MessageBox.Show("Textová hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
     static public void TextFieldCannotContainInvalidChars() {
@@ -52,15 +52,20 @@ namespace Core.UI {
       MessageBox.Show("Nejsou dostupné žádné zóny určené pro ukládání palet.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
-    static public void VerticalCapacityOnlyPositive() {
+    static public void VerticalCapacityGreaterThanZero() {
       MessageBox.Show("Vertikální kapacita musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+
+    static public void VerticalCapacityMustBeZero() {
+      MessageBox.Show("Vertikální kapacita musí být 0, protože zóna není určena pro ukládání palet.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
     static public void InvalidSize() {
       MessageBox.Show("Každej rozměr musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
-    
+
+
 
     // Confirmation
     static public DialogResult SaveUnsavedLayout() {

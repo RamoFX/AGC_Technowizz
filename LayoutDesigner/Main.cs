@@ -244,7 +244,7 @@ namespace LayoutDesigner {
         bool nameAlreadyTaken = LayoutManager.IsNameAlreadyTaken(newName);
 
         if (isEmpty) {
-          MessageBoxes.ValueCannotBeEmpty();
+          MessageBoxes.NameCannotBeEmpty();
           return false;
         } else if (newNameContainsInvalidChars) {
           MessageBoxes.TextFieldCannotContainInvalidChars();
@@ -279,7 +279,7 @@ namespace LayoutDesigner {
 
 
         if (isNameEmpty) {
-          MessageBoxes.ValueCannotBeEmpty();
+          MessageBoxes.NameCannotBeEmpty();
           return false;
         }
         
@@ -315,11 +315,13 @@ namespace LayoutDesigner {
 
         bool isNameEmpty = zone.Name.Trim().Length == 0;
 
-        bool isNameAlreadyInUse = this.CurrentLayout.Zones.Select(zone => zone.Name).Contains(zone.Name);
+        bool isNameAlreadyInUse = this.CurrentLayout.Any(currentZone => currentZone.Name == zone.Name);
 
-        bool isVerticalCapacityPositive = zone.VerticalCapacity > 0;
+        bool isVerticalCapacityGreaterThanZero = zone.VerticalCapacity > 0;
 
-        bool isOutOfBound = this.CurrentLayout.Rectangle.Contains(zone.Rectangle);
+        bool isVerticalCapacityZero = zone.VerticalCapacity == 0;
+
+        bool isOutOfBounds = !this.CurrentLayout.Rectangle.Contains(zone.Rectangle);
 
         bool doesIntersectWithOtherZone = this.CurrentLayout.Zones.Any(currentZone => zone.Rectangle.IntersectsWith(currentZone.Rectangle));
 
@@ -328,7 +330,7 @@ namespace LayoutDesigner {
 
 
         if (isNameEmpty) {
-          MessageBoxes.ValueCannotBeEmpty();
+          MessageBoxes.NameCannotBeEmpty();
           return false;
         }
         
@@ -337,12 +339,17 @@ namespace LayoutDesigner {
           return false;
         }
         
-        if (isVerticalCapacityPositive) {
-          MessageBoxes.VerticalCapacityOnlyPositive();
+        if (zone.Type == ZoneType.Storage && !isVerticalCapacityGreaterThanZero) {
+          MessageBoxes.VerticalCapacityGreaterThanZero();
           return false;
         }
-        
-        if (isOutOfBound) {
+
+        if (zone.Type == ZoneType.Other && !isVerticalCapacityZero) {
+          MessageBoxes.VerticalCapacityMustBeZero();
+          return false;
+        }
+
+        if (isOutOfBounds) {
           MessageBoxes.CantBeOutOfBounds();
           return false;
         }
