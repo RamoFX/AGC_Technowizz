@@ -339,7 +339,7 @@ namespace LayoutDesigner {
         return true;
       };
 
-      Zone initialZone = new("Nová zóna", ZoneType.Storage, 4, "značka", new(0, 0), new(1, 1));
+      Zone initialZone = new("Nová zóna", ZoneType.Storage, 4, "značka", new(1, 1), new(0, 0));
 
       UserNewObject newZone = new(validator, initialZone, "Nová zóna");
 
