@@ -87,7 +87,13 @@ namespace Core.Storage {
 
     [Browsable(false)]
     public int StoredPercent {
-      get => (int) Math.Round((decimal) this.Stored / this.MaxCapacity * 100);
+      get {
+        if (this.VerticalCapacity == 0) {
+          return 0;
+        }
+
+        return (int) Math.Round((decimal) this.Stored / this.MaxCapacity * 100);
+      }
     }
 
     [Browsable(false)]
