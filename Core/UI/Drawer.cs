@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
 using Core.Extensions;
 using Core.Storage;
 
@@ -62,29 +63,16 @@ namespace Core.UI {
 
       // Zones
       foreach (Zone zone in layout) {
-        // CarBrands
-        foreach (CarBrand carBrand in zone) {
-          graphics.FillRectangle(
-            carBrand.Color
-              .ToBrush()
-              .Transparentize(),
-
-            carBrand.Rectangle
-              .Shift(zone.Location)
-              .Scale(unitSize)
-          );
-        }
-
-
-
-        // Zone
         var zoneRectangle = zone.Rectangle.Scale(unitSize);
 
-        graphics.DrawRectangle(
+        graphics.FillRectangle(
           zone.Color
-            .ToPen(outlineSize),
-          
-          zoneRectangle
+            .ToBrush()
+            .Transparentize(),
+
+          zone.Rectangle
+            .Shift(zone.Location)
+            .Scale(unitSize)
         );
 
         if (zone.Type == ZoneType.Other) {
@@ -96,6 +84,14 @@ namespace Core.UI {
             zoneRectangle
           );
         }
+      }
+    }
+
+
+
+    static public void DrawLayers(Graphics graphics, params Layer[] layers) {
+      foreach (Layer layer in layers) {
+        graphics.DrawImage(layer.Bitmap, layer.Rectangle);
       }
     }
   }

@@ -66,10 +66,7 @@ namespace ZoneAssigner
 
     private void Initialize_ComboBox_ContainerCodes() {
       this.ComboBox_ContainerCodes.DataSource = this.CurrentLayout.Zones
-        .SelectMany(zone => zone.CarBrands)
-        .Select(carBrand => carBrand.Name)
         .Select((_, index) => index)
-        .Distinct()
         .ToList();
     }
 

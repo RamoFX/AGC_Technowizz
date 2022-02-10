@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using Core;
+using Core.UI;
 using Core.Extensions;
+
 
 
 namespace Settings {
@@ -16,23 +19,24 @@ namespace Settings {
       propertyGrid.SelectedObject = settingsProperties;
     }
 
-    private void buttonResetSettings_Click(object sender, EventArgs e)
-    {
-      if (MessageBox.Show("Opravdu chcete vrátit základní nastavení?", "Varování!", MessageBoxButtons.YesNo) == DialogResult.Yes)
-      {
+    private void buttonResetSettings_Click(object sender, EventArgs e) {
+      var dialogResult = MessageBoxes.SettingsReset();
+
+      if (dialogResult == DialogResult.Yes) {
         settingsProperties.StartupLayoutName = DynamicSettings.StartupLayoutName.Fallback;
         settingsProperties.Highlight_Duration = DynamicSettings.Highlight_Duration.Fallback.ToInt();
         settingsProperties.Highlight_TotalFlashesCount = DynamicSettings.Highlight_TotalFlashesCount.Fallback.ToInt();
-        settingsProperties.NeutralColor_Dark = DynamicSettings.LayoutColor.Fallback.ToColor();
-        settingsProperties.NeutralColor_Light = DynamicSettings.GridColor.Fallback.ToColor();
+        settingsProperties.LayoutColor = DynamicSettings.LayoutColor.Fallback.ToColor();
+        settingsProperties.GridColor = DynamicSettings.GridColor.Fallback.ToColor();
         settingsProperties.ZoneColor_Storage = DynamicSettings.ZoneColor_Storage.Fallback.ToColor();
         settingsProperties.ZoneColor_Other = DynamicSettings.ZoneColor_Other.Fallback.ToColor();
-        settingsProperties.CarBrandColor_Full = DynamicSettings.CarBrandColor_Full.Fallback.ToColor();
-        settingsProperties.CarBrandColor_AlmostFull = DynamicSettings.CarBrandColor_AlmostFull.Fallback.ToColor();
-        settingsProperties.CarBrandColor_AboveHalf = DynamicSettings.CarBrandColor_AboveHalf.Fallback.ToColor();
-        settingsProperties.CarBrandColor_BelowHalf = DynamicSettings.CarBrandColor_BelowHalf.Fallback.ToColor();
-        settingsProperties.CarBrandColor_AlmostEmpty = DynamicSettings.CarBrandColor_AlmostEmpty.Fallback.ToColor();
-        settingsProperties.CarBrandColor_Empty = DynamicSettings.CarBrandColor_Empty.Fallback.ToColor();
+        settingsProperties.ZoneColor_Full = DynamicSettings.ZoneColor_Full.Fallback.ToColor();
+        settingsProperties.ZoneColor_AlmostFull = DynamicSettings.ZoneColor_AlmostFull.Fallback.ToColor();
+        settingsProperties.ZoneColor_AboveHalf = DynamicSettings.ZoneColor_AboveHalf.Fallback.ToColor();
+        settingsProperties.ZoneColor_BelowHalf = DynamicSettings.ZoneColor_BelowHalf.Fallback.ToColor();
+        settingsProperties.ZoneColor_AlmostEmpty = DynamicSettings.ZoneColor_AlmostEmpty.Fallback.ToColor();
+        settingsProperties.ZoneColor_Empty = DynamicSettings.ZoneColor_Empty.Fallback.ToColor();
+
         propertyGrid.SelectedObject = settingsProperties;
       }
     }

@@ -64,7 +64,6 @@
     <Compile Include="Extensions\Operators.cs" />
     <Compile Include="Helpers\DynamicSettings.cs" />
     <Compile Include="Helpers\DynamicSetting.cs" />
-    <Compile Include="Storage\CarBrand.cs" />
     <Compile Include="UI\Colors.cs" />
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
@@ -85,6 +84,8 @@
       <DependentUpon>UserSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Drawer.cs" />
+    <Compile Include="UI\Layer.cs" />
+    <Compile Include="UI\Renderer.cs" />
     <Compile Include="UI\Utilities.cs" />
     <Compile Include="Helpers\XmlLinqUtilities.cs" />
     <Compile Include="DynamicSettings.cs" />

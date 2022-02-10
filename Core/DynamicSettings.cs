@@ -22,11 +22,11 @@ namespace Core {
     static public DynamicSetting ZoneColor_Storage = new("ZoneColor_Storage", "DarkBlue");
     static public DynamicSetting ZoneColor_Other = new("ZoneColor_Other", "DeepPink");
 
-    static public DynamicSetting CarBrandColor_Full = new("CarBrandColor_Full", "Red");
-    static public DynamicSetting CarBrandColor_AlmostFull = new("CarBrandColor_AlmostFull", "OrangeRed");
-    static public DynamicSetting CarBrandColor_AboveHalf = new("CarBrandColor_AboveHalf", "Orange");
-    static public DynamicSetting CarBrandColor_BelowHalf = new("CarBrandColor_BelowHalf", "Yellow");
-    static public DynamicSetting CarBrandColor_AlmostEmpty = new("CarBrandColor_AlmostEmpty", "DarkSeaGreen");
-    static public DynamicSetting CarBrandColor_Empty = new("CarBrandColor_Empty", "DarkCyan");
+    static public DynamicSetting ZoneColor_Full = new("ZoneColor_Full", "Red");
+    static public DynamicSetting ZoneColor_AlmostFull = new("ZoneColor_AlmostFull", "OrangeRed");
+    static public DynamicSetting ZoneColor_AboveHalf = new("ZoneColor_AboveHalf", "Orange");
+    static public DynamicSetting ZoneColor_BelowHalf = new("ZoneColor_BelowHalf", "Yellow");
+    static public DynamicSetting ZoneColor_AlmostEmpty = new("ZoneColor_AlmostEmpty", "DarkSeaGreen");
+    static public DynamicSetting ZoneColor_Empty = new("ZoneColor_Empty", "DarkCyan");
   }
 }

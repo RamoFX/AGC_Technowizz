@@ -10,7 +10,7 @@ namespace Settings {
   internal partial class SettingsProperties {
     [DisplayName("Barva okrajů")]
     [Category("Barva")]
-    public Color NeutralColor_Dark {
+    public Color LayoutColor {
       get => DynamicSettings.LayoutColor.Value.ToColor();
       set => DynamicSettings.LayoutColor.Value = value.Name;
     }
@@ -19,7 +19,7 @@ namespace Settings {
 
     [DisplayName("Barva mřížky")]
     [Category("Barva")]
-    public Color NeutralColor_Light {
+    public Color GridColor {
       get => DynamicSettings.GridColor.Value.ToColor();
       set => DynamicSettings.GridColor.Value = value.Name;
     }
@@ -47,9 +47,9 @@ namespace Settings {
     [DisplayName("Barva plné zóny")]
     [Category("Barva")]
     [Description("100%")]
-    public Color CarBrandColor_Full {
-      get => DynamicSettings.CarBrandColor_Full.Value.ToColor();
-      set => DynamicSettings.CarBrandColor_Full.Value = value.Name;
+    public Color ZoneColor_Full {
+      get => DynamicSettings.ZoneColor_Full.Value.ToColor();
+      set => DynamicSettings.ZoneColor_Full.Value = value.Name;
     }
 
 
@@ -57,9 +57,9 @@ namespace Settings {
     [DisplayName("Barva skoro plné zóny")]
     [Category("Barva")]
     [Description("99% ... 75%")]
-    public Color CarBrandColor_AlmostFull {
-      get => DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor();
-      set => DynamicSettings.CarBrandColor_AlmostFull.Value = value.Name;
+    public Color ZoneColor_AlmostFull {
+      get => DynamicSettings.ZoneColor_AlmostFull.Value.ToColor();
+      set => DynamicSettings.ZoneColor_AlmostFull.Value = value.Name;
     }
 
 
@@ -67,9 +67,9 @@ namespace Settings {
     [DisplayName("Barva zóny zaplněné nad polovinu")]
     [Category("Barva")]
     [Description("74% ... 50%")]
-    public Color CarBrandColor_AboveHalf {
-      get => DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor();
-      set => DynamicSettings.CarBrandColor_AboveHalf.Value = value.Name;
+    public Color ZoneColor_AboveHalf {
+      get => DynamicSettings.ZoneColor_AboveHalf.Value.ToColor();
+      set => DynamicSettings.ZoneColor_AboveHalf.Value = value.Name;
     }
 
 
@@ -77,9 +77,9 @@ namespace Settings {
     [DisplayName("Barva zóny zaplněné do poloviny")]
     [Category("Barva")]
     [Description("49% ... 25%")]
-    public Color CarBrandColor_BelowHalf {
-      get => DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor();
-      set => DynamicSettings.CarBrandColor_BelowHalf.Value = value.Name;
+    public Color ZoneColor_BelowHalf {
+      get => DynamicSettings.ZoneColor_BelowHalf.Value.ToColor();
+      set => DynamicSettings.ZoneColor_BelowHalf.Value = value.Name;
     }
 
 
@@ -87,9 +87,9 @@ namespace Settings {
     [DisplayName("Barva skoro prázdné zóny")]
     [Category("Barva")]
     [Description("24% ... 1%")]
-    public Color CarBrandColor_AlmostEmpty {
-      get => DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor();
-      set => DynamicSettings.CarBrandColor_AlmostEmpty.Value = value.Name;
+    public Color ZoneColor_AlmostEmpty {
+      get => DynamicSettings.ZoneColor_AlmostEmpty.Value.ToColor();
+      set => DynamicSettings.ZoneColor_AlmostEmpty.Value = value.Name;
     }
 
 
@@ -97,9 +97,9 @@ namespace Settings {
     [DisplayName("Barva prázdné zóny")]
     [Category("Barva")]
     [Description("0%")]
-    public Color CarBrandColor_Empty {
-      get => DynamicSettings.CarBrandColor_Empty.Value.ToColor();
-      set => DynamicSettings.CarBrandColor_Empty.Value = value.Name;
+    public Color ZoneColor_Empty {
+      get => DynamicSettings.ZoneColor_Empty.Value.ToColor();
+      set => DynamicSettings.ZoneColor_Empty.Value = value.Name;
     }
   }
 }

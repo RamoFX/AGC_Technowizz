@@ -103,6 +103,10 @@ namespace Core.Storage {
 
     // Constructors
     public Layout(string name, string warehouseName, Size size, IEnumerable<Zone> zones) {
+      if (name == default || warehouseName == default || size == default || zones == default) {
+        throw new ArgumentNullException();
+      }
+
       this.Name = name;
       this.WarehouseName = warehouseName;
       this.Size = size;
@@ -119,16 +123,21 @@ namespace Core.Storage {
       this.DaysPeriod = daysPeriod;
       
       foreach (Zone zone in this) {
-        zone.Initialize(this);
+        zone.Initialize(this, this.DaysPeriod);
       }
     }
 
 
 
     // Self interactions
-    public void Add(Zone zone) {
-      zone.Initialize(this);
+    public void Add(Zone zone, int daysPeriod) {
       this.Zones.Add(zone);
+      zone.Initialize(this, daysPeriod);
+    }
+
+    public void Add(Zone zone) {
+      this.Zones.Add(zone);
+      zone.Initialize(this, this.DaysPeriod);
     }
 
     static public string GetPath(string name) {
@@ -266,10 +275,10 @@ namespace Core.Storage {
     static public new Layout FromXDocument(XDocument document) {
       XElement root = document.Root;
 
-      string name = root.Attribute("name").Value;
-      string warehouseName = root.Attribute("warehouseName").Value;
-      Size size = root.Attribute("size").Value.ToSize();
-      IEnumerable<Zone> zones = root.Element("Zones").Elements().Select(zone => Zone.FromXElement(zone));
+      string name = root.Attribute("name")?.Value ?? default;
+      string warehouseName = root.Attribute("warehouseName")?.Value ?? default;
+      Size size = root.Attribute("size")?.Value.ToSize() ?? default;
+      IEnumerable<Zone> zones = root.Element("Zones")?.Elements().Select(zone => Zone.FromXElement(zone)) ?? default;
 
       Layout layout = new(name, warehouseName, size, zones);
 

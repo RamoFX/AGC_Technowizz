@@ -51,13 +51,9 @@ namespace Core.UI {
     static public void NoAvailableZone() {
       MessageBox.Show("Nejsou dostupné žádné zóny určené pro ukládání palet.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
-    
 
-
-    // Successes
-    static public void SettingsWriteSuccessful()
-    {
-      MessageBox.Show("Zapsání nastavení bylo úspěšné", "Správně!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    static public void VerticalCapacityOnlyPositive() {
+      MessageBox.Show("Vertikální kapacita musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
 
@@ -69,6 +65,10 @@ namespace Core.UI {
 
     static public DialogResult UndoableDeletion(string name) {
       return MessageBox.Show($"Rozvržení \"{ name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+    }
+
+    static public DialogResult SettingsReset() {
+      return MessageBox.Show("Opravdu chcete vrátit základní nastavení?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
   }
 }

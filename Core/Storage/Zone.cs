@@ -5,31 +5,43 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
+using Communicator;
 using Core.Extensions;
 using Core.Helpers;
 
 
 
 namespace Core.Storage {
-  public class Zone : XElementConvertable<Zone>, IEnumerable<CarBrand> {
+  public class Zone : XElementConvertable<Zone> {
     [Browsable(true), DisplayName("Název")]
     public string Name { get; set; }
 
 
 
     [Browsable(true), DisplayName("Typ")]
-    [Description("Storage - zóna určena pro uložení palet. Other - jiné využití zóny (např. zóna exportu).")]
+    [Description("Storage - zóna určena pro uložení palet. Other - jiné využití plochy (např. zóna exportu nebo kancelář).")]
     public ZoneType Type { get; set; }
 
 
 
-    [Browsable(true), DisplayName("Souřadnice")]
-    public Point Location { get; set; }
+    [Browsable(true)]
+    [DisplayName("Značka auta")]
+    public string CarBrand { get; set; }
+
+
+
+    [Browsable(true), DisplayName("Vertikální kapacita")]
+    public int VerticalCapacity { get; set; }
 
 
 
     [Browsable(true), DisplayName("Rozměry")]
     public Size Size { get; set; }
+
+
+
+    [Browsable(true), DisplayName("Souřadnice")]
+    public Point Location { get; set; }
 
 
 
@@ -41,16 +53,21 @@ namespace Core.Storage {
     [Browsable(false)]
     public Color Color {
       get {
-        if (this.Type == ZoneType.Storage) {
-          return DynamicSettings.ZoneColor_Storage.Value.ToColor();
+        if (this.StoredPercent == 100) {
+          return DynamicSettings.ZoneColor_Full.Value.ToColor();
+        } else if (this.StoredPercent < 100 && this.StoredPercent >= 75) {
+          return DynamicSettings.ZoneColor_AlmostFull.Value.ToColor();
+        } else if (this.StoredPercent < 75 && this.StoredPercent >= 50) {
+          return DynamicSettings.ZoneColor_AboveHalf.Value.ToColor();
+        } else if (this.StoredPercent < 50 && this.StoredPercent >= 25) {
+          return DynamicSettings.ZoneColor_BelowHalf.Value.ToColor();
+        } else if (this.StoredPercent < 25 && this.StoredPercent > 0) {
+          return DynamicSettings.ZoneColor_AlmostEmpty.Value.ToColor();
         } else {
-          return DynamicSettings.ZoneColor_Other.Value.ToColor();
+          return DynamicSettings.ZoneColor_Empty.Value.ToColor();
         }
       }
     }
-
-    [Browsable(false)]
-    public List<CarBrand> CarBrands;
 
 
 
@@ -61,42 +78,21 @@ namespace Core.Storage {
     }
 
     [Browsable(false)]
-    public int Area_CarBrands {
-      get => this.Sum(carBrand => carBrand.Area);
-    }
-
-    [Browsable(false)]
     public int MaxCapacity {
-      get => this.Sum(carBrand => carBrand.MaxCapacity);
+      get => this.Area * this.VerticalCapacity;
     }
 
     [Browsable(false)]
-    public int Stored {
-      get => this.Sum(carBrand => carBrand.Stored);
-    }
+    public int Stored;
 
     [Browsable(false)]
     public int StoredPercent {
-      get {
-        if (this.Count() == 0)
-          return 0;
-
-        double average = this.Average(carBrand => carBrand.StoredPercent);
-
-        return (int) Math.Round(average);
-      }
+      get => (int) Math.Round((decimal) this.Stored / this.MaxCapacity * 100);
     }
 
     [Browsable(false)]
     public int CanStore {
-      get => this.Sum(carBrand => carBrand.CanStore);
-    }
-
-
-
-    // Indexer
-    public CarBrand this[int index] {
-      get => this.CarBrands[index];
+      get => this.MaxCapacity - this.Stored;
     }
 
 
@@ -105,94 +101,85 @@ namespace Core.Storage {
     [Browsable(false)]
     internal Layout Parent;
 
+    [Browsable(false)]
+    internal int DaysPeriod;
+
 
 
     // Constructors
-    public Zone(string name, Point location, Size size, ZoneType type, IEnumerable<CarBrand> carBrands) {
+    public Zone(string name, ZoneType type, int verticalCapacity, string carBrand, Size size, Point location) {
+      if (name == default || type == default || verticalCapacity == default || carBrand == default || size == default || location == default) {
+        throw new ArgumentNullException();
+      }
+
       this.Name = name;
+      this.Type = type;
+      this.VerticalCapacity = verticalCapacity;
+      this.CarBrand = carBrand;
       this.Location = location;
       this.Size = size;
-      this.Type = type;
-      this.CarBrands = carBrands.ToList();
     }
-
-    public Zone(string name, Point location, Size size, ZoneType type)
-      : this(name, location, size, type, new CarBrand[0] { }) { }
 
 
 
     // Initializators
-    public void Initialize(Layout parent) {
+    public void Initialize(Layout parent, int daysPeriod) {
       this.Parent = parent;
+      this.DaysPeriod = daysPeriod;
 
-      foreach (CarBrand carBrand in this) {
-        carBrand.Initialize(this);
-      }
+      this.Stored = DatabaseAccess.GetPalletsCount(
+        this.Parent.WarehouseName,
+        this.Name,
+        this.CarBrand,
+        this.DaysPeriod
+      );
     }
 
 
 
     // Self interaction
-    public void Add(CarBrand carBrand) {
-      carBrand.Initialize(this);
-      this.CarBrands.Add(carBrand);
+    public bool HasAvailableSpace() {
+      return this.CanStore > 0;
     }
 
-    public CarBrand GetCarBrandOrDefault(string name) {
-      return this.CarBrands.FirstOrDefault(carBrand => carBrand.Name == name);
-    }
-
-
-
-    // CarBrand interaction
-    private bool IsSuitable(string carBrandName) {
-      return this.GetCarBrandOrDefault(carBrandName) != default;
+    private bool IsSuitable(string carBrand) {
+      return this.CarBrand == carBrand;
     }
 
     public bool IsLoadable(string carBrandName) {
       if (!this.IsSuitable(carBrandName))
         return false;
 
-      return this.GetCarBrandOrDefault(carBrandName).CanStore > 0;
+      return this.CanStore > 0;
     }
 
 
 
     // XElementConvertable
     override public XElement ToXElement() {
-      IEnumerable<XElement> zoneChildrenElements = this.CarBrands.Select(carBrand => carBrand.ToXElement());
-
       XAttribute[] attributes = {
         new("name", this.Name),
-        new("location", this.Location.ToCustomString()),
+        new("type", this.Type.ToString()),
+        new("verticalCapacity", this.VerticalCapacity.ToString()),
+        new("carBrand", this.CarBrand),
         new("size", this.Size.ToCustomString()),
-        new("type", this.Type.ToString())
+        new("location", this.Location.ToCustomString()),
       };
 
-      return XmlLinqUtilities.CreateElement("Zone", attributes, zoneChildrenElements);
+      return XmlLinqUtilities.CreateElement("Zone", attributes);
     }
 
     static public new Zone FromXElement(XElement element) {
-      string name = element.Attribute("name").Value;
-      Point location = element.Attribute("location").Value.ToPoint();
-      Size size = element.Attribute("size").Value.ToSize();
-      ZoneType type = element.Attribute("type").Value.ToZoneType(true);
-      IEnumerable<CarBrand> carBrads = element.Elements().Select( carBrandElement => CarBrand.FromXElement(carBrandElement));
+      string name = element.Attribute("name")?.Value ?? default;
+      ZoneType type = element.Attribute("type")?.Value.ToZoneType(true) ?? default;
+      int verticalCapacity = element.Attribute("verticalCapacity")?.Value.ToInt() ?? default;
+      string carBrand = element.Attribute("carBrand")?.Value ?? default;
+      Size size = element.Attribute("size")?.Value.ToSize() ?? default;
+      Point location = element.Attribute("location")?.Value.ToPoint() ?? default;
 
-      return new Zone(name, location, size, type, carBrads);
-    }
+      Zone zone = new(name, type, verticalCapacity, carBrand, size, location);
 
-
-
-    // IEnumerable
-    public IEnumerator<CarBrand> GetEnumerator() {
-      foreach (CarBrand carBrand in this.CarBrands) {
-        yield return carBrand;
-      }
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() {
-      return this.GetEnumerator();
+      return zone;
     }
   }
 }

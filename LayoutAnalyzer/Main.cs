@@ -108,11 +108,6 @@ namespace LayoutAnalyzer {
         foreach (Zone zone in this.CurrentLayout.Zones)
         {
           var zoneNode = rootNode.Nodes.Add(zone.Name + (zone.Type == ZoneType.Storage ? " : " + zone.StoredPercent + " %" : ""));
-
-          foreach (CarBrand carBrand in zone.CarBrands)
-          {
-            zoneNode.Nodes.Add($"{carBrand.Name} : {carBrand.StoredPercent} %");
-          }
         }
 
         this.TreeView_Layout.ExpandAll();
@@ -289,27 +284,27 @@ namespace LayoutAnalyzer {
         string text = "";
         switch (i) {
           case 0:
-            color = DynamicSettings.CarBrandColor_Full.Value.ToColor();
+            color = DynamicSettings.ZoneColor_Full.Value.ToColor();
             text = "100%";
             break;
           case 1:
-            color = DynamicSettings.CarBrandColor_AlmostFull.Value.ToColor();
+            color = DynamicSettings.ZoneColor_AlmostFull.Value.ToColor();
             text = "99% - 75%";
             break;
           case 2:
-            color = DynamicSettings.CarBrandColor_AboveHalf.Value.ToColor();
+            color = DynamicSettings.ZoneColor_AboveHalf.Value.ToColor();
             text = "74% - 50%";
             break;
           case 3:
-            color = DynamicSettings.CarBrandColor_BelowHalf.Value.ToColor();
+            color = DynamicSettings.ZoneColor_BelowHalf.Value.ToColor();
             text = "49% - 25%";
             break;
           case 4:
-            color = DynamicSettings.CarBrandColor_AlmostEmpty.Value.ToColor();
+            color = DynamicSettings.ZoneColor_AlmostEmpty.Value.ToColor();
             text = "24% - 1%";
             break;
           case 5:
-            color = DynamicSettings.CarBrandColor_Empty.Value.ToColor();
+            color = DynamicSettings.ZoneColor_Empty.Value.ToColor();
             text = "0%";
             break;
         }
