@@ -15,7 +15,7 @@ namespace LayoutAnalyzer {
 
   public partial class Main : Form {
     // Constants
-    private const string TitleBase = "Analýza rozvržení";
+    private const string TitleBase = "Analýza rozložení";
     private const string SelectBelow = "Vyberte níže...";
 
 

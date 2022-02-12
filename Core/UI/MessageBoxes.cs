@@ -6,11 +6,11 @@ namespace Core.UI {
   static public class MessageBoxes {
     // Errors
     static public void StartupLayoutCorruptedOrDoesntExist() {
-      MessageBox.Show("Spouštěcí rozvržení je poškozené nebo neexistuje.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      MessageBox.Show("Spouštěcí rozložení je poškozené nebo neexistuje.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     static public void NoLayoutsExist() {
-      MessageBox.Show("Rozvržení nenalezeny. Zkuste nejprve vytvořit nové rozvržení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      MessageBox.Show("Rozložení nenalezeny. Zkuste nejprve vytvořit nové rozložení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     static public void NoSettingsExist() {
@@ -18,7 +18,7 @@ namespace Core.UI {
     }
 
     static public void LayoutInvalid(string name) {
-      MessageBox.Show($"Rozvržení \"{ name }\" je poškozené.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      MessageBox.Show($"Rozložení \"{ name }\" je poškozené.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
 
@@ -61,7 +61,7 @@ namespace Core.UI {
     }
 
     static public void InvalidSize() {
-      MessageBox.Show("Každej rozměr musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+      MessageBox.Show("Každý rozměr musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
 
@@ -69,11 +69,11 @@ namespace Core.UI {
 
     // Confirmation
     static public DialogResult SaveUnsavedLayout() {
-      return MessageBox.Show("Rozvržení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      return MessageBox.Show("Rozložení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
 
     static public DialogResult UndoableDeletion(string name) {
-      return MessageBox.Show($"Rozvržení \"{ name }\" bude odstraněno a tuto operaci nebude možné vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      return MessageBox.Show($"Rozložení \"{ name }\" bude odstraněno a tuto operaci nelze vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
 
     static public DialogResult SettingsReset() {

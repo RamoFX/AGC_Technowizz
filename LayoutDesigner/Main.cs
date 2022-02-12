@@ -20,7 +20,7 @@ using Core.UI.Dialogs;
 namespace LayoutDesigner {
   public partial class Main : Form {
     // Constants
-    private const string TitleBase = "Návrhář rozvržení";
+    private const string TitleBase = "Návrhář rozložení";
 
 
 
@@ -117,7 +117,7 @@ namespace LayoutDesigner {
     }
 
     private void Open() {
-      UserSelect selectLayoutName = GetSelect(LayoutManager.GetValidLayoutNames(), "Vyberte rozvržení");
+      UserSelect selectLayoutName = GetSelect(LayoutManager.GetValidLayoutNames(), "Vyberte rozložení");
 
       if (selectLayoutName.DialogResult == DialogResult.OK) {
         string layoutName = (string) selectLayoutName.FinalValue;
@@ -257,7 +257,7 @@ namespace LayoutDesigner {
         }
       };
 
-      UserTextInput userTextInput = new(valueValidator, "Nový název rozvržení");
+      UserTextInput userTextInput = new(valueValidator, "Nový název rozložení");
 
       userTextInput.ShowDialog(this);
 
@@ -298,7 +298,7 @@ namespace LayoutDesigner {
         return true;
       };
 
-      Layout initialLayout = new("Nové rozvržení", "warehouse-1", new(10, 10));
+      Layout initialLayout = new("Nové rozložení", "warehouse-1", new(10, 10));
 
       UserNewObject newLayout = new(validator, initialLayout, "Nová zóna");
 

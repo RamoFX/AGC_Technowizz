@@ -167,7 +167,7 @@ namespace LayoutDesigner {
       this.ToolStripMenuItem_OpenInFileExplorer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.ToolStripMenuItem_OpenInFileExplorer.Name = "ToolStripMenuItem_OpenInFileExplorer";
       this.ToolStripMenuItem_OpenInFileExplorer.Size = new System.Drawing.Size(297, 22);
-      this.ToolStripMenuItem_OpenInFileExplorer.Text = "Všechna rozvržení v průzkumníku souborů";
+      this.ToolStripMenuItem_OpenInFileExplorer.Text = "Všechna rozložení v průzkumníku souborů";
       this.ToolStripMenuItem_OpenInFileExplorer.Click += new System.EventHandler(this.ToolStripMenuItem_OpenInFileExplorer_Click);
       // 
       // toolStripSeparator3
@@ -191,7 +191,7 @@ namespace LayoutDesigner {
             this.ToolStripMenuItem_RemoveZone});
       this.ToolStripMenuItem_Layout.Name = "ToolStripMenuItem_Layout";
       this.ToolStripMenuItem_Layout.Size = new System.Drawing.Size(69, 24);
-      this.ToolStripMenuItem_Layout.Text = "Rozvržení";
+      this.ToolStripMenuItem_Layout.Text = "Rozložení";
       // 
       // ToolStripMenuItem_NewZone
       // 

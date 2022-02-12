@@ -16,7 +16,7 @@ using Core.Helpers;
 
 namespace Core.Storage {
   public class Layout : XDocumentConvertable<Layout>, IEnumerable<Zone> {
-    [Browsable(true), DisplayName("Název rozvržení")]
+    [Browsable(true), DisplayName("Název rozložení")]
     public string Name { get; set; }
 
 
