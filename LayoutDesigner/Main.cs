@@ -20,7 +20,7 @@ using Core.UI.Dialogs;
 namespace LayoutDesigner {
   public partial class Main : Form {
     // Constants
-    private const string TitleBase = "Návrhář rozložení";
+    private const string TITLE_BASE = "Návrhář rozložení";
 
 
 
@@ -383,9 +383,9 @@ namespace LayoutDesigner {
     // Update state
     private void UpdateTitle() {
       if (this.IsLayoutPresent) {
-        this.Text = $"{ TitleBase } - { this.CurrentLayout.Name } ({( this.CurrentLayout.IsCorrespondingFileUpToDate() ? "uloženo" : "neuloženo" )})";
+        this.Text = $"{ TITLE_BASE } - { this.CurrentLayout.Name } ({( this.CurrentLayout.IsCorrespondingFileUpToDate() ? "uloženo" : "neuloženo" )})";
       } else {
-        this.Text = $"{ TitleBase }";
+        this.Text = $"{ TITLE_BASE }";
       }
     }
 
@@ -517,7 +517,7 @@ namespace LayoutDesigner {
       graphics.Clear(this.PictureBox_Layout.BackColor);
 
       if (this.IsLayoutPresent) {
-        this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UnitSize);
+        this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UNIT_SIZE);
         Drawer.DrawLayout(graphics, this.CurrentLayout);
       }
     }

@@ -50,7 +50,7 @@ namespace Core.UI {
 
     static public Layer RenderZone(Zone zone) {
       // Preparation
-      int unitSize = StaticSettings.UnitSize;
+      int unitSize = StaticSettings.UNIT_SIZE;
 
       int width = zone.Size.Width * unitSize;
       int height = zone.Size.Height * unitSize;

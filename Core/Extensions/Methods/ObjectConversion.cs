@@ -11,7 +11,7 @@ using Core.Storage;
 namespace Core.Extensions {
   static public partial class Methods {
     static public Size ToSize(this string value) {
-      string[] values = value.Split(StaticSettings.CustomStringSeparator);
+      string[] values = value.Split(StaticSettings.CUSTOM_STRING_SEPARATOR);
       int width = int.Parse(values[0]);
       int height = int.Parse(values[1]);
 

@@ -11,7 +11,7 @@ using Core.Storage;
 namespace Core.Extensions {
   static public partial class Methods {
     static public string ToCustomString(this Size size) {
-      return $"{ size.Width }{ StaticSettings.CustomStringSeparator }{ size.Height }";
+      return $"{ size.Width }{ StaticSettings.CUSTOM_STRING_SEPARATOR }{ size.Height }";
     }
 
 

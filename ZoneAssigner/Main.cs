@@ -28,7 +28,7 @@ namespace ZoneAssigner
 
 
     // Fields & Properties
-    private const string FormName = "Přiřazovač zón";
+    private const string FORM_NAME = "Přiřazovač zón";
     private static readonly Color color = Color.Red;
     private readonly List<string> ValidLayoutNames = LayoutManager.GetValidLayoutNames().ToList();
 
@@ -76,7 +76,7 @@ namespace ZoneAssigner
     private void SetActiveLayout(string name) {
       this.CurrentLayout = Core.Storage.Layout.Import(name);
       this.CurrentLayout.Initialize(1);
-      this.Text = $"{FormName} ({name})";
+      this.Text = $"{FORM_NAME} ({name})";
       this.Menu_ValidLayoutNames.SelectedItem = name;
       DynamicSettings.StartupLayoutName.Value = name;
 
