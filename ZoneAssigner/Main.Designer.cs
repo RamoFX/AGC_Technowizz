@@ -139,7 +139,7 @@ namespace ZoneAssigner {
             this.Menu_ValidLayoutNames});
       this.Menu_StartupLayout.Name = "Menu_StartupLayout";
       this.Menu_StartupLayout.Size = new System.Drawing.Size(175, 22);
-      this.Menu_StartupLayout.Text = "Spouštěcí rozvržení";
+      this.Menu_StartupLayout.Text = "Spouštěcí rozložení";
       // 
       // Menu_ValidLayoutNames
       // 

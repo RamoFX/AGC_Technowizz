@@ -14,8 +14,8 @@ namespace Core.UI {
   public static class Drawer {
     static public void DrawLayout(Graphics graphics, Layout.Entity layout) {
       // Preparation
-      int unitSize = StaticSettings.UnitSize;
-      int outlineSize = StaticSettings.OutlineSize * 0 + 1;
+      int unitSize = StaticSettings.UNIT_SIZE;
+      int outlineSize = StaticSettings.OUTLINE_SIZE * 0 + 1;
 
       Pen penNeutralLight = DynamicSettings.GridColor.Value.ToColor().ToPen(outlineSize);
 

@@ -21,7 +21,7 @@ namespace Core.Settings {
       int foundIndex = lines.FindIndex(line => line.StartsWith(key));
       if (foundIndex != -1)
         lines.RemoveAt(foundIndex);
-      lines = lines.Append($"{key}{StaticSettings.SettingsSeparator}{value}").ToList();
+      lines = lines.Append($"{key}{StaticSettings.SETTINGS_SEPARATOR}{value}").ToList();
       File.WriteAllLines(StaticSettings.SettingsFilePath, lines);
     }
 
@@ -29,7 +29,7 @@ namespace Core.Settings {
       PrepareSettingsFile();
       string[] lines = File.ReadAllLines(StaticSettings.SettingsFilePath);
       string maybeValue = lines.FirstOrDefault(line => line.StartsWith(key));
-      return maybeValue != default ? maybeValue.Split(StaticSettings.SettingsSeparator)[1] : fallback;
+      return maybeValue != default ? maybeValue.Split(StaticSettings.SETTINGS_SEPARATOR)[1] : fallback;
     }
   }
 }

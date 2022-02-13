@@ -17,8 +17,8 @@ namespace LayoutAnalyzer {
 
   public partial class Main : Form {
     // Constants
-    private const string TitleBase = "Analýza rozvržení";
-    private const string SelectBelow = "Vyberte níže...";
+    private const string TITLE_BASE = "Analýza rozložení";
+    private const string SELECT_BELOW = "Vyberte níže...";
 
 
 
@@ -30,7 +30,7 @@ namespace LayoutAnalyzer {
     }
 
     private List<string> ImportableLayoutsNames {
-      get => LayoutManager.GetExistingLayoutNames().Prepend(SelectBelow).ToList();
+      get => LayoutManager.GetExistingLayoutNames().Prepend(SELECT_BELOW).ToList();
     }
 
 
@@ -131,9 +131,9 @@ namespace LayoutAnalyzer {
 
     private void UpdateTitle() {
       if (this.IsLayoutPresent) {
-        this.Text = $"{ TitleBase } - { this.CurrentLayout.Name }";
+        this.Text = $"{ TITLE_BASE } - { this.CurrentLayout.Name }";
       } else {
-        this.Text = $"{ TitleBase }";
+        this.Text = $"{ TITLE_BASE }";
       }
     }
 
@@ -195,8 +195,8 @@ namespace LayoutAnalyzer {
 
       if (this.IsLayoutPresent) {
         // Main
-        int Main_MinimumWidth = this.CurrentLayout.Size.Width * StaticSettings.UnitSize + this.TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth;
-        int Main_MinimumHeight = this.CurrentLayout.Size.Height * StaticSettings.UnitSize + this.HeightOffset;
+        int Main_MinimumWidth = this.CurrentLayout.Size.Width * StaticSettings.UNIT_SIZE + this.TreeView_Layout.Width + SystemInformation.VerticalScrollBarWidth;
+        int Main_MinimumHeight = this.CurrentLayout.Size.Height * StaticSettings.UNIT_SIZE + this.HeightOffset;
 
         this.MinimumSize = new Size(Main_MinimumWidth, Main_MinimumHeight);
 
@@ -230,7 +230,7 @@ namespace LayoutAnalyzer {
     private void ToolStripComboBox_ImportableLayoutNames_ComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
       string existingLayoutName = (string) this.ToolStripComboBox_ImportableLayoutNames.SelectedItem;
 
-      if (!(existingLayoutName == SelectBelow)) {
+      if (!(existingLayoutName == SELECT_BELOW)) {
         this.Open(existingLayoutName);
       }
     }

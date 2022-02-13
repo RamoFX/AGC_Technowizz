@@ -7,8 +7,8 @@ namespace Core.Settings {
   public static class StaticSettings {
     // Solution
     static public readonly string SolutionBasePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-    public const string SolutionBaseName = "AGC_Technowizz";
-    static public readonly string SolutionPath = Path.Combine(SolutionBasePath, SolutionBaseName);
+    public const string SOLUTION_BASE_NAME = "AGC_Technowizz";
+    static public readonly string SolutionPath = Path.Combine(SolutionBasePath, SOLUTION_BASE_NAME);
 
 
 
@@ -26,12 +26,12 @@ namespace Core.Settings {
 
 
     // Visual
-    public const int UnitSize = 48;
-    public const int OutlineSize = 4;
+    public const int UNIT_SIZE = 48;
+    public const int OUTLINE_SIZE = 4;
 
 
 
     // Other
-    public const char CustomStringSeparator = ',';
+    public const char CUSTOM_STRING_SEPARATOR = ',';
   }
 }
