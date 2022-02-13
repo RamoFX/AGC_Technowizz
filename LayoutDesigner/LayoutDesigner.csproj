@@ -88,6 +88,36 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Drawing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Interactions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Prompts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\MenuFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\Other.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\SplitContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\Actions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\Current.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -135,5 +165,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
