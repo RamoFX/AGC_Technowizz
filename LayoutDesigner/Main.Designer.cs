@@ -96,7 +96,7 @@ namespace LayoutDesigner {
       this.MenuItem_New.Name = "MenuItem_New";
       this.MenuItem_New.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
       this.MenuItem_New.Size = new System.Drawing.Size(297, 22);
-      this.MenuItem_New.Text = "Nový...";
+      this.MenuItem_New.Text = "Nové...";
       this.MenuItem_New.Click += new System.EventHandler(this.Item_New_Click);
       // 
       // MenuItem_Open
@@ -190,25 +190,25 @@ namespace LayoutDesigner {
             this.Separator4,
             this.MenuItem_RemoveZone});
       this.MenuLayout.Name = "MenuLayout";
-      this.MenuLayout.Size = new System.Drawing.Size(69, 24);
+      this.MenuLayout.Size = new System.Drawing.Size(66, 24);
       this.MenuLayout.Text = "rozložení";
       // 
       // MenuItem_NewZone
       // 
       this.MenuItem_NewZone.Name = "MenuItem_NewZone";
-      this.MenuItem_NewZone.Size = new System.Drawing.Size(180, 22);
+      this.MenuItem_NewZone.Size = new System.Drawing.Size(161, 22);
       this.MenuItem_NewZone.Text = "Nová zóna...";
       this.MenuItem_NewZone.Click += new System.EventHandler(this.MenuItem_NewZone_Click);
       // 
       // Separator4
       // 
       this.Separator4.Name = "Separator4";
-      this.Separator4.Size = new System.Drawing.Size(177, 6);
+      this.Separator4.Size = new System.Drawing.Size(158, 6);
       // 
       // MenuItem_RemoveZone
       // 
       this.MenuItem_RemoveZone.Name = "MenuItem_RemoveZone";
-      this.MenuItem_RemoveZone.Size = new System.Drawing.Size(180, 22);
+      this.MenuItem_RemoveZone.Size = new System.Drawing.Size(161, 22);
       this.MenuItem_RemoveZone.Text = "Odstranit zónu...";
       this.MenuItem_RemoveZone.Click += new System.EventHandler(this.MenuItem_RemoveZone_Click);
       // 
