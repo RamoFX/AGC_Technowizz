@@ -140,9 +140,11 @@
   <ItemGroup>
     <None Include="Schemas\Layout.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy /y $(ProjectDir)Schemas\Layout.xsd $(TargetDir)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
