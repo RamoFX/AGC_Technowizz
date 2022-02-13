@@ -116,7 +116,7 @@ namespace LayoutDesigner {
 
         bool isNameEmpty = zone.Name.Trim().Length == 0;
 
-        bool isNameAlreadyInUse = this.CurrentLayout.Any(currentZone => currentZone.Name == zone.Name);
+        bool isNameAlreadyInUse = this.CurrentLayout.Zones.Any(currentZone => currentZone.Name == zone.Name);
 
         bool isVerticalCapacityNegative = zone.VerticalCapacity < 0;
 

@@ -22,7 +22,7 @@ namespace Core.UI {
       timer.Start();
     }
 
-    static public int GetTitleBarHeight(Form form) {
+    static public int ComputeTitleBarHeight(Form form) {
       return form.RectangleToScreen(form.ClientRectangle).Top - form.Top;
     }
   }

@@ -18,6 +18,8 @@ using Core.UI.Dialogs;
 
 namespace LayoutDesigner {
   public partial class Main : Form {
+    private const string TITLE_BASE = "Návrhář rozložení";
+
     public Main() {
       InitializeComponent();
 
@@ -31,7 +33,7 @@ namespace LayoutDesigner {
       int splittedHeight = this.SplitContainer_Horizontal.SplitterWidth;
 
       int minimalWidth = left + right + splitterWidth;
-      int minimalHeight = top + bottom + splittedHeight + this.TitleBarHeight + this.Menu.Height;
+      int minimalHeight = top + bottom + splittedHeight + Utilities.ComputeTitleBarHeight(this) + this.Menu.Height;
 
       this.MinimumSize = new Size(minimalWidth, minimalHeight);
 

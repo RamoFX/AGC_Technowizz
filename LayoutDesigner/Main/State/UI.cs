@@ -15,47 +15,47 @@ using Core.UI.Dialogs;
 namespace LayoutDesigner {
   public partial class Main {
     private void UpdateTitle() {
-      if (this.IsLayoutPresent) {
-        this.Text = $"{ TITLE_BASE } - { this.CurrentLayout.Name } ({(this.CurrentLayout.IsCorrespondingFileUpToDate() ? "uloženo" : "neuloženo")})";
+      if (this.CurrentLayout != null) {
+        this.Text = $"{ TITLE_BASE } - { this.CurrentLayout.Name } ({( Core.Layout.State.IsUpToDate(this.CurrentLayout) ? "uloženo" : "neuloženo" )})";
       } else {
         this.Text = $"{ TITLE_BASE }";
       }
     }
 
     private void UpdateOpenControl_Enabled() {
-      MenuItem_Open.Enabled = this.ValidLayoutNames.Count() > 0;
+      MenuItem_Open.Enabled = Core.Layout.FileSystem.GetValidNames().Count() > 0;
     }
 
     private void UpdateCloseControl_Enabled() {
-      MenuItem_Close.Enabled = this.IsLayoutPresent;
+      MenuItem_Close.Enabled = this.CurrentLayout != null;
     }
 
     private void UpdateSaveControl_Enabled() {
-      if (this.IsLayoutPresent) {
-        this.MenuItem_Save.Enabled = !this.CurrentLayout.IsCorrespondingFileUpToDate();
+      if (this.CurrentLayout != null) {
+        this.MenuItem_Save.Enabled = !Core.Layout.State.IsUpToDate(this.CurrentLayout);
       } else {
         this.MenuItem_Save.Enabled = false;
       }
     }
 
     private void UpdateSaveAsControl_Enabled() {
-      this.MenuItem_SaveAs.Enabled = this.IsLayoutPresent;
+      this.MenuItem_SaveAs.Enabled = this.CurrentLayout != null;
     }
 
     private void UpdateRenameControl_Enabled() {
-      this.MenuItem_Rename.Enabled = this.IsLayoutPresent;
+      this.MenuItem_Rename.Enabled = this.CurrentLayout != null;
     }
 
     private void UpdateDeleteControl_Enabled() {
-      this.MenuItem_Delete.Enabled = this.IsLayoutPresent && this.CurrentLayout.HasValidCorrespondingFile();
+      this.MenuItem_Delete.Enabled = this.CurrentLayout != null && Core.Layout.FileSystem.Exists(this.CurrentLayout.Name);
     }
 
     private void UpdateNewZoneControl_Enabled() {
-      this.MenuItem_NewZone.Enabled = this.IsLayoutPresent;
+      this.MenuItem_NewZone.Enabled = this.CurrentLayout != null;
     }
 
     private void UpdateRemoveZoneControl_Enabled() {
-      this.MenuItem_RemoveZone.Enabled = this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0;
+      this.MenuItem_RemoveZone.Enabled = this.CurrentLayout != null && this.CurrentLayout.Zones.Count > 0;
     }
 
     private void UpdateState() {

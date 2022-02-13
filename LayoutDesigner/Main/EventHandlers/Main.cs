@@ -18,7 +18,7 @@ namespace LayoutDesigner {
     private void Main_Resize(object sender, EventArgs e) {
       // Split containers
       this.SplitContainer_Vertical.Width = this.Width;
-      this.SplitContainer_Vertical.Height = this.Height - Utilities.GetTitleBarHeight(this) - this.Menu.Height;
+      this.SplitContainer_Vertical.Height = this.Height - Utilities.ComputeTitleBarHeight(this) - this.Menu.Height;
     }
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {

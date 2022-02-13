@@ -21,7 +21,7 @@ namespace Core.Settings {
     // Dynamic settings
     public const string SettingsFileName = "Settings.ukvp"; // ukvp == Unordered key-value pairs
     static public readonly string SettingsFilePath = Path.Combine(SolutionPath, SettingsFileName);
-    public const char SettingsSeparator = ':';
+    public const char SETTINGS_SEPARATOR = ':';
 
 
 

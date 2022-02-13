@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using Core.UI;
+using Core.UI.Dialogs;
 
 
 
@@ -10,13 +14,14 @@ namespace LayoutDesigner {
   public partial class Main {
     // Layout
     private void UnloadLayout(bool force) {
-      if (!this.IsLayoutPresent) {
+      if (this.CurrentLayout == null)
         return;
-      }
 
       // If not saved ask user if he wants to save
       // If forced then do not ask
-      if (!force && !Core.Layout.) {
+      bool isUpToDate = Core.Layout.State.IsUpToDate(this.CurrentLayout);
+
+      if (!force && !isUpToDate) {
         var dialogResult = MessageBoxes.SaveUnsavedLayout();
 
         if (dialogResult == DialogResult.Yes) {
@@ -32,129 +37,164 @@ namespace LayoutDesigner {
       this.UpdateState();
     }
 
+
+
     private void UnloadLayout() {
       this.UnloadLayout(false);
     }
+
+
 
     private void NewLayout() {
       // Pre-hooks
       this.UnloadLayout();
 
       // Setup new object
-      UserNewObject newLayout = this.CreateNewLayout();
+      ObjectEditor newLayout = this.CreateNewLayout();
 
-      if (newLayout.DialogResult == DialogResult.OK) {
-        // Post-hooks
-        this.SetCurrentLayout((Layout) newLayout.FinalValue);
-      }
+      if (newLayout.DialogResult != DialogResult.OK)
+        return;
+
+      // Post-hooks
+      this.SetCurrentLayout((Core.Layout.Entity) newLayout.FinalValue);
     }
 
+
+
     private void OpenLayout(string layoutName) {
-      Layout layout = Core.Entities.Entity.Import(layoutName);
+      Core.Layout.Entity layout = Core.Layout.FileSystem.Import(layoutName);
       this.SetCurrentLayout(layout);
     }
 
+
+
     private void OpenLayout() {
-      UserSelect selectLayoutName = GetSelect(LayoutManager.GetValidLayoutNames(), "Vyberte rozložení");
+      ListSelection selectLayoutName = GetSelect(Core.Layout.FileSystem.GetValidNames(), "Vyberte rozložení");
 
-      if (selectLayoutName.DialogResult == DialogResult.OK) {
-        string layoutName = (string) selectLayoutName.FinalValue;
+      if (selectLayoutName.DialogResult != DialogResult.OK)
+        return;
 
-        this.OpenLayout(layoutName);
-      }
+      string layoutName = (string) selectLayoutName.FinalValue;
+
+      this.OpenLayout(layoutName);
     }
+
+
 
     private void SaveLayout() {
-      if (this.IsLayoutPresent) {
-        // Save if not saved
-        if (!this.CurrentLayout.IsCorrespondingFileUpToDate()) {
-          this.CurrentLayout.Export();
+      if (this.CurrentLayout == null)
+        return;
 
-          // Post-hooks
-          this.UpdateState();
-        }
-      }
+      // Save if not saved
+      if (Core.Layout.State.IsUpToDate(this.CurrentLayout))
+        return;
+
+      Core.Layout.FileSystem.Export(this.CurrentLayout);
+
+      // Post-hooks
+      this.UpdateState();
     }
+
+
 
     private void SaveLayoutAs() {
       // Save if layout present
-      if (this.IsLayoutPresent) {
-        var userTextInput = this.GetNewName();
+      if (this.CurrentLayout == null)
+        return;
 
-        if (userTextInput.DialogResult == DialogResult.OK) {
-          this.CurrentLayout.ExportAs(userTextInput.FinalValue);
+      var userTextInput = this.GetNewName();
 
-          // Post-hooks
-          this.UpdateState();
-        }
-      }
+      if (userTextInput.DialogResult != DialogResult.OK)
+        return;
+
+      Core.Layout.FileSystem.ExportAs(this.CurrentLayout, userTextInput.FinalValue);
+
+      // Post-hooks
+      this.UpdateState();
     }
+
+
 
     private void RenameLayout() {
       // Rename if layout present
-      if (this.IsLayoutPresent) {
-        var userTextInput = this.GetNewName();
+      if (this.CurrentLayout == null)
+        return;
 
-        if (userTextInput.DialogResult == DialogResult.OK) {
-          this.CurrentLayout.Rename(userTextInput.FinalValue);
+      var userTextInput = this.GetNewName();
 
-          // Post-hooks
-          this.UpdateState();
-        }
-      }
+      if (userTextInput.DialogResult != DialogResult.OK)
+        return;
+
+      Core.Layout.FileSystem.Rename(this.CurrentLayout, userTextInput.FinalValue);
+
+      // Post-hooks
+      this.UpdateState();
     }
 
+
+
     private void DeleteLayout() {
-      // Delete if layout opened
-      if (this.IsLayoutPresent) {
-        // Ask if user is sure
-        var dialogResult = MessageBoxes.UndoableDeletion(this.CurrentLayout.Name);
+      // Delete if layout present
+      if (this.CurrentLayout == null)
+        return;
 
-        if (dialogResult == DialogResult.Yes) {
-          this.CurrentLayout.Delete();
+      // Ask if user is sure
+      var dialogResult = MessageBoxes.UndoableDeletion(this.CurrentLayout.Name);
 
-          // Post-hooks
-          this.UnloadLayout(true);
-          this.UpdateState();
-        }
-      }
+      if (dialogResult != DialogResult.Yes)
+        return;
+
+      Core.Layout.FileSystem.Delete(this.CurrentLayout.Name);
+
+      // Post-hooks
+      this.UnloadLayout(true);
+      this.UpdateState();
     }
 
 
 
     // Zone
     private void NewZone() {
-      if (this.IsLayoutPresent) {
-        bool layoutHasAvailableArea = this.CurrentLayout.Area > this.CurrentLayout.Area_Zones;
+      if (this.CurrentLayout == null)
+        return;
 
-        if (!layoutHasAvailableArea) {
-          MessageBoxes.AreaFull();
-        } else {
-          UserNewObject newZone = CreateNewZone();
+      bool layoutHasAvailableArea = this.CurrentLayout.Area > this.CurrentLayout.Area_Zones;
 
-          if (newZone.DialogResult == DialogResult.OK) {
-            this.CurrentLayout.Add((Core.Entities.Entity) newZone.FinalValue);
+      if (!layoutHasAvailableArea) {
+        MessageBoxes.AreaFull();
+      } else {
+        ObjectEditor newZone = CreateNewZone();
 
-            // Post-hooks
-            this.UpdateState();
-          }
-        }
+        if (newZone.DialogResult != DialogResult.OK)
+          return;
+
+        this.CurrentLayout.Add((Core.Zone.Entity) newZone.FinalValue);
+
+        // Post-hooks
+        this.UpdateState();
       }
     }
 
+
+
     private void DeleteZone() {
-      if (this.IsLayoutPresent && this.CurrentLayout.Zones.Count > 0) {
-        UserSelect zoneSelect = GetSelect(this.CurrentLayout.Zones, "Name", "Vyberte zónu");
+      if (this.CurrentLayout == null)
+        return;
 
-        if (zoneSelect.DialogResult == DialogResult.OK) {
-          Core.Entities.Entity zone = (Core.Entities.Entity) zoneSelect.FinalValue;
+      if (this.CurrentLayout.Zones.Count() == 0)
+        return;
 
-          this.CurrentLayout.Zones.Remove(zone);
+      ListSelection zoneSelect = GetSelect(this.CurrentLayout.Zones, "Name", "Vyberte zónu");
 
-          // Post-hooks
-          this.UpdateState();
-        }
-      }
+      if (zoneSelect.DialogResult != DialogResult.OK)
+        return;
+
+      var zone = (Core.Zone.Entity) zoneSelect.FinalValue;
+
+      this.CurrentLayout.Zones.Remove(zone);
+
+      // Post-hooks
+      this.UpdateState();
     }
   }
 }

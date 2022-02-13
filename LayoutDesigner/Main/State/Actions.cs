@@ -18,7 +18,7 @@ namespace LayoutDesigner {
     private void SetCurrentLayout(Layout.Entity layout) {
       this.CurrentLayout = layout;
 
-      if (this.IsLayoutPresent) {
+      if (this.CurrentLayout != null) {
         this.CurrentLayout.Initialize(0);
       }
 
@@ -38,7 +38,7 @@ namespace LayoutDesigner {
             currentSelection = this.CurrentLayout;
           }
         } else {
-          foreach (Core.Entities.Entity zone in this.CurrentLayout) {
+          foreach (var zone in this.CurrentLayout.Zones) {
             if (level == 1) {
               if (pathPieces[level] == zone.Name) {
                 currentSelection = zone;
@@ -66,10 +66,10 @@ namespace LayoutDesigner {
       // TreeView
       this.Tree_Layout.Nodes.Clear();
 
-      if (this.IsLayoutPresent) {
+      if (this.CurrentLayout != null) {
         var rootNode = Tree_Layout.Nodes.Add(this.CurrentLayout.Name);
 
-        foreach (Core.Entities.Entity zone in this.CurrentLayout.Zones) {
+        foreach (var zone in this.CurrentLayout.Zones) {
           rootNode.Nodes.Add(zone.Name);
         }
 

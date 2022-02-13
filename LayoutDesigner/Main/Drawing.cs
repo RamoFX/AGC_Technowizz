@@ -19,7 +19,7 @@ namespace LayoutDesigner {
       if (this.CurrentLayout == null)
         return;
 
-      this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UnitSize);
+      this.PictureBox_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UNIT_SIZE);
       Stopwatch stopwatch = new();
       stopwatch.Start();
       Drawer.DrawLayout(graphics, this.CurrentLayout);
