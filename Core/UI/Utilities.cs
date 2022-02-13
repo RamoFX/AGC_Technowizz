@@ -1,5 +1,4 @@
-﻿using Core.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -21,6 +20,10 @@ namespace Core.UI {
 
       timer.Interval = millisecond;
       timer.Start();
+    }
+
+    static public int GetTitleBarHeight(Form form) {
+      return form.RectangleToScreen(form.ClientRectangle).Top - form.Top;
     }
   }
 }

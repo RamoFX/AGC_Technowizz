@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Windows.Forms;
 
 using Core.UI;
-using Core.Storage;
-using System.Windows.Forms;
+
+
 
 namespace Core.Extensions {
   static public partial class Methods {

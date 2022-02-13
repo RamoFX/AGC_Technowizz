@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 
 using Core.UI;
-using Core.Storage;
+using Core.Settings;
 
 
 

@@ -8,7 +8,5 @@ using System.Threading.Tasks;
 
 
 namespace Core.Extensions {
-  class Operators {
-
-  }
+  class Operators { }
 }

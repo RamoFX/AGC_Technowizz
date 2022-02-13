@@ -11,7 +11,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -53,6 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Layout\Entity\Constructors.cs" />
+    <Compile Include="Layout\Entity\Fields\Data.cs" />
+    <Compile Include="Layout\Entity\Fields\Main.cs" />
+    <Compile Include="Layout\Entity\Initialization.cs" />
+    <Compile Include="Layout\Entity\Interactions\Self.cs" />
+    <Compile Include="Layout\Entity\Interactions\Zone.cs" />
+    <Compile Include="Layout\State.cs" />
+    <Compile Include="Zone\Entity\Constructors.cs" />
+    <Compile Include="Zone\Entity\Fields\Data.cs" />
+    <Compile Include="Zone\Entity\Fields\Main.cs" />
+    <Compile Include="Zone\Entity\Initialization.cs" />
+    <Compile Include="Zone\Entity\Interactions.cs" />
     <Compile Include="Extensions\Methods\Brush.cs" />
     <Compile Include="Extensions\Methods\Color.cs" />
     <Compile Include="Extensions\Methods\ObjectConversion.cs" />
@@ -62,8 +74,8 @@
     <Compile Include="Extensions\Methods\Size.cs" />
     <Compile Include="Extensions\Methods\StringConversion.cs" />
     <Compile Include="Extensions\Operators.cs" />
-    <Compile Include="Helpers\DynamicSettings.cs" />
-    <Compile Include="Helpers\DynamicSetting.cs" />
+    <Compile Include="Settings\DynamicSettings.Internal.cs" />
+    <Compile Include="Settings\DynamicSetting.cs" />
     <Compile Include="UI\Colors.cs" />
     <Compile Include="UI\Dialogs\Help.cs">
       <SubType>Form</SubType>
@@ -71,52 +83,52 @@
     <Compile Include="UI\Dialogs\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\UserNewObject.cs">
+    <Compile Include="UI\Dialogs\ObjectEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\UserNewObject.Designer.cs">
-      <DependentUpon>UserNewObject.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\ObjectEditor.Designer.cs">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\UserSelect.cs">
+    <Compile Include="UI\Dialogs\ListSelection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\UserSelect.Designer.cs">
-      <DependentUpon>UserSelect.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\ListSelection.Designer.cs">
+      <DependentUpon>ListSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Drawer.cs" />
     <Compile Include="UI\Layer.cs" />
     <Compile Include="UI\Renderer.cs" />
     <Compile Include="UI\Utilities.cs" />
-    <Compile Include="Helpers\XmlLinqUtilities.cs" />
-    <Compile Include="DynamicSettings.cs" />
-    <Compile Include="Storage\Layout.cs" />
-    <Compile Include="Storage\LayoutManager.cs" />
-    <Compile Include="StaticSettings.cs" />
-    <Compile Include="Helpers\XDocumentConvertable.cs" />
-    <Compile Include="Helpers\XElementConvertable.cs" />
-    <Compile Include="Storage\ZoneType.cs" />
-    <Compile Include="Storage\Zone.cs" />
+    <Compile Include="Common\Xml.cs" />
+    <Compile Include="Layout\FileSystem\Changing.cs" />
+    <Compile Include="Layout\FileSystem\Helpers.cs" />
+    <Compile Include="Layout\FileSystem\Reading.cs" />
+    <Compile Include="Layout\FileSystem\Writing.cs" />
+    <Compile Include="Layout\Xml.cs" />
+    <Compile Include="Settings\DynamicSettings.cs" />
+    <Compile Include="Settings\StaticSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\Dialogs\UserTextInput.cs">
+    <Compile Include="UI\Dialogs\TextInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\UserTextInput.Designer.cs">
-      <DependentUpon>UserTextInput.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\TextInput.Designer.cs">
+      <DependentUpon>TextInput.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\MessageBoxes.cs" />
+    <Compile Include="Zone\Xml.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\UserNewObject.resx">
-      <DependentUpon>UserNewObject.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\ObjectEditor.resx">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\UserSelect.resx">
-      <DependentUpon>UserSelect.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\ListSelection.resx">
+      <DependentUpon>ListSelection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\UserTextInput.resx">
-      <DependentUpon>UserTextInput.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\TextInput.resx">
+      <DependentUpon>TextInput.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +136,12 @@
       <Project>{5aa69357-42c9-4c92-9cfe-a808a42ad0c8}</Project>
       <Name>Communicator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Schemas\Layout.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

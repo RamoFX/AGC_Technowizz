@@ -4,33 +4,30 @@ using System.Windows.Forms;
 
 
 namespace Core.UI.Dialogs {
-  public partial class UserTextInput : Form {
+  public partial class ObjectEditor : Form {
     public new DialogResult DialogResult;
-    public Func<string, bool> ValueValidator;
-    public string FinalValue;
+    public Func<object, bool> ValueValidator;
+    public object FinalValue;
 
 
 
-    public UserTextInput(Func<string, bool> validator, string label, string initialValue) {
+    public ObjectEditor(Func<object, bool> valueValidator, object initialObject, string labelText) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
-      this.ValueValidator = validator;
-      this.Label.Text = label;
-      this.TextBox.Text = initialValue;
+      this.ValueValidator = valueValidator;
+      this.PropertyGrid.SelectedObject = initialObject;
+      this.Label.Text = labelText;
     }
-
-    public UserTextInput(Func<string, bool> validator, string label)
-      : this(validator, label, "") { }
 
 
 
     private void Button_Apply_Click(object sender, EventArgs e) {
-      string newName = TextBox.Text;
-      bool isValid = this.ValueValidator(newName);
+      object newObject = PropertyGrid.SelectedObject;
+      bool isValid = this.ValueValidator(newObject);
 
       if (isValid) {
         this.DialogResult = DialogResult.OK;
-        this.FinalValue = newName;
+        this.FinalValue = newObject;
         this.Close();
       }
     }
@@ -46,6 +43,7 @@ namespace Core.UI.Dialogs {
 
     private void KeyboardShortcuts(object sender, KeyEventArgs e)
     {
+      MessageBox.Show("");
       switch (e.KeyCode)
       {
         case Keys.Enter:

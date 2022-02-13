@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 
 namespace Core.UI.Dialogs {
-  public partial class UserSelect : Form {
+  public partial class ListSelection : Form {
     public new DialogResult DialogResult;
     public object FinalValue;
 
 
 
-    public UserSelect(List<object> selectItems, string displayMember, string labelText) {
+    public ListSelection(List<object> selectItems, string displayMember, string labelText) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
       this.ListBox.DataSource = selectItems;

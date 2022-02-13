@@ -1,6 +1,5 @@
-﻿
-namespace Core.UI.Dialogs {
-  partial class UserTextInput {
+﻿namespace Core.UI.Dialogs {
+  partial class TextInput {
     /// <summary>
     /// Required designer variable.
     /// </summary>

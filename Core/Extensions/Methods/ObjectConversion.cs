@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 
 using Core.UI;
-using Core.Storage;
+using Core.Settings;
 
 
 
@@ -32,8 +32,8 @@ namespace Core.Extensions {
 
 
 
-    static public ZoneType ToZoneType(this string value, bool ignoreCase) {
-      return (ZoneType) Enum.Parse(typeof(ZoneType), value, ignoreCase);
+    static public bool ToBool(this string value) {
+      return bool.Parse(value);
     }
   }
 }

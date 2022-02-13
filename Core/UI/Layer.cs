@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
+using System.Linq;
+
 
 
 namespace Core.UI {
   public class Layer {
-    public Bitmap Bitmap { get; set; }
-
     public Point Location { get; }
 
     public Size Size { get; }
@@ -13,14 +13,18 @@ namespace Core.UI {
       get => new(this.Location, this.Size);
     }
 
+    public Bitmap Bitmap { get; set; }
 
 
-    public Layer(Bitmap bitmap, Point location, Size size) {
-      this.Bitmap = bitmap;
+
+    public Layer(Point location, Size size) {
       this.Location = location;
       this.Size = size;
+      this.Bitmap = new(size.Width, size.Height);
     }
 
-    public Layer(Bitmap bitmap, Rectangle rectangle) : this(bitmap, rectangle.Location, rectangle.Size) { }
+    public Layer(Rectangle rectangle) : this(rectangle.Location, rectangle.Size) { }
+
+    public Layer(Layer from) : this(from.Rectangle) { }
   }
 }

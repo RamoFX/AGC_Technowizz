@@ -6,13 +6,13 @@ using System.Text;
 using System.Windows.Forms;
 
 using Core.Extensions;
-using Core.Storage;
+using Core.Settings;
 
 
 
 namespace Core.UI {
   public static class Drawer {
-    static public void DrawLayout(Graphics graphics, Layout layout) {
+    static public void DrawLayout(Graphics graphics, Layout.Entity layout) {
       // Preparation
       int unitSize = StaticSettings.UnitSize;
       int outlineSize = StaticSettings.OutlineSize * 0 + 1;
@@ -62,7 +62,7 @@ namespace Core.UI {
 
 
       // Zones
-      foreach (Zone zone in layout) {
+      foreach (Zone.Entity zone in layout.Zones) {
         var zoneRectangle = zone.Rectangle.Scale(unitSize);
 
         graphics.FillRectangle(
@@ -71,11 +71,10 @@ namespace Core.UI {
             .Transparentize(),
 
           zone.Rectangle
-            .Shift(zone.Location)
             .Scale(unitSize)
         );
 
-        if (zone.Type == ZoneType.Other) {
+        if (zone.VerticalCapacity == 0) {
           graphics.FillRectangle(
             zone.Color
               .ToBrush()

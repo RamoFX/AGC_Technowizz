@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Core.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 
 
-namespace Core
-{
+namespace Core.Settings {
   static public partial class DynamicSettings {
-    static private void PrepareSettingsFile() {
+    static internal void PrepareSettingsFile() {
       if (!File.Exists(StaticSettings.SettingsFilePath)) {
         Directory.CreateDirectory(Path.GetDirectoryName(StaticSettings.SettingsFilePath));
         using var fileStream = File.Create(StaticSettings.SettingsFilePath);
       }
     }
 
-    static public void WriteSettingsValue(string key, string value) {
+    static internal void WriteSettingsValue(string key, string value) {
       PrepareSettingsFile();
       List<string> lines = File.ReadAllLines(StaticSettings.SettingsFilePath).ToList();
       int foundIndex = lines.FindIndex(line => line.StartsWith(key));
@@ -25,7 +25,7 @@ namespace Core
       File.WriteAllLines(StaticSettings.SettingsFilePath, lines);
     }
 
-    static public string ReadSettingsValue(string key, string fallback) {
+    static internal string ReadSettingsValue(string key, string fallback) {
       PrepareSettingsFile();
       string[] lines = File.ReadAllLines(StaticSettings.SettingsFilePath);
       string maybeValue = lines.FirstOrDefault(line => line.StartsWith(key));

@@ -1,4 +1,4 @@
-﻿namespace Core.Helpers {
+﻿namespace Core.Settings {
   public class DynamicSetting {
     private readonly string Key;
     public readonly string Fallback;

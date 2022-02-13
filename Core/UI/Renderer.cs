@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Core.Extensions;
-using Core.Storage;
+using Core.Settings;
 
 
 
@@ -48,20 +48,16 @@ namespace Core.UI {
 
 
 
-    static public Layer RenderZone(Zone zone) {
+    static public Layer RenderZone(Zone.Entity zone) {
       // Preparation
       int unitSize = StaticSettings.UnitSize;
-
-      int width = zone.Size.Width * unitSize;
-      int height = zone.Size.Height * unitSize;
       Rectangle rectangle = zone.Rectangle.Scale(unitSize);
 
       // Creation
-      Bitmap bitmap = new(width, height);
-      Layer layer = new(bitmap, rectangle);
+      Layer layer = new(rectangle);
 
       // Rendering
-      using Graphics graphics = Graphics.FromImage(bitmap);
+      using Graphics graphics = Graphics.FromImage(layer.Bitmap);
 
       return layer;
     }

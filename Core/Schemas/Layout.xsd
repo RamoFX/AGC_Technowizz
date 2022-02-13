@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="name">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:whiteSpace value="collapse" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="natural-number">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="size">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[1-9]\d*,[1-9]\d*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="location">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]\d*,[0-9]\d*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  
+  
+  <xs:element name="Layout">
+    <xs:complexType>
+      
+      <xs:sequence>
+
+        <xs:element name="Zones" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+
+              <xs:element name="Zone" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      
+                      <xs:attribute name="name"              type="name"           use="required" />
+                      <xs:attribute name="vertical-capacity" type="natural-number" use="required" />
+                      <xs:attribute name="car-brand"         type="name"           use="required" />
+                      <xs:attribute name="size"              type="size"           use="required" />
+                      <xs:attribute name="location"          type="location"       use="required" />
+                      
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
+      </xs:sequence>
+
+      <xs:attribute name="name"           type="name" use="required" />
+      <xs:attribute name="warehouse-name" type="name" use="required" />
+      <xs:attribute name="size"           type="size" use="required" />
+      
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
