@@ -12,8 +12,7 @@ namespace Core {
     static public class State {
       static public bool IsValid(string name) {
         string raw = FileSystem.ImportRaw(name);
-        var document = Common.Xml.Parse(raw);
-        return Layout.Xml.IsValid(document);
+        return Xml.IsValid(raw);
       }
 
       static public bool AreEqual(Entity layout, XDocument document) {

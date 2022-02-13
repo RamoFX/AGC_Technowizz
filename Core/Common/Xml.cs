@@ -21,11 +21,9 @@ namespace Core {
         return XDocument.Parse(raw);
       }
 
-      static public bool IsValid(XDocument document, XmlSchema xmlSchema) {
+      static public bool IsValid(XDocument document, XmlSchema schema) {
         XmlSchemaSet xmlSchemaSet = new();
-        xmlSchemaSet.Add(xmlSchema);
-
-        bool isValid = false;
+        xmlSchemaSet.Add(schema);
 
         List<string> warnings = new();
         List<string> errors = new();
@@ -43,10 +41,19 @@ namespace Core {
         }
 
         foreach (string error in errors) {
-          Console.WriteLine($"Warning (XML Validator): { error }");
+          Console.WriteLine($"Error (XML Validator): { error }");
         }
 
-        return isValid;
+        return warnings.Count == 0 && errors.Count == 0;
+      }
+
+      static public bool IsValid(string rawDocument, XmlSchema schema) {
+        try {
+          var document = Parse(rawDocument);
+          return IsValid(document, schema);
+        } catch {
+          return false;
+        }
       }
 
       static public XElement CreateElement(XName name, IEnumerable<XAttribute> attributes, IEnumerable<XElement> childrenElements) {

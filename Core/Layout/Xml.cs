@@ -13,8 +13,8 @@ namespace Core {
     static internal class Xml {
       static internal readonly XmlSchema Schema = Common.Xml.ImportSchema(StaticSettings.LayoutSchemaName);
 
-      static public bool IsValid(XDocument layout) {
-        return Common.Xml.IsValid(layout, Schema);
+      static public bool IsValid(string raw) {
+        return Common.Xml.IsValid(raw, Schema);
       }
 
       static public XDocument ToDocument(Entity layout) {
