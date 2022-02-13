@@ -10,7 +10,7 @@ using Core.Settings;
 namespace Core {
   public partial class Layout {
     public partial class Entity {
-      [Browsable(true), DisplayName("Název rozvržení")]
+      [Browsable(true), DisplayName("Název rozložení")]
       public string Name { get; set; }
 
 

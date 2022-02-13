@@ -54,7 +54,7 @@ namespace LayoutDesigner {
         }
       };
 
-      TextInput userTextInput = new(valueValidator, "Nový název rozvržení");
+      TextInput userTextInput = new(valueValidator, "Nový název rozložení");
 
       userTextInput.ShowDialog(this);
 

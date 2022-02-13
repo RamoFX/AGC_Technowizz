@@ -55,7 +55,7 @@ namespace LayoutDesigner {
     }
 
     private void OpenLayout() {
-      UserSelect selectLayoutName = GetSelect(LayoutManager.GetValidLayoutNames(), "Vyberte rozvržení");
+      UserSelect selectLayoutName = GetSelect(LayoutManager.GetValidLayoutNames(), "Vyberte rozložení");
 
       if (selectLayoutName.DialogResult == DialogResult.OK) {
         string layoutName = (string) selectLayoutName.FinalValue;

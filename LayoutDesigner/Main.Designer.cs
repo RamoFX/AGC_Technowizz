@@ -167,7 +167,7 @@ namespace LayoutDesigner {
       this.MenuItem_OpenInFileExplorer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.MenuItem_OpenInFileExplorer.Name = "MenuItem_OpenInFileExplorer";
       this.MenuItem_OpenInFileExplorer.Size = new System.Drawing.Size(297, 22);
-      this.MenuItem_OpenInFileExplorer.Text = "Všechna rozvržení v průzkumníku souborů";
+      this.MenuItem_OpenInFileExplorer.Text = "Všechna rozložení v průzkumníku souborů";
       this.MenuItem_OpenInFileExplorer.Click += new System.EventHandler(this.MenuItem_OpenInFileExplorer_Click);
       // 
       // Separator3
@@ -191,7 +191,7 @@ namespace LayoutDesigner {
             this.MenuItem_RemoveZone});
       this.MenuLayout.Name = "MenuLayout";
       this.MenuLayout.Size = new System.Drawing.Size(69, 24);
-      this.MenuLayout.Text = "Rozvržení";
+      this.MenuLayout.Text = "rozložení";
       // 
       // MenuItem_NewZone
       // 

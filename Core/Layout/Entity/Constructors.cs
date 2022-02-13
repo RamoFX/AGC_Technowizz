@@ -39,7 +39,7 @@ namespace Core {
       public Entity(string name, string warehouseName, Size size)
         : this(name, warehouseName, size, new Zone.Entity[0] { }) { }
 
-      public Entity() : this("Nové rozvržení", "název-skladu", new Size(10, 10)) { }
+      public Entity() : this("Nové rozložení", "název-skladu", new Size(10, 10)) { }
     }
   }
 }
