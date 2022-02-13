@@ -7,9 +7,11 @@ using System.Linq;
 using System.Windows.Forms;
 
 using Core;
-using Core.Storage;
 using Core.UI;
 using Core.Extensions;
+using Core.Entities;
+using Core.Settings;
+using Core.Utilities;
 
 namespace LayoutAnalyzer {
 
@@ -74,7 +76,7 @@ namespace LayoutAnalyzer {
       IEnumerable<string> validLayoutNames = LayoutManager.GetValidLayoutNames();
 
       if (validLayoutNames.Contains(name)) {
-        Layout layout = Core.Storage.Layout.Import(name);
+        Layout layout = Core.Entities.Entity.Import(name);
         this.SetCurrentLayout(layout);
       } else {
         MessageBoxes.LayoutInvalid(name);
@@ -105,9 +107,9 @@ namespace LayoutAnalyzer {
         TreeView_Layout.Nodes.Clear();
         var rootNode = TreeView_Layout.Nodes.Add($"{this.CurrentLayout.Name} : {this.CurrentLayout.StoredPercent} %");
 
-        foreach (Zone zone in this.CurrentLayout.Zones)
+        foreach (Core.Entities.Entity zone in this.CurrentLayout.Zones)
         {
-          var zoneNode = rootNode.Nodes.Add(zone.Name + (zone.Type == ZoneType.Storage ? " : " + zone.StoredPercent + " %" : ""));
+          var zoneNode = rootNode.Nodes.Add(zone.Name + (zone.IsLoadable == ZoneType.Storage ? " : " + zone.StoredPercent + " %" : ""));
         }
 
         this.TreeView_Layout.ExpandAll();

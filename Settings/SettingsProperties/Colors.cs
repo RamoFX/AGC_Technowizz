@@ -3,13 +3,14 @@ using System.Drawing;
 
 using Core;
 using Core.Extensions;
+using Core.Settings;
 
 
 
 namespace Settings {
   internal partial class SettingsProperties {
-    [DisplayName("Barva okrajů")]
     [Category("Barva")]
+    [DisplayName("Barva okrajů")]
     public Color LayoutColor {
       get => DynamicSettings.LayoutColor.Value.ToColor();
       set => DynamicSettings.LayoutColor.Value = value.Name;
@@ -17,8 +18,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva mřížky")]
     [Category("Barva")]
+    [DisplayName("Barva mřížky")]
     public Color GridColor {
       get => DynamicSettings.GridColor.Value.ToColor();
       set => DynamicSettings.GridColor.Value = value.Name;
@@ -26,8 +27,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva zóny pro uložení")]
     [Category("Barva")]
+    [DisplayName("Barva zóny pro uložení")]
     public Color ZoneColor_Storage {
       get => DynamicSettings.ZoneColor_Storage.Value.ToColor();
       set => DynamicSettings.ZoneColor_Storage.Value = value.Name;
@@ -35,8 +36,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva ostatních zón")]
     [Category("Barva")]
+    [DisplayName("Barva ostatních zón")]
     public Color ZoneColor_Other {
       get => DynamicSettings.ZoneColor_Other.Value.ToColor();
       set => DynamicSettings.ZoneColor_Other.Value = value.Name;
@@ -44,8 +45,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva plné zóny")]
     [Category("Barva")]
+    [DisplayName("Barva plné zóny")]
     [Description("100%")]
     public Color ZoneColor_Full {
       get => DynamicSettings.ZoneColor_Full.Value.ToColor();
@@ -54,8 +55,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva skoro plné zóny")]
     [Category("Barva")]
+    [DisplayName("Barva skoro plné zóny")]
     [Description("99% ... 75%")]
     public Color ZoneColor_AlmostFull {
       get => DynamicSettings.ZoneColor_AlmostFull.Value.ToColor();
@@ -64,8 +65,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva zóny zaplněné nad polovinu")]
     [Category("Barva")]
+    [DisplayName("Barva zóny zaplněné nad polovinu")]
     [Description("74% ... 50%")]
     public Color ZoneColor_AboveHalf {
       get => DynamicSettings.ZoneColor_AboveHalf.Value.ToColor();
@@ -74,8 +75,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva zóny zaplněné do poloviny")]
     [Category("Barva")]
+    [DisplayName("Barva zóny zaplněné do poloviny")]
     [Description("49% ... 25%")]
     public Color ZoneColor_BelowHalf {
       get => DynamicSettings.ZoneColor_BelowHalf.Value.ToColor();
@@ -84,8 +85,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva skoro prázdné zóny")]
     [Category("Barva")]
+    [DisplayName("Barva skoro prázdné zóny")]
     [Description("24% ... 1%")]
     public Color ZoneColor_AlmostEmpty {
       get => DynamicSettings.ZoneColor_AlmostEmpty.Value.ToColor();
@@ -94,8 +95,8 @@ namespace Settings {
 
 
 
-    [DisplayName("Barva prázdné zóny")]
     [Category("Barva")]
+    [DisplayName("Barva prázdné zóny")]
     [Description("0%")]
     public Color ZoneColor_Empty {
       get => DynamicSettings.ZoneColor_Empty.Value.ToColor();

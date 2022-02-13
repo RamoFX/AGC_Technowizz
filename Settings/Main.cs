@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Core;
 using Core.UI;
 using Core.Extensions;
+using Core.Settings;
 
 
 
@@ -13,31 +14,40 @@ namespace Settings {
       InitializeComponent();
     }
 
-    SettingsProperties settingsProperties = new SettingsProperties();
+    private readonly SettingsProperties SettingsProperties = new SettingsProperties();
 
     private void Main_Load(object sender, EventArgs e) {
-      propertyGrid.SelectedObject = settingsProperties;
+      propertyGrid.SelectedObject = SettingsProperties;
     }
 
     private void buttonResetSettings_Click(object sender, EventArgs e) {
       var dialogResult = MessageBoxes.SettingsReset();
 
       if (dialogResult == DialogResult.Yes) {
-        settingsProperties.StartupLayoutName = DynamicSettings.StartupLayoutName.Fallback;
-        settingsProperties.Highlight_Duration = DynamicSettings.Highlight_Duration.Fallback.ToInt();
-        settingsProperties.Highlight_TotalFlashesCount = DynamicSettings.Highlight_TotalFlashesCount.Fallback.ToInt();
-        settingsProperties.LayoutColor = DynamicSettings.LayoutColor.Fallback.ToColor();
-        settingsProperties.GridColor = DynamicSettings.GridColor.Fallback.ToColor();
-        settingsProperties.ZoneColor_Storage = DynamicSettings.ZoneColor_Storage.Fallback.ToColor();
-        settingsProperties.ZoneColor_Other = DynamicSettings.ZoneColor_Other.Fallback.ToColor();
-        settingsProperties.ZoneColor_Full = DynamicSettings.ZoneColor_Full.Fallback.ToColor();
-        settingsProperties.ZoneColor_AlmostFull = DynamicSettings.ZoneColor_AlmostFull.Fallback.ToColor();
-        settingsProperties.ZoneColor_AboveHalf = DynamicSettings.ZoneColor_AboveHalf.Fallback.ToColor();
-        settingsProperties.ZoneColor_BelowHalf = DynamicSettings.ZoneColor_BelowHalf.Fallback.ToColor();
-        settingsProperties.ZoneColor_AlmostEmpty = DynamicSettings.ZoneColor_AlmostEmpty.Fallback.ToColor();
-        settingsProperties.ZoneColor_Empty = DynamicSettings.ZoneColor_Empty.Fallback.ToColor();
+        // Layout
+        SettingsProperties.StartupLayoutName = DynamicSettings.StartupLayoutName.Fallback;
 
-        propertyGrid.SelectedObject = settingsProperties;
+        // Highlight
+        SettingsProperties.Highlight_Duration = DynamicSettings.Highlight_Duration.Fallback.ToInt();
+        SettingsProperties.Highlight_TotalFlashesCount = DynamicSettings.Highlight_TotalFlashesCount.Fallback.ToInt();
+
+        // Colors
+        SettingsProperties.LayoutColor = DynamicSettings.LayoutColor.Fallback.ToColor();
+        SettingsProperties.GridColor = DynamicSettings.GridColor.Fallback.ToColor();
+
+        SettingsProperties.ZoneColor_Storage = DynamicSettings.ZoneColor_Storage.Fallback.ToColor();
+        SettingsProperties.ZoneColor_Other = DynamicSettings.ZoneColor_Other.Fallback.ToColor();
+
+        SettingsProperties.ZoneColor_Full = DynamicSettings.ZoneColor_Full.Fallback.ToColor();
+        SettingsProperties.ZoneColor_AlmostFull = DynamicSettings.ZoneColor_AlmostFull.Fallback.ToColor();
+        SettingsProperties.ZoneColor_AboveHalf = DynamicSettings.ZoneColor_AboveHalf.Fallback.ToColor();
+        SettingsProperties.ZoneColor_BelowHalf = DynamicSettings.ZoneColor_BelowHalf.Fallback.ToColor();
+        SettingsProperties.ZoneColor_AlmostEmpty = DynamicSettings.ZoneColor_AlmostEmpty.Fallback.ToColor();
+        SettingsProperties.ZoneColor_Empty = DynamicSettings.ZoneColor_Empty.Fallback.ToColor();
+
+
+
+        propertyGrid.SelectedObject = SettingsProperties;
       }
     }
   }

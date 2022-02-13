@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 
 using Core;
+using Core.Settings;
 
 
 

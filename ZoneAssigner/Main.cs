@@ -5,14 +5,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using Communicator;
-using Core.Storage;
 using Core.UI;
 using Core;
+using Core.Entities;
+using Core.Utilities;
 
-
-
-namespace ZoneAssigner
-{
+namespace ZoneAssigner {
   public partial class Main : Form {
     public Main() {
       InitializeComponent();
@@ -33,7 +31,7 @@ namespace ZoneAssigner
     private readonly List<string> ValidLayoutNames = LayoutManager.GetValidLayoutNames().ToList();
 
     private Layout CurrentLayout;
-    private Zone zone;
+    private Core.Entities.Entity zone;
 
     private int i = 0;
     private bool submitted = false;
@@ -74,7 +72,7 @@ namespace ZoneAssigner
 
     // State update
     private void SetActiveLayout(string name) {
-      this.CurrentLayout = Core.Storage.Layout.Import(name);
+      this.CurrentLayout = Core.Entities.Entity.Import(name);
       this.CurrentLayout.Initialize(1);
       this.Text = $"{FormName} ({name})";
       this.Menu_ValidLayoutNames.SelectedItem = name;
