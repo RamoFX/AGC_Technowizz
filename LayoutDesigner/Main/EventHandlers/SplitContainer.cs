@@ -14,6 +14,15 @@ namespace LayoutDesigner {
       this.SplitContainer_Horizontal.Size = size;
     }
 
+    private void SplitContainer_Vertical_Panel2_Resize(object sender, EventArgs e) {
+      SplitterPanel panel = this.SplitContainer_Vertical.Panel2;
+
+      this.Panel_Tools.Width = panel.Width;
+
+      this.PictureBox_Layout.Width = panel.Width;
+      this.PictureBox_Layout.Height = panel.Height - this.Panel_Tools.Height;
+    }
+
 
 
     // Split container horizontal
