@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using Core;
-using Core.Extensions;
-using Core.Settings;
-using Core.UI;
-using Core.UI.Dialogs;
+﻿using System.Windows.Forms;
 
 
 
