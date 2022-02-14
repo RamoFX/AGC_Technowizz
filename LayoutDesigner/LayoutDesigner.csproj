@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LayoutDesigner.ico" />
+    <None Include="Resources\add.wmf" />
     <None Include="Resources\pencil.wmf" />
     <None Include="Resources\pointer.wmf" />
   </ItemGroup>

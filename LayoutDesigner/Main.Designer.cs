@@ -48,8 +48,9 @@ namespace LayoutDesigner {
       this.Properties_CurrentSelection = new System.Windows.Forms.PropertyGrid();
       this.SplitContainer_Horizontal = new System.Windows.Forms.SplitContainer();
       this.SplitContainer_Vertical = new System.Windows.Forms.SplitContainer();
-      this.ToolModeEdit = new System.Windows.Forms.RadioButton();
-      this.ToolModeView = new System.Windows.Forms.RadioButton();
+      this.ToolAdd = new System.Windows.Forms.RadioButton();
+      this.ToolView = new System.Windows.Forms.RadioButton();
+      this.ToolEdit = new System.Windows.Forms.RadioButton();
       this.Menu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Horizontal)).BeginInit();
@@ -293,44 +294,59 @@ namespace LayoutDesigner {
       // SplitContainer_Vertical.Panel2
       // 
       this.SplitContainer_Vertical.Panel2.AutoScroll = true;
-      this.SplitContainer_Vertical.Panel2.Controls.Add(this.ToolModeEdit);
-      this.SplitContainer_Vertical.Panel2.Controls.Add(this.ToolModeView);
+      this.SplitContainer_Vertical.Panel2.Controls.Add(this.ToolEdit);
+      this.SplitContainer_Vertical.Panel2.Controls.Add(this.ToolAdd);
+      this.SplitContainer_Vertical.Panel2.Controls.Add(this.ToolView);
       this.SplitContainer_Vertical.Panel2.Controls.Add(this.PictureBox_Layout);
       this.SplitContainer_Vertical.Panel2MinSize = 750;
       this.SplitContainer_Vertical.Size = new System.Drawing.Size(1241, 570);
       this.SplitContainer_Vertical.SplitterDistance = 250;
       this.SplitContainer_Vertical.TabIndex = 6;
       // 
-      // ToolModeEdit
+      // ToolAdd
       // 
-      this.ToolModeEdit.Appearance = System.Windows.Forms.Appearance.Button;
-      this.ToolModeEdit.AutoSize = true;
-      this.ToolModeEdit.BackgroundImage = global::LayoutDesigner.Properties.Resources.pencil;
-      this.ToolModeEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ToolModeEdit.Location = new System.Drawing.Point(26, 0);
-      this.ToolModeEdit.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-      this.ToolModeEdit.Name = "ToolModeEdit";
-      this.ToolModeEdit.Size = new System.Drawing.Size(23, 23);
-      this.ToolModeEdit.TabIndex = 4;
-      this.ToolModeEdit.Text = "  ";
-      this.ToolModeEdit.UseVisualStyleBackColor = true;
+      this.ToolAdd.Appearance = System.Windows.Forms.Appearance.Button;
+      this.ToolAdd.AutoSize = true;
+      this.ToolAdd.BackgroundImage = global::LayoutDesigner.Properties.Resources.add;
+      this.ToolAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.ToolAdd.Location = new System.Drawing.Point(26, 0);
+      this.ToolAdd.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+      this.ToolAdd.Name = "ToolAdd";
+      this.ToolAdd.Size = new System.Drawing.Size(23, 23);
+      this.ToolAdd.TabIndex = 4;
+      this.ToolAdd.Text = "  ";
+      this.ToolAdd.UseVisualStyleBackColor = true;
       // 
-      // ToolModeView
+      // ToolView
       // 
-      this.ToolModeView.Appearance = System.Windows.Forms.Appearance.Button;
-      this.ToolModeView.AutoSize = true;
-      this.ToolModeView.BackgroundImage = global::LayoutDesigner.Properties.Resources.pointer;
-      this.ToolModeView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ToolModeView.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      this.ToolModeView.Checked = true;
-      this.ToolModeView.Location = new System.Drawing.Point(0, 0);
-      this.ToolModeView.Margin = new System.Windows.Forms.Padding(0);
-      this.ToolModeView.Name = "ToolModeView";
-      this.ToolModeView.Size = new System.Drawing.Size(23, 23);
-      this.ToolModeView.TabIndex = 3;
-      this.ToolModeView.TabStop = true;
-      this.ToolModeView.Text = "  ";
-      this.ToolModeView.UseVisualStyleBackColor = true;
+      this.ToolView.Appearance = System.Windows.Forms.Appearance.Button;
+      this.ToolView.AutoSize = true;
+      this.ToolView.BackgroundImage = global::LayoutDesigner.Properties.Resources.pointer;
+      this.ToolView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.ToolView.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.ToolView.Checked = true;
+      this.ToolView.Location = new System.Drawing.Point(0, 0);
+      this.ToolView.Margin = new System.Windows.Forms.Padding(0);
+      this.ToolView.Name = "ToolView";
+      this.ToolView.Size = new System.Drawing.Size(23, 23);
+      this.ToolView.TabIndex = 3;
+      this.ToolView.TabStop = true;
+      this.ToolView.Text = "  ";
+      this.ToolView.UseVisualStyleBackColor = true;
+      // 
+      // ToolEdit
+      // 
+      this.ToolEdit.Appearance = System.Windows.Forms.Appearance.Button;
+      this.ToolEdit.AutoSize = true;
+      this.ToolEdit.BackgroundImage = global::LayoutDesigner.Properties.Resources.pencil;
+      this.ToolEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.ToolEdit.Location = new System.Drawing.Point(52, 0);
+      this.ToolEdit.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+      this.ToolEdit.Name = "ToolEdit";
+      this.ToolEdit.Size = new System.Drawing.Size(23, 23);
+      this.ToolEdit.TabIndex = 5;
+      this.ToolEdit.Text = "  ";
+      this.ToolEdit.UseVisualStyleBackColor = true;
       // 
       // Main
       // 
@@ -390,8 +406,9 @@ namespace LayoutDesigner {
     private System.Windows.Forms.ToolStripMenuItem MenuItem_RemoveZone;
     private System.Windows.Forms.SplitContainer SplitContainer_Horizontal;
     private System.Windows.Forms.SplitContainer SplitContainer_Vertical;
-    private System.Windows.Forms.RadioButton ToolModeView;
-    private System.Windows.Forms.RadioButton ToolModeEdit;
+    private System.Windows.Forms.RadioButton ToolView;
+    private System.Windows.Forms.RadioButton ToolAdd;
+    private System.Windows.Forms.RadioButton ToolEdit;
   }
 }
 
