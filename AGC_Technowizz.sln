@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communicator", "Communicato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "Settings\Settings.csproj", "{D2FC3DE1-64AC-4CA2-89E6-269D4449448E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LayoutAnalyzer", "LayoutAnalyzer\LayoutAnalyzer.csproj", "{7C20A3CB-3BC4-45B0-8E04-347ECDB52E4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LayoutOverview", "LayoutAnalyzer\LayoutOverview.csproj", "{7C20A3CB-3BC4-45B0-8E04-347ECDB52E4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
