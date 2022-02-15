@@ -69,11 +69,11 @@ namespace Core.UI {
 
     // Confirmation
     static public DialogResult SaveUnsavedLayout() {
-      return MessageBox.Show("Rozložení obsahuje změny a není uloženo, přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      return MessageBox.Show("Rozložení obsahuje změny a není uloženo. Přejete si ho uložit?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
 
-    static public DialogResult UndoableDeletion(string name) {
-      return MessageBox.Show($"Rozložení \"{ name }\" bude odstraněno a tuto operaci nelze vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+    static public DialogResult DeleteConfirmation() {
+      return MessageBox.Show("Tato položka bude odstraněna a tuto operaci nelze vrátit zpět. Pokračovat?", "Jste si jistí?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
 
     static public DialogResult SettingsReset() {
