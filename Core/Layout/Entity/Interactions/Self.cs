@@ -22,6 +22,14 @@ namespace Core {
         this.Zones.Add(zone);
         zone.Initialize(this, this.DaysPeriod);
       }
+
+
+
+      public void Change(Entity edited) {
+        this.Name = edited.Name;
+        this.WarehouseName = edited.WarehouseName;
+        this.Size = edited.Size;
+      }
     }
   }
 }
