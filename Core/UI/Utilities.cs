@@ -22,8 +22,39 @@ namespace Core.UI {
       timer.Start();
     }
 
+
+
     static public int ComputeTitleBarHeight(Form form) {
       return form.RectangleToScreen(form.ClientRectangle).Top - form.Top;
+    }
+
+
+
+    static public object GetEntityFromTreePath(string path, char[] pathSeparator, Layout.Entity layout) {
+      string[] pathPieces = path.Split(pathSeparator);
+      int level = pathPieces.Length - 1;
+      object currentSelection = null;
+
+      // Find current selection which can be Layout or Zone
+      if (level == 0 || level == 1) {
+        if (level == 0) {
+          if (pathPieces[level] == layout.Name) {
+            currentSelection = layout;
+          }
+        } else {
+          foreach (var zone in layout.Zones) {
+            if (level == 1) {
+              if (pathPieces[level] == zone.Name) {
+                currentSelection = zone;
+
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      return currentSelection;
     }
   }
 }
