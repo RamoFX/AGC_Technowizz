@@ -15,7 +15,7 @@ namespace Core.Extensions {
     }
 
     static public Point Unscale(this Point point, int multiplier) {
-      return point.Scale(-multiplier);
+      return new(point.X / multiplier, point.Y / multiplier);
     }
 
 
