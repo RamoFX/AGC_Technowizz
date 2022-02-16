@@ -35,7 +35,7 @@ namespace Core {
       static public Entity FromElement(XElement element) {
         string name = element.Attribute("name").Value;
         int verticalCapacity = element.Attribute("vertical-capacity").Value.ToInt();
-        string carBrand = element.Attribute("car-crand").Value;
+        string carBrand = element.Attribute("car-brand").Value;
         Size size = element.Attribute("size").Value.ToSize();
         Point location = element.Attribute("location").Value.ToPoint();
 
