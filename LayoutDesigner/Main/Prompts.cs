@@ -11,7 +11,7 @@ using Core.UI.Dialogs;
 
 namespace LayoutDesigner {
   public partial class Main {
-    private ListSelection GetSelect(IEnumerable<object> selectItems, string displayMember, string label) {
+    private ListSelection SelectionPrompt(IEnumerable<object> selectItems, string displayMember, string label) {
       ListSelection userSelect = new(selectItems.ToList(), displayMember, label);
 
       userSelect.ShowDialog(this);
@@ -19,15 +19,11 @@ namespace LayoutDesigner {
       return userSelect;
     }
 
-
-
-    private ListSelection GetSelect(IEnumerable<object> selectItems, string label) {
-      return GetSelect(selectItems, "", label);
+    private ListSelection SelectionPrompt(IEnumerable<object> selectItems, string label) {
+      return SelectionPrompt(selectItems, "", label);
     }
 
-
-
-    private TextInput GetNewName() {
+    private TextInput TextPrompt() {
       Func<string, bool> valueValidator = newName => {
         newName = newName.Trim();
         char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
@@ -59,19 +55,16 @@ namespace LayoutDesigner {
 
 
 
-    private ObjectEditor CreateNewLayout() {
+    // Base object prompt
+    private ObjectEditor LayoutEditorPrompt(string title, Layout.Entity layout, IEnumerable<string> otherNames) {
       Func<object, bool> validator = obj => {
         Layout.Entity layout = (Layout.Entity) obj;
 
+        layout.Name = layout.Name.Trim();
 
-
-        bool isNameEmpty = layout.Name.Trim().Length == 0;
-
-        bool isNameAlreadyInUse = Core.Layout.FileSystem.Exists(layout.Name);
-
+        bool isNameEmpty = layout.Name.Length == 0;
+        bool isNameAlreadyInUse = otherNames.Contains(layout.Name);
         bool hasInvalidSize = layout.Size.Width < 1 || layout.Size.Height < 1;
-
-
 
         if (isNameEmpty) {
           MessageBoxes.NameCannotBeEmpty();
@@ -88,41 +81,28 @@ namespace LayoutDesigner {
           return false;
         }
 
-
-
         return true;
       };
 
-      Layout.Entity initialLayout = new();
+      ObjectEditor layoutEditor = new(validator, layout, title);
 
-      ObjectEditor newLayout = new(validator, initialLayout, "Nová zóna");
+      layoutEditor.ShowDialog(this);
 
-      newLayout.ShowDialog(this);
-
-      return newLayout;
+      return layoutEditor;
     }
 
-
-
-    private ObjectEditor CreateNewZone() {
+    private ObjectEditor ZoneEditorPrompt(string title, Zone.Entity zone, IEnumerable<Zone.Entity> otherZones) {
       Func<object, bool> validator = obj => {
         Zone.Entity zone = (Zone.Entity) obj;
 
+        zone.Name = zone.Name.Trim();
 
-
-        bool isNameEmpty = zone.Name.Trim().Length == 0;
-
-        bool isNameAlreadyInUse = this.CurrentLayout.Zones.Any(currentZone => currentZone.Name == zone.Name);
-
+        bool isNameEmpty = zone.Name.Length == 0;
+        bool isNameAlreadyInUse = otherZones.Any(currentZone => currentZone.Name == zone.Name);
         bool isVerticalCapacityNegative = zone.VerticalCapacity < 0;
-
         bool isOutOfBounds = !this.CurrentLayout.Rectangle.Contains(zone.Rectangle);
-
-        bool doesIntersectWithOtherZone = this.CurrentLayout.Zones.Any(currentZone => zone.Rectangle.IntersectsWith(currentZone.Rectangle));
-
+        bool doesIntersectWithOtherZone = otherZones.Any(someZone => zone.Rectangle.IntersectsWith(someZone.Rectangle));
         bool hasInvalidSize = zone.Size.Width < 1 || zone.Size.Height < 1;
-
-
 
         if (isNameEmpty) {
           MessageBoxes.NameCannotBeEmpty();
@@ -154,18 +134,33 @@ namespace LayoutDesigner {
           return false;
         }
 
-
-
         return true;
       };
 
-      Core.Zone.Entity initialZone = new();
+      ObjectEditor zoneEditor = new(validator, zone, title);
 
-      ObjectEditor newZone = new(validator, initialZone, "Nová zóna");
+      zoneEditor.ShowDialog(this);
 
-      newZone.ShowDialog(this);
+      return zoneEditor;
+    }
 
-      return newZone;
+
+
+    // Object creation
+    private ObjectEditor NewLayoutPrompt() {
+      return this.LayoutEditorPrompt(
+        "Nové rozložení",
+        new(),
+        Core.Layout.FileSystem.GetFilesNames()
+      );
+    }
+
+    private ObjectEditor NewZonePrompt() {
+      return this.ZoneEditorPrompt(
+        "Nová zóna",
+        new(),
+        this.CurrentLayout.Zones
+      );
     }
   }
 }

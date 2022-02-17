@@ -42,7 +42,7 @@ namespace LayoutDesigner {
 
 
     private void MenuItem_OpenInFileExplorer_Click(object sender, EventArgs e) {
-      if (Core.Layout.FileSystem.GetFilesNames().Count() == 0) {
+      if (Core.Layout.FileSystem.GetValidNames().Count() == 0) {
         MessageBoxes.NoLayoutsExist();
         return;
       }

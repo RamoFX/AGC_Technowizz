@@ -12,13 +12,19 @@ namespace LayoutDesigner {
       }
     }
 
+
+
     private void UpdateOpenControl_Enabled() {
       MenuItem_Open.Enabled = Core.Layout.FileSystem.GetValidNames().Count() > 0;
     }
 
+
+
     private void UpdateCloseControl_Enabled() {
       MenuItem_Close.Enabled = this.CurrentLayout != null;
     }
+
+
 
     private void UpdateSaveControl_Enabled() {
       if (this.CurrentLayout != null) {
@@ -28,25 +34,37 @@ namespace LayoutDesigner {
       }
     }
 
+
+
     private void UpdateSaveAsControl_Enabled() {
       this.MenuItem_SaveAs.Enabled = this.CurrentLayout != null;
     }
+
+
 
     private void UpdateRenameControl_Enabled() {
       this.MenuItem_Rename.Enabled = this.CurrentLayout != null;
     }
 
+
+
     private void UpdateDeleteControl_Enabled() {
       this.MenuItem_Delete.Enabled = this.CurrentLayout != null && Core.Layout.FileSystem.Exists(this.CurrentLayout.Name);
     }
+
+
 
     private void UpdateNewZoneControl_Enabled() {
       this.MenuItem_NewZone.Enabled = this.CurrentLayout != null;
     }
 
+
+
     private void UpdateRemoveZoneControl_Enabled() {
       this.MenuItem_RemoveZone.Enabled = this.CurrentLayout != null && this.CurrentLayout.Zones.Count > 0;
     }
+
+
 
     private void UpdateState() {
       this.UpdateTitle();

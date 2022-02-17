@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Forms;
-
+using System.Xml;
+using Core;
 using Core.UI;
 using Core.UI.Dialogs;
 
@@ -33,20 +34,16 @@ namespace LayoutDesigner {
       this.UpdateState();
     }
 
-
-
     private void UnloadLayout() {
       this.UnloadLayout(false);
     }
-
-
 
     private void NewLayout() {
       // Pre-hooks
       this.UnloadLayout();
 
       // Setup new object
-      ObjectEditor newLayout = this.CreateNewLayout();
+      ObjectEditor newLayout = this.NewLayoutPrompt();
 
       if (newLayout.DialogResult != DialogResult.OK)
         return;
@@ -55,17 +52,13 @@ namespace LayoutDesigner {
       this.SetCurrentLayout((Core.Layout.Entity) newLayout.FinalValue);
     }
 
-
-
     private void OpenLayout(string layoutName) {
       Core.Layout.Entity layout = Core.Layout.FileSystem.Import(layoutName);
       this.SetCurrentLayout(layout);
     }
 
-
-
     private void OpenLayout() {
-      ListSelection selectLayoutName = GetSelect(Core.Layout.FileSystem.GetValidNames(), "Vyberte rozložení");
+      ListSelection selectLayoutName = SelectionPrompt(Core.Layout.FileSystem.GetValidNames(), "Vyberte rozložení");
 
       if (selectLayoutName.DialogResult != DialogResult.OK)
         return;
@@ -74,8 +67,6 @@ namespace LayoutDesigner {
 
       this.OpenLayout(layoutName);
     }
-
-
 
     private void SaveLayout() {
       if (this.CurrentLayout == null)
@@ -91,14 +82,12 @@ namespace LayoutDesigner {
       this.UpdateState();
     }
 
-
-
     private void SaveLayoutAs() {
       // Save if layout present
       if (this.CurrentLayout == null)
         return;
 
-      var userTextInput = this.GetNewName();
+      var userTextInput = this.TextPrompt();
 
       if (userTextInput.DialogResult != DialogResult.OK)
         return;
@@ -109,14 +98,12 @@ namespace LayoutDesigner {
       this.UpdateState();
     }
 
-
-
     private void RenameLayout() {
       // Rename if layout present
       if (this.CurrentLayout == null)
         return;
 
-      var userTextInput = this.GetNewName();
+      var userTextInput = this.TextPrompt();
 
       if (userTextInput.DialogResult != DialogResult.OK)
         return;
@@ -127,7 +114,24 @@ namespace LayoutDesigner {
       this.UpdateState();
     }
 
+    private void EditLayout() {
+      var otherNames = Core.Layout.FileSystem.GetFilesNames().Where(someName => someName != this.CurrentLayout.Name);
+      var layoutEditor = this.LayoutEditorPrompt("Upravit rozložení", this.CurrentLayout, otherNames);
 
+      if (layoutEditor.DialogResult != DialogResult.OK)
+        return;
+
+      var editedLayout = (Layout.Entity) layoutEditor.FinalValue;
+
+      // Handle name change
+      if (this.CurrentLayout.Name != editedLayout.Name)
+        Core.Layout.FileSystem.Move(this.CurrentLayout.Name, editedLayout.Name);
+
+      this.CurrentLayout.Change(editedLayout);
+
+      // Post-hooks
+      this.UpdateState();
+    }
 
     private void DeleteLayout() {
       // Delete if layout present
@@ -135,7 +139,7 @@ namespace LayoutDesigner {
         return;
 
       // Ask if user is sure
-      var dialogResult = MessageBoxes.UndoableDeletion(this.CurrentLayout.Name);
+      var dialogResult = MessageBoxes.DeleteConfirmation();
 
       if (dialogResult != DialogResult.Yes)
         return;
@@ -159,7 +163,7 @@ namespace LayoutDesigner {
       if (!layoutHasAvailableArea) {
         MessageBoxes.AreaFull();
       } else {
-        ObjectEditor newZone = CreateNewZone();
+        ObjectEditor newZone = NewZonePrompt();
 
         if (newZone.DialogResult != DialogResult.OK)
           return;
@@ -171,7 +175,31 @@ namespace LayoutDesigner {
       }
     }
 
+    private void EditZone(Zone.Entity targetZone) {
+      var otherZones = this.CurrentLayout.Zones.Where(someZone => someZone.Name != targetZone.Name);
+      var zoneEditor = this.ZoneEditorPrompt("Upravit zónu", targetZone, otherZones);
 
+      if (zoneEditor.DialogResult != DialogResult.OK)
+        return;
+
+      var editedZone = (Zone.Entity) zoneEditor.FinalValue;
+
+      targetZone.Change(editedZone);
+    }
+
+    private void DeleteZone(Zone.Entity zone, bool doForce) {
+      if (!doForce) {
+        var dialogResult = MessageBoxes.DeleteConfirmation();
+
+        if (dialogResult != DialogResult.Yes)
+          return;
+      }
+
+      this.CurrentLayout.Zones.Remove(zone);
+
+      // Post-hooks
+      this.UpdateState();
+    }
 
     private void DeleteZone() {
       if (this.CurrentLayout == null)
@@ -180,17 +208,14 @@ namespace LayoutDesigner {
       if (this.CurrentLayout.Zones.Count() == 0)
         return;
 
-      ListSelection zoneSelect = GetSelect(this.CurrentLayout.Zones, "Name", "Vyberte zónu");
+      ListSelection zoneSelect = SelectionPrompt(this.CurrentLayout.Zones, "Name", "Vyberte zónu");
 
       if (zoneSelect.DialogResult != DialogResult.OK)
         return;
 
       var zone = (Core.Zone.Entity) zoneSelect.FinalValue;
 
-      this.CurrentLayout.Zones.Remove(zone);
-
-      // Post-hooks
-      this.UpdateState();
+      this.DeleteZone(zone, true);
     }
   }
 }

@@ -44,16 +44,12 @@ namespace LayoutDesigner {
       this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
       this.MenuItem_RemoveZone = new System.Windows.Forms.ToolStripMenuItem();
       this.Tree_Layout = new System.Windows.Forms.TreeView();
-      this.PictureBox_Layout = new System.Windows.Forms.PictureBox();
+      this.Canvas_Layout = new System.Windows.Forms.PictureBox();
       this.Properties_CurrentSelection = new System.Windows.Forms.PropertyGrid();
       this.SplitContainer_Horizontal = new System.Windows.Forms.SplitContainer();
       this.SplitContainer_Vertical = new System.Windows.Forms.SplitContainer();
-      this.ToolEdit = new System.Windows.Forms.RadioButton();
-      this.ToolAdd = new System.Windows.Forms.RadioButton();
-      this.ToolView = new System.Windows.Forms.RadioButton();
-      this.Panel_Tools = new System.Windows.Forms.Panel();
       this.Menu.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.Canvas_Layout)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Horizontal)).BeginInit();
       this.SplitContainer_Horizontal.Panel1.SuspendLayout();
       this.SplitContainer_Horizontal.Panel2.SuspendLayout();
@@ -62,7 +58,6 @@ namespace LayoutDesigner {
       this.SplitContainer_Vertical.Panel1.SuspendLayout();
       this.SplitContainer_Vertical.Panel2.SuspendLayout();
       this.SplitContainer_Vertical.SuspendLayout();
-      this.Panel_Tools.SuspendLayout();
       this.SuspendLayout();
       // 
       // Menu
@@ -230,19 +225,26 @@ namespace LayoutDesigner {
       this.Tree_Layout.ShowNodeToolTips = true;
       this.Tree_Layout.Size = new System.Drawing.Size(250, 328);
       this.Tree_Layout.TabIndex = 0;
-      this.Tree_Layout.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_Layout_NodeMouseClick);
+      this.Tree_Layout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tree_Layout_MouseDown);
       // 
-      // PictureBox_Layout
+      // Canvas_Layout
       // 
-      this.PictureBox_Layout.ErrorImage = null;
-      this.PictureBox_Layout.InitialImage = null;
-      this.PictureBox_Layout.Location = new System.Drawing.Point(0, 23);
-      this.PictureBox_Layout.Margin = new System.Windows.Forms.Padding(0);
-      this.PictureBox_Layout.Name = "PictureBox_Layout";
-      this.PictureBox_Layout.Size = new System.Drawing.Size(987, 547);
-      this.PictureBox_Layout.TabIndex = 2;
-      this.PictureBox_Layout.TabStop = false;
-      this.PictureBox_Layout.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Layout_Paint);
+      this.Canvas_Layout.BackColor = System.Drawing.SystemColors.Control;
+      this.Canvas_Layout.ErrorImage = null;
+      this.Canvas_Layout.InitialImage = null;
+      this.Canvas_Layout.Location = new System.Drawing.Point(0, 0);
+      this.Canvas_Layout.Margin = new System.Windows.Forms.Padding(0);
+      this.Canvas_Layout.Name = "Canvas_Layout";
+      this.Canvas_Layout.Size = new System.Drawing.Size(987, 570);
+      this.Canvas_Layout.TabIndex = 2;
+      this.Canvas_Layout.TabStop = false;
+      this.Canvas_Layout.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Layout_Paint);
+      this.Canvas_Layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseClick);
+      this.Canvas_Layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseDoubleClick);
+      this.Canvas_Layout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseDown);
+      this.Canvas_Layout.MouseLeave += new System.EventHandler(this.PictureBox_Layout_MouseLeave);
+      this.Canvas_Layout.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseMove);
+      this.Canvas_Layout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseUp);
       // 
       // Properties_CurrentSelection
       // 
@@ -295,69 +297,12 @@ namespace LayoutDesigner {
       // 
       // SplitContainer_Vertical.Panel2
       // 
-      this.SplitContainer_Vertical.Panel2.Controls.Add(this.Panel_Tools);
-      this.SplitContainer_Vertical.Panel2.Controls.Add(this.PictureBox_Layout);
-      this.SplitContainer_Vertical.Panel2.Resize += new System.EventHandler(this.SplitContainer_Vertical_Panel2_Resize);
+      this.SplitContainer_Vertical.Panel2.AutoScroll = true;
+      this.SplitContainer_Vertical.Panel2.Controls.Add(this.Canvas_Layout);
       this.SplitContainer_Vertical.Panel2MinSize = 750;
       this.SplitContainer_Vertical.Size = new System.Drawing.Size(1241, 570);
       this.SplitContainer_Vertical.SplitterDistance = 250;
       this.SplitContainer_Vertical.TabIndex = 6;
-      // 
-      // ToolEdit
-      // 
-      this.ToolEdit.Appearance = System.Windows.Forms.Appearance.Button;
-      this.ToolEdit.AutoSize = true;
-      this.ToolEdit.BackgroundImage = global::LayoutDesigner.Properties.Resources.pencil;
-      this.ToolEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ToolEdit.Location = new System.Drawing.Point(52, 0);
-      this.ToolEdit.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-      this.ToolEdit.Name = "ToolEdit";
-      this.ToolEdit.Size = new System.Drawing.Size(23, 23);
-      this.ToolEdit.TabIndex = 5;
-      this.ToolEdit.Text = "  ";
-      this.ToolEdit.UseVisualStyleBackColor = true;
-      // 
-      // ToolAdd
-      // 
-      this.ToolAdd.Appearance = System.Windows.Forms.Appearance.Button;
-      this.ToolAdd.AutoSize = true;
-      this.ToolAdd.BackgroundImage = global::LayoutDesigner.Properties.Resources.add;
-      this.ToolAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ToolAdd.Location = new System.Drawing.Point(26, 0);
-      this.ToolAdd.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-      this.ToolAdd.Name = "ToolAdd";
-      this.ToolAdd.Size = new System.Drawing.Size(23, 23);
-      this.ToolAdd.TabIndex = 4;
-      this.ToolAdd.Text = "  ";
-      this.ToolAdd.UseVisualStyleBackColor = true;
-      // 
-      // ToolView
-      // 
-      this.ToolView.Appearance = System.Windows.Forms.Appearance.Button;
-      this.ToolView.AutoSize = true;
-      this.ToolView.BackgroundImage = global::LayoutDesigner.Properties.Resources.pointer;
-      this.ToolView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ToolView.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      this.ToolView.Checked = true;
-      this.ToolView.Location = new System.Drawing.Point(0, 0);
-      this.ToolView.Margin = new System.Windows.Forms.Padding(0);
-      this.ToolView.Name = "ToolView";
-      this.ToolView.Size = new System.Drawing.Size(23, 23);
-      this.ToolView.TabIndex = 3;
-      this.ToolView.TabStop = true;
-      this.ToolView.Text = "  ";
-      this.ToolView.UseVisualStyleBackColor = true;
-      // 
-      // Panel_Tools
-      // 
-      this.Panel_Tools.Controls.Add(this.ToolView);
-      this.Panel_Tools.Controls.Add(this.ToolEdit);
-      this.Panel_Tools.Controls.Add(this.ToolAdd);
-      this.Panel_Tools.Location = new System.Drawing.Point(0, 0);
-      this.Panel_Tools.Margin = new System.Windows.Forms.Padding(0);
-      this.Panel_Tools.Name = "Panel_Tools";
-      this.Panel_Tools.Size = new System.Drawing.Size(987, 23);
-      this.Panel_Tools.TabIndex = 6;
       // 
       // Main
       // 
@@ -378,7 +323,7 @@ namespace LayoutDesigner {
       this.Resize += new System.EventHandler(this.Main_Resize);
       this.Menu.ResumeLayout(false);
       this.Menu.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Layout)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.Canvas_Layout)).EndInit();
       this.SplitContainer_Horizontal.Panel1.ResumeLayout(false);
       this.SplitContainer_Horizontal.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Horizontal)).EndInit();
@@ -387,8 +332,6 @@ namespace LayoutDesigner {
       this.SplitContainer_Vertical.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Vertical)).EndInit();
       this.SplitContainer_Vertical.ResumeLayout(false);
-      this.Panel_Tools.ResumeLayout(false);
-      this.Panel_Tools.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -410,7 +353,7 @@ namespace LayoutDesigner {
     private System.Windows.Forms.ToolStripSeparator Separator3;
     private System.Windows.Forms.ToolStripMenuItem MenuItem_Exit;
     private System.Windows.Forms.TreeView Tree_Layout;
-    private System.Windows.Forms.PictureBox PictureBox_Layout;
+    private System.Windows.Forms.PictureBox Canvas_Layout;
     private System.Windows.Forms.PropertyGrid Properties_CurrentSelection;
     private System.Windows.Forms.ToolStripMenuItem MenuLayout;
     private System.Windows.Forms.ToolStripMenuItem MenuItem_NewZone;
@@ -418,10 +361,6 @@ namespace LayoutDesigner {
     private System.Windows.Forms.ToolStripMenuItem MenuItem_RemoveZone;
     private System.Windows.Forms.SplitContainer SplitContainer_Horizontal;
     private System.Windows.Forms.SplitContainer SplitContainer_Vertical;
-    private System.Windows.Forms.RadioButton ToolView;
-    private System.Windows.Forms.RadioButton ToolAdd;
-    private System.Windows.Forms.RadioButton ToolEdit;
-    private System.Windows.Forms.Panel Panel_Tools;
   }
 }
 

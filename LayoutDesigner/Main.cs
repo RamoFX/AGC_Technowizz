@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using Core.UI;
@@ -8,9 +10,6 @@ using Core.UI;
 
 namespace LayoutDesigner {
   public partial class Main : Form {
-    private const string TITLE_BASE = "Návrhář rozložení";
-    private readonly int MainHeightOffset;
-
     public Main() {
       InitializeComponent();
 
@@ -36,8 +35,6 @@ namespace LayoutDesigner {
       // Post-hooks
       this.SetCurrentLayout(null);
       this.UpdateState();
-
-      //this.Open("grid-test");
     }
   }
 }
