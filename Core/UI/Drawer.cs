@@ -12,58 +12,58 @@ using Core.Settings;
 
 namespace Core.UI {
   public static class Drawer {
-    static public void DrawLayout(Graphics graphics, Layout.Entity layout) {
-      // Preparation
-      int unitSize = StaticSettings.UNIT_SIZE;
-      int outlineSize = StaticSettings.OUTLINE_SIZE * 0 + 1;
-
-      Pen penNeutralLight = DynamicSettings.GridColor.Value.ToColor().ToPen(outlineSize);
-
-      Pen penNeutralDark = DynamicSettings.LayoutColor.Value.ToColor().ToPen(outlineSize);
+    static private readonly int UnitSize = StaticSettings.UNIT_SIZE;
+    static private readonly int OutlineSize = StaticSettings.OUTLINE_SIZE;
+    static private readonly Pen NeutralLight = DynamicSettings.GridColor.Value.ToColor().ToPen(OutlineSize);
 
 
+
+    static public void DrawLayout(Graphics graphics, Rectangle clip, Layout.Entity layout) {
+      // Current visible area clip
+      graphics.SetClip(clip);
 
       // Vertical grid lines
       for (int x = 0; x <= layout.Size.Width; x++) {
+        // Draw only if inside clip
+        if (!graphics.IsVisible(x * UnitSize, clip.Location.Y))
+          continue;
+
         graphics.DrawLine(
-          penNeutralLight,
+          NeutralLight,
 
           new Point(x, 0)
-            .Scale(unitSize),
+            .Scale(UnitSize),
 
           new Point(x, layout.Size.Height)
-            .Scale(unitSize)
+            .Scale(UnitSize)
         );
       }
 
       // Horizontal grid lines
       for (int y = 0; y <= layout.Size.Height; y++) {
+        // Draw only if inside clip
+        if (!graphics.IsVisible(clip.Location.X, y * UnitSize))
+          continue;
+
         graphics.DrawLine(
-          penNeutralLight,
+          NeutralLight,
 
           new Point(0, y)
-            .Scale(unitSize),
+            .Scale(UnitSize),
 
           new Point(layout.Size.Width, y)
-            .Scale(unitSize)
+            .Scale(UnitSize)
         );
       }
 
 
 
-      // Layout
-      graphics.DrawRectangle(
-        penNeutralDark,
-
-        layout.Rectangle
-          .Scale(unitSize)
-      );
-
-
-
       // Zones
       foreach (Zone.Entity zone in layout.Zones) {
-        var zoneRectangle = zone.Rectangle.Scale(unitSize);
+        var zoneRectangle = zone.Rectangle.Scale(UnitSize);
+
+        if (!graphics.IsVisible(zoneRectangle))
+          continue;
 
         graphics.FillRectangle(
           zone.Color
@@ -71,7 +71,7 @@ namespace Core.UI {
             .Transparentize(),
 
           zone.Rectangle
-            .Scale(unitSize)
+            .Scale(UnitSize)
         );
 
         if (zone.VerticalCapacity == 0) {
