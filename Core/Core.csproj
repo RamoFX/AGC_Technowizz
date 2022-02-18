@@ -96,8 +96,6 @@
       <DependentUpon>ListSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Drawer.cs" />
-    <Compile Include="UI\Layer.cs" />
-    <Compile Include="UI\Renderer.cs" />
     <Compile Include="UI\Utilities.cs" />
     <Compile Include="Common\Xml.cs" />
     <Compile Include="Layout\FileSystem\Changing.cs" />
