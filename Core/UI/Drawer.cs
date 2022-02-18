@@ -83,13 +83,5 @@ namespace Core.UI {
         }
       }
     }
-
-
-
-    static public void DrawLayers(Graphics graphics, params Layer[] layers) {
-      foreach (Layer layer in layers) {
-        graphics.DrawImage(layer.Bitmap, layer.Rectangle);
-      }
-    }
   }
 }
