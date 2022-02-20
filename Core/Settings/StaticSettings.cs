@@ -26,8 +26,9 @@ namespace Core.Settings {
 
 
     // Visual
-    public const int UNIT_SIZE = 48;
     public const int OUTLINE_SIZE = 2;
+    public const int UNIT_SIZE    = 48;
+    public const int CLIP_OFFSET  = UNIT_SIZE / 4;
 
 
 
