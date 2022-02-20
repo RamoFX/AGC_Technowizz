@@ -16,13 +16,15 @@ namespace Core.UI {
 
 
 
-    static public void DrawLayout(Graphics graphics, Rectangle clip, Layout.Entity layout) {
-      // Current visible area clip
+    static public void DrawLayout(Graphics graphics, Rectangle clip, Layout.Entity layout, object selection) {
+      // Current visible clip
       graphics.SetClip(clip);
+
+
 
       // Vertical grid lines
       for (int x = 0; x <= layout.Size.Width; x++) {
-        // Draw only if inside clip
+        // Draw only if inside visible clip
         if (!graphics.IsVisible(x * StaticSettings.UNIT_SIZE, clip.Location.Y))
           continue;
 
@@ -37,9 +39,11 @@ namespace Core.UI {
         );
       }
 
+
+
       // Horizontal grid lines
       for (int y = 0; y <= layout.Size.Height; y++) {
-        // Draw only if inside clip
+        // Draw only if inside visible clip
         if (!graphics.IsVisible(clip.Location.X, y * StaticSettings.UNIT_SIZE))
           continue;
 
@@ -60,27 +64,30 @@ namespace Core.UI {
       foreach (Zone.Entity zone in layout.Zones) {
         var zoneRectangle = zone.Rectangle.Scale(StaticSettings.UNIT_SIZE);
 
+        // Draw only if inside visible clip
         if (!graphics.IsVisible(zoneRectangle))
           continue;
 
-        graphics.FillRectangle(
-          zone.Color
-            .ToBrush()
-            .Transparentize(),
+        // Preparation
+        bool isSelection = zone == selection;
 
-          zone.Rectangle
-            .Scale(StaticSettings.UNIT_SIZE)
+        var brush = zone.Color
+            .ToBrush()
+            .Transparentize(isSelection ? 150 : 200);
+
+        var pen = zone.Color
+            .ToPen(StaticSettings.OUTLINE_SIZE);
+
+        // Draw
+        graphics.FillRectangle(
+          brush,
+          zoneRectangle
         );
 
-        if (zone.VerticalCapacity == 0) {
-          graphics.FillRectangle(
-            zone.Color
-              .ToBrush()
-              .Transparentize(),
-
-            zoneRectangle
-          );
-        }
+        graphics.DrawRectangle(
+          pen,
+          zoneRectangle
+        );
       }
     }
   }
