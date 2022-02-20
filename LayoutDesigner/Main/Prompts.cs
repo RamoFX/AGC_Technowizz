@@ -101,7 +101,7 @@ namespace LayoutDesigner {
         Zone.Entity newZone = (Zone.Entity) obj;
 
         newZone.Name = newZone.Name.Trim();
-        newZone.CarBrand = newZone.Name.Trim();
+        newZone.CarBrand = newZone.CarBrand.Trim();
 
         bool isNameEmpty = newZone.Name.Length == 0;
         bool isNameAlreadyInUse = otherZones.Select(someZone => someZone.Name).Contains(newZone.Name);
