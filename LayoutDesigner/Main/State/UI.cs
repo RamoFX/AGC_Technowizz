@@ -54,18 +54,6 @@ namespace LayoutDesigner {
 
 
 
-    private void UpdateNewZoneControl_Enabled() {
-      this.MenuItem_NewZone.Enabled = this.CurrentLayout != null;
-    }
-
-
-
-    private void UpdateRemoveZoneControl_Enabled() {
-      this.MenuItem_RemoveZone.Enabled = this.CurrentLayout != null && this.CurrentLayout.Zones.Count > 0;
-    }
-
-
-
     private void UpdateState() {
       this.UpdateTitle();
       this.UpdateOpenControl_Enabled();
@@ -74,8 +62,6 @@ namespace LayoutDesigner {
       this.UpdateSaveAsControl_Enabled();
       this.UpdateRenameControl_Enabled();
       this.UpdateDeleteControl_Enabled();
-      this.UpdateNewZoneControl_Enabled();
-      this.UpdateRemoveZoneControl_Enabled();
 
       // Post-hooks
       this.CurrentLayoutChangedHandler();

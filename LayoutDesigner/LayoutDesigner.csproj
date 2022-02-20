@@ -88,7 +88,7 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\EventHandlers\Mouse.cs">
+    <Compile Include="Main\EventHandlers\CanvasMouse.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main\State\Handlers.cs">

@@ -39,10 +39,6 @@ namespace LayoutDesigner {
       this.MenuItem_OpenInFileExplorer = new System.Windows.Forms.ToolStripMenuItem();
       this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
       this.MenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
-      this.MenuLayout = new System.Windows.Forms.ToolStripMenuItem();
-      this.MenuItem_NewZone = new System.Windows.Forms.ToolStripMenuItem();
-      this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
-      this.MenuItem_RemoveZone = new System.Windows.Forms.ToolStripMenuItem();
       this.Tree_Layout = new System.Windows.Forms.TreeView();
       this.Canvas_Layout = new System.Windows.Forms.PictureBox();
       this.Properties_CurrentSelection = new System.Windows.Forms.PropertyGrid();
@@ -64,8 +60,7 @@ namespace LayoutDesigner {
       // 
       this.Menu.GripMargin = new System.Windows.Forms.Padding(0);
       this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuFile,
-            this.MenuLayout});
+            this.MenuFile});
       this.Menu.Location = new System.Drawing.Point(0, 0);
       this.Menu.Name = "Menu";
       this.Menu.Padding = new System.Windows.Forms.Padding(0);
@@ -184,35 +179,6 @@ namespace LayoutDesigner {
       this.MenuItem_Exit.Text = "Ukončit";
       this.MenuItem_Exit.Click += new System.EventHandler(this.MenuItem_Exit_Click);
       // 
-      // MenuLayout
-      // 
-      this.MenuLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItem_NewZone,
-            this.Separator4,
-            this.MenuItem_RemoveZone});
-      this.MenuLayout.Name = "MenuLayout";
-      this.MenuLayout.Size = new System.Drawing.Size(66, 24);
-      this.MenuLayout.Text = "rozložení";
-      // 
-      // MenuItem_NewZone
-      // 
-      this.MenuItem_NewZone.Name = "MenuItem_NewZone";
-      this.MenuItem_NewZone.Size = new System.Drawing.Size(161, 22);
-      this.MenuItem_NewZone.Text = "Nová zóna...";
-      this.MenuItem_NewZone.Click += new System.EventHandler(this.MenuItem_NewZone_Click);
-      // 
-      // Separator4
-      // 
-      this.Separator4.Name = "Separator4";
-      this.Separator4.Size = new System.Drawing.Size(158, 6);
-      // 
-      // MenuItem_RemoveZone
-      // 
-      this.MenuItem_RemoveZone.Name = "MenuItem_RemoveZone";
-      this.MenuItem_RemoveZone.Size = new System.Drawing.Size(161, 22);
-      this.MenuItem_RemoveZone.Text = "Odstranit zónu...";
-      this.MenuItem_RemoveZone.Click += new System.EventHandler(this.MenuItem_RemoveZone_Click);
-      // 
       // Tree_Layout
       // 
       this.Tree_Layout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -239,12 +205,11 @@ namespace LayoutDesigner {
       this.Canvas_Layout.TabIndex = 2;
       this.Canvas_Layout.TabStop = false;
       this.Canvas_Layout.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Layout_Paint);
-      this.Canvas_Layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseClick);
-      this.Canvas_Layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseDoubleClick);
-      this.Canvas_Layout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseDown);
-      this.Canvas_Layout.MouseLeave += new System.EventHandler(this.PictureBox_Layout_MouseLeave);
-      this.Canvas_Layout.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseMove);
-      this.Canvas_Layout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_Layout_MouseUp);
+      this.Canvas_Layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseDoubleClick);
+      this.Canvas_Layout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseDown);
+      this.Canvas_Layout.MouseLeave += new System.EventHandler(this.Canvas_Layout_MouseLeave);
+      this.Canvas_Layout.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseMove);
+      this.Canvas_Layout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseUp);
       // 
       // Properties_CurrentSelection
       // 
@@ -355,10 +320,6 @@ namespace LayoutDesigner {
     private System.Windows.Forms.TreeView Tree_Layout;
     private System.Windows.Forms.PictureBox Canvas_Layout;
     private System.Windows.Forms.PropertyGrid Properties_CurrentSelection;
-    private System.Windows.Forms.ToolStripMenuItem MenuLayout;
-    private System.Windows.Forms.ToolStripMenuItem MenuItem_NewZone;
-    private System.Windows.Forms.ToolStripSeparator Separator4;
-    private System.Windows.Forms.ToolStripMenuItem MenuItem_RemoveZone;
     private System.Windows.Forms.SplitContainer SplitContainer_Horizontal;
     private System.Windows.Forms.SplitContainer SplitContainer_Vertical;
   }

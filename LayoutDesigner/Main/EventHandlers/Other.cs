@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 using Core.Extensions;
 using Core.Settings;
 using Core.UI;
@@ -23,7 +25,7 @@ namespace LayoutDesigner {
         char[] pathSeparator = this.Tree_Layout.PathSeparator.ToCharArray();
         var layout = this.CurrentLayout;
 
-        currentSelection = Utilities.GetEntityFromTreePath(path, pathSeparator, layout);
+        currentSelection = Utilities.MatchEntity(path, pathSeparator, layout);
       }
 
       this.SetCurrentSelection(currentSelection);
@@ -44,7 +46,7 @@ namespace LayoutDesigner {
       if (this.CurrentLayout == null)
         return;
 
-      this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UNIT_SIZE);
+      this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UNIT_SIZE) + new Size(StaticSettings.OUTLINE_SIZE / 2, StaticSettings.OUTLINE_SIZE / 2);
 
       Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentLayout);
     }

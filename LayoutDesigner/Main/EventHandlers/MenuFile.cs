@@ -54,16 +54,5 @@ namespace LayoutDesigner {
     private void MenuItem_Exit_Click(object sender, EventArgs e) {
       this.Close();
     }
-
-
-
-    // Layout (Tool strip menu item)
-    private void MenuItem_NewZone_Click(object sender, EventArgs e) {
-      this.NewZone();
-    }
-
-    private void MenuItem_RemoveZone_Click(object sender, EventArgs e) {
-      this.DeleteZone();
-    }
   }
 }

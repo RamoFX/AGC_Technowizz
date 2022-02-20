@@ -62,12 +62,12 @@ namespace Core.UI {
 
 
 
-    static public object MatchEntity(Point location, int scaleFactor, Layout.Entity layout) {
+    static public object MatchEntity(Point location, Layout.Entity layout) {
       // Handle invalid parameter values
-      if (location.X < 0 || location.Y < 0 || scaleFactor < 1 || layout == null)
+      if (location.X < 0 || location.Y < 0 || layout == null)
         return null;
 
-      location = location.Unscale(scaleFactor);
+      location = location.Unscale(StaticSettings.UNIT_SIZE);
 
       // Handle location out of bounds
       if (!layout.Rectangle.Contains(location))
