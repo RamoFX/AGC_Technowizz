@@ -6,24 +6,24 @@ using System.Windows.Forms;
 namespace Core.UI.Dialogs {
   public partial class ObjectEditor : Form {
     public new DialogResult DialogResult;
-    public Func<object, bool> ValueValidator;
+    public Validator<object> Validator;
     public object FinalValue;
 
 
 
-    public ObjectEditor(Func<object, bool> valueValidator, object initialObject, string labelText) {
+    public ObjectEditor(Validator<object> validator, object initialObject, string labelText) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
-      this.ValueValidator = valueValidator;
+      this.Validator = validator;
       this.PropertyGrid.SelectedObject = initialObject;
-      this.Label.Text = labelText;
+      this.Text = labelText;
     }
 
 
 
     private void Button_Apply_Click(object sender, EventArgs e) {
       object newObject = PropertyGrid.SelectedObject;
-      bool isValid = this.ValueValidator(newObject);
+      bool isValid = this.Validator(newObject);
 
       if (isValid) {
         this.DialogResult = DialogResult.OK;
@@ -37,22 +37,6 @@ namespace Core.UI.Dialogs {
     private void Button_Cancel_Click(object sender, EventArgs e) {
       this.DialogResult = DialogResult.Cancel;
       this.Close();
-    }
-
-
-
-    private void KeyboardShortcuts(object sender, KeyEventArgs e)
-    {
-      MessageBox.Show("");
-      switch (e.KeyCode)
-      {
-        case Keys.Enter:
-          Button_Apply.PerformClick();
-          break;
-        case Keys.Escape:
-          Button_Cancel.PerformClick();
-          break;
-      }
     }
   }
 }

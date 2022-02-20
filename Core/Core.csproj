@@ -60,6 +60,7 @@
     <Compile Include="Layout\Entity\Interactions\Self.cs" />
     <Compile Include="Layout\Entity\Interactions\Zone.cs" />
     <Compile Include="Layout\State.cs" />
+    <Compile Include="UI\Dialogs\Validator.cs" />
     <Compile Include="Zone\Entity\Constructors.cs" />
     <Compile Include="Zone\Entity\Fields\Data.cs" />
     <Compile Include="Zone\Entity\Fields\Main.cs" />

@@ -6,27 +6,27 @@ using System.Windows.Forms;
 namespace Core.UI.Dialogs {
   public partial class TextInput : Form {
     public new DialogResult DialogResult;
-    public Func<string, bool> ValueValidator;
+    public Validator<string> Validator;
     public string FinalValue;
 
 
 
-    public TextInput(Func<string, bool> validator, string label, string initialValue) {
+    public TextInput(Validator<string> validator, string label, string initialValue) {
       InitializeComponent();
       this.DialogResult = DialogResult.None;
-      this.ValueValidator = validator;
-      this.Label.Text = label;
+      this.Validator = validator;
+      this.Text = label;
       this.TextBox.Text = initialValue;
     }
 
-    public TextInput(Func<string, bool> validator, string label)
+    public TextInput(Validator<string> validator, string label)
       : this(validator, label, "") { }
 
 
 
     private void Button_Apply_Click(object sender, EventArgs e) {
       string newName = TextBox.Text;
-      bool isValid = this.ValueValidator(newName);
+      bool isValid = this.Validator(newName);
 
       if (isValid) {
         this.DialogResult = DialogResult.OK;
@@ -44,13 +44,12 @@ namespace Core.UI.Dialogs {
 
 
 
-    private void KeyboardShortcuts(object sender, KeyEventArgs e)
-    {
-      switch (e.KeyCode)
-      {
+    private void KeyboardShortcuts(object sender, KeyEventArgs e) {
+      switch (e.KeyCode) {
         case Keys.Enter:
           Button_Apply.PerformClick();
           break;
+
         case Keys.Escape:
           Button_Cancel.PerformClick();
           break;

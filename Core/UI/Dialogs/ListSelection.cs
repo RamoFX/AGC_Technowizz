@@ -16,7 +16,7 @@ namespace Core.UI.Dialogs {
       this.DialogResult = DialogResult.None;
       this.ListBox.DataSource = selectItems;
       this.ListBox.DisplayMember = displayMember;
-      this.Label.Text = labelText;
+      this.Text = labelText;
     }
 
 
@@ -41,21 +41,21 @@ namespace Core.UI.Dialogs {
 
 
 
-    private void KeyboardShortcuts(object sender, KeyEventArgs e)
-    {
-      switch (e.KeyCode)
-      {
+    private void KeyboardShortcuts(object sender, KeyEventArgs e) {
+      switch (e.KeyCode) {
         case Keys.Enter:
           Button_Apply.PerformClick();
           break;
+
         case Keys.Escape:
           Button_Cancel.PerformClick();
           break;
       }
     }
 
-    private void ListBox_MouseDoubleClick(object sender, MouseEventArgs e)
-    {
+
+
+    private void ListBox_MouseDoubleClick(object sender, MouseEventArgs e) {
       Button_Apply.PerformClick();
     }
   }
