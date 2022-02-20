@@ -23,30 +23,35 @@ namespace LayoutDesigner {
       return SelectionPrompt(selectItems, "", label);
     }
 
-    private TextInput TextPrompt() {
-      Func<string, bool> valueValidator = newName => {
-        newName = newName.Trim();
+    private TextInput TextPrompt(string initialValue) {
+      Validator<string> valueValidator = name => {
+        name = name.Trim();
         char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
 
-        bool isEmpty = newName.Length == 0;
-        bool newNameContainsInvalidChars = newName.ToCharArray().Any(newNameChar => invalidFileNameChars.Contains(newNameChar));
-        bool nameAlreadyTaken = Core.Layout.FileSystem.Exists(newName);
+        bool isEmpty = name.Length == 0;
+        bool newNameContainsInvalidChars = name.ToCharArray().Any(newNameChar => invalidFileNameChars.Contains(newNameChar));
+        bool nameAlreadyTaken = Core.Layout.FileSystem.Exists(name);
 
         if (isEmpty) {
           MessageBoxes.NameCannotBeEmpty();
           return false;
-        } else if (newNameContainsInvalidChars) {
+        }
+        
+        else if (newNameContainsInvalidChars) {
           MessageBoxes.TextFieldCannotContainInvalidChars();
           return false;
-        } else if (nameAlreadyTaken) {
+        }
+        
+        else if (nameAlreadyTaken) {
           MessageBoxes.NameAlreadyInUse();
           return false;
-        } else {
-          return true;
         }
+        
+        else
+          return true;
       };
 
-      TextInput userTextInput = new(valueValidator, "Nový název rozložení");
+      TextInput userTextInput = new(valueValidator, "Nový název rozložení", initialValue);
 
       userTextInput.ShowDialog(this);
 
@@ -57,7 +62,7 @@ namespace LayoutDesigner {
 
     // Base object prompt
     private ObjectEditor LayoutEditorPrompt(string title, Layout.Entity layout, IEnumerable<string> otherNames) {
-      Func<object, bool> validator = obj => {
+      Validator<object> validator = obj => {
         Layout.Entity layout = (Layout.Entity) obj;
 
         layout.Name = layout.Name.Trim();
@@ -92,49 +97,50 @@ namespace LayoutDesigner {
     }
 
     private ObjectEditor ZoneEditorPrompt(string title, Zone.Entity zone, IEnumerable<Zone.Entity> otherZones) {
-      Func<object, bool> validator = obj => {
-        Zone.Entity zone = (Zone.Entity) obj;
+      Validator<object> validator = obj => {
+        Zone.Entity newZone = (Zone.Entity) obj;
 
-        zone.Name = zone.Name.Trim();
+        newZone.Name = newZone.Name.Trim();
 
-        bool isNameEmpty = zone.Name.Length == 0;
-        bool isNameAlreadyInUse = otherZones.Any(currentZone => currentZone.Name == zone.Name);
-        bool isVerticalCapacityNegative = zone.VerticalCapacity < 0;
-        bool isOutOfBounds = !this.CurrentLayout.Rectangle.Contains(zone.Rectangle);
-        bool doesIntersectWithOtherZone = otherZones.Any(someZone => zone.Rectangle.IntersectsWith(someZone.Rectangle));
-        bool hasInvalidSize = zone.Size.Width < 1 || zone.Size.Height < 1;
+        bool isNameEmpty = newZone.Name.Length == 0;
+        bool isNameAlreadyInUse = otherZones.Select(someZone => someZone.Name).Contains(newZone.Name);
+        bool isVerticalCapacityNegative = newZone.VerticalCapacity < 0;
+        bool isOutOfBounds = !this.CurrentLayout.Rectangle.Contains(newZone.Rectangle);
+        bool doesIntersectWithOtherZone = otherZones.Any(someZone => newZone.Rectangle.IntersectsWith(someZone.Rectangle));
+        bool hasInvalidSize = newZone.Size.Width < 1 || newZone.Size.Height < 1;
 
         if (isNameEmpty) {
           MessageBoxes.NameCannotBeEmpty();
           return false;
         }
 
-        if (isNameAlreadyInUse) {
+        else if (isNameAlreadyInUse) {
           MessageBoxes.NameAlreadyInUse();
           return false;
         }
-
-        if (isVerticalCapacityNegative) {
+        
+        else if (isVerticalCapacityNegative) {
           MessageBoxes.VerticalCapacityGreaterThanZero();
           return false;
         }
-
-        if (isOutOfBounds) {
+        
+        else if (isOutOfBounds) {
           MessageBoxes.CantBeOutOfBounds();
           return false;
         }
-
-        if (doesIntersectWithOtherZone) {
+        
+        else if (doesIntersectWithOtherZone) {
           MessageBoxes.CantIntersect();
           return false;
         }
-
-        if (hasInvalidSize) {
+        
+        else if (hasInvalidSize) {
           MessageBoxes.InvalidSize();
           return false;
         }
-
-        return true;
+        
+        else 
+          return true;
       };
 
       ObjectEditor zoneEditor = new(validator, zone, title);
@@ -155,10 +161,10 @@ namespace LayoutDesigner {
       );
     }
 
-    private ObjectEditor NewZonePrompt() {
+    private ObjectEditor NewZonePrompt(Zone.Entity initialZone) {
       return this.ZoneEditorPrompt(
         "Nová zóna",
-        new(),
+        initialZone,
         this.CurrentLayout.Zones
       );
     }

@@ -4,24 +4,32 @@
       // Draw
       this.Canvas_Layout.Refresh();
 
-      // TreeView
+      // Tree view
       this.Tree_Layout.Nodes.Clear();
 
-      if (this.CurrentLayout != null) {
-        var rootNode = Tree_Layout.Nodes.Add(this.CurrentLayout.Name);
+      if (this.CurrentLayout == null)
+        return;
 
-        foreach (var zone in this.CurrentLayout.Zones) {
-          rootNode.Nodes.Add(zone.Name);
-        }
+      // Add nodes
+      var rootNode = Tree_Layout.Nodes.Add(this.CurrentLayout.Name);
 
-        this.Tree_Layout.ExpandAll();
+      foreach (var zone in this.CurrentLayout.Zones) {
+        rootNode.Nodes.Add(zone.Name);
       }
+
+      this.Tree_Layout.ExpandAll();
     }
 
 
 
     private void CurrentSelectionChangedHandler() {
+      // Property grid
       this.Properties_CurrentSelection.SelectedObject = this.CurrentSelection;
+
+      // Select correct tree view node
+      this.Tree_Layout.SelectedNode = null;
+
+      // Redraw
       this.Canvas_Layout.Refresh();
     }
   }

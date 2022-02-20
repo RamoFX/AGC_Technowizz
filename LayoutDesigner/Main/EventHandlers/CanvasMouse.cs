@@ -13,22 +13,40 @@ using Core.UI;
 namespace LayoutDesigner {
   public partial class Main {
     private void Canvas_Layout_MouseClick(object sender, MouseEventArgs e) {
-      object currentSelection = Utilities.MatchEntity(e.Location, this.CurrentLayout);
-      this.SetCurrentSelection(currentSelection);
+      if (this.CurrentLayout == null)
+        return;
+
+      var target = Utilities.MatchEntity(e.Location, this.CurrentLayout);
+
+      // Create new zone
+      bool doCreateZone = target.GetType().ToString() == "Core.Layout+Entity";
+
+      if (doCreateZone) {
+        var newZone = new Zone.Entity {
+          Location = e.Location.Unscale(StaticSettings.UNIT_SIZE)
+        };
+
+        this.NewZone(newZone);
+      }
+
+      // Hooks
+      this.SetCurrentSelection(target);
     }
 
 
 
     private void Canvas_Layout_MouseDoubleClick(object sender, MouseEventArgs e) {
+      if (this.CurrentSelection == null)
+        return;
+
+
+
       bool isLeft = e.Button == MouseButtons.Left;
       bool isRight = e.Button == MouseButtons.Right;
 
 
 
       // Actual selection determination
-      if (this.CurrentSelection == null)
-        return;
-
       string selectionType = this.CurrentSelection.GetType().ToString();
 
       bool isZone = selectionType == "Core.Zone+Entity";
@@ -73,6 +91,9 @@ namespace LayoutDesigner {
 
 
     private void Canvas_Layout_MouseDown(object sender, MouseEventArgs e) {
+      if (this.CurrentLayout == null)
+        return;
+
       this.IsDragging = true;
     }
 

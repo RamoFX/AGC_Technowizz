@@ -183,7 +183,6 @@ namespace LayoutDesigner {
       // 
       this.Tree_Layout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.Tree_Layout.CausesValidation = false;
-      this.Tree_Layout.FullRowSelect = true;
       this.Tree_Layout.Location = new System.Drawing.Point(0, 0);
       this.Tree_Layout.Margin = new System.Windows.Forms.Padding(0);
       this.Tree_Layout.Name = "Tree_Layout";
@@ -220,8 +219,9 @@ namespace LayoutDesigner {
       this.Properties_CurrentSelection.PropertySort = System.Windows.Forms.PropertySort.NoSort;
       this.Properties_CurrentSelection.Size = new System.Drawing.Size(250, 238);
       this.Properties_CurrentSelection.TabIndex = 3;
+      this.Properties_CurrentSelection.TabStop = false;
       this.Properties_CurrentSelection.ToolbarVisible = false;
-      this.Properties_CurrentSelection.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyGrid_CurrentSelection_PropertyValueChanged);
+      this.Properties_CurrentSelection.Enter += new System.EventHandler(this.Properties_CurrentSelection_Enter);
       // 
       // SplitContainer_Horizontal
       // 

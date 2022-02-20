@@ -35,9 +35,6 @@ namespace LayoutDesigner {
       // Post-hooks
       this.SetCurrentLayout(null);
       this.UpdateState();
-
-      // Dev
-      this.OpenLayout("Nové rozložení");
     }
   }
 }

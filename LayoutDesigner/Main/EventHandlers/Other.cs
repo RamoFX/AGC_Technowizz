@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+using Core;
 using Core.Extensions;
 using Core.Settings;
 using Core.UI;
@@ -33,10 +36,25 @@ namespace LayoutDesigner {
 
 
 
-    private void PropertyGrid_CurrentSelection_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
-      this.UpdateState();
-    }
+    private void Properties_CurrentSelection_Enter(object sender, EventArgs e) {
+      // Lose focus (shouldn't be editable)
+      this.Properties_CurrentSelection.Enabled = false;
+      this.Properties_CurrentSelection.Enabled = true;
 
+      if (this.CurrentLayout == null || this.CurrentSelection == null)
+        return;
+      
+      // Edit matched entity
+      bool isZone = this.CurrentSelection.GetType().ToString() == "Core.Zone+Entity";
+      bool isLayout = this.CurrentSelection.GetType().ToString() == "Core.Layout+Entity";
+
+      if (isZone) {
+        var zone = (Zone.Entity) this.CurrentSelection;
+        this.EditZone(zone);
+      } else if (isLayout) {
+        this.EditLayout();
+      }
+    }
 
 
 
