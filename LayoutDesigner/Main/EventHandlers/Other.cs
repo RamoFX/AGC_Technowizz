@@ -48,7 +48,7 @@ namespace LayoutDesigner {
 
       this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UNIT_SIZE) + new Size(StaticSettings.OUTLINE_SIZE / 2, StaticSettings.OUTLINE_SIZE / 2);
 
-      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentLayout);
+      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentLayout, this.CurrentSelection);
     }
   }
 }

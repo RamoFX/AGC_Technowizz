@@ -205,6 +205,7 @@ namespace LayoutDesigner {
       this.Canvas_Layout.TabIndex = 2;
       this.Canvas_Layout.TabStop = false;
       this.Canvas_Layout.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Layout_Paint);
+      this.Canvas_Layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseClick);
       this.Canvas_Layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseDoubleClick);
       this.Canvas_Layout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_Layout_MouseDown);
       this.Canvas_Layout.MouseLeave += new System.EventHandler(this.Canvas_Layout_MouseLeave);
