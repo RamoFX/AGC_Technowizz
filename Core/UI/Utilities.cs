@@ -1,11 +1,13 @@
-﻿using Core.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Core.Extensions;
+using Core.Settings;
 
 
 
@@ -79,6 +81,42 @@ namespace Core.UI {
 
       // Match is layout
       return layout;
+    }
+
+
+
+    static public Rectangle CreateMovingClip(Rectangle unscaledEntityBounds) {
+      var clip = unscaledEntityBounds.Scale(StaticSettings.UNIT_SIZE);
+
+      clip.Offset(
+        StaticSettings.CLIP_OFFSET,
+        StaticSettings.CLIP_OFFSET
+      );
+
+      clip.Inflate(
+        -StaticSettings.CLIP_OFFSET * 2,
+        -StaticSettings.CLIP_OFFSET * 2
+      );
+
+      return clip;
+    }
+
+
+
+    static public Rectangle CreateResizingClip(Rectangle unscaledEntityBounds) {
+      var clip = unscaledEntityBounds.Scale(StaticSettings.UNIT_SIZE);
+
+      clip.Offset(
+        -StaticSettings.CLIP_OFFSET,
+        -StaticSettings.CLIP_OFFSET
+      );
+
+      clip.Inflate(
+        StaticSettings.CLIP_OFFSET * 2,
+        StaticSettings.CLIP_OFFSET * 2
+      );
+
+      return clip;
     }
   }
 }
