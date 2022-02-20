@@ -32,10 +32,8 @@ namespace Settings {
         SettingsProperties.Highlight_TotalFlashesCount = DynamicSettings.Highlight_TotalFlashesCount.Fallback.ToInt();
 
         // Colors
-        SettingsProperties.LayoutColor = DynamicSettings.LayoutColor.Fallback.ToColor();
         SettingsProperties.GridColor = DynamicSettings.GridColor.Fallback.ToColor();
 
-        SettingsProperties.ZoneColor_Storage = DynamicSettings.ZoneColor_Storage.Fallback.ToColor();
         SettingsProperties.ZoneColor_Other = DynamicSettings.ZoneColor_Other.Fallback.ToColor();
 
         SettingsProperties.ZoneColor_Full = DynamicSettings.ZoneColor_Full.Fallback.ToColor();
