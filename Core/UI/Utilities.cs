@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Core.UI {
 
 
 
-    static public object GetEntityFromTreePath(string path, char[] pathSeparator, Layout.Entity layout) {
+    static public object MatchEntity(string path, char[] pathSeparator, Layout.Entity layout) {
       string[] pathPieces = path.Split(pathSeparator);
       int level = pathPieces.Length - 1;
       object currentSelection = null;
@@ -55,6 +56,29 @@ namespace Core.UI {
       }
 
       return currentSelection;
+    }
+
+
+
+    static public object MatchEntity(Point location, int scaleFactor, Layout.Entity layout) {
+      // Handle invalid parameter values
+      if (location.X < 0 || location.Y < 0 || scaleFactor < 1 || layout == null)
+        return null;
+
+      location = location.Unscale(scaleFactor);
+
+      // Handle location out of bounds
+      if (!layout.Rectangle.Contains(location))
+        return null;
+
+      // Find zone match
+      foreach (var zone in layout.Zones) {
+        if (zone.Rectangle.Contains(location))
+          return zone;
+      }
+
+      // Match is layout
+      return layout;
     }
   }
 }
