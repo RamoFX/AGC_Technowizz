@@ -34,11 +34,6 @@ namespace Core {
 
 
       [Browsable(false)]
-      public readonly Color Color = DynamicSettings.LayoutColor.Value.ToColor();
-
-
-
-      [Browsable(false)]
       public readonly List<Zone.Entity> Zones;
     }
   }

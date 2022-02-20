@@ -10,28 +10,10 @@ using Core.Settings;
 namespace Settings {
   internal partial class SettingsProperties {
     [Category("Barva")]
-    [DisplayName("Barva okrajů")]
-    public Color LayoutColor {
-      get => DynamicSettings.LayoutColor.Value.ToColor();
-      set => DynamicSettings.LayoutColor.Value = value.Name;
-    }
-
-
-
-    [Category("Barva")]
     [DisplayName("Barva mřížky")]
     public Color GridColor {
       get => DynamicSettings.GridColor.Value.ToColor();
       set => DynamicSettings.GridColor.Value = value.Name;
-    }
-
-
-
-    [Category("Barva")]
-    [DisplayName("Barva zóny pro uložení")]
-    public Color ZoneColor_Storage {
-      get => DynamicSettings.ZoneColor_Storage.Value.ToColor();
-      set => DynamicSettings.ZoneColor_Storage.Value = value.Name;
     }
 
 

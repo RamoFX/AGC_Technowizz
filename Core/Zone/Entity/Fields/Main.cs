@@ -45,19 +45,30 @@ namespace Core {
       [Browsable(false)]
       public Color Color {
         get {
-          if (this.StoredPercent == 100) {
-            return DynamicSettings.ZoneColor_Full.Value.ToColor();
-          } else if (this.StoredPercent < 100 && this.StoredPercent >= 75) {
-            return DynamicSettings.ZoneColor_AlmostFull.Value.ToColor();
-          } else if (this.StoredPercent < 75 && this.StoredPercent >= 50) {
-            return DynamicSettings.ZoneColor_AboveHalf.Value.ToColor();
-          } else if (this.StoredPercent < 50 && this.StoredPercent >= 25) {
-            return DynamicSettings.ZoneColor_BelowHalf.Value.ToColor();
-          } else if (this.StoredPercent < 25 && this.StoredPercent > 0) {
-            return DynamicSettings.ZoneColor_AlmostEmpty.Value.ToColor();
-          } else {
-            return DynamicSettings.ZoneColor_Empty.Value.ToColor();
-          }
+          DynamicSetting color;
+
+          if (this.VerticalCapacity == 0)
+            color = DynamicSettings.ZoneColor_Other;
+
+          else if (this.StoredPercent == 100)
+            color = DynamicSettings.ZoneColor_Full;
+
+          else if (this.StoredPercent < 100 && this.StoredPercent >= 75)
+            color = DynamicSettings.ZoneColor_AlmostFull;
+
+          else if (this.StoredPercent < 75 && this.StoredPercent >= 50)
+            color = DynamicSettings.ZoneColor_AboveHalf;
+
+          else if (this.StoredPercent < 50 && this.StoredPercent >= 25)
+            color = DynamicSettings.ZoneColor_BelowHalf;
+
+          else if (this.StoredPercent < 25 && this.StoredPercent > 0)
+            color = DynamicSettings.ZoneColor_AlmostEmpty;
+
+          else
+            color = DynamicSettings.ZoneColor_Empty;
+
+          return color.Value.ToColor();
         }
       }
     }

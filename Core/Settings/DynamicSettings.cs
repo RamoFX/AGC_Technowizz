@@ -8,11 +8,9 @@
     static public DynamicSetting Highlight_TotalFlashesCount = new("Highlight_TotalFlashesCount", "4");
 
     // Colors
-    static public DynamicSetting LayoutColor = new("NeutralColor_Dark",  "DarkGray");
-    static public DynamicSetting GridColor   = new("NeutralColor_Light", "LightGray");
+    static public DynamicSetting GridColor = new("NeutralColor_Light", "LightGray");
 
-    static public DynamicSetting ZoneColor_Storage = new("ZoneColor_Storage", "DarkBlue");
-    static public DynamicSetting ZoneColor_Other   = new("ZoneColor_Other",   "DeepPink");
+    static public DynamicSetting ZoneColor_Other = new("ZoneColor_Other",   "DeepPink");
 
     static public DynamicSetting ZoneColor_Full        = new("ZoneColor_Full",        "Red");
     static public DynamicSetting ZoneColor_AlmostFull  = new("ZoneColor_AlmostFull",  "OrangeRed");
