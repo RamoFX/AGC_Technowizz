@@ -15,23 +15,27 @@ namespace Core {
         carBrand = carBrand.Trim();
 
         if (verticalCapacity < 0) {
-          throw new ArgumentException("verticalCapacity");
+          throw new ArgumentException("Invalid verticalCapacity");
         }
 
         if (!(name.Length > 0)) {
-          throw new ArgumentException("name");
+          throw new ArgumentException("Invalid name");
         }
 
-        if (!(carBrand.Length > 0) && verticalCapacity > 0) {
-          throw new ArgumentException("carBrand");
+        bool isValidRegularZone = carBrand.Length > 0 && verticalCapacity > 0;
+        bool isValidOtherZone = carBrand.Length == 0 && verticalCapacity == 0;
+        bool isInvalidRegularOrOtherZone = !(isValidRegularZone || isValidOtherZone);
+
+        if (isInvalidRegularOrOtherZone) {
+          throw new ArgumentException("Invalid carBrand and/or verticalCapacity");
         }
 
         if (size.Width < 1 || size.Height < 1) {
-          throw new ArgumentException("size");
+          throw new ArgumentException("Invalid size");
         }
 
         if (location.X < 0 || location.Y < 0) {
-          throw new ArgumentException("location");
+          throw new ArgumentException("Invalid location");
         }
 
         this.Name = name;

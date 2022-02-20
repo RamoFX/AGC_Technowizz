@@ -101,6 +101,7 @@ namespace LayoutDesigner {
         Zone.Entity newZone = (Zone.Entity) obj;
 
         newZone.Name = newZone.Name.Trim();
+        newZone.CarBrand = newZone.Name.Trim();
 
         bool isNameEmpty = newZone.Name.Length == 0;
         bool isNameAlreadyInUse = otherZones.Select(someZone => someZone.Name).Contains(newZone.Name);
@@ -108,6 +109,10 @@ namespace LayoutDesigner {
         bool isOutOfBounds = !this.CurrentLayout.Rectangle.Contains(newZone.Rectangle);
         bool doesIntersectWithOtherZone = otherZones.Any(someZone => newZone.Rectangle.IntersectsWith(someZone.Rectangle));
         bool hasInvalidSize = newZone.Size.Width < 1 || newZone.Size.Height < 1;
+
+        bool isValidRegularZone = newZone.CarBrand.Length > 0 && newZone.VerticalCapacity > 0;
+        bool isValidOtherZone = newZone.CarBrand.Length == 0 && newZone.VerticalCapacity == 0;
+        bool isInvalidRegularOrOtherZone = !(isValidRegularZone || isValidOtherZone);
 
         if (isNameEmpty) {
           MessageBoxes.NameCannotBeEmpty();
@@ -136,6 +141,11 @@ namespace LayoutDesigner {
         
         else if (hasInvalidSize) {
           MessageBoxes.InvalidSize();
+          return false;
+        }
+        
+        else if (isInvalidRegularOrOtherZone) {
+          MessageBoxes.InvalidRegularOrOtherZone();
           return false;
         }
         

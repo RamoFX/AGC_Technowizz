@@ -17,15 +17,15 @@ namespace Core {
         warehouseName = warehouseName.Trim();
 
         if (!(name.Length > 0)) {
-          throw new ArgumentException("name");
+          throw new ArgumentException("Invalid name");
         }
 
         if (!(warehouseName.Length > 0)) {
-          throw new ArgumentException("warehouseName");
+          throw new ArgumentException("Invalid warehouseName");
         }
 
         if (size.Width < 1 || size.Height < 1) {
-          throw new ArgumentException("size");
+          throw new ArgumentException("Invalid size");
         }
 
         this.Name = name;
