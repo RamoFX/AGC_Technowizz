@@ -41,7 +41,15 @@ namespace Core {
         this.Size = size;
       }
 
-      public Entity() : this("Nová zóna", 4, "značka-auta", new(1, 1), new(0, 0)) { }
+
+
+      public Entity(Entity from)
+        : this(from.Name, from.VerticalCapacity, from.CarBrand, from.Size, from.Location) { }
+
+
+
+      public Entity()
+        : this("Nová zóna", 4, "značka-auta", new(1, 1), new(0, 0)) { }
     }
   }
 }
