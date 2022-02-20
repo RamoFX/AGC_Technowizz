@@ -10,7 +10,7 @@
        *    - řetězec palletCode (číslo čárkového kódu palety)
        *
        *  Aplikace přijímá:
-       *    - řetězec (název značky nebo modelu auta , např. BM, MS, VO, ...)
+       *    - řetězec (název značky nebo modelu auta, např. BM, MS, VO, ...)
        *
        */
 
