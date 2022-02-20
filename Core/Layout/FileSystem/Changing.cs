@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-
-using Core.Settings;
+﻿using System.IO;
 
 
 
@@ -17,6 +11,7 @@ namespace Core {
 
         string fromPath = GetPath(fromName);
         string toPath = GetPath(toName);
+
         File.Move(fromPath, toPath);
       }
 
