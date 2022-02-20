@@ -1,9 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:simpleType name="name">
+  <xs:simpleType name="name-non-empty">
     <xs:restriction base="xs:string">
       <xs:minLength value="1" />
+      <xs:whiteSpace value="collapse" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="name-or-empty">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="0" />
       <xs:whiteSpace value="collapse" />
     </xs:restriction>
   </xs:simpleType>
@@ -42,9 +49,9 @@
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
                       
-                      <xs:attribute name="name"              type="name"           use="required" />
+                      <xs:attribute name="name"              type="name-non-empty" use="required" />
                       <xs:attribute name="vertical-capacity" type="natural-number" use="required" />
-                      <xs:attribute name="car-brand"         type="name"           use="required" />
+                      <xs:attribute name="car-brand"         type="name-or-empty"  use="required" />
                       <xs:attribute name="size"              type="size"           use="required" />
                       <xs:attribute name="location"          type="location"       use="required" />
                       
@@ -59,9 +66,9 @@
         
       </xs:sequence>
 
-      <xs:attribute name="name"           type="name" use="required" />
-      <xs:attribute name="warehouse-name" type="name" use="required" />
-      <xs:attribute name="size"           type="size" use="required" />
+      <xs:attribute name="name"           type="name-non-empty" use="required" />
+      <xs:attribute name="warehouse-name" type="name-non-empty" use="required" />
+      <xs:attribute name="size"           type="size"           use="required" />
       
     </xs:complexType>
   </xs:element>

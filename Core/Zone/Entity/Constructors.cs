@@ -22,7 +22,7 @@ namespace Core {
           throw new ArgumentException("name");
         }
 
-        if (!(carBrand.Length > 0)) {
+        if (!(carBrand.Length > 0) && verticalCapacity > 0) {
           throw new ArgumentException("carBrand");
         }
 
