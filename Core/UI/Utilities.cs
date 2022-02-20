@@ -88,15 +88,11 @@ namespace Core.UI {
     static public Rectangle CreateMovingClip(Rectangle unscaledEntityBounds) {
       var clip = unscaledEntityBounds.Scale(StaticSettings.UNIT_SIZE);
 
-      clip.Offset(
-        StaticSettings.CLIP_OFFSET,
-        StaticSettings.CLIP_OFFSET
-      );
+      clip.X += StaticSettings.CLIP_OFFSET;
+      clip.Y += StaticSettings.CLIP_OFFSET;
 
-      clip.Inflate(
-        -StaticSettings.CLIP_OFFSET * 2,
-        -StaticSettings.CLIP_OFFSET * 2
-      );
+      clip.Width -= StaticSettings.CLIP_OFFSET * 2;
+      clip.Height -= StaticSettings.CLIP_OFFSET * 2;
 
       return clip;
     }
@@ -106,15 +102,11 @@ namespace Core.UI {
     static public Rectangle CreateResizingClip(Rectangle unscaledEntityBounds) {
       var clip = unscaledEntityBounds.Scale(StaticSettings.UNIT_SIZE);
 
-      clip.Offset(
-        -StaticSettings.CLIP_OFFSET,
-        -StaticSettings.CLIP_OFFSET
-      );
+      clip.X -= StaticSettings.CLIP_OFFSET;
+      clip.Y -= StaticSettings.CLIP_OFFSET;
 
-      clip.Inflate(
-        StaticSettings.CLIP_OFFSET * 2,
-        StaticSettings.CLIP_OFFSET * 2
-      );
+      clip.Width += StaticSettings.CLIP_OFFSET * 2;
+      clip.Height += StaticSettings.CLIP_OFFSET * 2;
 
       return clip;
     }
