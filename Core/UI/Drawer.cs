@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using Core.Extensions;
@@ -88,6 +90,22 @@ namespace Core.UI {
           pen,
           zoneRectangle
         );
+
+        // Text
+        Font font = new(FontFamily.GenericMonospace, 9, FontStyle.Bold);
+        int fontHeight = font.Height;
+        const int chunkSize = 6;
+        int linesCount = zone.Name.Length / chunkSize + 1;
+
+        for (int lineIndex = 0; lineIndex < linesCount; lineIndex++) {
+          bool isLast = (lineIndex + 1) * chunkSize > zone.Name.Length;
+          int charsCount = isLast ? zone.Name.Length % chunkSize : chunkSize;
+          var chars = zone.Name.ToList().GetRange(lineIndex * chunkSize, charsCount);
+          string nameChunk = string.Join("", chars);
+          PointF point = zoneRectangle.Location.Shift(new(0, fontHeight * lineIndex));
+
+          graphics.DrawString(nameChunk, font, Brushes.White, point);
+        }
       }
     }
   }
