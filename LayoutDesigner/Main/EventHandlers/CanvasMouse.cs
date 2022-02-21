@@ -16,14 +16,14 @@ namespace LayoutDesigner {
       if (this.CurrentLayout == null)
         return;
 
-      var target = Utilities.MatchEntity(e.Location, this.CurrentLayout);
+      var target = Utilities.MatchEntity(e.Location, this.CurrentUnitSize, this.CurrentLayout);
 
       // Create new zone
       bool doCreateZone = target.GetType().ToString() == "Core.Layout+Entity";
 
       if (doCreateZone) {
         var newZone = new Zone.Entity {
-          Location = e.Location.Unscale(StaticSettings.UNIT_SIZE)
+          Location = e.Location.Unscale(this.CurrentUnitSize)
         };
 
         this.NewZone(newZone);

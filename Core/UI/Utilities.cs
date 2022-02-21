@@ -62,12 +62,12 @@ namespace Core.UI {
 
 
 
-    static public object MatchEntity(Point location, Layout.Entity layout) {
+    static public object MatchEntity(Point location, int unitSize, Layout.Entity layout) {
       // Handle invalid parameter values
       if (location.X < 0 || location.Y < 0 || layout == null)
         return null;
 
-      location = location.Unscale(StaticSettings.UNIT_SIZE);
+      location = location.Unscale(unitSize);
 
       // Handle location out of bounds
       if (!layout.Rectangle.Contains(location))
@@ -85,30 +85,15 @@ namespace Core.UI {
 
 
 
-    static public Rectangle CreateMovingClip(Rectangle unscaledEntityBounds) {
-      var clip = unscaledEntityBounds.Scale(StaticSettings.UNIT_SIZE);
+    public static int ComputeOptimalUnitSize(int unitSize, Size canvas, Size layoutUnscaled) {
+      int adapted = Math.Min(
+        canvas.Width / layoutUnscaled.Width,
+        canvas.Height / layoutUnscaled.Height
+      );
 
-      clip.X += StaticSettings.CLIP_OFFSET;
-      clip.Y += StaticSettings.CLIP_OFFSET;
+      bool isApadtedTooSmall = adapted < unitSize;
 
-      clip.Width -= StaticSettings.CLIP_OFFSET * 2;
-      clip.Height -= StaticSettings.CLIP_OFFSET * 2;
-
-      return clip;
-    }
-
-
-
-    static public Rectangle CreateResizingClip(Rectangle unscaledEntityBounds) {
-      var clip = unscaledEntityBounds.Scale(StaticSettings.UNIT_SIZE);
-
-      clip.X -= StaticSettings.CLIP_OFFSET;
-      clip.Y -= StaticSettings.CLIP_OFFSET;
-
-      clip.Width += StaticSettings.CLIP_OFFSET * 2;
-      clip.Height += StaticSettings.CLIP_OFFSET * 2;
-
-      return clip;
+      return isApadtedTooSmall ? unitSize : adapted;
     }
   }
 }

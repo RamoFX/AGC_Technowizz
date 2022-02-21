@@ -18,7 +18,7 @@ namespace Core.UI {
 
 
 
-    static public void DrawLayout(Graphics graphics, Rectangle clip, Layout.Entity layout, object selection) {
+    static public void DrawLayout(Graphics graphics, Rectangle clip, int unitSize, Layout.Entity layout, object selection) {
       // Current visible clip
       graphics.SetClip(clip);
 
@@ -27,17 +27,17 @@ namespace Core.UI {
       // Vertical grid lines
       for (int x = 0; x <= layout.Size.Width; x++) {
         // Draw only if inside visible clip
-        if (!graphics.IsVisible(x * StaticSettings.UNIT_SIZE, clip.Location.Y))
+        if (!graphics.IsVisible(x * unitSize, clip.Location.Y))
           continue;
 
         graphics.DrawLine(
           NeutralLight,
 
           new Point(x, 0)
-            .Scale(StaticSettings.UNIT_SIZE),
+            .Scale(unitSize),
 
           new Point(x, layout.Size.Height)
-            .Scale(StaticSettings.UNIT_SIZE)
+            .Scale(unitSize)
         );
       }
 
@@ -46,17 +46,17 @@ namespace Core.UI {
       // Horizontal grid lines
       for (int y = 0; y <= layout.Size.Height; y++) {
         // Draw only if inside visible clip
-        if (!graphics.IsVisible(clip.Location.X, y * StaticSettings.UNIT_SIZE))
+        if (!graphics.IsVisible(clip.Location.X, y * unitSize))
           continue;
 
         graphics.DrawLine(
           NeutralLight,
 
           new Point(0, y)
-            .Scale(StaticSettings.UNIT_SIZE),
+            .Scale(unitSize),
 
           new Point(layout.Size.Width, y)
-            .Scale(StaticSettings.UNIT_SIZE)
+            .Scale(unitSize)
         );
       }
 
@@ -64,7 +64,7 @@ namespace Core.UI {
 
       // Zones
       foreach (Zone.Entity zone in layout.Zones) {
-        var zoneRectangle = zone.Rectangle.Scale(StaticSettings.UNIT_SIZE);
+        var zoneRectangle = zone.Rectangle.Scale(unitSize);
 
         // Draw only if inside visible clip
         if (!graphics.IsVisible(zoneRectangle))
@@ -94,7 +94,7 @@ namespace Core.UI {
         // Text
         Font font = new(FontFamily.GenericMonospace, 9, FontStyle.Bold);
         int fontHeight = font.Height;
-        const int chunkSize = 6;
+        int chunkSize = unitSize / 8;
         int linesCount = zone.Name.Length / chunkSize + 1;
 
         for (int lineIndex = 0; lineIndex < linesCount; lineIndex++) {

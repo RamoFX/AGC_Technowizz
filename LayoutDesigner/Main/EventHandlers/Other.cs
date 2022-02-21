@@ -59,14 +59,25 @@ namespace LayoutDesigner {
 
 
     private void Canvas_Layout_Paint(object sender, PaintEventArgs e) {
+      // Remove previous paintings
       e.Graphics.Clear(this.Canvas_Layout.BackColor);
 
+      // Continue is layout present
       if (this.CurrentLayout == null)
         return;
 
-      this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(StaticSettings.UNIT_SIZE) + new Size(StaticSettings.OUTLINE_SIZE / 2, StaticSettings.OUTLINE_SIZE / 2);
+      // Update unit size
+      this.CurrentUnitSize = Utilities.ComputeOptimalUnitSize(
+        StaticSettings.UNIT_SIZE,
+        SplitContainer_Vertical.Panel2.Size,
+        this.CurrentLayout.Size
+      );
+      
+      // Resize canvas
+      this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(this.CurrentUnitSize) + new Size(StaticSettings.OUTLINE_SIZE / 2, StaticSettings.OUTLINE_SIZE / 2);
 
-      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentLayout, this.CurrentSelection);
+      // Draw
+      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentUnitSize, this.CurrentLayout, this.CurrentSelection);
     }
   }
 }

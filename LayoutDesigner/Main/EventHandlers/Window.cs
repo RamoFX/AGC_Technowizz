@@ -11,6 +11,9 @@ namespace LayoutDesigner {
       // Split containers
       this.SplitContainer_Vertical.Width = this.Width - SystemInformation.VerticalScrollBarWidth;
       this.SplitContainer_Vertical.Height = this.Height - Utilities.ComputeTitleBarHeight(this) - this.Menu.Height + this.MainHeightOffset - SystemInformation.HorizontalScrollBarHeight;
+
+      // Redraw, unit size may change
+      this.Canvas_Layout.Refresh();
     }
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
