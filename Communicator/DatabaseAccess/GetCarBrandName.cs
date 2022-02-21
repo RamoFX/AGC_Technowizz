@@ -6,11 +6,11 @@
        *  Zde by se měl uskutečnit požadavek na databázi SAP
        *
        *  Aplikace posílá:
-       *    - řetězec warehouseName (název skladu, např. CCx, ...)
-       *    - řetězec palletCode (číslo čárkového kódu palety)
+       *    - řetězec warehouseName - název skladu (např. CCx, ...)
+       *    - řetězec palletCode - číslo čárkového kódu palety
        *
        *  Aplikace přijímá:
-       *    - řetězec (název značky nebo modelu auta, např. BM, MS, VO, ...)
+       *    - řetězec - název značky nebo modelu auta (např. BM, MS, VO, ...)
        *
        */
 
@@ -30,14 +30,6 @@
 
       if (warehouseName == "CCx") {
         return palletCode switch {
-          _ => ""
-        };
-      }
-
-
-
-      if (warehouseName == "example") {
-        return palletCode switch {
           "0" => "BM",
           "1" => "TO",
           "2" => "NM",
@@ -50,7 +42,6 @@
           "9" => "FI",
           "10" => "VW",
           "11" => "FO",
-          "12" => "PE",
           _ => ""
         };
       }

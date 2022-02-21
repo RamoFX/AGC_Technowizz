@@ -20,7 +20,6 @@ namespace Core {
         this.Stored = DatabaseAccess.GetPalletsCount(
           this.Parent.WarehouseName,
           this.Name,
-          this.CarBrand,
           this.DaysPeriod
         );
       }
