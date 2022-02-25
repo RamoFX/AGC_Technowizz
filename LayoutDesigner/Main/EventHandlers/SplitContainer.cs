@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace LayoutDesigner {
   public partial class Main {
+    // Vertical (Tree layout _ Properties current selection)
     private void SplitContainer_Vertical_Panel1_Resize(object sender, EventArgs e) {
       SplitterPanel panel = this.SplitContainer_Vertical.Panel1;
       Size size = new(panel.Width, panel.Height);
@@ -15,7 +16,7 @@ namespace LayoutDesigner {
 
 
 
-    // Split container horizontal
+    // Horizontal (Split container vertical | Canvas layout)
     private void SplitContainer_Horizontal_Panel1_Resize(object sender, EventArgs e) {
       SplitterPanel panel = this.SplitContainer_Horizontal.Panel1;
       Size size = new(panel.Width, panel.Height);

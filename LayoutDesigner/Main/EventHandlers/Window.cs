@@ -16,6 +16,8 @@ namespace LayoutDesigner {
       this.Canvas_Layout.Refresh();
     }
 
+
+
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
       this.UnloadLayout();
     }
