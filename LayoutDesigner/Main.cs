@@ -24,7 +24,6 @@ namespace LayoutDesigner {
 
       // Offset of height (this.Height and real height)
       this.MainHeightOffset = this.Height - Utilities.ComputeTitleBarHeight(this) - this.Menu.Height - this.SplitContainer_Vertical.Height;
-      Console.WriteLine();
 
       // Minimum size
       int minimalWidth = left + right + splitterWidth + SystemInformation.VerticalScrollBarWidth;
