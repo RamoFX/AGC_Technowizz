@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 namespace LayoutDesigner {
   public partial class Main {
-    // Split container vertical
     private void SplitContainer_Vertical_Panel1_Resize(object sender, EventArgs e) {
       SplitterPanel panel = this.SplitContainer_Vertical.Panel1;
       Size size = new(panel.Width, panel.Height);
