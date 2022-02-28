@@ -21,10 +21,14 @@ namespace Core.UI {
       MessageBox.Show($"Rozložení \"{ name }\" je poškozené.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
+    static public void NotANumber() {
+      MessageBox.Show("Číslo je neplatné nebo není číslo.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
 
 
     // Warnings
-    static public void NameCannotBeEmpty() {
+    static public void TextValueCannotBeEmpty() {
       MessageBox.Show("Textová hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 

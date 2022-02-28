@@ -33,7 +33,7 @@ namespace LayoutDesigner {
         bool nameAlreadyTaken = Core.Layout.FileSystem.Exists(name);
 
         if (isEmpty) {
-          MessageBoxes.NameCannotBeEmpty();
+          MessageBoxes.TextValueCannotBeEmpty();
           return false;
         }
         
@@ -72,7 +72,7 @@ namespace LayoutDesigner {
         bool hasInvalidSize = layout.Size.Width < 1 || layout.Size.Height < 1;
 
         if (isNameEmpty) {
-          MessageBoxes.NameCannotBeEmpty();
+          MessageBoxes.TextValueCannotBeEmpty();
           return false;
         }
 
@@ -115,7 +115,7 @@ namespace LayoutDesigner {
         bool isInvalidRegularOrOtherZone = !(isValidRegularZone || isValidOtherZone);
 
         if (isNameEmpty) {
-          MessageBoxes.NameCannotBeEmpty();
+          MessageBoxes.TextValueCannotBeEmpty();
           return false;
         }
 
