@@ -13,16 +13,12 @@ namespace Core.UI {
       MessageBox.Show("Rozložení nenalezeny. Zkuste nejprve vytvořit nové rozložení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
-    static public void NoSettingsExist() {
-      MessageBox.Show("Žadná nastavení nenalezena. Zkuste nejprve spustit ostatní aplikace.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
-
-    static public void LayoutInvalid(string name) {
-      MessageBox.Show($"Rozložení \"{ name }\" je poškozené.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
-
     static public void NotANumber() {
       MessageBox.Show("Číslo je neplatné nebo není číslo.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    static public void NoSuitableZone(string carBrand) {
+      MessageBox.Show($"Nenašla se žádná zóna, která by měla místo pro paletu a zároveň je určena pro uskladnění značky \"{ carBrand }\".", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
 
