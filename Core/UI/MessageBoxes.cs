@@ -9,8 +9,8 @@ namespace Core.UI {
       MessageBox.Show("Rozložení nenalezeny. Zkuste nejprve vytvořit nové rozložení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
-    static public void NotANumber() {
-      MessageBox.Show("Číslo je neplatné nebo není číslo.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    static public void ValueNotANumber() {
+      MessageBox.Show("Hodnota není číslo.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     static public void NoSuitableZone(string carBrand) {
@@ -21,7 +21,7 @@ namespace Core.UI {
 
     // Warnings
     static public void TextValueCannotBeEmpty() {
-      MessageBox.Show("Textová hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+      MessageBox.Show("Hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
     static public void TextFieldCannotContainInvalidChars() {
