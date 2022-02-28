@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.IO;
 
+using Core.Extensions;
+
 
 
 namespace Core.Settings {
@@ -29,7 +31,15 @@ namespace Core.Settings {
     // Visual
     public const int OUTLINE_SIZE = 2;
     public const int UNIT_SIZE = 48;
-    static public readonly Font ZoneNameFont = new("Courier New", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+
+    static public Font ZoneNameFont {
+      get => new(
+        "Courier New",
+        DynamicSettings.ZoneNameSize.Value.ToInt(),
+        FontStyle.Regular,
+        GraphicsUnit.Pixel
+      );
+    }
 
 
 

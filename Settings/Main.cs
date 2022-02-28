@@ -24,12 +24,8 @@ namespace Settings {
       var dialogResult = MessageBoxes.SettingsReset();
 
       if (dialogResult == DialogResult.Yes) {
-        // Layout
-        SettingsProperties.StartupLayoutName = DynamicSettings.StartupLayoutName.Fallback;
-
-        // Highlight
-        SettingsProperties.Highlight_Duration = DynamicSettings.Highlight_Duration.Fallback.ToInt();
-        SettingsProperties.Highlight_TotalFlashesCount = DynamicSettings.Highlight_TotalFlashesCount.Fallback.ToInt();
+        // Layout drawer
+        SettingsProperties.ZoneNameSize = DynamicSettings.ZoneNameSize.Fallback.ToInt();
 
         // Colors
         SettingsProperties.GridColor = DynamicSettings.GridColor.Fallback.ToColor();

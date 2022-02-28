@@ -1,14 +1,10 @@
 ﻿namespace Core.Settings {
   static public partial class DynamicSettings {
-    // Zone assigner
-    static public DynamicSetting StartupLayoutName = new("StartupLayoutName", "Příklad 1");
-
-    // Highlight
-    static public DynamicSetting Highlight_Duration          = new("Highlight_Duration_On",       "500");
-    static public DynamicSetting Highlight_TotalFlashesCount = new("Highlight_TotalFlashesCount", "4");
+    // Layout drawer
+    static public DynamicSetting ZoneNameSize = new("ZoneNameSize", "12");
 
     // Colors
-    static public DynamicSetting GridColor = new("NeutralColor_Light", "LightGray");
+    static public DynamicSetting GridColor = new("GridColor", "LightGray");
 
     static public DynamicSetting ZoneColor_Other = new("ZoneColor_Other",   "DeepPink");
 
