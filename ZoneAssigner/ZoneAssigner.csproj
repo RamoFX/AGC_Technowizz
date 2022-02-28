@@ -62,11 +62,43 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\EventHandlers\MenuFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\Other.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\PalletCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\EventHandlers\Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Interactions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Prompts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\Actions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\Current.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\Handlers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\State\UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
