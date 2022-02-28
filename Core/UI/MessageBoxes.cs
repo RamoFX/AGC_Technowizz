@@ -5,10 +5,6 @@
 namespace Core.UI {
   static public class MessageBoxes {
     // Errors
-    static public void StartupLayoutCorruptedOrDoesntExist() {
-      MessageBox.Show("Spouštěcí rozložení je poškozené nebo neexistuje.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
-
     static public void NoLayoutsExist() {
       MessageBox.Show("Rozložení nenalezeny. Zkuste nejprve vytvořit nové rozložení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
@@ -48,16 +44,8 @@ namespace Core.UI {
       MessageBox.Show("Nedostačující volná plocha.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
-    static public void NoAvailableZone() {
-      MessageBox.Show("Nejsou dostupné žádné zóny určené pro ukládání palet.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    }
-
     static public void VerticalCapacityGreaterThanZero() {
       MessageBox.Show("Vertikální kapacita musí být větší jak 0.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    }
-
-    static public void VerticalCapacityMustBeZero() {
-      MessageBox.Show("Vertikální kapacita musí být 0, protože zóna není určena pro ukládání palet.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
     static public void InvalidSize() {
