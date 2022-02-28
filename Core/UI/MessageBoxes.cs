@@ -9,12 +9,12 @@ namespace Core.UI {
       MessageBox.Show("Rozložení nenalezeny. Zkuste nejprve vytvořit nové rozložení.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
-    static public void ValueNotANumber() {
-      MessageBox.Show("Hodnota není číslo.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    static public void CarBrandNotLoadable() {
+      MessageBox.Show($"Nenašla se žádná zóna určená pro uskladnění této palety.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
-    static public void NoSuitableZone(string carBrand) {
-      MessageBox.Show($"Nenašla se žádná zóna, která by měla místo pro paletu a zároveň je určena pro uskladnění značky \"{ carBrand }\".", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    static public void NoSpace() {
+      MessageBox.Show($"Pro tuto paletu již není místo.", "Chyba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
 
@@ -22,6 +22,10 @@ namespace Core.UI {
     // Warnings
     static public void TextValueCannotBeEmpty() {
       MessageBox.Show("Hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+
+    static public void ValueNotANumber() {
+      MessageBox.Show("Hodnota není číslo.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
     static public void TextFieldCannotContainInvalidChars() {
