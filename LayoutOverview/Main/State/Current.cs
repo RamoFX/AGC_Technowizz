@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Extensions;
 using Core.Settings;
 
 
@@ -10,6 +11,6 @@ namespace LayoutOverview {
     private object CurrentSelection = null;
 
     // Drawing
-    private int CurrentUnitSize = StaticSettings.UNIT_SIZE;
+    private int CurrentUnitSize = DynamicSettings.UnitSize.Value.ToInt();
   }
 }

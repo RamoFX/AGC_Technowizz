@@ -2,6 +2,7 @@
   static public partial class DynamicSettings {
     // Layout drawer
     static public DynamicSetting ZoneNameSize = new("ZoneNameSize", "12");
+    static public DynamicSetting UnitSize = new("UnitSize", "48");
 
     // Colors
     static public DynamicSetting GridColor = new("GridColor", "LightGray");

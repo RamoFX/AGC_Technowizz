@@ -26,7 +26,7 @@ namespace ZoneAssigner {
 
       // Update unit size
       this.CurrentUnitSize = Utilities.ComputeOptimalUnitSize(
-        StaticSettings.UNIT_SIZE,
+        DynamicSettings.UnitSize.Value.ToInt(),
         this.Panel_CanvasWrapper.Size,
         this.CurrentLayout.Size
       );

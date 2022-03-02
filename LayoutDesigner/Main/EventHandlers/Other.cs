@@ -123,7 +123,7 @@ namespace LayoutDesigner {
 
       // Update unit size
       this.CurrentUnitSize = Utilities.ComputeOptimalUnitSize(
-        StaticSettings.UNIT_SIZE,
+        DynamicSettings.UnitSize.Value.ToInt(),
         SplitContainer_Vertical.Panel2.Size,
         this.CurrentLayout.Size
       );
