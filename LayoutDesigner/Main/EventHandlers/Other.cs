@@ -36,6 +36,61 @@ namespace LayoutDesigner {
 
 
 
+    private void Tree_Layout_MouseDoubleClick(object sender, MouseEventArgs e) {
+      if (this.CurrentSelection == null)
+        return;
+
+
+
+      bool isLeft = e.Button == MouseButtons.Left;
+      bool isRight = e.Button == MouseButtons.Right;
+
+
+
+      // Actual selection determination
+      string selectionType = this.CurrentSelection.GetType().ToString();
+
+      bool isZone = selectionType == "Core.Zone+Entity";
+      bool isLayout = !isZone && selectionType == "Core.Layout+Entity";
+
+
+
+      // No target - no business
+      if (!isZone && !isLayout)
+        return;
+
+
+
+      // Zone edit, delete
+      if (isZone) {
+        var targetZone = (Zone.Entity) this.CurrentSelection;
+
+        // Edit
+        if (isLeft) {
+          this.EditZone(targetZone);
+        }
+
+        // Delete
+        else if (isRight) {
+          this.DeleteZone(targetZone, false);
+        }
+      }
+
+
+
+      // Layout edit
+      else if (isLeft && isLayout) {
+        this.EditLayout();
+      }
+
+
+
+      // Post-hooks
+      this.UpdateState();
+    }
+
+
+
     private void Properties_CurrentSelection_Enter(object sender, EventArgs e) {
       // Lose focus (shouldn't be editable)
       this.Properties_CurrentSelection.Enabled = false;

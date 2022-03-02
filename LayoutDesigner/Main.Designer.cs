@@ -190,6 +190,7 @@ namespace LayoutDesigner {
       this.Tree_Layout.ShowNodeToolTips = true;
       this.Tree_Layout.Size = new System.Drawing.Size(250, 328);
       this.Tree_Layout.TabIndex = 0;
+      this.Tree_Layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tree_Layout_MouseDoubleClick);
       this.Tree_Layout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tree_Layout_MouseDown);
       // 
       // Canvas_Layout
