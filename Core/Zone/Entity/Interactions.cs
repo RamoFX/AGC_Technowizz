@@ -7,6 +7,12 @@
 
 
 
+      public bool IsLoadable() {
+        return !(this.VerticalCapacity == 0 && this.CarBrand == "");
+      }
+
+
+
       public void Change(Entity edited) {
         this.Name = edited.Name;
         this.CarBrand = edited.CarBrand;

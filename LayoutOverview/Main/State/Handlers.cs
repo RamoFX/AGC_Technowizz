@@ -14,7 +14,11 @@
       var rootNode = Tree_Layout.Nodes.Add(this.CurrentLayout.Name);
 
       foreach (var zone in this.CurrentLayout.Zones) {
-        rootNode.Nodes.Add($"{ zone.Name } { (zone.VerticalCapacity != 0 ? "(" + zone.StoredPercent + "%)" : "") }");
+        if (zone.IsLoadable())
+          rootNode.Nodes.Add($"{ zone.Name } ({ zone.StoredPercent } %)");
+
+        else
+          rootNode.Nodes.Add(zone.Name);
       }
 
       this.Tree_Layout.ExpandAll();
