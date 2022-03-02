@@ -68,11 +68,17 @@ namespace LayoutDesigner {
         layout.Name = layout.Name.Trim();
 
         bool isNameEmpty = layout.Name.Length == 0;
+        bool doesNameContainsDot = layout.Name.Contains('.');
         bool isNameAlreadyInUse = otherNames.Contains(layout.Name);
         bool hasInvalidSize = layout.Size.Width < 1 || layout.Size.Height < 1;
 
         if (isNameEmpty) {
           MessageBoxes.TextValueCannotBeEmpty();
+          return false;
+        }
+
+        if (doesNameContainsDot) {
+          MessageBoxes.NameCantContainADot();
           return false;
         }
 

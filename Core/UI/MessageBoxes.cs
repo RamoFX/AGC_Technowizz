@@ -60,6 +60,10 @@ namespace Core.UI {
       MessageBox.Show("Zóna musí obsahovat značku auta a zároveň mít kladnou vertikální kapacitu nebo značka auta musí být prázdná a zároveň vertikální kapacita musí být nula.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
+    static public void NameCantContainADot() {
+      MessageBox.Show("Název nesmí obsahovat tečku.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+
 
 
     // Confirmation
