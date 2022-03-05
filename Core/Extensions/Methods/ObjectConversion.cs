@@ -29,11 +29,5 @@ namespace Core.Extensions {
     static public int ToInt(this string value) {
       return int.Parse(value);
     }
-
-
-
-    static public bool ToBool(this string value) {
-      return bool.Parse(value);
-    }
   }
 }

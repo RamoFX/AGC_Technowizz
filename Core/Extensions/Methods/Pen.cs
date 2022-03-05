@@ -25,17 +25,5 @@ namespace Core.Extensions {
 
       return newPen;
     }
-
-
-
-    static public Pen Dashed(this Pen pen, params float[] pattern) {
-      return pen.Style(DashStyle.Dash, pattern);
-    }
-
-
-
-    static public Pen Dotted(this Pen pen, params float[] pattern) {
-      return pen.Style(DashStyle.Dot, pattern);
-    }
   }
 }

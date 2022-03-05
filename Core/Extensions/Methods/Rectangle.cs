@@ -12,14 +12,5 @@ namespace Core.Extensions {
     static public Rectangle Scale(this Rectangle rectangle, int multiplier) {
       return new Rectangle(rectangle.Location.Scale(multiplier), rectangle.Size.Scale(multiplier));
     }
-
-
-
-    static public Rectangle Shift(this Rectangle rectangle, Point shift) {
-      return new(
-        rectangle.Location.Shift(shift),
-        rectangle.Size
-      );
-    }
   }
 }
