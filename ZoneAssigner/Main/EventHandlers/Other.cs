@@ -35,7 +35,7 @@ namespace ZoneAssigner {
       this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(this.CurrentUnitSize) + new Size(StaticSettings.OUTLINE_SIZE / 2, StaticSettings.OUTLINE_SIZE / 2);
 
       // Draw
-      Drawer.DrawHightContrastLayout(e.Graphics, e.ClipRectangle, this.CurrentUnitSize, this.CurrentLayout, this.CurrentSelection);
+      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentUnitSize, this.CurrentLayout, this.CurrentSelection, true);
     }
   }
 }
