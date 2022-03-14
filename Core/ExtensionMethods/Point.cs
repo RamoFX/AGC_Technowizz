@@ -17,5 +17,17 @@ namespace Core.Extensions {
     static public Point Unscale(this Point point, int scaleFactor) {
       return new(point.X / scaleFactor, point.Y / scaleFactor);
     }
+
+    static public Point Add(this Point point1, Point point2) {
+      return new(point1.X + point2.X, point1.Y + point2.Y);
+    }
+
+    static public Point Subtract(this Point point1, Point point2) {
+      return new(point1.X - point2.X, point1.Y - point2.Y);
+    }
+
+    static public Point Abs(this Point point) {
+      return new(Math.Abs(point.X), Math.Abs(point.Y));
+    }
   }
 }
