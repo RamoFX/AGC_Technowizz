@@ -1,6 +1,10 @@
-﻿using Core;
+﻿using System.Drawing;
+
+using Core;
 using Core.Extensions;
 using Core.Settings;
+
+
 
 namespace LayoutDesigner {
   public partial class Main {
@@ -11,7 +15,10 @@ namespace LayoutDesigner {
     // Drawing
     private int CurrentUnitSize = DynamicSettings.UnitSize.Value.ToInt();
 
-    // Mouse activity
-    private bool IsDragging = false;
+    // Zone creation
+    private bool IsCreatingZone = false;
+
+    private Point DragStart = new(0, 0);
+    private Point DragEnd = new(0, 0);
   }
 }

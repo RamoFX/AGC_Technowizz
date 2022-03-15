@@ -182,27 +182,29 @@ namespace LayoutDesigner {
 
 
     // Zone
-    private void NewZone(Zone.Entity initialZone) {
+    private Zone.Entity NewZone(Zone.Entity initialZone) {
       if (this.CurrentLayout == null)
-        return;
+        return null;
 
       bool layoutHasAvailableArea = this.CurrentLayout.Area > this.CurrentLayout.Area_Zones;
 
       if (!layoutHasAvailableArea) {
         MessageBoxes.AreaFull();
-        return;
+        return null;
       }
 
       ObjectEditor newZone = NewZonePrompt(initialZone);
 
       if (newZone.DialogResult != DialogResult.OK)
-        return;
+        return null;
 
       this.CurrentLayout.Add((Zone.Entity) newZone.FinalValue);
 
       // Post-hooks
       this.SetCurrentSelection(newZone.FinalValue);
       this.UpdateState();
+
+      return (Zone.Entity) newZone.FinalValue;
     }
 
     private void EditZone(Zone.Entity zone) {
@@ -240,6 +242,7 @@ namespace LayoutDesigner {
 
       // Post-hooks
       this.UpdateState();
+      this.SetCurrentSelection(null);
     }
   }
 }

@@ -5,36 +5,12 @@ using System.Windows.Forms;
 
 using Core;
 using Core.Extensions;
-using Core.Settings;
 using Core.UI;
 
 
 
 namespace LayoutDesigner {
   public partial class Main {
-    private void Canvas_Layout_MouseClick(object sender, MouseEventArgs e) {
-      if (this.CurrentLayout == null)
-        return;
-
-      var target = Utilities.MatchEntity(e.Location, this.CurrentUnitSize, this.CurrentLayout);
-
-      // Create new zone
-      bool doCreateZone = target.GetType().ToString() == "Core.Layout+Entity";
-
-      if (doCreateZone) {
-        var newZone = new Zone.Entity {
-          Location = e.Location.Unscale(this.CurrentUnitSize)
-        };
-
-        this.NewZone(newZone);
-      }
-
-      // Hooks
-      this.SetCurrentSelection(target);
-    }
-
-
-
     private void Canvas_Layout_MouseDoubleClick(object sender, MouseEventArgs e) {
       if (this.CurrentSelection == null)
         return;
@@ -94,20 +70,76 @@ namespace LayoutDesigner {
       if (this.CurrentLayout == null)
         return;
 
-      this.IsDragging = true;
+      object target = Utilities.MatchEntity(e.Location, this.CurrentUnitSize, this.CurrentLayout);
+      this.SetCurrentSelection(target);
+
+      this.IsCreatingZone = target.GetType().ToString() == "Core.Layout+Entity";
+
+      if (!this.IsCreatingZone)
+        return;
+
+      this.DragStart = e.Location;
+      this.DragEnd = e.Location;
+    }
+
+
+
+    private void Canvas_Layout_MouseMove(object sender, MouseEventArgs e) {
+      if (this.CurrentLayout == null)
+        return;
+
+      if (!this.IsCreatingZone)
+        return;
+
+      this.DragEnd = e.Location;
     }
 
 
 
     private void Canvas_Layout_MouseUp(object sender, MouseEventArgs e) {
-      this.IsDragging = false;
-    }
+      // Guards
+      if (this.CurrentLayout == null)
+        return;
 
+      if (!this.IsCreatingZone)
+        return;
 
+      this.IsCreatingZone = false;
 
-    private void Canvas_Layout_MouseLeave(object sender, EventArgs e) {
-      Cursor.Current = Cursors.Default;
-      this.IsDragging = false;
+      // Validation
+      Point dragStart_Unscaled = this.DragStart.Unscale(this.CurrentUnitSize);
+      Point dragEnd_Unscaled = this.DragEnd.Unscale(this.CurrentUnitSize);
+
+      Point location = new(
+        Math.Min(dragStart_Unscaled.X, dragEnd_Unscaled.X),
+        Math.Min(dragStart_Unscaled.Y, dragEnd_Unscaled.Y)
+      );
+
+      Size size = new(
+        dragEnd_Unscaled
+          .Subtract(dragStart_Unscaled)
+          .Abs()
+          .Add(new(1, 1))
+      );
+
+      bool willLayoutContainZone = this.CurrentLayout.Rectangle.Contains(new Rectangle(location, size));
+
+      if (!willLayoutContainZone)
+        return;
+
+      // Zone creation
+      var newZone = new Zone.Entity {
+        Location = location,
+        Size = size
+      };
+
+      // Selection
+      Zone.Entity finalZone = this.NewZone(newZone);
+
+      if (finalZone == null)
+        return;
+
+      this.SetCurrentSelection(finalZone);
     }
   }
 }
