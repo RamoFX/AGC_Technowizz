@@ -78,8 +78,8 @@ namespace LayoutDesigner {
       if (!this.IsCreatingZone)
         return;
 
-      this.DragStart = e.Location;
-      this.DragEnd = e.Location;
+      this.DragStart = e.Location.Unscale(this.CurrentUnitSize);
+      this.DragEnd = new(this.DragStart.X, this.DragStart.Y);
     }
 
 
@@ -91,13 +91,12 @@ namespace LayoutDesigner {
       if (!this.IsCreatingZone)
         return;
 
-      this.DragEnd = e.Location;
+      this.DragEnd = e.Location.Unscale(this.CurrentUnitSize);
     }
 
 
 
     private void Canvas_Layout_MouseUp(object sender, MouseEventArgs e) {
-      // Guards
       if (this.CurrentLayout == null)
         return;
 
@@ -107,17 +106,14 @@ namespace LayoutDesigner {
       this.IsCreatingZone = false;
 
       // Validation
-      Point dragStart_Unscaled = this.DragStart.Unscale(this.CurrentUnitSize);
-      Point dragEnd_Unscaled = this.DragEnd.Unscale(this.CurrentUnitSize);
-
       Point location = new(
-        Math.Min(dragStart_Unscaled.X, dragEnd_Unscaled.X),
-        Math.Min(dragStart_Unscaled.Y, dragEnd_Unscaled.Y)
+        Math.Min(this.DragStart.X, this.DragEnd.X),
+        Math.Min(this.DragStart.Y, this.DragEnd.Y)
       );
 
       Size size = new(
-        dragEnd_Unscaled
-          .Subtract(dragStart_Unscaled)
+        this.DragEnd
+          .Subtract(this.DragStart)
           .Abs()
           .Add(new(1, 1))
       );
@@ -139,6 +135,7 @@ namespace LayoutDesigner {
       if (finalZone == null)
         return;
 
+      // Post-hooks
       this.SetCurrentSelection(finalZone);
     }
   }
