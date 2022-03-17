@@ -135,7 +135,6 @@ namespace LayoutDesigner {
       if (finalZone == null)
         return;
 
-      // Post-hooks
       this.SetCurrentSelection(finalZone);
     }
   }
