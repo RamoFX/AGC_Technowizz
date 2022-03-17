@@ -24,10 +24,6 @@ namespace Core.UI {
       MessageBox.Show("Hodnota nesmí být prázdná.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
-    static public void ValueNotANumber() {
-      MessageBox.Show("Hodnota není číslo.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    }
-
     static public void TextFieldCannotContainInvalidChars() {
       MessageBox.Show("Textové pole nesmí obsahovat zakázané znaky.", "Pozor!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }

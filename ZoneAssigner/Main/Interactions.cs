@@ -45,10 +45,10 @@ namespace ZoneAssigner {
         return;
 
       // Evaluation
-      string palletCodeString = this.TextField_PalletCode.Text.Trim();
+      string palletCode = this.TextField_PalletCode.Text.Trim();
 
       // Validation
-      bool isEmpty = palletCodeString.Length == 0;
+      bool isEmpty = palletCode.Length == 0;
 
       if (isEmpty) {
         MessageBoxes.TextValueCannotBeEmpty();
@@ -56,16 +56,8 @@ namespace ZoneAssigner {
         return;
       }
 
-      bool isNotInt = !int.TryParse(palletCodeString, out int palletCode);
-
-      if (isNotInt) {
-        MessageBoxes.ValueNotANumber();
-        this.SetCurrentSelection(null);
-        return;
-      }
-
       // Matching zone
-      string carBrand = Communicator.DatabaseAccess.GetCarBrandName(this.CurrentLayout.WarehouseName, palletCodeString);
+      string carBrand = Communicator.DatabaseAccess.GetCarBrandName(this.CurrentLayout.WarehouseName, palletCode);
       bool isCarBrandEmpty = carBrand.Length == 0;
 
       if (isCarBrandEmpty) {
