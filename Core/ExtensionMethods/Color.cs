@@ -7,8 +7,8 @@ using Core.UI;
 
 
 
-namespace Core.Extensions {
-  static public partial class Methods {
+namespace Core {
+  static public partial class ExtensionMethods {
     static public Color ToColor(this string colorString) {
       if (colorString.StartsWith("#"))
         return Color.FromArgb(Convert.ToInt32(Colors.HexConverter(colorString.Substring(1)), 16));

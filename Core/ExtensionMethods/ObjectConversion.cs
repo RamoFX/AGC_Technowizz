@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-
-using Core.UI;
+﻿using System.Drawing;
 using Core.Settings;
 
 
 
-namespace Core.Extensions {
-  static public partial class Methods {
+namespace Core {
+  static public partial class ExtensionMethods {
     static public Size ToSize(this string value) {
       string[] values = value.Split(StaticSettings.CUSTOM_STRING_SEPARATOR);
       int width = int.Parse(values[0]);

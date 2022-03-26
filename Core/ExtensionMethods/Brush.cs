@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-
-using Core.UI;
+﻿using System.Drawing;
 
 
 
-namespace Core.Extensions {
-  static public partial class Methods {
+namespace Core {
+  static public partial class ExtensionMethods {
     static public SolidBrush ToBrush(this Color color) {
       return new SolidBrush(color);
     }
