@@ -80,6 +80,8 @@ namespace LayoutDesigner {
 
       this.DragStart = e.Location.Unscale(this.CurrentUnitSize);
       this.DragEnd = new(this.DragStart.X, this.DragStart.Y);
+
+      this.Canvas_Layout.Refresh();
     }
 
 
@@ -92,6 +94,8 @@ namespace LayoutDesigner {
         return;
 
       this.DragEnd = e.Location.Unscale(this.CurrentUnitSize);
+
+      this.Canvas_Layout.Refresh();
     }
 
 
@@ -105,28 +109,20 @@ namespace LayoutDesigner {
 
       this.IsCreatingZone = false;
 
+      this.Canvas_Layout.Refresh();
+
       // Validation
-      Point location = new(
-        Math.Min(this.DragStart.X, this.DragEnd.X),
-        Math.Min(this.DragStart.Y, this.DragEnd.Y)
-      );
+      var rectangle = Utilities.CreateRectangleFromPoints(this.DragStart, this.DragEnd);
 
-      Size size = new(
-        this.DragEnd
-          .Subtract(this.DragStart)
-          .Abs()
-          .Add(new(1, 1))
-      );
-
-      bool willLayoutContainZone = this.CurrentLayout.Rectangle.Contains(new Rectangle(location, size));
+      bool willLayoutContainZone = this.CurrentLayout.Rectangle.Contains(rectangle);
 
       if (!willLayoutContainZone)
         return;
 
       // Zone creation
       var newZone = new Zone.Entity {
-        Location = location,
-        Size = size
+        Location = rectangle.Location,
+        Size = rectangle.Size
       };
 
       // Selection

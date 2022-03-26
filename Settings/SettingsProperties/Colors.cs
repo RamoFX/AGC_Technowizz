@@ -19,6 +19,15 @@ namespace Settings {
 
 
     [Category("Barva")]
+    [DisplayName("Barva vytvoření tažením")]
+    public Color DragCreationColor {
+      get => DynamicSettings.DragCreationColor.Value.ToColor();
+      set => DynamicSettings.DragCreationColor.Value = value.Name;
+    }
+
+
+
+    [Category("Barva")]
     [DisplayName("Barva ostatních zón")]
     public Color ZoneColor_Other {
       get => DynamicSettings.ZoneColor_Other.Value.ToColor();

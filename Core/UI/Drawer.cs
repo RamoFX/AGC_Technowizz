@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 using Core.Extensions;
 using Core.Settings;
@@ -11,7 +12,7 @@ namespace Core.UI {
 
 
 
-    static public void DrawLayout(Graphics graphics, Rectangle clip, int unitSize, Layout.Entity layout, object selection, bool isHightContrast) {
+    static public void DrawLayout(Graphics graphics, Rectangle clip, int unitSize, Layout.Entity layout, object selection, bool isHightContrast, bool isCreatingZone, Point dragStart, Point dragEnd) {
       // Current visible clip
       graphics.SetClip(clip);
 
@@ -84,6 +85,26 @@ namespace Core.UI {
         if (doDraw)
           graphics.DrawString(zone.Name, StaticSettings.ZoneNameFont, Brushes.White, zoneRectangle);
       }
+
+
+
+      // Dragging creation
+      if (!isCreatingZone)
+        return;
+
+      var creationColor = DynamicSettings.DragCreationColor.Value.ToColor();
+      var creationPen = creationColor.ToPen(StaticSettings.OUTLINE_SIZE);
+      var creationBrush = creationColor.ToBrush().Transparentize(150);
+      var creationRectangle = Utilities.CreateRectangleFromPoints(dragStart, dragEnd).Scale(unitSize);
+
+      graphics.DrawRectangle(creationPen, creationRectangle);
+      graphics.FillRectangle(creationBrush, creationRectangle);
+    }
+    
+
+
+    static public void DrawLayout(Graphics graphics, Rectangle clip, int unitSize, Layout.Entity layout, object selection, bool isHightContrast) {
+      DrawLayout(graphics, clip, unitSize, layout, selection, isHightContrast, false, new(), new());
     }
   }
 }

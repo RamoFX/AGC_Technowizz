@@ -102,7 +102,9 @@ namespace LayoutDesigner {
       if (isZone) {
         var zone = (Zone.Entity) this.CurrentSelection;
         this.EditZone(zone);
-      } else if (isLayout) {
+      }
+      
+      else if (isLayout) {
         this.EditLayout();
       }
     }
@@ -128,7 +130,7 @@ namespace LayoutDesigner {
       this.Canvas_Layout.Size = this.CurrentLayout.Size.Scale(this.CurrentUnitSize) + new Size(StaticSettings.OUTLINE_SIZE / 2, StaticSettings.OUTLINE_SIZE / 2);
 
       // Draw
-      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentUnitSize, this.CurrentLayout, this.CurrentSelection, false);
+      Drawer.DrawLayout(e.Graphics, e.ClipRectangle, this.CurrentUnitSize, this.CurrentLayout, this.CurrentSelection, false, this.IsCreatingZone, this.DragStart, this.DragEnd);
     }
   }
 }

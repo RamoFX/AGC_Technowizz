@@ -7,6 +7,8 @@
     // Colors
     static public DynamicSetting GridColor = new("GridColor", "LightGray");
 
+    static public DynamicSetting DragCreationColor = new("DragCreationColor", "DeepSkyBlue");
+
     static public DynamicSetting ZoneColor_Other = new("ZoneColor_Other",   "DeepPink");
 
     static public DynamicSetting ZoneColor_Full        = new("ZoneColor_Full",        "Maroon");

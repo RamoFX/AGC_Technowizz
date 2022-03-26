@@ -95,5 +95,23 @@ namespace Core.UI {
 
       return isApadtedTooSmall ? unitSize : adapted;
     }
+
+
+
+    public static Rectangle CreateRectangleFromPoints(Point point1, Point point2) {
+      int[] xCoordinates = new int[2] { point1.X, point2.X };
+      Array.Sort(xCoordinates);
+
+      int[] yCoordinates = new int[2] { point1.Y, point2.Y };
+      Array.Sort(yCoordinates);
+
+      int x = xCoordinates[0];
+      int y = yCoordinates[0];
+
+      int width = xCoordinates[1] - xCoordinates[0] + 1;
+      int height = yCoordinates[1] - yCoordinates[0] + 1;
+
+      return new(x, y, width, height);
+    }
   }
 }
