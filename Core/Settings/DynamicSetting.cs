@@ -4,13 +4,13 @@
     public readonly string Fallback;
 
     public string Value {
-      get => DynamicSettings.ReadSettingsValue(this.Key, this.Fallback);
-      set => DynamicSettings.WriteSettingsValue(this.Key, value);
+      get => DynamicSettings.ReadSettingsValue(Key, Fallback);
+      set => DynamicSettings.WriteSettingsValue(Key, value);
     }
 
     public DynamicSetting(string key, string fallback) {
-      this.Key = key;
-      this.Fallback = fallback;
+      Key = key;
+      Fallback = fallback;
     }
   }
 }

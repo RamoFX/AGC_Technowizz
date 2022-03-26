@@ -1,7 +1,4 @@
 ﻿using System.ComponentModel;
-
-using Core;
-using Core.Extensions;
 using Core.Settings;
 
 

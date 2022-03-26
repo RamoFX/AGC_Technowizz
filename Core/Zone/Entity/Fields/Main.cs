@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
-
-using Core.Extensions;
 using Core.Settings;
 
 
@@ -37,7 +35,7 @@ namespace Core {
 
       [Browsable(false)]
       public Rectangle Rectangle {
-        get => new(this.Location, this.Size);
+        get => new(Location, Size);
       }
 
 
@@ -47,22 +45,22 @@ namespace Core {
         get {
           DynamicSetting color;
 
-          if (this.VerticalCapacity == 0)
+          if (VerticalCapacity == 0)
             color = DynamicSettings.ZoneColor_Other;
 
-          else if (this.StoredPercent == 100)
+          else if (StoredPercent == 100)
             color = DynamicSettings.ZoneColor_Full;
 
-          else if (this.StoredPercent < 100 && this.StoredPercent >= 75)
+          else if (StoredPercent < 100 && StoredPercent >= 75)
             color = DynamicSettings.ZoneColor_AlmostFull;
 
-          else if (this.StoredPercent < 75 && this.StoredPercent >= 50)
+          else if (StoredPercent < 75 && StoredPercent >= 50)
             color = DynamicSettings.ZoneColor_AboveHalf;
 
-          else if (this.StoredPercent < 50 && this.StoredPercent >= 25)
+          else if (StoredPercent < 50 && StoredPercent >= 25)
             color = DynamicSettings.ZoneColor_BelowHalf;
 
-          else if (this.StoredPercent < 25 && this.StoredPercent > 0)
+          else if (StoredPercent < 25 && StoredPercent > 0)
             color = DynamicSettings.ZoneColor_AlmostEmpty;
 
           else

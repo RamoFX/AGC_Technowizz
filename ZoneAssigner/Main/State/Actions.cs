@@ -5,34 +5,34 @@
 namespace ZoneAssigner {
   public partial class Main {
     private void SetCurrentLayout(Layout.Entity layout) {
-      this.CurrentLayout = layout;
+      CurrentLayout = layout;
 
-      if (this.CurrentLayout != null) {
-        this.CurrentLayout.Initialize(DAYS_PERIOD);
+      if (CurrentLayout != null) {
+        CurrentLayout.Initialize(DAYS_PERIOD);
       }
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
 
 
     private void SetCurrentSelection(object target) {
       // Change and fire handler only if not same
-      if (this.CurrentSelection == target)
+      if (CurrentSelection == target)
         return;
 
-      this.CurrentSelection = target;
+      CurrentSelection = target;
 
       // Label
       if (target == null)
-        this.ZoneName.Text = "";
+        ZoneName.Text = "";
 
       else if (target.GetType().ToString() == "Core.Zone+Entity")
-        this.ZoneName.Text = ((Zone.Entity) target).Name;
+        ZoneName.Text = ( (Zone.Entity) target ).Name;
 
       // Post-hooks
-      this.CurrentSelectionChangedHandler();
+      CurrentSelectionChangedHandler();
     }
   }
 }

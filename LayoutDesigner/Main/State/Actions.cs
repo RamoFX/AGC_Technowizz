@@ -5,27 +5,27 @@
 namespace LayoutDesigner {
   public partial class Main {
     private void SetCurrentLayout(Layout.Entity layout) {
-      this.CurrentLayout = layout;
+      CurrentLayout = layout;
 
-      if (this.CurrentLayout != null) {
-        this.CurrentLayout.Initialize(DAYS_PERIOD);
+      if (CurrentLayout != null) {
+        CurrentLayout.Initialize(DAYS_PERIOD);
       }
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
 
 
     private void SetCurrentSelection(object target) {
       // Change and fire handler only if not same
-      if (this.CurrentSelection == target)
+      if (CurrentSelection == target)
         return;
 
-      this.CurrentSelection = target;
+      CurrentSelection = target;
 
       // Post-hooks
-      this.CurrentSelectionChangedHandler();
+      CurrentSelectionChangedHandler();
     }
   }
 }

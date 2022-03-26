@@ -7,22 +7,22 @@ using Core.UI.Dialogs;
 namespace LayoutOverview {
   public partial class Main {
     private void UnloadLayout() {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Unload
-      this.CurrentLayout = null;
-      this.CurrentSelection = null;
+      CurrentLayout = null;
+      CurrentSelection = null;
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
 
 
     private void OpenLayout(string layoutName) {
       Core.Layout.Entity layout = Core.Layout.FileSystem.Import(layoutName);
-      this.SetCurrentLayout(layout);
+      SetCurrentLayout(layout);
     }
 
 
@@ -35,7 +35,7 @@ namespace LayoutOverview {
 
       string layoutName = (string) selectLayoutName.FinalValue;
 
-      this.OpenLayout(layoutName);
+      OpenLayout(layoutName);
     }
   }
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using System.Xml.Schema;
-
-using Core.Extensions;
 using Core.Settings;
 
 

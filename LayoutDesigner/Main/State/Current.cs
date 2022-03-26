@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 
 using Core;
-using Core.Extensions;
 using Core.Settings;
 
 

@@ -11,10 +11,10 @@ namespace Core {
 
 
       public void Initialize(int daysPeriod) {
-        this.DaysPeriod = daysPeriod;
+        DaysPeriod = daysPeriod;
 
-        foreach (Zone.Entity zone in this.Zones) {
-          zone.Initialize(this, this.DaysPeriod);
+        foreach (Zone.Entity zone in Zones) {
+          zone.Initialize(this, DaysPeriod);
         }
       }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -35,19 +34,13 @@ namespace LayoutDesigner {
         if (isEmpty) {
           MessageBoxes.TextValueCannotBeEmpty();
           return false;
-        }
-        
-        else if (newNameContainsInvalidChars) {
+        } else if (newNameContainsInvalidChars) {
           MessageBoxes.TextFieldCannotContainInvalidChars();
           return false;
-        }
-        
-        else if (nameAlreadyTaken) {
+        } else if (nameAlreadyTaken) {
           MessageBoxes.NameAlreadyInUse();
           return false;
-        }
-        
-        else
+        } else
           return true;
       };
 
@@ -112,50 +105,36 @@ namespace LayoutDesigner {
         bool isNameEmpty = newZone.Name.Length == 0;
         bool isNameAlreadyInUse = otherZones.Select(someZone => someZone.Name).Contains(newZone.Name);
         bool isVerticalCapacityNegative = newZone.VerticalCapacity < 0;
-        bool isOutOfBounds = !this.CurrentLayout.Rectangle.Contains(newZone.Rectangle);
+        bool isOutOfBounds = !CurrentLayout.Rectangle.Contains(newZone.Rectangle);
         bool doesIntersectWithOtherZone = otherZones.Any(someZone => newZone.Rectangle.IntersectsWith(someZone.Rectangle));
         bool hasInvalidSize = newZone.Size.Width < 1 || newZone.Size.Height < 1;
 
         bool isValidRegularZone = newZone.CarBrand.Length > 0 && newZone.VerticalCapacity > 0;
         bool isValidOtherZone = newZone.CarBrand.Length == 0 && newZone.VerticalCapacity == 0;
-        bool isInvalidRegularOrOtherZone = !(isValidRegularZone || isValidOtherZone);
+        bool isInvalidRegularOrOtherZone = !( isValidRegularZone || isValidOtherZone );
 
         if (isNameEmpty) {
           MessageBoxes.TextValueCannotBeEmpty();
           return false;
-        }
-
-        else if (isNameAlreadyInUse) {
+        } else if (isNameAlreadyInUse) {
           MessageBoxes.NameAlreadyInUse();
           return false;
-        }
-        
-        else if (isVerticalCapacityNegative) {
+        } else if (isVerticalCapacityNegative) {
           MessageBoxes.VerticalCapacityGreaterThanZero();
           return false;
-        }
-        
-        else if (isOutOfBounds) {
+        } else if (isOutOfBounds) {
           MessageBoxes.CantBeOutOfBounds();
           return false;
-        }
-        
-        else if (doesIntersectWithOtherZone) {
+        } else if (doesIntersectWithOtherZone) {
           MessageBoxes.CantIntersect();
           return false;
-        }
-        
-        else if (hasInvalidSize) {
+        } else if (hasInvalidSize) {
           MessageBoxes.InvalidSize();
           return false;
-        }
-        
-        else if (isInvalidRegularOrOtherZone) {
+        } else if (isInvalidRegularOrOtherZone) {
           MessageBoxes.InvalidRegularOrOtherZone();
           return false;
-        }
-        
-        else 
+        } else
           return true;
       };
 
@@ -170,7 +149,7 @@ namespace LayoutDesigner {
 
     // Object creation
     private ObjectEditor NewLayoutPrompt() {
-      return this.LayoutEditorPrompt(
+      return LayoutEditorPrompt(
         "Nové rozložení",
         new(),
         Core.Layout.FileSystem.GetFilesNames()
@@ -178,10 +157,10 @@ namespace LayoutDesigner {
     }
 
     private ObjectEditor NewZonePrompt(Zone.Entity initialZone) {
-      return this.ZoneEditorPrompt(
+      return ZoneEditorPrompt(
         "Nová zóna",
         initialZone,
-        this.CurrentLayout.Zones
+        CurrentLayout.Zones
       );
     }
   }

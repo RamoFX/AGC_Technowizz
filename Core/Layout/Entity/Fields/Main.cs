@@ -2,9 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 
-using Core.Extensions;
-using Core.Settings;
-
 
 
 namespace Core {
@@ -28,7 +25,7 @@ namespace Core {
 
       [Browsable(false)]
       public Rectangle Rectangle {
-        get => new(new(0, 0), this.Size);
+        get => new(new(0, 0), Size);
       }
 
 

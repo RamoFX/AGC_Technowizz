@@ -18,13 +18,13 @@ namespace Core {
           throw new ArgumentException("Invalid verticalCapacity");
         }
 
-        if (!(name.Length > 0)) {
+        if (!( name.Length > 0 )) {
           throw new ArgumentException("Invalid name");
         }
 
         bool isValidRegularZone = carBrand.Length > 0 && verticalCapacity > 0;
         bool isValidOtherZone = carBrand.Length == 0 && verticalCapacity == 0;
-        bool isInvalidRegularOrOtherZone = !(isValidRegularZone || isValidOtherZone);
+        bool isInvalidRegularOrOtherZone = !( isValidRegularZone || isValidOtherZone );
 
         if (isInvalidRegularOrOtherZone) {
           throw new ArgumentException("Invalid carBrand and/or verticalCapacity");
@@ -38,11 +38,11 @@ namespace Core {
           throw new ArgumentException("Invalid location");
         }
 
-        this.Name = name;
-        this.VerticalCapacity = verticalCapacity;
-        this.CarBrand = carBrand;
-        this.Location = location;
-        this.Size = size;
+        Name = name;
+        VerticalCapacity = verticalCapacity;
+        CarBrand = carBrand;
+        Location = location;
+        Size = size;
       }
 
 

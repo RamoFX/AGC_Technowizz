@@ -13,10 +13,10 @@ namespace Core.UI.Dialogs {
 
     public TextInput(Validator<string> validator, string label, string initialValue) {
       InitializeComponent();
-      this.DialogResult = DialogResult.None;
-      this.Validator = validator;
-      this.Text = label;
-      this.TextBox.Text = initialValue;
+      DialogResult = DialogResult.None;
+      Validator = validator;
+      Text = label;
+      TextBox.Text = initialValue;
     }
 
     public TextInput(Validator<string> validator, string label)
@@ -26,20 +26,20 @@ namespace Core.UI.Dialogs {
 
     private void Button_Apply_Click(object sender, EventArgs e) {
       string newName = TextBox.Text;
-      bool isValid = this.Validator(newName);
+      bool isValid = Validator(newName);
 
       if (isValid) {
-        this.DialogResult = DialogResult.OK;
-        this.FinalValue = newName;
-        this.Close();
+        DialogResult = DialogResult.OK;
+        FinalValue = newName;
+        Close();
       }
     }
 
 
 
     private void Button_Cancel_Click(object sender, EventArgs e) {
-      this.DialogResult = DialogResult.Cancel;
-      this.Close();
+      DialogResult = DialogResult.Cancel;
+      Close();
     }
 
 

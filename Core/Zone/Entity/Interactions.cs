@@ -2,23 +2,23 @@
   public partial class Zone {
     public partial class Entity {
       public bool IsSuitable(string carBrand) {
-        return this.CanStore > 0 && this.CarBrand == carBrand;
+        return CanStore > 0 && CarBrand == carBrand;
       }
 
 
 
       public bool IsLoadable() {
-        return !(this.VerticalCapacity == 0 && this.CarBrand == "");
+        return !( VerticalCapacity == 0 && CarBrand == "" );
       }
 
 
 
       public void Change(Entity edited) {
-        this.Name = edited.Name;
-        this.CarBrand = edited.CarBrand;
-        this.VerticalCapacity = edited.VerticalCapacity;
-        this.Size = edited.Size;
-        this.Location = edited.Location;
+        Name = edited.Name;
+        CarBrand = edited.CarBrand;
+        VerticalCapacity = edited.VerticalCapacity;
+        Size = edited.Size;
+        Location = edited.Location;
       }
     }
   }

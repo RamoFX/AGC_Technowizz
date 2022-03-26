@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 using Core.UI;
@@ -13,20 +12,20 @@ namespace ZoneAssigner {
       InitializeComponent();
 
       // Offset of height (this.Height and real height)
-      this.MainHeightOffset = this.Height - Utilities.ComputeTitleBarHeight(this) - this.Menu.Height - this.Panel_Upper.Height - this.Canvas_Layout.Height;
+      MainHeightOffset = Height - Utilities.ComputeTitleBarHeight(this) - Menu.Height - Panel_Upper.Height - Canvas_Layout.Height;
 
       // Minimum size
-      int minimalWidth = this.Menu.Width + SystemInformation.VerticalScrollBarWidth;
-      int minimalHeight = this.Panel_Upper.Height + this.Panel_CanvasWrapper.Height + Utilities.ComputeTitleBarHeight(this) + this.Menu.Height + this.MainHeightOffset;
+      int minimalWidth = Menu.Width + SystemInformation.VerticalScrollBarWidth;
+      int minimalHeight = Panel_Upper.Height + Panel_CanvasWrapper.Height + Utilities.ComputeTitleBarHeight(this) + Menu.Height + MainHeightOffset;
 
-      this.MinimumSize = new Size(minimalWidth, minimalHeight);
+      MinimumSize = new Size(minimalWidth, minimalHeight);
 
       // Hide label text
-      this.ZoneName.Text = "";
+      ZoneName.Text = "";
 
       // Post-hooks
-      this.SetCurrentLayout(null);
-      this.UpdateState();
+      SetCurrentLayout(null);
+      UpdateState();
     }
   }
 }

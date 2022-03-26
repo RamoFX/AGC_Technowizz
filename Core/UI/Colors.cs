@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-namespace Core.UI {
+﻿namespace Core.UI {
   public static class Colors {
-    static public string HexConverter(string hexColor)
-    {
-      switch (hexColor.Length)
-      {
+    static public string HexConverter(string hexColor) {
+      switch (hexColor.Length) {
         case 3:
           hexColor += "F";
           goto case 4;

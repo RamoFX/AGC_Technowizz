@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-using Core.Extensions;
+﻿using System.Drawing;
 using Core.Settings;
 
 
@@ -100,7 +97,7 @@ namespace Core.UI {
       graphics.DrawRectangle(creationPen, creationRectangle);
       graphics.FillRectangle(creationBrush, creationRectangle);
     }
-    
+
 
 
     static public void DrawLayout(Graphics graphics, Rectangle clip, int unitSize, Layout.Entity layout, object selection, bool isHightContrast) {

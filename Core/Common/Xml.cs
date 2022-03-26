@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 
 
- 
+
 namespace Core {
   internal partial class Common {
     internal class Xml {

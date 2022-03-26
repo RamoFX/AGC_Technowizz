@@ -1,34 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-
-
-namespace Core {
+﻿namespace Core {
   public partial class Layout {
     public partial class Entity {
       public void Add(Zone.Entity zone, int daysPeriod) {
-        this.Zones.Add(zone);
+        Zones.Add(zone);
         zone.Initialize(this, daysPeriod);
       }
 
 
 
       public void Add(Zone.Entity zone) {
-        this.Zones.Add(zone);
-        zone.Initialize(this, this.DaysPeriod);
+        Zones.Add(zone);
+        zone.Initialize(this, DaysPeriod);
       }
 
 
 
       public void Change(Entity edited) {
-        this.Name = edited.Name;
-        this.WarehouseName = edited.WarehouseName;
-        this.Size = edited.Size;
+        Name = edited.Name;
+        WarehouseName = edited.WarehouseName;
+        Size = edited.Size;
       }
     }
   }

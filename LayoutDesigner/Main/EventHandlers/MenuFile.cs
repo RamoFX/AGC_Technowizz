@@ -11,33 +11,33 @@ namespace LayoutDesigner {
   public partial class Main {
     // File (Tool strip menu item)
     private void Item_New_Click(object sender, EventArgs e) {
-      this.NewLayout();
+      NewLayout();
     }
 
     private void MenuItem_Open_Click(object sender, EventArgs e) {
-      this.OpenLayout();
+      OpenLayout();
     }
 
     private void MenuItem_Close_Click(object sender, EventArgs e) {
-      this.UnloadLayout();
+      UnloadLayout();
     }
 
 
     private void MenuItem_Save_Click(object sender, EventArgs e) {
-      this.SaveLayout();
+      SaveLayout();
     }
 
     private void MenuItem_SaveAs_Click(object sender, EventArgs e) {
-      this.SaveLayoutAs();
+      SaveLayoutAs();
     }
 
     private void MenuItem_Rename_Click(object sender, EventArgs e) {
-      this.RenameLayout();
+      RenameLayout();
     }
 
 
     private void MenuItem_Delete_Click(object sender, EventArgs e) {
-      this.DeleteLayout();
+      DeleteLayout();
     }
 
 
@@ -52,7 +52,7 @@ namespace LayoutDesigner {
 
 
     private void MenuItem_Exit_Click(object sender, EventArgs e) {
-      this.Close();
+      Close();
     }
   }
 }

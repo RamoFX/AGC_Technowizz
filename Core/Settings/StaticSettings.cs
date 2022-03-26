@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.IO;
 
-using Core.Extensions;
-
 
 
 namespace Core.Settings {

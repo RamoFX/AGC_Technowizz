@@ -2,18 +2,18 @@
   public partial class Main {
     private void CurrentLayoutChangedHandler() {
       // Draw
-      this.Canvas_Layout.Refresh();
+      Canvas_Layout.Refresh();
 
       // Tree view
-      this.Tree_Layout.Nodes.Clear();
+      Tree_Layout.Nodes.Clear();
 
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Add nodes
-      var rootNode = Tree_Layout.Nodes.Add(this.CurrentLayout.Name);
+      var rootNode = Tree_Layout.Nodes.Add(CurrentLayout.Name);
 
-      foreach (var zone in this.CurrentLayout.Zones) {
+      foreach (var zone in CurrentLayout.Zones) {
         if (zone.IsLoadable())
           rootNode.Nodes.Add($"{ zone.Name } ({ zone.StoredPercent } %)");
 
@@ -21,20 +21,20 @@
           rootNode.Nodes.Add(zone.Name);
       }
 
-      this.Tree_Layout.ExpandAll();
+      Tree_Layout.ExpandAll();
     }
 
 
 
     private void CurrentSelectionChangedHandler() {
       // Property grid
-      this.Properties_CurrentSelection.SelectedObject = this.CurrentSelection;
+      Properties_CurrentSelection.SelectedObject = CurrentSelection;
 
       // Select correct tree view node
-      this.Tree_Layout.SelectedNode = null;
+      Tree_Layout.SelectedNode = null;
 
       // Redraw
-      this.Canvas_Layout.Refresh();
+      Canvas_Layout.Refresh();
     }
   }
 }

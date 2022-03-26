@@ -5,10 +5,10 @@
 namespace LayoutOverview {
   public partial class Main {
     private void UpdateTitle() {
-      if (this.CurrentLayout != null) {
-        this.Text = $"{ TITLE_BASE } - { this.CurrentLayout.Name }";
+      if (CurrentLayout != null) {
+        Text = $"{ TITLE_BASE } - { CurrentLayout.Name }";
       } else {
-        this.Text = $"{ TITLE_BASE }";
+        Text = $"{ TITLE_BASE }";
       }
     }
 
@@ -21,19 +21,19 @@ namespace LayoutOverview {
 
 
     private void UpdateCloseControl_Enabled() {
-      MenuItem_Close.Enabled = this.CurrentLayout != null;
+      MenuItem_Close.Enabled = CurrentLayout != null;
     }
 
 
 
     private void UpdateState() {
-      this.UpdateTitle();
-      this.UpdateOpenControl_Enabled();
-      this.UpdateCloseControl_Enabled();
+      UpdateTitle();
+      UpdateOpenControl_Enabled();
+      UpdateCloseControl_Enabled();
 
       // Post-hooks
-      this.CurrentLayoutChangedHandler();
-      this.CurrentSelectionChangedHandler();
+      CurrentLayoutChangedHandler();
+      CurrentSelectionChangedHandler();
     }
   }
 }

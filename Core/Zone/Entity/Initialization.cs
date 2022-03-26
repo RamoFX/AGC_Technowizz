@@ -14,13 +14,13 @@ namespace Core {
       internal int DaysPeriod;
 
       public void Initialize(Layout.Entity parent, int daysPeriod) {
-        this.Parent = parent;
-        this.DaysPeriod = daysPeriod;
+        Parent = parent;
+        DaysPeriod = daysPeriod;
 
-        this.Stored = DatabaseAccess.GetPalletsCount(
-          this.Parent.WarehouseName,
-          this.Name,
-          this.DaysPeriod
+        Stored = DatabaseAccess.GetPalletsCount(
+          Parent.WarehouseName,
+          Name,
+          DaysPeriod
         );
       }
     }

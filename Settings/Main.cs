@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-
-using Core;
 using Core.UI;
-using Core.Extensions;
 using Core.Settings;
 
 

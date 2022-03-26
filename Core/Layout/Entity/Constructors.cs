@@ -16,11 +16,11 @@ namespace Core {
         name = name.Trim();
         warehouseName = warehouseName.Trim();
 
-        if (!(name.Length > 0)) {
+        if (!( name.Length > 0 )) {
           throw new ArgumentException("Invalid name");
         }
 
-        if (!(warehouseName.Length > 0)) {
+        if (!( warehouseName.Length > 0 )) {
           throw new ArgumentException("Invalid warehouseName");
         }
 
@@ -28,10 +28,10 @@ namespace Core {
           throw new ArgumentException("Invalid size");
         }
 
-        this.Name = name;
-        this.WarehouseName = warehouseName;
-        this.Size = size;
-        this.Zones = zones.ToList();
+        Name = name;
+        WarehouseName = warehouseName;
+        Size = size;
+        Zones = zones.ToList();
       }
 
 

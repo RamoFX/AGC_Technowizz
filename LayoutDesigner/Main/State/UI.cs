@@ -5,10 +5,10 @@
 namespace LayoutDesigner {
   public partial class Main {
     private void UpdateTitle() {
-      if (this.CurrentLayout != null) {
-        this.Text = $"{ TITLE_BASE } - { this.CurrentLayout.Name } ({( Core.Layout.State.IsUpToDate(this.CurrentLayout) ? "uloženo" : "neuloženo" )})";
+      if (CurrentLayout != null) {
+        Text = $"{ TITLE_BASE } - { CurrentLayout.Name } ({( Core.Layout.State.IsUpToDate(CurrentLayout) ? "uloženo" : "neuloženo" )})";
       } else {
-        this.Text = $"{ TITLE_BASE }";
+        Text = $"{ TITLE_BASE }";
       }
     }
 
@@ -21,51 +21,51 @@ namespace LayoutDesigner {
 
 
     private void UpdateCloseControl_Enabled() {
-      MenuItem_Close.Enabled = this.CurrentLayout != null;
+      MenuItem_Close.Enabled = CurrentLayout != null;
     }
 
 
 
     private void UpdateSaveControl_Enabled() {
-      if (this.CurrentLayout != null) {
-        this.MenuItem_Save.Enabled = !Core.Layout.State.IsUpToDate(this.CurrentLayout);
+      if (CurrentLayout != null) {
+        MenuItem_Save.Enabled = !Core.Layout.State.IsUpToDate(CurrentLayout);
       } else {
-        this.MenuItem_Save.Enabled = false;
+        MenuItem_Save.Enabled = false;
       }
     }
 
 
 
     private void UpdateSaveAsControl_Enabled() {
-      this.MenuItem_SaveAs.Enabled = this.CurrentLayout != null;
+      MenuItem_SaveAs.Enabled = CurrentLayout != null;
     }
 
 
 
     private void UpdateRenameControl_Enabled() {
-      this.MenuItem_Rename.Enabled = this.CurrentLayout != null;
+      MenuItem_Rename.Enabled = CurrentLayout != null;
     }
 
 
 
     private void UpdateDeleteControl_Enabled() {
-      this.MenuItem_Delete.Enabled = this.CurrentLayout != null && Core.Layout.FileSystem.Exists(this.CurrentLayout.Name);
+      MenuItem_Delete.Enabled = CurrentLayout != null && Core.Layout.FileSystem.Exists(CurrentLayout.Name);
     }
 
 
 
     private void UpdateState() {
-      this.UpdateTitle();
-      this.UpdateOpenControl_Enabled();
-      this.UpdateCloseControl_Enabled();
-      this.UpdateSaveControl_Enabled();
-      this.UpdateSaveAsControl_Enabled();
-      this.UpdateRenameControl_Enabled();
-      this.UpdateDeleteControl_Enabled();
+      UpdateTitle();
+      UpdateOpenControl_Enabled();
+      UpdateCloseControl_Enabled();
+      UpdateSaveControl_Enabled();
+      UpdateSaveAsControl_Enabled();
+      UpdateRenameControl_Enabled();
+      UpdateDeleteControl_Enabled();
 
       // Post-hooks
-      this.CurrentLayoutChangedHandler();
-      this.CurrentSelectionChangedHandler();
+      CurrentLayoutChangedHandler();
+      CurrentSelectionChangedHandler();
     }
   }
 }

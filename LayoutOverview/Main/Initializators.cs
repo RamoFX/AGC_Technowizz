@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-
-using Core.Extensions;
 using Core.Settings;
 
 

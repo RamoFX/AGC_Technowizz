@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 
@@ -14,30 +13,30 @@ namespace Core.UI.Dialogs {
 
     public ObjectEditor(Validator<object> validator, object initialObject, string labelText) {
       InitializeComponent();
-      this.DialogResult = DialogResult.None;
-      this.Validator = validator;
-      this.PropertyGrid.SelectedObject = initialObject;
-      this.Text = labelText;
+      DialogResult = DialogResult.None;
+      Validator = validator;
+      PropertyGrid.SelectedObject = initialObject;
+      Text = labelText;
     }
 
 
 
     private void Button_Apply_Click(object sender, EventArgs e) {
       object newObject = PropertyGrid.SelectedObject;
-      bool isValid = this.Validator(newObject);
+      bool isValid = Validator(newObject);
 
       if (isValid) {
-        this.DialogResult = DialogResult.OK;
-        this.FinalValue = newObject;
-        this.Close();
+        DialogResult = DialogResult.OK;
+        FinalValue = newObject;
+        Close();
       }
     }
 
 
 
     private void Button_Cancel_Click(object sender, EventArgs e) {
-      this.DialogResult = DialogResult.Cancel;
-      this.Close();
+      DialogResult = DialogResult.Cancel;
+      Close();
     }
   }
 }

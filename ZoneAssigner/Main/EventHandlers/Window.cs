@@ -9,20 +9,20 @@ namespace ZoneAssigner {
   public partial class Main {
     private void Main_Resize(object sender, EventArgs e) {
       // Upper panel
-      this.Panel_Upper.Width = this.Width;
+      Panel_Upper.Width = Width;
 
       // Canvas
-      this.Panel_CanvasWrapper.Width = this.Width;
-      this.Panel_CanvasWrapper.Height = this.Height - this.Panel_Upper.Height - Utilities.ComputeTitleBarHeight(this) - this.Menu.Height - this.MainHeightOffset;
+      Panel_CanvasWrapper.Width = Width;
+      Panel_CanvasWrapper.Height = Height - Panel_Upper.Height - Utilities.ComputeTitleBarHeight(this) - Menu.Height - MainHeightOffset;
 
       // Redraw, unit size may change
-      this.Canvas_Layout.Refresh();
+      Canvas_Layout.Refresh();
     }
 
 
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
-      this.UnloadLayout();
+      UnloadLayout();
     }
   }
 }

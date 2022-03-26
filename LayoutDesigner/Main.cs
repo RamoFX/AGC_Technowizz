@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 using Core.UI;
@@ -14,26 +11,26 @@ namespace LayoutDesigner {
       InitializeComponent();
 
       // Preparation
-      int left = this.SplitContainer_Vertical.Panel1MinSize;
-      int right = this.SplitContainer_Vertical.Panel2MinSize;
-      int splitterWidth = this.SplitContainer_Vertical.SplitterWidth;
+      int left = SplitContainer_Vertical.Panel1MinSize;
+      int right = SplitContainer_Vertical.Panel2MinSize;
+      int splitterWidth = SplitContainer_Vertical.SplitterWidth;
 
-      int top = this.SplitContainer_Horizontal.Panel1MinSize;
-      int bottom = this.SplitContainer_Horizontal.Panel2MinSize;
-      int splitterHeight = this.SplitContainer_Horizontal.SplitterWidth;
+      int top = SplitContainer_Horizontal.Panel1MinSize;
+      int bottom = SplitContainer_Horizontal.Panel2MinSize;
+      int splitterHeight = SplitContainer_Horizontal.SplitterWidth;
 
       // Offset of height (this.Height and real height)
-      this.MainHeightOffset = this.Height - Utilities.ComputeTitleBarHeight(this) - this.Menu.Height - this.SplitContainer_Vertical.Height;
+      MainHeightOffset = Height - Utilities.ComputeTitleBarHeight(this) - Menu.Height - SplitContainer_Vertical.Height;
 
       // Minimum size
       int minimalWidth = left + right + splitterWidth + SystemInformation.VerticalScrollBarWidth;
-      int minimalHeight = top + bottom + splitterHeight + Utilities.ComputeTitleBarHeight(this) + this.Menu.Height + this.MainHeightOffset;
+      int minimalHeight = top + bottom + splitterHeight + Utilities.ComputeTitleBarHeight(this) + Menu.Height + MainHeightOffset;
 
-      this.MinimumSize = new Size(minimalWidth, minimalHeight);
+      MinimumSize = new Size(minimalWidth, minimalHeight);
 
       // Post-hooks
-      this.SetCurrentLayout(null);
-      this.UpdateState();
+      SetCurrentLayout(null);
+      UpdateState();
     }
   }
 }

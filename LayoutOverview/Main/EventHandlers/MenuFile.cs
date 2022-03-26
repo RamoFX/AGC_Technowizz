@@ -10,13 +10,13 @@ using Core.UI;
 namespace LayoutOverview {
   public partial class Main {
     private void MenuItem_Open_Click(object sender, EventArgs e) {
-      this.OpenLayout();
+      OpenLayout();
     }
 
 
 
     private void MenuItem_Close_Click(object sender, EventArgs e) {
-      this.UnloadLayout();
+      UnloadLayout();
     }
 
 
@@ -31,7 +31,7 @@ namespace LayoutOverview {
 
 
     private void MenuItem_Exit_Click(object sender, EventArgs e) {
-      this.Close();
+      Close();
     }
   }
 }

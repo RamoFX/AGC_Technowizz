@@ -7,13 +7,13 @@ using Core.UI;
 namespace LayoutOverview {
   public partial class Main {
     private void Canvas_Layout_MouseClick(object sender, MouseEventArgs e) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
-      var target = Utilities.MatchEntity(e.Location, this.CurrentUnitSize, this.CurrentLayout);
+      var target = Utilities.MatchEntity(e.Location, CurrentUnitSize, CurrentLayout);
 
       // Hooks
-      this.SetCurrentSelection(target);
+      SetCurrentSelection(target);
     }
   }
 }

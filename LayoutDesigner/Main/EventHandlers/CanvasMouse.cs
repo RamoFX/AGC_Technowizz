@@ -1,10 +1,6 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 using Core;
-using Core.Extensions;
 using Core.UI;
 
 
@@ -12,7 +8,7 @@ using Core.UI;
 namespace LayoutDesigner {
   public partial class Main {
     private void Canvas_Layout_MouseDoubleClick(object sender, MouseEventArgs e) {
-      if (this.CurrentSelection == null)
+      if (CurrentSelection == null)
         return;
 
 
@@ -23,7 +19,7 @@ namespace LayoutDesigner {
 
 
       // Actual selection determination
-      string selectionType = this.CurrentSelection.GetType().ToString();
+      string selectionType = CurrentSelection.GetType().ToString();
 
       bool isZone = selectionType == "Core.Zone+Entity";
       bool isLayout = !isZone && selectionType == "Core.Layout+Entity";
@@ -38,83 +34,83 @@ namespace LayoutDesigner {
 
       // Zone edit, delete
       if (isZone) {
-        var targetZone = (Zone.Entity) this.CurrentSelection;
+        var targetZone = (Zone.Entity) CurrentSelection;
 
         // Edit
         if (isLeft) {
-          this.EditZone(targetZone);
+          EditZone(targetZone);
         }
 
         // Delete
         else if (isRight) {
-          this.DeleteZone(targetZone, false);
+          DeleteZone(targetZone, false);
         }
       }
-      
+
 
 
       // Layout edit
       else if (isLeft && isLayout) {
-        this.EditLayout();
+        EditLayout();
       }
 
 
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
 
 
     private void Canvas_Layout_MouseDown(object sender, MouseEventArgs e) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
-      object target = Utilities.MatchEntity(e.Location, this.CurrentUnitSize, this.CurrentLayout);
-      this.SetCurrentSelection(target);
+      object target = Utilities.MatchEntity(e.Location, CurrentUnitSize, CurrentLayout);
+      SetCurrentSelection(target);
 
-      this.IsCreatingZone = target.GetType().ToString() == "Core.Layout+Entity";
+      IsCreatingZone = target.GetType().ToString() == "Core.Layout+Entity";
 
-      if (!this.IsCreatingZone)
+      if (!IsCreatingZone)
         return;
 
-      this.DragStart = e.Location.Unscale(this.CurrentUnitSize);
-      this.DragEnd = new(this.DragStart.X, this.DragStart.Y);
+      DragStart = e.Location.Unscale(CurrentUnitSize);
+      DragEnd = new(DragStart.X, DragStart.Y);
 
-      this.Canvas_Layout.Refresh();
+      Canvas_Layout.Refresh();
     }
 
 
 
     private void Canvas_Layout_MouseMove(object sender, MouseEventArgs e) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
-      if (!this.IsCreatingZone)
+      if (!IsCreatingZone)
         return;
 
-      this.DragEnd = e.Location.Unscale(this.CurrentUnitSize);
+      DragEnd = e.Location.Unscale(CurrentUnitSize);
 
-      this.Canvas_Layout.Refresh();
+      Canvas_Layout.Refresh();
     }
 
 
 
     private void Canvas_Layout_MouseUp(object sender, MouseEventArgs e) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
-      if (!this.IsCreatingZone)
+      if (!IsCreatingZone)
         return;
 
-      this.IsCreatingZone = false;
+      IsCreatingZone = false;
 
-      this.Canvas_Layout.Refresh();
+      Canvas_Layout.Refresh();
 
       // Validation
-      var rectangle = Utilities.CreateRectangleFromPoints(this.DragStart, this.DragEnd);
+      var rectangle = Utilities.CreateRectangleFromPoints(DragStart, DragEnd);
 
-      bool willLayoutContainZone = this.CurrentLayout.Rectangle.Contains(rectangle);
+      bool willLayoutContainZone = CurrentLayout.Rectangle.Contains(rectangle);
 
       if (!willLayoutContainZone)
         return;
@@ -126,12 +122,12 @@ namespace LayoutDesigner {
       };
 
       // Selection
-      Zone.Entity finalZone = this.NewZone(newZone);
+      Zone.Entity finalZone = NewZone(newZone);
 
       if (finalZone == null)
         return;
 
-      this.SetCurrentSelection(finalZone);
+      SetCurrentSelection(finalZone);
     }
   }
 }

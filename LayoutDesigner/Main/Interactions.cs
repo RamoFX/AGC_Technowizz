@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Forms;
-using System.Xml;
 
 using Core;
 using Core.UI;
@@ -13,52 +11,52 @@ namespace LayoutDesigner {
   public partial class Main {
     // Layout
     private void UnloadLayout(bool force) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // If not saved ask user if he wants to save
       // If forced then do not ask
-      bool isUpToDate = Core.Layout.State.IsUpToDate(this.CurrentLayout);
+      bool isUpToDate = Core.Layout.State.IsUpToDate(CurrentLayout);
 
       if (!force && !isUpToDate) {
         var dialogResult = MessageBoxes.SaveUnsavedLayout();
 
         if (dialogResult == DialogResult.Yes) {
-          this.SaveLayout();
+          SaveLayout();
         }
       }
 
       // Unload
-      this.CurrentLayout = null;
-      this.CurrentSelection = null;
+      CurrentLayout = null;
+      CurrentSelection = null;
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
     private void UnloadLayout() {
-      this.UnloadLayout(false);
+      UnloadLayout(false);
     }
 
     private void NewLayout() {
       // Pre-hooks
-      this.UnloadLayout();
+      UnloadLayout();
 
       // Setup new object
-      ObjectEditor newLayout = this.NewLayoutPrompt();
+      ObjectEditor newLayout = NewLayoutPrompt();
 
       if (newLayout.DialogResult != DialogResult.OK)
         return;
 
       // Post-hooks
-      this.SetCurrentLayout((Layout.Entity) newLayout.FinalValue);
-      this.SetCurrentSelection(this.CurrentLayout);
-      this.UpdateState();
+      SetCurrentLayout((Layout.Entity) newLayout.FinalValue);
+      SetCurrentSelection(CurrentLayout);
+      UpdateState();
     }
 
     private void OpenLayout(string layoutName) {
       Core.Layout.Entity layout = Core.Layout.FileSystem.Import(layoutName);
-      this.SetCurrentLayout(layout);
+      SetCurrentLayout(layout);
     }
 
     private void OpenLayout() {
@@ -69,80 +67,80 @@ namespace LayoutDesigner {
 
       string layoutName = (string) selectLayoutName.FinalValue;
 
-      this.OpenLayout(layoutName);
+      OpenLayout(layoutName);
     }
 
     private void SaveLayout() {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Save if not saved
-      if (Core.Layout.State.IsUpToDate(this.CurrentLayout))
+      if (Core.Layout.State.IsUpToDate(CurrentLayout))
         return;
 
-      Core.Layout.FileSystem.Export(this.CurrentLayout);
+      Core.Layout.FileSystem.Export(CurrentLayout);
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
     private void SaveLayoutAs() {
       // Save if layout present
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
-      string currentName = this.CurrentLayout.Name;
-      var userTextInput = this.TextPrompt(currentName);
+      string currentName = CurrentLayout.Name;
+      var userTextInput = TextPrompt(currentName);
 
       if (userTextInput.DialogResult != DialogResult.OK)
         return;
 
-      Core.Layout.FileSystem.ExportAs(this.CurrentLayout, userTextInput.FinalValue);
+      Core.Layout.FileSystem.ExportAs(CurrentLayout, userTextInput.FinalValue);
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
     private void RenameLayout(string newName) {
       // Rename if layout present
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Changes
-      Core.Layout.FileSystem.Rename(this.CurrentLayout, newName);
+      Core.Layout.FileSystem.Rename(CurrentLayout, newName);
 
       // Post-hooks
-      this.SetCurrentSelection(this.CurrentLayout);
-      this.UpdateState();
+      SetCurrentSelection(CurrentLayout);
+      UpdateState();
     }
 
     private void RenameLayout() {
       // Rename if layout present
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Preparation
-      string currentName = this.CurrentLayout.Name;
+      string currentName = CurrentLayout.Name;
 
       // Dialog
-      var userTextInput = this.TextPrompt(currentName);
+      var userTextInput = TextPrompt(currentName);
 
       if (userTextInput.DialogResult != DialogResult.OK)
         return;
 
-      this.RenameLayout(userTextInput.FinalValue);
+      RenameLayout(userTextInput.FinalValue);
     }
 
     private void EditLayout() {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Preparation
-      var otherNames = Core.Layout.FileSystem.GetFilesNames().Where(someName => someName != this.CurrentLayout.Name);
-      Layout.Entity layoutEditTarget = new(this.CurrentLayout);
+      var otherNames = Core.Layout.FileSystem.GetFilesNames().Where(someName => someName != CurrentLayout.Name);
+      Layout.Entity layoutEditTarget = new(CurrentLayout);
 
       // Dialog
-      var layoutEditor = this.LayoutEditorPrompt("Upravit rozložení", layoutEditTarget, otherNames);
+      var layoutEditor = LayoutEditorPrompt("Upravit rozložení", layoutEditTarget, otherNames);
 
       if (layoutEditor.DialogResult != DialogResult.OK)
         return;
@@ -151,19 +149,19 @@ namespace LayoutDesigner {
       var editedLayout = (Layout.Entity) layoutEditor.FinalValue;
 
       // Handle name change
-      if (this.CurrentLayout.Name != editedLayout.Name)
-        this.RenameLayout(editedLayout.Name);
+      if (CurrentLayout.Name != editedLayout.Name)
+        RenameLayout(editedLayout.Name);
 
-      this.CurrentLayout.Change(editedLayout);
+      CurrentLayout.Change(editedLayout);
 
       // Post-hooks
-      this.SetCurrentSelection(this.CurrentLayout);
-      this.UpdateState();
+      SetCurrentSelection(CurrentLayout);
+      UpdateState();
     }
 
     private void DeleteLayout() {
       // Delete if layout present
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Ask if user is sure
@@ -172,21 +170,21 @@ namespace LayoutDesigner {
       if (dialogResult != DialogResult.Yes)
         return;
 
-      Core.Layout.FileSystem.Delete(this.CurrentLayout.Name);
+      Core.Layout.FileSystem.Delete(CurrentLayout.Name);
 
       // Post-hooks
-      this.UnloadLayout(true);
-      this.UpdateState();
+      UnloadLayout(true);
+      UpdateState();
     }
 
 
 
     // Zone
     private Zone.Entity NewZone(Zone.Entity initialZone) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return null;
 
-      bool layoutHasAvailableArea = this.CurrentLayout.Area > this.CurrentLayout.Area_Zones;
+      bool layoutHasAvailableArea = CurrentLayout.Area > CurrentLayout.Area_Zones;
 
       if (!layoutHasAvailableArea) {
         MessageBoxes.AreaFull();
@@ -198,25 +196,25 @@ namespace LayoutDesigner {
       if (newZone.DialogResult != DialogResult.OK)
         return null;
 
-      this.CurrentLayout.Add((Zone.Entity) newZone.FinalValue);
+      CurrentLayout.Add((Zone.Entity) newZone.FinalValue);
 
       // Post-hooks
-      this.SetCurrentSelection(newZone.FinalValue);
-      this.UpdateState();
+      SetCurrentSelection(newZone.FinalValue);
+      UpdateState();
 
       return (Zone.Entity) newZone.FinalValue;
     }
 
     private void EditZone(Zone.Entity zone) {
-      if (this.CurrentLayout == null)
+      if (CurrentLayout == null)
         return;
 
       // Preparation
-      var otherZones = this.CurrentLayout.Zones.Where(someZone => someZone != zone);
+      var otherZones = CurrentLayout.Zones.Where(someZone => someZone != zone);
       Zone.Entity zoneEditTarget = new(zone);
 
       // Dialog
-      var zoneEditor = this.ZoneEditorPrompt("Upravit zónu", zoneEditTarget, otherZones);
+      var zoneEditor = ZoneEditorPrompt("Upravit zónu", zoneEditTarget, otherZones);
 
       if (zoneEditor.DialogResult != DialogResult.OK)
         return;
@@ -227,7 +225,7 @@ namespace LayoutDesigner {
       zone.Change(editedZone);
 
       // Post-hooks
-      this.UpdateState();
+      UpdateState();
     }
 
     private void DeleteZone(Zone.Entity zone, bool doForce) {
@@ -238,11 +236,11 @@ namespace LayoutDesigner {
           return;
       }
 
-      this.CurrentLayout.Zones.Remove(zone);
+      CurrentLayout.Zones.Remove(zone);
 
       // Post-hooks
-      this.UpdateState();
-      this.SetCurrentSelection(null);
+      UpdateState();
+      SetCurrentSelection(null);
     }
   }
 }

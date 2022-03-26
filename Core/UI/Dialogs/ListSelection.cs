@@ -13,30 +13,30 @@ namespace Core.UI.Dialogs {
 
     public ListSelection(List<object> selectItems, string displayMember, string labelText) {
       InitializeComponent();
-      this.DialogResult = DialogResult.None;
-      this.ListBox.DataSource = selectItems;
-      this.ListBox.DisplayMember = displayMember;
-      this.Text = labelText;
+      DialogResult = DialogResult.None;
+      ListBox.DataSource = selectItems;
+      ListBox.DisplayMember = displayMember;
+      Text = labelText;
     }
 
 
 
     private void Button_Apply_Click(object sender, EventArgs e) {
-      object selected = this.ListBox.SelectedValue;
+      object selected = ListBox.SelectedValue;
       bool isSelected = selected != null;
 
       if (isSelected) {
-        this.DialogResult = DialogResult.OK;
-        this.FinalValue = selected;
-        this.Close();
+        DialogResult = DialogResult.OK;
+        FinalValue = selected;
+        Close();
       }
     }
 
 
 
     private void Button_Cancel_Click(object sender, EventArgs e) {
-      this.DialogResult = DialogResult.Cancel;
-      this.Close();
+      DialogResult = DialogResult.Cancel;
+      Close();
     }
 
 
