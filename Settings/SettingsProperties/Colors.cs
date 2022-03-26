@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using Core.Settings;
+using Core;
 
 
 

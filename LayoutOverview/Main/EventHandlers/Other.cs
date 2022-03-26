@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Core.Settings;
 using Core.UI;
+using Core;
 
 
 
