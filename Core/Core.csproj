@@ -77,12 +77,6 @@
     <Compile Include="Settings\DynamicSettings.Internal.cs" />
     <Compile Include="Settings\DynamicSetting.cs" />
     <Compile Include="UI\Colors.cs" />
-    <Compile Include="UI\Dialogs\Help.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Dialogs\Help.Designer.cs">
-      <DependentUpon>Help.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Dialogs\ObjectEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,9 +110,6 @@
     <Compile Include="Zone\Xml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\Dialogs\Help.resx">
-      <DependentUpon>Help.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\ObjectEditor.resx">
       <DependentUpon>ObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
