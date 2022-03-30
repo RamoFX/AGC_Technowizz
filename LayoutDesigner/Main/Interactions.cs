@@ -55,7 +55,13 @@ namespace LayoutDesigner {
     }
 
     private void OpenLayout(string layoutName) {
+      // Pre-hooks
+      UnloadLayout();
+
+      // Open
       Core.Layout.Entity layout = Core.Layout.FileSystem.Import(layoutName);
+
+      // Post-hooks
       SetCurrentLayout(layout);
     }
 
