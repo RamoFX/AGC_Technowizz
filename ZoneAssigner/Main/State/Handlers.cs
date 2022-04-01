@@ -8,6 +8,9 @@
 
 
     private void CurrentSelectionChangedHandler() {
+      // Reinitialize data
+      CurrentLayout.Initialize(DAYS_PERIOD);
+
       // Redraw
       Canvas_Layout.Refresh();
     }

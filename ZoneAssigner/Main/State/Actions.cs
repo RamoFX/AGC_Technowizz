@@ -18,8 +18,7 @@ namespace ZoneAssigner {
 
 
     private void SetCurrentSelection(object target) {
-      // Change and fire handler only if not same
-      if (CurrentSelection == target)
+      if (CurrentLayout == null)
         return;
 
       CurrentSelection = target;
